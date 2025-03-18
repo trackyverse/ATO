@@ -1,0 +1,27 @@
+Package: ATO
+Title: Acoustic Telemetry Object Class
+Version: 0.0.0.9001
+Authors@R: c(
+    person("Hugo", "Flávio", role = c("aut", "cre"),
+           email = "hflavio@dal.ca", comment = c(ORCID = "0000-0002-5174-1197")),
+Description: Class and methods to create, edit, and expand an ATO.
+License: GPL-4
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Language: en-GB
+Depends: R (>= 4.0.0)
+Imports:
+    methods,
+    graphics,
+    grDevices,
+    scales,
+    stats,
+    utils
+Suggests:
+    testthat
+VignetteBuilder: knitr
+URL: https://github.com/trackyverse/ATO,
+     http://www.trackyverse.com/ATO
+BugReports: https://github.com/trackyverse/ATO/issues
