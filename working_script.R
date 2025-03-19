@@ -2,7 +2,7 @@
 # DO NOT KEEP PRECIOUS CODE IN HERE
 
 my_ATO <- new("ATO")
-validObject(my_ATO)
+my_ATO
 
 dets <- data.frame(datetime = as.POSIXct(actel:::example.detections$Timestamp),
                    frac_second = NA_real_,
@@ -10,10 +10,8 @@ dets <- data.frame(datetime = as.POSIXct(actel:::example.detections$Timestamp),
                    transmitter = with(actel:::example.detections, paste0(CodeSpace, "-", Signal)),
                    sensor_value = actel:::example.detections$Sensor.Value)
 
-check_detections(as.data.frame(dets))
-
 my_ATO <- add_detections(my_ATO, dets)
-validObject(my_ATO)
+my_ATO
 
 head(actel:::example.deployments)
 head(actel:::example.spatial)
@@ -32,6 +30,7 @@ deps <- data.frame(receiver_model = NA_character_,
                    transmitter_serial = NA_integer_)
 
 my_ATO <- add_deployments(my_ATO, deps)
+my_ATO
 
 tags <- data.frame(manufacturer = "Thelma",
                    model = NA_character_,
@@ -45,11 +44,14 @@ tags <- data.frame(manufacturer = "Thelma",
                    sensor_type = NA_character_,
                    sensor_unit = NA_character_,
                    animal = as.character(1:nrow(actel:::example.biometrics)), 
-                   capture_location = actel:::example.biometrics$Release.site,
+                   capture_location = as.character(actel:::example.biometrics$Release.site),
                    capture_datetime = actel:::example.biometrics$Release.date,
                    capture_lat = actel:::example.spatial$Latitude[18],
                    capture_lon = actel:::example.spatial$Longitude[18],
-                   release_location = actel:::example.biometrics$Release.site,
+                   release_location = as.character(actel:::example.biometrics$Release.site),
                    release_datetime = actel:::example.biometrics$Release.date,
                    release_lat = actel:::example.spatial$Latitude[18],
                    release_lon = actel:::example.spatial$Longitude[18])
+
+my_ATO <- add_tags(my_ATO, tags)
+my_ATO
