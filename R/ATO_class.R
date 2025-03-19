@@ -19,8 +19,8 @@
 .ATO_tags <- data.frame(manufacturer = NA_character_,
                         model = NA_character_,
                         power_level = NA_real_,
-                        ping_rate = NA_integer_, # seconds
-                        ping_variation = NA_integer_, # 0 if fixed ping rate
+                        ping_rate = NA_real_, # seconds
+                        ping_variation = NA_real_, # 0 if fixed ping rate
                         serial = NA_integer_,
                         transmitter = NA_character_,
                         activation_datetime = as.POSIXct(NA_real_),
@@ -34,9 +34,8 @@
                         capture_lon = NA_real_,
                         release_location = NA_character_,
                         release_datetime = as.POSIXct(NA_real_),
-                        release_lat = NA_integer_,
-                        release_lon = NA_integer_,
-                        comments = NA_character_)[-1,]
+                        release_lat = NA_real_,
+                        release_lon = NA_real_)[-1,]
 
 setClass("ATO",
          slots = c(detections = "data.frame",
