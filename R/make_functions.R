@@ -2,13 +2,33 @@ make_detections <- function (datetime = as.POSIXct(NA_real_),
                              frac_second = NA_real_,
                              receiver_serial = NA_integer_,
                              transmitter = NA_character_,
-                             sensor_value = NA_real_) {
+                             sensor_value = NA_real_,
+                             tz,
+                             ...) {
+  if (missing(tz)) {
+    stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
+  }
+  # detections objects can be very big.
+  # to avoid spending a long time loading everything
+  # before checking the quality of the data, we can make
+  # a fast mock output, test it, then compile the real thing.
+  mock <- data.frame(datetime = datetime[1],
+                     frac_second = frac_second[1],
+                     receiver_serial = receiver_serial[1],
+                     transmitter = transmitter[1],
+                     sensor_value = sensor_value[1],
+                     ...)
+  check_detections(mock)
+  attributes(mock$datetime)$tzone <- tz
+  # now the real thing, which should run smoothly.
   output <- data.frame(datetime = datetime,
                        frac_second = frac_second,
                        receiver_serial = receiver_serial,
                        transmitter = transmitter,
-                       sensor_value = sensor_value)
+                       sensor_value = sensor_value,
+                       ...)
   check_detections(output)
+  attributes(output$datetime)$tzone <- tz
   return(output)
 }
 
@@ -23,8 +43,14 @@ make_deployments <- function (receiver_model = NA_character_,
                               recover_lat = NA_real_,
                               recover_lon = NA_real_,
                               transmitter = NA_character_,
+                              transmitter_ping_rate = NA_real_,
                               transmitter_model = NA_character_,
-                              transmitter_serial = NA_integer_) {
+                              transmitter_serial = NA_integer_,
+                              tz,
+                              ...) {
+  if (missing(tz)) {
+    stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
+  }
   output <- data.frame(receiver_model = receiver_model,
                        receiver_serial = receiver_serial,
                        receiver_codeset = receiver_codeset,
@@ -36,9 +62,14 @@ make_deployments <- function (receiver_model = NA_character_,
                        recover_lat = recover_lat,
                        recover_lon = recover_lon,
                        transmitter = transmitter,
+                       transmitter_ping_rate = transmitter_ping_rate,
                        transmitter_model = transmitter_model,
-                       transmitter_serial = transmitter_serial)
+                       transmitter_serial = transmitter_serial,
+                       ...)
   check_deployments(output)
+  attributes(output$deploy_datetime)$tzone <- tz
+  attributes(output$recover_datetime)$tzone <- tz
+  class(output) <- c("data.frame", "ATO_deps")
   return(output)
 }
 
@@ -61,8 +92,12 @@ make_tags <- function(manufacturer = NA_character_,
                       release_location = NA_character_,
                       release_datetime = as.POSIXct(NA_real_),
                       release_lat = NA_real_,
-                      release_lon = NA_real_) {
-
+                      release_lon = NA_real_,
+                      tz,
+                      ...) {
+  if (missing(tz)) {
+    stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
+  }
   output <- data.frame(manufacturer = manufacturer,
                        model = model,
                        power_level = power_level,
@@ -84,6 +119,8 @@ make_tags <- function(manufacturer = NA_character_,
                        release_lat = release_lat,
                        release_lon = release_lon)
   check_tags(output)
+  attributes(output$capture_datetime)$tzone <- tz
+  attributes(output$release_datetime)$tzone <- tz
   class(output) <- c("data.frame", "ATO_tags")
   return(output)
 }

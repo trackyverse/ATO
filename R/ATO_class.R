@@ -20,6 +20,7 @@ class(.ATO_detections) <- c("data.frame", "ATO_detections")
                                recover_lat = NA_real_,
                                recover_lon = NA_real_,
                                transmitter = NA_character_,
+                               transmitter_ping_rate = NA_real_,
                                transmitter_model = NA_character_,
                                transmitter_serial = NA_integer_)[-1,]
 class(.ATO_deployments) <- c("data.frame", "ATO_deployments")
