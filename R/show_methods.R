@@ -47,7 +47,7 @@ print.ATO_detections <- function(object) {
           length(unique(object$transmitter[stray_link])),
           "are stray transmitters)")
     } else {
-      cat("(all on-target)")
+      cat(" (all on-target)")
     }
   }
   cat("\n")
@@ -58,7 +58,7 @@ print.ATO_detections <- function(object) {
           length(unique(object$receiver_serial[orphan_link])),
           "have deployments mismatches)")
     } else {
-      cat("(all deployed)")
+      cat(" (all deployed)")
     }
   }
   cat("\n")
@@ -96,6 +96,10 @@ print.ATO_deployments <- function(object) {
       cat(" (all with detections)")
     }
   }
+  cat("\n")
+  cat(" -",
+      length(!is.na(object$transmitter)),
+      "beacon transmitters")
   cat("\n")
   cat(" -", length(unique(object$deploy_location)), "locations\n")
 
