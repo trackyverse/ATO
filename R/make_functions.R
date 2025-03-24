@@ -1,10 +1,10 @@
-make_det <- function (datetime = as.POSIXct(NA_real_),
-                      frac_second = NA_real_,
-                      receiver_serial = NA_integer_,
-                      transmitter = NA_character_,
-                      sensor_value = NA_real_,
-                      tz,
-                      ...) {
+make_det <- function(datetime = as.POSIXct(NA_real_),
+                     frac_second = NA_real_,
+                     receiver_serial = NA_integer_,
+                     transmitter = NA_character_,
+                     sensor_value = NA_real_,
+                     tz,
+                     ...) {
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
@@ -46,23 +46,23 @@ make_det <- function (datetime = as.POSIXct(NA_real_),
   return(output)
 }
 
-make_dep <- function (receiver_model = NA_character_,
-                      receiver_serial = NA_integer_,
-                      receiver_codeset = NA_character_,
-                      deploy_location = NA_character_,
-                      deploy_datetime = as.POSIXct(NA_real_),
-                      deploy_lat = NA_real_,
-                      deploy_lon = NA_real_,
-                      deploy_z = NA_real_,
-                      recover_datetime = as.POSIXct(NA_real_),
-                      recover_lat = NA_real_,
-                      recover_lon = NA_real_,
-                      transmitter = NA_character_,
-                      transmitter_ping_rate = NA_real_,
-                      transmitter_model = NA_character_,
-                      transmitter_serial = NA_integer_,
-                      tz,
-                      ...) {
+make_dep <- function(receiver_model = NA_character_,
+                     receiver_serial = NA_integer_,
+                     receiver_codeset = NA_character_,
+                     deploy_location = NA_character_,
+                     deploy_datetime = as.POSIXct(NA_real_),
+                     deploy_lat = NA_real_,
+                     deploy_lon = NA_real_,
+                     deploy_z = NA_real_,
+                     recover_datetime = as.POSIXct(NA_real_),
+                     recover_lat = NA_real_,
+                     recover_lon = NA_real_,
+                     transmitter = NA_character_,
+                     transmitter_ping_rate = NA_real_,
+                     transmitter_model = NA_character_,
+                     transmitter_serial = NA_integer_,
+                     tz,
+                     ...) {
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
