@@ -3,10 +3,10 @@ setClass("ATO_dep")
 setClass("ATO_tag")
 
 .ATO_det <- data.frame(datetime = as.POSIXct(NA_real_),
-                              frac_second = NA_real_,
-                              receiver_serial = NA_integer_,
-                              transmitter = NA_character_,
-                              sensor_value = NA_real_)[-1, ]
+                       frac_second = NA_real_,
+                       receiver_serial = NA_integer_,
+                       transmitter = NA_character_,
+                       sensor_value = NA_real_)[-1, ]
 class(.ATO_det) <- c("ATO_det", "data.frame")
 
 .ATO_dep <- data.frame(receiver_model = NA_character_,
@@ -21,6 +21,7 @@ class(.ATO_det) <- c("ATO_det", "data.frame")
                        recover_lat = NA_real_,
                        recover_lon = NA_real_,
                        transmitter = NA_character_,
+                       transmitter_manufacturer = NA_character_,
                        transmitter_ping_rate = NA_real_,
                        transmitter_model = NA_character_,
                        transmitter_serial = NA_integer_)[-1,]
