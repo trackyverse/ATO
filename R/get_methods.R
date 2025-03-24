@@ -28,8 +28,8 @@ setMethod("get_det_deps", "ATO", function(x, receivers) {
   return(output)
 })
 
-setGeneric("get_deployments", function(x) standardGeneric("get_deployments"))
-setMethod("get_deployments", "ATO", function(x) x@dep)
+setGeneric("get_dep", function(x) standardGeneric("get_dep"))
+setMethod("get_dep", "ATO", function(x) x@dep)
 
-setGeneric("get_tags", function(x) standardGeneric("get_tags"))
-setMethod("get_tags", "ATO", function(x) x@tag)
+setGeneric("get_tag", function(x) standardGeneric("get_tag"))
+setMethod("get_tag", "ATO", function(x) x@tag)
