@@ -1,32 +1,32 @@
-setGeneric("add_detections", function(x, value) standardGeneric("add_detections"))
-setMethod("add_detections", "ATO", function(x, value) {
-  x@detections <- check_is_dataframe(value)
-  if (nrow(x@tags) > 0) {
-    x <- match_dets_tags(x)
-  }
-  if (nrow(x@deployments) > 0) {
-    x <- match_dets_deps(x)
-  }
+setGeneric("add", function(x, value) standardGeneric("add"))
+
+setMethod("add", c(x = "ATO", value = "ATO_det"), function(x, value) {
+  x@det <- value
   validObject(x)
+  if (nrow(x@tag) > 0) {
+    x <- match_det_tag(x)
+  }
+  if (nrow(x@dep) > 0) {
+    x <- match_det_dep(x)
+  }
   return(x)
 })
 
-setGeneric("add_deployments", function(x, value) standardGeneric("add_deployments"))
-setMethod("add_deployments", "ATO", function(x, value) {
-  x@deployments <- check_is_dataframe(value)
-  if (nrow(x@detections) > 0) {
-    x <- match_dets_deps(x)
-  }
+setMethod("add", c(x = "ATO", value = "ATO_dep"), function(x, value) {
+  x@dep <- value
   validObject(x)
+  if (nrow(x@det) > 0) {
+    x <- match_det_dep(x)
+  }
   return(x)
 })
 
-setGeneric("add_tags", function(x, value) standardGeneric("add_tags"))
-setMethod("add_tags", "ATO", function(x, value) {
-  x@tags <- check_is_dataframe(value)
-  if (nrow(x@detections) > 0) {
-    x <- match_dets_tags(x)
-  }
+setMethod("add", c(x = "ATO", value = "ATO_tag"), function(x, value) {
+  x@tag <- value
   validObject(x)
+  return(x)
+  if (nrow(x@det) > 0) {
+    x <- match_det_tag(x)
+  }
   return(x)
 })

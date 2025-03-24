@@ -1,6 +1,6 @@
 calc_det_interval <- function(object, silent = FALSE) {
-  by_receiver <- split(object@detections,
-                       object@detections$receiver)
+  by_receiver <- split(object@det,
+                       object@det$receiver)
   recipient1 <- lapply(by_receiver, function(receiver) {
     # cat(receiver$receiver_serial[1], "\n")
     by_tag <- split(receiver,
@@ -13,13 +13,13 @@ calc_det_interval <- function(object, silent = FALSE) {
                          tag$datetime_num[-1] - tag$datetime_num[-nrow(tag)])
       
       ping_rate <- NA
-      tag_link <- object@tags$transmitter == tag$transmitter[1]
-      dep_link <- object@deployments$transmitter == tag$transmitter[1]
+      tag_link <- object@tag$transmitter == tag$transmitter[1]
+      dep_link <- object@dep$transmitter == tag$transmitter[1]
       if (any(tag_link)) {
-        ping_rate <- object@tags$ping_rate[tag_link]
+        ping_rate <- object@tag$ping_rate[tag_link]
       }
       if (any(dep_link)) {
-        ping_rate <- object@deployments$transmitter_ping_rate[dep_link]
+        ping_rate <- object@dep$transmitter_ping_rate[dep_link]
       }
       if (!is.na(ping_rate)) {
         tag$ping_dev <- tag$time_diff %% ping_rate
@@ -35,7 +35,7 @@ calc_det_interval <- function(object, silent = FALSE) {
   })
   output <- data.table::rbindlist(recipient1)
   output <- as.data.frame(output)
-  class(output) <- class(object@detections)
-  object@detections <- output
+  class(output) <- class(object@det)
+  object@det <- output
   return(object)
 }

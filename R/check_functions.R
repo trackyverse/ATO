@@ -1,120 +1,66 @@
-check_detections <- function(object) {
-  if (is(object, "ATO")) {
-    object <- object@detections
-  }
+setGeneric("check", function(object) standardGeneric("check"))
+
+setMethod("check", "ATO_det", function(object) {
   # object class check
-  if (is(object, "data.table") | is(object, "tibble")) {
-    stop("ATO tables must be data.frames (not data.table or tibble)",
-         " to avoid compatibility issues.",
+  check_ato_table_type(object)
+  # column class check
+  check_ato_table_cols(object, .ATO_det)
+})
+
+setMethod("check", "ATO_dep", function(object) {
+  # object class check
+  check_ato_table_type(object)
+  # column names check
+  check_ato_table_cols(object, .ATO_dep)
+})
+
+setMethod("check", "ATO_tag", function(object) {
+  # object class check
+  check_ato_table_type(object)
+  # column class check
+  check_ato_table_cols(object, .ATO_tag)
+})
+
+
+check_ato_table_type <- function(object) {
+  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+  if (is(object, "data.table") & !ato_table_type == "data.table") {
+    stop("object is of type data.table but option ATO_table_type is set to ",
+         ato_table_type, ".",
+         "To change, run options(ATO_table_type = 'data.table').",
          call. = FALSE)
   }
-  # column names check
-  check <- colnames(.ATO_detections) %in% colnames(object)
+  if (is(object, "tibble") & !ato_table_type == "tibble") {
+    stop("object is of type tibble but option ATO_table_type is set to ",
+         ato_table_type, ".",
+         "To change, run options(ATO_table_type = 'tibble').",
+         call. = FALSE)
+  }
+}
+
+check_ato_table_cols <- function(object, ref) {
+  check <- colnames(ref) %in% colnames(object)
   if (any(!check)) {
-    stop("The detections are missing the following mandatory columns: ",
-         paste0(colnames(.ATO_detections)[!check], collapse = ", "),
+    stop("The ", class(object)[1], 
+         " is missing the following mandatory columns: ",
+         paste0(colnames(ref)[!check], collapse = ", "),
          call. = FALSE)
   }
   # column class check
   items <- ""
-  for (i in colnames(.ATO_detections)) {
+  for (i in colnames(ref)) {
     target_col <- match(i, colnames(object))
-    class_check <- class(.ATO_detections[, i]) %in% class(object[, target_col])
+    class_check <- class(ref[, i]) %in% class(object[, target_col])
     if (any(!class_check)) {
       items <- paste(items, "\n -", i, "is not",
-                     paste(class(.ATO_detections[, i])[!class_check],
+                     paste(class(ref[, i])[!class_check],
                            collapse = ", "),
                      collapse = "")
     }
   }
   if (items != "") {
-    stop("The following columns are not of the required class:",
+    stop("The following columns of the ", class(object)[1],
+         " are not of the required class:",
          items, call. = FALSE)
   }
-}
-
-check_deployments <- function(object) {
-  if (is(object, "ATO")) {
-    object <- object@deployments
-  } 
-  # object class check
-  if (is(object, "data.table") | is(object, "tibble")) {
-    stop("ATO tables must be data.frames (not data.table or tibble)",
-         " to avoid compatibility issues.",
-         call. = FALSE)
-  }
-  # column names check
-  check <- colnames(.ATO_deployments) %in% colnames(object)
-  if (any(!check)) {
-    stop("The deployments are missing the following mandatory columns: ",
-         paste0(colnames(.ATO_deployments)[!check], collapse = ", "),
-         call. = FALSE)
-  }
-  # column class check
-  items <- ""
-  for (i in colnames(.ATO_deployments)) {
-    target_col <- match(i, colnames(object))
-    class_check <- class(.ATO_deployments[, i]) %in% class(object[, target_col])
-    if (any(!class_check)) {
-      items <- paste(items, "\n -", i, "is not",
-                     paste(class(.ATO_deployments[, i])[!class_check],
-                           collapse = ", "),
-                     collapse = "")
-    }
-  }
-  if (items != "") {
-    stop("The following columns are not of the required class:",
-         items, call. = FALSE)
-  }
-}
-
-check_tags <- function(object) {
-  if (is(object, "ATO")) {
-    object <- object@tags
-  } 
-  # object class check
-  if (is(object, "data.table") | is(object, "tibble")) {
-    stop("ATO tables must be data.frames (not data.table or tibble)",
-         " to avoid compatibility issues.",
-         call. = FALSE)
-  }
-  # column names check
-  check <- colnames(.ATO_tags) %in% colnames(object)
-  if (any(!check)) {
-    stop("The tags are missing the following mandatory columns: ",
-         paste0(colnames(.ATO_tags)[!check], collapse = ", "),
-         call. = FALSE)
-  }
-  # column class check
-  items <- ""
-  for (i in colnames(.ATO_tags)) {
-    target_col <- match(i, colnames(object))
-    class_check <- class(.ATO_tags[, i]) %in% class(object[, target_col])
-    if (any(!class_check)) {
-      items <- paste(items, "\n -", i, "is not",
-                     paste(class(.ATO_tags[, i])[!class_check],
-                           collapse = ", "),
-                     collapse = "")
-    }
-  }
-  if (items != "") {
-    stop("The following columns are not of the required class:",
-         items, call. = FALSE)
-  }
-}
-
-check_is_dataframe <- function(object) {
-  if (is(object, "data.table")) {
-    warning("ATO tables must be data.frames for compatibility.",
-            " Downgrading data.table to data.frame.",
-            immediate. = TRUE, call. = FALSE)
-    object <- as.data.frame(object)
-  }
-  if (is(object, "tibble")) {
-    warning("ATO tables must be data.frames for compatibility.",
-            " Downgrading tibble to data.frame.",
-            immediate. = TRUE, call. = FALSE)
-    object <- as.data.frame(object)
-  }
-  return(object)
 }

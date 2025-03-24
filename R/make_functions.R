@@ -1,10 +1,11 @@
-make_detections <- function (datetime = as.POSIXct(NA_real_),
-                             frac_second = NA_real_,
-                             receiver_serial = NA_integer_,
-                             transmitter = NA_character_,
-                             sensor_value = NA_real_,
-                             tz,
-                             ...) {
+make_det <- function (datetime = as.POSIXct(NA_real_),
+                      frac_second = NA_real_,
+                      receiver_serial = NA_integer_,
+                      transmitter = NA_character_,
+                      sensor_value = NA_real_,
+                      tz,
+                      ...) {
+  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
   }
@@ -18,8 +19,15 @@ make_detections <- function (datetime = as.POSIXct(NA_real_),
                      transmitter = transmitter[1],
                      sensor_value = sensor_value[1],
                      ...)
-  check_detections(mock)
+  if (ato_table_type == "data.table") {
+    mock <- data.table::as.data.table(mock)
+  }
+  if (ato_table_type == "tibble") {
+    mock <- tibble::as_tibble(mock)
+  }
+  class(mock) <- c("ATO_det", class(mock))
   attributes(mock$datetime)$tzone <- tz
+  check(mock)
   # now the real thing, which should run smoothly.
   output <- data.frame(datetime = datetime,
                        frac_second = frac_second,
@@ -27,27 +35,35 @@ make_detections <- function (datetime = as.POSIXct(NA_real_),
                        transmitter = transmitter,
                        sensor_value = sensor_value,
                        ...)
-  check_detections(output)
+  if (ato_table_type == "data.table") {
+    output <- data.table::as.data.table(output)
+  }
+  if (ato_table_type == "tibble") {
+    output <- tibble::as_tibble(output)
+  }
+  class(output) <- c("ATO_det", class(output))
   attributes(output$datetime)$tzone <- tz
   return(output)
 }
 
-make_deployments <- function (receiver_model = NA_character_,
-                              receiver_serial = NA_integer_,
-                              receiver_codeset = NA_character_,
-                              deploy_location = NA_character_,
-                              deploy_datetime = as.POSIXct(NA_real_),
-                              deploy_lat = NA_real_,
-                              deploy_lon = NA_real_,
-                              recover_datetime = as.POSIXct(NA_real_),
-                              recover_lat = NA_real_,
-                              recover_lon = NA_real_,
-                              transmitter = NA_character_,
-                              transmitter_ping_rate = NA_real_,
-                              transmitter_model = NA_character_,
-                              transmitter_serial = NA_integer_,
-                              tz,
-                              ...) {
+make_dep <- function (receiver_model = NA_character_,
+                      receiver_serial = NA_integer_,
+                      receiver_codeset = NA_character_,
+                      deploy_location = NA_character_,
+                      deploy_datetime = as.POSIXct(NA_real_),
+                      deploy_lat = NA_real_,
+                      deploy_lon = NA_real_,
+                      deploy_z = NA_real_,
+                      recover_datetime = as.POSIXct(NA_real_),
+                      recover_lat = NA_real_,
+                      recover_lon = NA_real_,
+                      transmitter = NA_character_,
+                      transmitter_ping_rate = NA_real_,
+                      transmitter_model = NA_character_,
+                      transmitter_serial = NA_integer_,
+                      tz,
+                      ...) {
+  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
   }
@@ -58,6 +74,7 @@ make_deployments <- function (receiver_model = NA_character_,
                        deploy_datetime = deploy_datetime,
                        deploy_lat = deploy_lat,
                        deploy_lon = deploy_lon,
+                       deploy_z = deploy_z,
                        recover_datetime = recover_datetime,
                        recover_lat = recover_lat,
                        recover_lon = recover_lon,
@@ -66,35 +83,42 @@ make_deployments <- function (receiver_model = NA_character_,
                        transmitter_model = transmitter_model,
                        transmitter_serial = transmitter_serial,
                        ...)
-  check_deployments(output)
+  if (ato_table_type == "data.table") {
+    output <- data.table::as.data.table(output)
+  }
+  if (ato_table_type == "tibble") {
+    output <- tibble::as_tibble(output)
+  }
+  class(output) <- c("ATO_dep", class(output))
   attributes(output$deploy_datetime)$tzone <- tz
   attributes(output$recover_datetime)$tzone <- tz
-  class(output) <- c("data.frame", "ATO_deps")
+  check(output)
   return(output)
 }
 
-make_tags <- function(manufacturer = NA_character_,
-                      model = NA_character_,
-                      power_level = NA_real_,
-                      ping_rate = NA_real_,
-                      ping_variation = NA_real_,
-                      serial = NA_integer_,
-                      transmitter = NA_character_,
-                      activation_datetime = as.POSIXct(NA_real_),
-                      battery_life = NA_integer_,
-                      sensor_type = NA_character_,
-                      sensor_unit = NA_character_,
-                      animal = NA_character_,
-                      capture_location = NA_character_,
-                      capture_datetime = as.POSIXct(NA_real_),
-                      capture_lat = NA_real_,
-                      capture_lon = NA_real_,
-                      release_location = NA_character_,
-                      release_datetime = as.POSIXct(NA_real_),
-                      release_lat = NA_real_,
-                      release_lon = NA_real_,
-                      tz,
-                      ...) {
+make_tag <- function(manufacturer = NA_character_,
+                     model = NA_character_,
+                     power_level = NA_real_,
+                     ping_rate = NA_real_,
+                     ping_variation = NA_real_,
+                     serial = NA_integer_,
+                     transmitter = NA_character_,
+                     activation_datetime = as.POSIXct(NA_real_),
+                     battery_life = NA_integer_,
+                     sensor_type = NA_character_,
+                     sensor_unit = NA_character_,
+                     animal = NA_character_,
+                     capture_location = NA_character_,
+                     capture_datetime = as.POSIXct(NA_real_),
+                     capture_lat = NA_real_,
+                     capture_lon = NA_real_,
+                     release_location = NA_character_,
+                     release_datetime = as.POSIXct(NA_real_),
+                     release_lat = NA_real_,
+                     release_lon = NA_real_,
+                     tz,
+                     ...) {
+  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
   }
@@ -118,9 +142,15 @@ make_tags <- function(manufacturer = NA_character_,
                        release_datetime = release_datetime,
                        release_lat = release_lat,
                        release_lon = release_lon)
-  check_tags(output)
+  if (ato_table_type == "data.table") {
+    output <- data.table::as.data.table(output)
+  }
+  if (ato_table_type == "tibble") {
+    output <- tibble::as_tibble(output)
+  }
+  class(output) <- c("ATO_tag", class(output))
   attributes(output$capture_datetime)$tzone <- tz
   attributes(output$release_datetime)$tzone <- tz
-  class(output) <- c("data.frame", "ATO_tags")
+  # check(output)
   return(output)
 }
