@@ -33,3 +33,9 @@ setMethod("get_dep", "ATO", function(x) x@dep)
 
 setGeneric("get_tag", function(x) standardGeneric("get_tag"))
 setMethod("get_tag", "ATO", function(x) x@tag)
+
+setGeneric("get_ani", function(x) standardGeneric("get_ani"))
+setMethod("get_ani", "ATO", function(x) x@ani)
+
+setGeneric("get_obs", function(x) standardGeneric("get_obs"))
+setMethod("get_obs", "ATO", function(x) x@obs)

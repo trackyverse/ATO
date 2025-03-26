@@ -1,7 +1,4 @@
 setClass("ATO_det")
-setClass("ATO_dep")
-setClass("ATO_tag")
-
 .ATO_det <- data.frame(datetime = as.POSIXct(NA_real_),
                        frac_second = NA_real_,
                        receiver_serial = NA_integer_,
@@ -9,6 +6,7 @@ setClass("ATO_tag")
                        sensor_value = NA_real_)[-1, ]
 class(.ATO_det) <- c("ATO_det", "data.frame")
 
+setClass("ATO_dep")
 .ATO_dep <- data.frame(receiver_model = NA_character_,
                        receiver_serial = NA_integer_,
                        receiver_codeset = NA_character_,
@@ -27,6 +25,7 @@ class(.ATO_det) <- c("ATO_det", "data.frame")
                        transmitter_serial = NA_integer_)[-1,]
 class(.ATO_dep) <- c("ATO_dep", "data.frame")
 
+setClass("ATO_tag")
 .ATO_tag <- data.frame(manufacturer = NA_character_,
                        model = NA_character_,
                        power_level = NA_real_,
@@ -35,10 +34,14 @@ class(.ATO_dep) <- c("ATO_dep", "data.frame")
                        serial = NA_integer_,
                        transmitter = NA_character_,
                        activation_datetime = as.POSIXct(NA_real_),
-                       battery_life = NA_integer_, # days
+                       battery_life = NA_real_, # days
                        sensor_type = NA_character_,
                        sensor_unit = NA_character_, # thoughts on sensor info needs?
-                       animal = NA_character_, # let scientists nickname their animals :)
+                       animal = NA_character_)[-1,]
+class(.ATO_tag) <- c("ATO_tag", "data.frame")
+
+setClass("ATO_ani")
+.ATO_ani <- data.frame(animal = NA_character_, # let scientists nickname their animals :)
                        capture_location = NA_character_,
                        capture_datetime = as.POSIXct(NA_real_),
                        capture_lat = NA_real_,
@@ -47,25 +50,54 @@ class(.ATO_dep) <- c("ATO_dep", "data.frame")
                        release_datetime = as.POSIXct(NA_real_),
                        release_lat = NA_real_,
                        release_lon = NA_real_)[-1,]
-class(.ATO_tag) <- c("ATO_tag", "data.frame")
+class(.ATO_ani) <- c("ATO_ani", "data.frame")
+
+setClass("ATO_obs")
+.ATO_obs <- data.frame(animal = NA_character_,
+                       transmitter = NA_character_,
+                       type = NA_character_,
+                       terminal = NA, # logical
+                       location = NA_character_,
+                       datetime = as.POSIXct(NA_real_),
+                       lat = NA_real_,
+                       lon = NA_real_)[-1,]
+class(.ATO_obs) <- c("ATO_obs", "data.frame")
+
+setClass("ATO_log")
+.ATO_log <- data.frame(datetime = as.POSIXct(NA_real_),
+                       package = NA_character_,
+                       call = NA_character_,
+                       log = NA_character_)[-1,]
+class(.ATO_log) <- c("ATO_log", "data.frame")
+
+setClass("ATO_tbl")
+.ATO_tbl <- "data.frame"
+class(.ATO_tbl) <- c("ATO_tbl", "character")
 
 setClass("ATO",
          slots = c(det = "ATO_det",
                    dep = "ATO_dep",
-                   tag = "ATO_tag"),
+                   tag = "ATO_tag",
+                   ani = "ATO_ani",
+                   obs = "ATO_obs",
+                   log = "ATO_log",
+                   tbl = "ATO_tbl"),
          prototype = list(det = .ATO_det,
                           dep = .ATO_dep,
-                          tag = .ATO_tag)
+                          tag = .ATO_tag,
+                          ani = .ATO_ani,
+                          obs = .ATO_obs,
+                          log = .ATO_log,
+                          tbl = .ATO_tbl)
          )
 
 setValidity("ATO", function (object) {
   check(object@det)
   check(object@dep)
   check(object@tag)
+  check(object@ani)
+  check(object@obs)
+  check(object@tbl)
 
-  # if (nrow(object@detections) > 0 & nrow(object@deployments) > 0) {
-  #   check_dets_deps(object)
-  # }
-  
   return(TRUE)
 })

@@ -1,7 +1,7 @@
 setMethod("summary", "ATO_det", function(object) {
   tag_check <- any(colnames(object) %in% "tag_match")
-  dep_check <- any(colnames(object) %in% "deploy_match")
-  cat("ATO Detection info:\n")
+  dep_check <- any(colnames(object) %in% "dep_match")
+  cat("@det:\n")
   cat(" -", nrow(object), "detections")
   if (tag_check | dep_check) {
     cat(" (")
@@ -9,12 +9,12 @@ setMethod("summary", "ATO_det", function(object) {
       stray_link <- !object$tag_match
       cat(round(sum(stray_link)/nrow(object) * 100, 2))
       cat("% off-target")
-      if (!is.null(object$deploy_match)) {
+      if (!is.null(object$dep_match)) {
         cat(", ")
       }
     }
     if (dep_check) {
-      orphan_link <- is.na(object$deploy_match)
+      orphan_link <- is.na(object$dep_match)
       cat(round(sum(orphan_link)/nrow(object) * 100, 2))
       cat("% orphan")
     }
@@ -51,7 +51,7 @@ setMethod("summary", "ATO_det", function(object) {
 
 setMethod("summary", "ATO_dep", function(object) {
   det_check <- any(colnames(object) %in% "n_detections")
-  cat("ATO Deployment info:\n")
+  cat("@dep:\n")
   cat(" -",
       nrow(object),
       "deployments")
@@ -87,7 +87,7 @@ setMethod("summary", "ATO_dep", function(object) {
 
 setMethod("summary", "ATO_tag", function(object) {
   det_check <- any(colnames(object) %in% "det_match")
-  cat("ATO tag info:\n")
+  cat("@tag:\n")
   cat(" -", 
       nrow(object),
       ifelse(nrow(object) > 1,
@@ -95,7 +95,6 @@ setMethod("summary", "ATO_tag", function(object) {
               "transmitter code"))
   if (det_check) {
     det_link <- !object$det_match
-
     if (any(det_link)) {
       aux <- sum(det_link)
       cat(" (of which",
@@ -127,15 +126,21 @@ setMethod("summary", "ATO_tag", function(object) {
     }
   }
   cat("\n")
-  aux <- length(unique(object$animal))
+})
+
+setMethod("summary", "ATO_ani", function(object) {
+  det_check <- any(colnames(object) %in% "det_match")
+  cat("@ani:\n")
+  aux <- nrow(object)
   cat(" -",
-      aux,
+     aux,
       ifelse(aux > 1,
              "animals",
              "animal"))
   if (det_check) {
+    det_link <- !object$det_match
     if (any(det_link)) {
-      aux <- length(unique(object$animal[det_link]))
+      aux <- sum(det_link)
       cat(" (of which",
           aux,
           ifelse(aux > 1,
@@ -154,3 +159,40 @@ setMethod("summary", "ATO_tag", function(object) {
              "release location"))
   cat("\n")
 })
+
+setMethod("summary", "ATO_obs", function(object) {
+  tag_check <- any(colnames(object) %in% "tag_match")
+  ani_check <- any(colnames(object) %in% "ani_match")
+  cat("@obs:\n")
+  cat(" -", nrow(object), "observations")
+  if (tag_check | ani_check) {
+    if (tag_check & !ani_check) {
+      stray_link <- !object$tag_match
+    }
+    if (!tag_check & ani_check) {
+      stray_link <- !object$ani_match
+    }
+    if (tag_check & ani_check) {
+      stray_link <- !object$ani_match & !object$tag_match
+    }
+    cat(" (")
+    cat(round(sum(stray_link)/nrow(object) * 100, 2))
+    cat("% off-target")
+    cat(")")
+  }
+  cat("\n")
+  cat(" -", sum(object$terminal), " are terminal")
+  cat("\n")
+})
+
+setMethod("summary", "ATO_log", function(object) {
+  cat("@log:\n")
+  aux <- length(unique(object@package))
+  cat(" -", nrow(object), "log entries from ",
+      aux,
+      ifelse(aux > 1,
+             " packages",
+             " package"))
+  cat("\n")
+})
+

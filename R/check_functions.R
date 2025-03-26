@@ -1,27 +1,3 @@
-setGeneric("check", function(object) standardGeneric("check"))
-
-setMethod("check", "ATO_det", function(object) {
-  # object class check
-  check_ato_table_type(object)
-  # column class check
-  check_ato_table_cols(object, .ATO_det)
-})
-
-setMethod("check", "ATO_dep", function(object) {
-  # object class check
-  check_ato_table_type(object)
-  # column names check
-  check_ato_table_cols(object, .ATO_dep)
-})
-
-setMethod("check", "ATO_tag", function(object) {
-  # object class check
-  check_ato_table_type(object)
-  # column class check
-  check_ato_table_cols(object, .ATO_tag)
-})
-
-
 check_ato_table_type <- function(object) {
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (is(object, "data.table") & !ato_table_type == "data.table") {
@@ -42,7 +18,7 @@ check_ato_table_cols <- function(object, ref) {
   check <- colnames(ref) %in% colnames(object)
   if (any(!check)) {
     stop("The ", class(object)[1], 
-         " is missing the following mandatory columns: ",
+         " is missing the following standard columns: ",
          paste0(colnames(ref)[!check], collapse = ", "),
          call. = FALSE)
   }

@@ -58,6 +58,7 @@ make_dep <- function(receiver_model = NA_character_,
                      recover_lat = NA_real_,
                      recover_lon = NA_real_,
                      transmitter = NA_character_,
+                     transmitter_manufacturer = NA_character_,
                      transmitter_ping_rate = NA_real_,
                      transmitter_model = NA_character_,
                      transmitter_serial = NA_integer_,
@@ -79,6 +80,7 @@ make_dep <- function(receiver_model = NA_character_,
                        recover_lat = recover_lat,
                        recover_lon = recover_lon,
                        transmitter = transmitter,
+                       transmitter_manufacturer = transmitter_manufacturer,
                        transmitter_ping_rate = transmitter_ping_rate,
                        transmitter_model = transmitter_model,
                        transmitter_serial = transmitter_serial,
@@ -104,18 +106,10 @@ make_tag <- function(manufacturer = NA_character_,
                      serial = NA_integer_,
                      transmitter = NA_character_,
                      activation_datetime = as.POSIXct(NA_real_),
-                     battery_life = NA_integer_,
+                     battery_life = NA_real_,
                      sensor_type = NA_character_,
                      sensor_unit = NA_character_,
                      animal = NA_character_,
-                     capture_location = NA_character_,
-                     capture_datetime = as.POSIXct(NA_real_),
-                     capture_lat = NA_real_,
-                     capture_lon = NA_real_,
-                     release_location = NA_character_,
-                     release_datetime = as.POSIXct(NA_real_),
-                     release_lat = NA_real_,
-                     release_lon = NA_real_,
                      tz,
                      ...) {
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
@@ -134,14 +128,7 @@ make_tag <- function(manufacturer = NA_character_,
                        sensor_type = sensor_type,
                        sensor_unit = sensor_unit,
                        animal = animal,
-                       capture_location = capture_location,
-                       capture_datetime = capture_datetime,
-                       capture_lat = capture_lat,
-                       capture_lon = capture_lon,
-                       release_location = release_location,
-                       release_datetime = release_datetime,
-                       release_lat = release_lat,
-                       release_lon = release_lon)
+                       ...)
   if (ato_table_type == "data.table") {
     output <- data.table::as.data.table(output)
   }
@@ -149,8 +136,79 @@ make_tag <- function(manufacturer = NA_character_,
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_tag", class(output))
+  check(output)
+  return(output)
+}
+
+make_ani <- function(animal = NA_character_,
+                     capture_location = NA_character_,
+                     capture_datetime = as.POSIXct(NA_real_),
+                     capture_lat = NA_real_,
+                     capture_lon = NA_real_,
+                     release_location = NA_character_,
+                     release_datetime = as.POSIXct(NA_real_),
+                     release_lat = NA_real_,
+                     release_lon = NA_real_,
+                     tz,
+                     ...) {
+  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+  if (missing(tz)) {
+    stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
+  }
+  output <- data.frame(animal = animal,
+                       capture_location = capture_location,
+                       capture_datetime = capture_datetime,
+                       capture_lat = capture_lat,
+                       capture_lon = capture_lon,
+                       release_location = release_location,
+                       release_datetime = release_datetime,
+                       release_lat = release_lat,
+                       release_lon = release_lon,
+                       ...)
+  if (ato_table_type == "data.table") {
+    output <- data.table::as.data.table(output)
+  }
+  if (ato_table_type == "tibble") {
+    output <- tibble::as_tibble(output)
+  }
+  class(output) <- c("ATO_ani", class(output))
   attributes(output$capture_datetime)$tzone <- tz
   attributes(output$release_datetime)$tzone <- tz
-  # check(output)
+  check(output)
+  return(output)
+}
+
+make_obs <- function(animal = NA_character_,
+                     transmitter = NA_character_,
+                     type = NA_character_,
+                     terminal = NA, # logical
+                     location = NA_character_,
+                     datetime = as.POSIXct(NA_real_),
+                     lat = NA_real_,
+                     lon = NA_real_,
+                     tz,
+                     ...) {
+  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+  if (missing(tz)) {
+    stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
+  }
+  output <- data.frame(animal = animal,
+                       transmitter = transmitter,
+                       type = type,
+                       terminal = terminal,
+                       location = location,
+                       datetime = datetime,
+                       lat = lat,
+                       lon = lon,
+                       ...)
+  if (ato_table_type == "data.table") {
+    output <- data.table::as.data.table(output)
+  }
+  if (ato_table_type == "tibble") {
+    output <- tibble::as_tibble(output)
+  }
+  class(output) <- c("ATO_obs", class(output))
+  attributes(output$datetime)$tzone <- tz
+  check(output)
   return(output)
 }
