@@ -1,3 +1,11 @@
+#' Method to show an \code{\link{ATO}}
+#' 
+#' @param object an ATO
+#' 
+#' @return Nothing. Called for side-effects
+#' 
+#' @export
+#' 
 setMethod("show", "ATO", function(object) {
   cat(object@tbl)
   cat(" ATO object:\n")

@@ -1,3 +1,11 @@
+#' Summary method for an ATO_det object
+#' 
+#' @param object an ATO_det object
+#' 
+#' @return Nothing. Prints a summary.
+#' 
+#' @export
+#' 
 setMethod("summary", "ATO_det", function(object) {
   tag_check <- any(colnames(object) %in% "tag_match")
   dep_check <- any(colnames(object) %in% "dep_match")
@@ -35,9 +43,12 @@ setMethod("summary", "ATO_det", function(object) {
   cat(" -", length(unique(object$receiver_serial)), "receivers")
   if (dep_check) {
     if (any(orphan_link)) {
-      cat("(of which",
-          length(unique(object$receiver_serial[orphan_link])),
-          "have deployments mismatches)")
+      aux <- length(unique(object$receiver_serial[orphan_link]))
+      cat(" (of which",
+          aux,
+          ifelse(aux > 1,
+                 "have deployments mismatches)",
+                 "has deployments mismatches)"))
     } else {
       cat(" (all deployed)")
     }
@@ -49,16 +60,24 @@ setMethod("summary", "ATO_det", function(object) {
       as.character(max(object$datetime)), "\n")
 })
 
+#' Summary method for an ATO_dep object
+#' 
+#' @param object an ATO_dep object
+#' 
+#' @return Nothing. Prints a summary.
+#' 
+#' @export
+#' 
 setMethod("summary", "ATO_dep", function(object) {
   det_check <- any(colnames(object) %in% "n_detections")
   cat("@dep:\n")
   cat(" -",
       nrow(object),
       "deployments")
-  aux <- object$n_detections == 0
+  aux <- sum(object$n_detections == 0)
   if (any(aux)) {
     cat(" (of which", aux,
-        " had no detections)")
+        "had no detections)")
   } else {
     cat(" (all with detections)")
   }
@@ -72,7 +91,7 @@ setMethod("summary", "ATO_dep", function(object) {
                      max)
     if (any(aux$x == 0)) {
       cat(" (of which", sum(aux$x == 0),
-          " had no detections)")
+          "had no detections)")
     } else {
       cat(" (all with detections)")
     }
@@ -85,6 +104,14 @@ setMethod("summary", "ATO_dep", function(object) {
   cat(" -", length(unique(object$deploy_location)), "locations\n")
 })
 
+#' Summary method for an ATO_tag object
+#' 
+#' @param object an ATO_tag object
+#' 
+#' @return Nothing. Prints a summary.
+#' 
+#' @export
+#' 
 setMethod("summary", "ATO_tag", function(object) {
   det_check <- any(colnames(object) %in% "det_match")
   cat("@tag:\n")
@@ -128,6 +155,14 @@ setMethod("summary", "ATO_tag", function(object) {
   cat("\n")
 })
 
+#' Summary method for an ATO_ani object
+#' 
+#' @param object an ATO_ani object
+#' 
+#' @return Nothing. Prints a summary.
+#' 
+#' @export
+#' 
 setMethod("summary", "ATO_ani", function(object) {
   det_check <- any(colnames(object) %in% "det_match")
   cat("@ani:\n")
@@ -160,6 +195,14 @@ setMethod("summary", "ATO_ani", function(object) {
   cat("\n")
 })
 
+#' Summary method for an ATO_obs object
+#' 
+#' @param object an ATO_obs object
+#' 
+#' @return Nothing. Prints a summary.
+#' 
+#' @export
+#' 
 setMethod("summary", "ATO_obs", function(object) {
   tag_check <- any(colnames(object) %in% "tag_match")
   ani_check <- any(colnames(object) %in% "ani_match")
@@ -185,6 +228,14 @@ setMethod("summary", "ATO_obs", function(object) {
   cat("\n")
 })
 
+#' Summary method for an ATO_log object
+#' 
+#' @param object an ATO_log object
+#' 
+#' @return Nothing. Prints a summary.
+#' 
+#' @export
+#' 
 setMethod("summary", "ATO_log", function(object) {
   cat("@log:\n")
   aux <- length(unique(object@package))
@@ -195,4 +246,3 @@ setMethod("summary", "ATO_log", function(object) {
              " package"))
   cat("\n")
 })
-

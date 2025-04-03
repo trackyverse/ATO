@@ -1,19 +1,36 @@
+#' Check that the table type matches the current global option
+#' 
+#' @param object A prospective ATO slot object.
+#' 
+#' @keywords internal
+#' 
+#' @return Nothing. Called to stop() if needed.
+#' 
 check_ato_table_type <- function(object) {
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (is(object, "data.table") & !ato_table_type == "data.table") {
     stop("object is of type data.table but option ATO_table_type is set to ",
          ato_table_type, ".",
-         "To change, run options(ATO_table_type = 'data.table').",
+         " To change, run options(ATO_table_type = 'data.table').",
          call. = FALSE)
   }
   if (is(object, "tibble") & !ato_table_type == "tibble") {
     stop("object is of type tibble but option ATO_table_type is set to ",
          ato_table_type, ".",
-         "To change, run options(ATO_table_type = 'tibble').",
+         " To change, run options(ATO_table_type = 'tibble').",
          call. = FALSE)
   }
 }
 
+#' Check that the table columns match the prototype
+#' 
+#' @param object A prospective ATO slot object
+#' @param ref The prototype for the respective slot
+#' 
+#' @keywords internal
+#' 
+#' @return Nothing. Called to stop() if needed.
+#' 
 check_ato_table_cols <- function(object, ref) {
   check <- colnames(ref) %in% colnames(object)
   if (any(!check)) {

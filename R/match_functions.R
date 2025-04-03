@@ -1,4 +1,18 @@
+#' Match transmitters in the detections to the target tags
+#' 
+#' Automatically called by the \code{\link{add}} functions.
+#' 
+#' @param x an \code{\link{ATO}}
+#' @param silent Supresses summary messages
+#' 
+#' @return the updated ATO
+#' 
+#' @export
+#' 
 match_det_tag <- function(x, silent = FALSE) {
+  is_ato(x)
+  has(x, c("det", "tag"), error = TRUE)
+
   # column might already exist through deployment match
   if (is.null(x@det$tag_match)) {
     x@det$tag_match <- FALSE
@@ -16,7 +30,7 @@ match_det_tag <- function(x, silent = FALSE) {
     } else {
       message("M: Number of off-target detections updated to ",
               sum(!x@det$tag_match),
-              " ( ",
+              " (",
               length(unique(x@det$transmitter[!x@det$tag_match])),
               " stray transmitters).")
     }
@@ -29,8 +43,27 @@ match_det_tag <- function(x, silent = FALSE) {
   return(x)
 }
 
+#' Match transmitters in the detections to
+#' beacon/reference transmitters in the deployments
+#' 
+#' Automatically called by the \code{\link{add}} functions.
+#' 
+#' @param x an \code{\link{ATO}}
+#' @param silent Supresses summary messages
+#' 
+#' @return the updated ATO
+#' 
+#' @export
+#' 
 match_det_dep <- function(x, silent = FALSE) {
-  aux <- as.data.table(x@det)
+  is_ato(x)
+  has(x, c("det", "dep"), error = TRUE)
+  
+  if (.data.table_exists(error = FALSE)) {
+    aux <- data.table::as.data.table(x@det)
+  } else {
+    aux <- x@det
+  }
   # assign deployments to detections
   x@det$dep_match <- NA
   for (i in 1:nrow(x@dep)) {
@@ -76,10 +109,24 @@ match_det_dep <- function(x, silent = FALSE) {
   return(x)
 }
 
+#' Match transmitters in the detections to the respective animals
+#' 
+#' Automatically called by the \code{\link{add}} functions.
+#' 
+#' @param x an \code{\link{ATO}}
+#' @param silent Supresses summary messages
+#' 
+#' @return the updated ATO
+#' 
+#' @export
+#' 
 match_det_ani <- function(x, silent = FALSE) {
+  is_ato(x)
+  has(x, c("det", "tag", "ani"), error = TRUE)
+  
   animal_link <- match(x@det$transmitter, x@tag$transmitter)
   x@det$animal <- x@tag$animal[animal_link]
-  x@ani$det_match <- x@ani@animal %in% x@det$animal
+  x@ani$det_match <- x@ani$animal %in% x@det$animal
   if (!silent & any(!x@ani$det_match)) {
     message("M: ", sum(!x@ani$det_match),
             " animals were never detected.")
@@ -87,7 +134,21 @@ match_det_ani <- function(x, silent = FALSE) {
   return(x)
 }
 
+#' Match transmitters in the observations to the target tags
+#' 
+#' Automatically called by the \code{\link{add}} functions.
+#' 
+#' @param x an \code{\link{ATO}}
+#' @param silent Supresses summary messages
+#' 
+#' @return the updated ATO
+#' 
+#' @export
+#' 
 match_obs_tag <- function(x, silent = FALSE) {
+  is_ato(x)
+  has(x, c("obs", "tag"), error = TRUE)
+  
   x@obs$tag_match <- x@obs$transmitter %in% x@tag$transmitter
   strays <- !is.na(x@obs$transmitter) & !x@obs$tag_match
   if (!silent & any(strays)) {
@@ -104,7 +165,21 @@ match_obs_tag <- function(x, silent = FALSE) {
   return(x)
 }
 
+#' Match animals in the observations to the target animals
+#' 
+#' Automatically called by the \code{\link{add}} functions.
+#' 
+#' @param x an \code{\link{ATO}}
+#' @param silent Supresses summary messages
+#' 
+#' @return the updated ATO
+#' 
+#' @export
+#' 
 match_obs_ani <- function(x, silent = FALSE) {
+  is_ato(x)
+  has(x, c("obs", "ani"), error = TRUE)
+
   x@obs$ani_match <- x@obs$animal %in% x@ani$animal
   strays <- !is.na(x@obs$animal) & !x@obs$ani_match
   if (!silent & any(strays)) {
@@ -121,7 +196,21 @@ match_obs_ani <- function(x, silent = FALSE) {
   return(x)
 }
 
+#' Match animals listed in the target tags to the target animals
+#' 
+#' Automatically called by the \code{\link{add}} functions.
+#' 
+#' @param x an \code{\link{ATO}}
+#' @param silent Supresses summary messages
+#' 
+#' @return the updated ATO
+#' 
+#' @export
+#' 
 match_tag_ani <- function(x, silent = FALSE) {
+  is_ato(x)
+  has(x, c("tag", "ani"), error = TRUE)
+
   x@tag$ani_match <- x@tag$animal %in% x@ani$animal
   if (!silent & any(!x@tag$ani_match)) {
     message("M: ", sum(!x@tag$ani_match),
