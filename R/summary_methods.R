@@ -25,6 +25,13 @@ setMethod("summary", "ATO_det", function(object) {
       orphan_link <- is.na(object$dep_match)
       cat(round(sum(orphan_link)/nrow(object) * 100, 2))
       cat("% orphan")
+      if (any(!object$valid)) {
+        cat(", ")
+      }
+   }
+    if (any(!object$valid)) {
+      cat(round(sum(!object$valid)/nrow(object) * 100, 2))
+      cat("% marked as invalid")
     }
     cat(")")
   }
