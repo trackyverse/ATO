@@ -6,15 +6,20 @@
 \title{A wrapper of \code{\link{get_det}} to extract detections for transmitters listed
 in the dep slot}
 \usage{
-get_det_dep(x, receivers)
+get_det_dep(x, receivers, type = c("all", "valid", "invalid"))
 
-\S4method{get_det_dep}{ATO}(x, receivers)
+\S4method{get_det_dep}{ATO}(x, receivers, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}
 
 \item{receivers}{An optional vector of receiver serial numbers from which
 to extract detections.}
+
+\item{type}{the type of detections to return. One of:
+'all' - returns both valid and invalid detections (default);
+'valid' - returns only valid detections;
+'invalid' - returns only invalid detections}
 }
 \value{
 a table of detections

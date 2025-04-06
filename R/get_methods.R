@@ -5,15 +5,24 @@
 #'   to extract detections.
 #' @param transmitters An optional vector of transmitters for which to extract
 #'   detections.
+#' @param type the type of detections to return. One of: 
+#'   'all' - returns both valid and invalid detections (default);
+#'   'valid' - returns only valid detections;
+#'   'invalid' - returns only invalid detections
 #' 
 #' @return a table of detections
 #' 
 #' @export
 #' 
-setGeneric("get_det", function(x, receivers, transmitters) standardGeneric("get_det"))
+setGeneric("get_det", function(x, receivers, transmitters,
+                               type = c("all", "valid", "invalid"))
+                      standardGeneric("get_det"))
 
 #' @rdname get_det
-setMethod("get_det", "ATO", function(x, receivers, transmitters) {
+setMethod("get_det", "ATO", function(x, receivers, transmitters,
+                                     type = c("all", "valid", "invalid")) {
+  type <- match.arg(type)
+
   if (missing("receivers")) {
     receiver_link <- rep(TRUE, nrow(x@det))
   } else {
@@ -24,7 +33,16 @@ setMethod("get_det", "ATO", function(x, receivers, transmitters) {
   } else {
     transmitter_link <- x@det$transmitter %in% transmitters
   }
-  output <- x@det[receiver_link & transmitter_link, ]
+  if (type == "all") {
+    combined_link <- receiver_link & transmitter_link
+  }
+  if (type == "valid") {
+    combined_link <- receiver_link & transmitter_link & x@det$valid
+  }
+  if (type == "invalid") {
+    combined_link <- receiver_link & transmitter_link & !x@det$valid
+  }
+  output <- x@det[combined_link, ]
   return(output)
 })
 
@@ -37,12 +55,16 @@ setMethod("get_det", "ATO", function(x, receivers, transmitters) {
 #' 
 #' @export
 #' 
-setGeneric("get_det_tag", function(x, receivers) standardGeneric("get_det_tag"))
+setGeneric("get_det_tag", function(x, receivers,
+                               type = c("all", "valid", "invalid"))
+                          standardGeneric("get_det_tag"))
 
 #' @rdname get_det_tag
-setMethod("get_det_tag", "ATO", function(x, receivers) {
+setMethod("get_det_tag", "ATO",
+          function(x, receivers, type = c("all", "valid", "invalid")) {
   output <- get_det(x, receivers = receivers,
-                    transmitters = x@tag$transmitter)
+                    transmitters = x@tag$transmitter,
+                    type = type)
   return(output)
 })
 
@@ -55,12 +77,16 @@ setMethod("get_det_tag", "ATO", function(x, receivers) {
 #' 
 #' @export
 #' 
-setGeneric("get_det_dep", function(x, receivers) standardGeneric("get_det_dep"))
+setGeneric("get_det_dep", function(x, receivers,
+                                   type = c("all", "valid", "invalid"))
+                          standardGeneric("get_det_dep"))
 
 #' @rdname get_det_dep
-setMethod("get_det_dep", "ATO", function(x, receivers) {
+setMethod("get_det_dep", "ATO",
+          function(x, receivers, type = c("all", "valid", "invalid")) {
   output <- get_det(x, receivers = receivers,
-                    transmitters = x@dep$transmitter)
+                    transmitters = x@dep$transmitter,
+                    type = type)
   return(output)
 })
 
@@ -106,12 +132,28 @@ setMethod("get_ani", "ATO", function(x) x@ani)
 #' Generic to extract the obs slot as a table
 #' 
 #' @param x an \code{\link{ATO}} object
+#' @param type the type of observations to return. One of: 
+#'   'all' - returns both valid and invalid observations (default);
+#'   'valid' - returns only valid observations;
+#'   'invalid' - returns only invalid observations
 #' 
 #' @return The obs slot as a table
 #' 
 #' @export
 #' 
-setGeneric("get_obs", function(x) standardGeneric("get_obs"))
+setGeneric("get_obs", function(x, type = c("all", "valid", "invalid"))
+                      standardGeneric("get_obs"))
 
 #' @rdname get_obs
-setMethod("get_obs", "ATO", function(x) x@obs)
+setMethod("get_obs", "ATO", function(x, type = c("all", "valid", "invalid")) {
+  type <- match.arg(type)
+  if (type == "all") {
+    return(x@obs)
+  }
+  if (type == "valid") {
+    return(x@obs[x@obs$valid, ])
+  }
+  if (type == "invalid") {
+    return(x@obs[!x@obs$valid, ])
+  }
+})

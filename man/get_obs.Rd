@@ -5,12 +5,17 @@
 \alias{get_obs,ATO-method}
 \title{Generic to extract the obs slot as a table}
 \usage{
-get_obs(x)
+get_obs(x, type = c("all", "valid", "invalid"))
 
-\S4method{get_obs}{ATO}(x)
+\S4method{get_obs}{ATO}(x, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}
+
+\item{type}{the type of observations to return. One of:
+'all' - returns both valid and invalid observations (default);
+'valid' - returns only valid observations;
+'invalid' - returns only invalid observations}
 }
 \value{
 The obs slot as a table

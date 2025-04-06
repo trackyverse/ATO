@@ -5,9 +5,9 @@
 \alias{get_det,ATO-method}
 \title{Generic to extract detections as a table}
 \usage{
-get_det(x, receivers, transmitters)
+get_det(x, receivers, transmitters, type = c("all", "valid", "invalid"))
 
-\S4method{get_det}{ATO}(x, receivers, transmitters)
+\S4method{get_det}{ATO}(x, receivers, transmitters, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}
@@ -17,6 +17,11 @@ to extract detections.}
 
 \item{transmitters}{An optional vector of transmitters for which to extract
 detections.}
+
+\item{type}{the type of detections to return. One of:
+'all' - returns both valid and invalid detections (default);
+'valid' - returns only valid detections;
+'invalid' - returns only invalid detections}
 }
 \value{
 a table of detections
