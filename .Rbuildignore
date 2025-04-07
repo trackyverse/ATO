@@ -1,2 +1,3 @@
 working_script.R
-ATO_logo*
+^ATO_logo.*\.(png|svg)$
+^\.github$
