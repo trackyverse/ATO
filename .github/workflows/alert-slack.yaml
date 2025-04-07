@@ -14,4 +14,4 @@ jobs:
       - name: Notify Slack
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data "{'text':'Changes pushed to ATO. See them here: $GITHUB_REF'}" $SLACK_BOT_TOKEN
+          --data "{'text':'Changes pushed to ATO. See them here: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}'}" $SLACK_BOT_TOKEN
