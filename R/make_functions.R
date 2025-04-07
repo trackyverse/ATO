@@ -71,6 +71,7 @@ make_det <- function(datetime = as.POSIXct(NA_real_),
                          receiver_serial = receiver_serial,
                          transmitter = transmitter,
                          sensor_value = sensor_value,
+                         valid = TRUE,
                          ...)
   }
   if (ato_table_type == "data.table") {
@@ -80,6 +81,7 @@ make_det <- function(datetime = as.POSIXct(NA_real_),
                                     receiver_serial = receiver_serial,
                                     transmitter = transmitter,
                                     sensor_value = sensor_value,
+                                    valid = TRUE,
                                     ...)
   }
   if (ato_table_type == "tibble") {
@@ -89,6 +91,7 @@ make_det <- function(datetime = as.POSIXct(NA_real_),
                              receiver_serial = receiver_serial,
                              transmitter = transmitter,
                              sensor_value = sensor_value,
+                             valid = TRUE,
                              ...)
   }
   class(output) <- c("ATO_det", class(output))
