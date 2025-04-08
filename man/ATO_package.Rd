@@ -21,5 +21,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Hugo Flávio \email{hflavio@dal.ca}
 
+Other contributors:
+\itemize{
+  \item Michael O'Brien \email{obrien@umces.edu} (\href{https://orcid.org/0000-0003-1420-6395}{ORCID}) [contributor]
+}
+
 }
 \keyword{internal}

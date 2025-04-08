@@ -1,3 +1,4 @@
-working_script.R
+^working_script\.R$
 ^ATO_logo.*\.(png|svg)$
 ^\.github$
+^LICENSE\.md$

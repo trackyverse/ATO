@@ -1,9 +1,12 @@
 Package: ATO
 Title: Acoustic Telemetry Object Class
 Version: 0.0.0.9001
-Authors@R: c(person("Hugo", "Flavio", role = c("aut", "cre"), email = "hflavio@dal.ca"))
+Authors@R: c(
+  person("Hugo", "Flávio", role = c("aut", "cre"), email = "hflavio@dal.ca"),
+  person("Michael", "O'Brien", , "obrien@umces.edu", role = "ctb",
+           comment = c(ORCID = "0000-0003-1420-6395")))
 Description: Class and methods to create, edit, and expand an ATO.
-License: GPL-3
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
