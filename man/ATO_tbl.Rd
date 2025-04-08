@@ -19,5 +19,5 @@ One of: "data.frame", "data.table", or "tibble"
 \details{
 The prototype @tbl slot contains the default value for the @log slot.
 }
+\keyword{classes}
 \keyword{datasets}
-\keyword{internal}

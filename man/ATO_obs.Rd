@@ -46,5 +46,5 @@ See \code{\link{table_type}} for more details on
 \seealso{
 make_obs
 }
+\keyword{classes}
 \keyword{datasets}
-\keyword{internal}
