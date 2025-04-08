@@ -1,7 +1,7 @@
 Package: ATO
 Title: Acoustic Telemetry Object Class
 Version: 0.0.0.9001
-Authors@R: c(person("Hugo", "Flávio", role = c("aut", "cre"), email = "hflavio@dal.ca"))
+Authors@R: c(person("Hugo", "Flavio", role = c("aut", "cre"), email = "hflavio@dal.ca"))
 Description: Class and methods to create, edit, and expand an ATO.
 License: GPL-3
 Encoding: UTF-8
@@ -17,7 +17,7 @@ Imports:
 Suggests:
     data.table,
     tibble,
-    testthat
+    testthat (>= 3.0.0)
 URL: https://github.com/trackyverse/ATO,
      http://www.trackyverse.com/ATO
 BugReports: https://github.com/trackyverse/ATO/issues
