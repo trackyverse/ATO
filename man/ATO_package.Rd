@@ -18,8 +18,4 @@ Useful links:
 }
 
 }
-\author{
-\strong{Maintainer}: Hugo Flávio \email{hflavio@dal.ca}
-
-}
 \keyword{internal}
