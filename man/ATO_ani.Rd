@@ -45,5 +45,5 @@ See \code{\link{table_type}} for more details on
 \seealso{
 make_ani
 }
+\keyword{classes}
 \keyword{datasets}
-\keyword{internal}

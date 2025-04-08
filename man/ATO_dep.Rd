@@ -56,5 +56,5 @@ See \code{\link{table_type}} for more details on
 \seealso{
 make_dep
 }
+\keyword{classes}
 \keyword{datasets}
-\keyword{internal}

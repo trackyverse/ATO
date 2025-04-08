@@ -37,5 +37,5 @@ depending on the @tbl slot.
 See \code{\link{table_type}} for more details on
 \code{\link{ATO}} table types.
 }
+\keyword{classes}
 \keyword{datasets}
-\keyword{internal}

@@ -50,5 +50,5 @@ See \code{\link{table_type}} for more details on
 \seealso{
 make_tag
 }
+\keyword{classes}
 \keyword{datasets}
-\keyword{internal}
