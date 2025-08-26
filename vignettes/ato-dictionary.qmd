@@ -1,0 +1,40 @@
+---
+title: "The ATO Dictionary"
+vignette: >
+  %\VignetteIndexEntry{The ATO Dictionary}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+Find the [Google Sheets version here](https://docs.google.com/spreadsheets/d/1YKL4qaIcM70KUY9LssGDrd0aKtEecHlCv1XotF2EJfY).
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+library(googlesheets4)
+gs4_deauth()
+
+ato_url <- 'https://docs.google.com/spreadsheets/d/1YKL4qaIcM70KUY9LssGDrd0aKtEecHlCv1XotF2EJfY/'
+
+sheets <- sheet_names(ato_url)
+
+sheets_data <- lapply(sheets, {
+  \(.x) with_gs4_quiet(read_sheet(ato_url, sheet = .x))
+})
+```
+```{r}
+#| echo: false
+#| results: asis
+for(i in seq_along(sheets)){
+  cat('## ', sheets[i], '\n', 
+    knitr::kable(sheets_data[[i]]), '\n\n',
+    sep = "")
+}
+```
+
+

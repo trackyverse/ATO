@@ -16,6 +16,7 @@ Imports:
     utils
 Suggests:
     data.table,
+    googlesheets4,
     tibble,
     testthat,
     knitr,
