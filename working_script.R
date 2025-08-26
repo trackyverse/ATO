@@ -1,59 +1,77 @@
 # THIS IS A SANDBOX FILE
 # DO NOT KEEP PRECIOUS CODE IN HERE
 
+# quick test of changing table types
+ato1 <- init_ato()
+ato1@tbl
+class(ato1@det)
+
+ato_table_type_global("data.table")
+ato2 <- init_ato()
+ato2@tbl
+class(ato2@det)
+
+table_type(ato1) <- "data.frame"
+# ---
+
+# creating a basic ATO
 my_ATO <- new("ATO")
 my_ATO
 
-dets <- data.frame(datetime = as.POSIXct(actel:::example.detections$Timestamp),
-                   frac_second = NA_real_,
-                   receiver_serial = actel:::example.detections$Receiver,
-                   transmitter = with(actel:::example.detections, paste0(CodeSpace, "-", Signal)),
-                   sensor_value = actel:::example.detections$Sensor.Value)
+dets <- make_det(datetime = as.POSIXct(actel:::example.detections$Timestamp),
+                 frac_second = NA_real_,
+                 receiver_serial = actel:::example.detections$Receiver,
+                 transmitter = with(actel:::example.detections, paste0(CodeSpace, "-", Signal)),
+                 sensor_value = actel:::example.detections$Sensor.Value,
+                 tz = "UTC")
+class(dets)
 
-my_ATO <- add_detections(my_ATO, dets)
+my_ATO <- add(my_ATO, dets)
 my_ATO
 
 head(actel:::example.deployments)
 head(actel:::example.spatial)
-deps <- data.frame(receiver_model = NA_character_,
-                   receiver_serial = as.integer(actel:::example.deployments$Receiver),
-                   receiver_codeset = NA_character_,
-                   deploy_location = actel:::example.deployments$Station.name,
-                   deploy_datetime = actel:::example.deployments$Start,
-                   deploy_lat = actel:::example.spatial$Latitude[-18],
-                   deploy_lon = actel:::example.spatial$Longitude[-18],
-                   recover_datetime = actel:::example.deployments$Stop,
-                   recover_lat = actel:::example.spatial$Latitude[-18],
-                   recover_lon = actel:::example.spatial$Longitude[-18],
-                   transmitter = NA_character_,
-                   transmitter_model = NA_character_,
-                   transmitter_serial = NA_integer_)
+deps <- make_dep(receiver_model = NA_character_,
+                 receiver_serial = as.integer(actel:::example.deployments$Receiver),
+                 receiver_codeset = NA_character_,
+                 deploy_location = actel:::example.deployments$Station.name,
+                 deploy_datetime = actel:::example.deployments$Start,
+                 deploy_lat = actel:::example.spatial$Latitude[-18],
+                 deploy_lon = actel:::example.spatial$Longitude[-18],
+                 recover_datetime = actel:::example.deployments$Stop,
+                 recover_lat = actel:::example.spatial$Latitude[-18],
+                 recover_lon = actel:::example.spatial$Longitude[-18],
+                 transmitter = NA_character_,
+                 transmitter_model = NA_character_,
+                 transmitter_serial = NA_integer_,
+                 tz = "UTC")
 
-my_ATO <- add_deployments(my_ATO, deps)
+my_ATO <- add(my_ATO, deps)
 my_ATO
 
-tags <- data.frame(manufacturer = "Thelma",
-                   model = NA_character_,
-                   power_level = NA_real_,
-                   ping_rate = 60, # seconds
-                   ping_variation = 30, # 0 if fixed ping rate
-                   serial = actel:::example.biometrics$Serial.nr,
-                   transmitter = paste0("R64K-", actel:::example.biometrics$Signal),
-                   activation_datetime = as.POSIXct(NA_real_),
-                   battery_life = NA_integer_, # days
-                   sensor_type = NA_character_,
-                   sensor_unit = NA_character_,
-                   animal = as.character(1:nrow(actel:::example.biometrics)), 
-                   capture_location = as.character(actel:::example.biometrics$Release.site),
-                   capture_datetime = actel:::example.biometrics$Release.date,
-                   capture_lat = actel:::example.spatial$Latitude[18],
-                   capture_lon = actel:::example.spatial$Longitude[18],
-                   release_location = as.character(actel:::example.biometrics$Release.site),
-                   release_datetime = actel:::example.biometrics$Release.date,
-                   release_lat = actel:::example.spatial$Latitude[18],
-                   release_lon = actel:::example.spatial$Longitude[18])
+tags <- make_tag(manufacturer = "Thelma",
+                 model = NA_character_,
+                 power_level = NA_real_,
+                 ping_rate = 60, # seconds
+                 ping_variation = 30, # 0 if fixed ping rate
+                 serial = actel:::example.biometrics$Serial.nr,
+                 transmitter = paste0("R64K-", actel:::example.biometrics$Signal),
+                 activation_datetime = as.POSIXct(NA_real_),
+                 battery_life = NA_real_, # days
+                 sensor_type = NA_character_,
+                 sensor_unit = NA_character_,
+                 animal = as.character(1:nrow(actel:::example.biometrics)), 
+                 capture_location = as.character(actel:::example.biometrics$Release.site),
+                 capture_datetime = actel:::example.biometrics$Release.date,
+                 capture_lat = actel:::example.spatial$Latitude[18],
+                 capture_lon = actel:::example.spatial$Longitude[18],
+                 release_location = as.character(actel:::example.biometrics$Release.site),
+                 release_datetime = actel:::example.biometrics$Release.date,
+                 release_lat = actel:::example.spatial$Latitude[18],
+                 release_lon = actel:::example.spatial$Longitude[18],
+                 tz = "UTC")
 
-my_ATO <- add_tags(my_ATO, tags)
+my_ATO <- add(my_ATO, tags)
 my_ATO
 
 
