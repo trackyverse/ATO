@@ -18,6 +18,5 @@ Suggests:
     data.table,
     tibble,
     testthat
-URL: https://github.com/trackyverse/ATO,
-     http://www.trackyverse.com/ATO
+URL: https://github.com/trackyverse/ATO, http://ato.trackyverse.org, https://trackyverse.github.io/ATO/
 BugReports: https://github.com/trackyverse/ATO/issues
