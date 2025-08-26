@@ -71,17 +71,1003 @@
     <p>Find the <a href="https://docs.google.com/spreadsheets/d/1YKL4qaIcM70KUY9LssGDrd0aKtEecHlCv1XotF2EJfY" class="external-link">Google Sheets version here</a>.</p>
 <section class="level2"><h2 id="slots">slots<a class="anchor" aria-label="anchor" href="#slots"></a>
 </h2>
-<p>|slot |defining class |other classes |optional classes ||:—-|:————–|:————-|:——————||<span class="citation" data-cites="det">@det</span> |ATO_det |data.frame |data.table, tibble ||<span class="citation" data-cites="dep">@dep</span> |ATO_dep |data.frame |data.table, tibble ||<span class="citation" data-cites="tag">@tag</span> |ATO_tag |data.frame |data.table, tibble ||<span class="citation" data-cites="ani">@ani</span> |ATO_ani |data.frame |data.table, tibble ||<span class="citation" data-cites="obs">@obs</span> |ATO_obs |data.frame |data.table, tibble ||<span class="citation" data-cites="log">@log</span> |ATO_log |data.frame |data.table, tibble ||<span class="citation" data-cites="tbl">@tbl</span> |ATO_tbl |character |NA |</p>
-</section><section class="level2"><h2 id="columns">columns<a class="anchor" aria-label="anchor" href="#columns"></a>
+<table class="table caption-top">
+<thead><tr class="header">
+<th style="text-align: left;">slot</th>
+<th style="text-align: left;">defining class</th>
+<th style="text-align: left;">other classes</th>
+<th style="text-align: left;">optional classes</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="det">@det</span></td>
+<td style="text-align: left;">ATO_det</td>
+<td style="text-align: left;">data.frame</td>
+<td style="text-align: left;">data.table, tibble</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="dep">@dep</span></td>
+<td style="text-align: left;">ATO_dep</td>
+<td style="text-align: left;">data.frame</td>
+<td style="text-align: left;">data.table, tibble</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">ATO_tag</td>
+<td style="text-align: left;">data.frame</td>
+<td style="text-align: left;">data.table, tibble</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="ani">@ani</span></td>
+<td style="text-align: left;">ATO_ani</td>
+<td style="text-align: left;">data.frame</td>
+<td style="text-align: left;">data.table, tibble</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="obs">@obs</span></td>
+<td style="text-align: left;">ATO_obs</td>
+<td style="text-align: left;">data.frame</td>
+<td style="text-align: left;">data.table, tibble</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="log">@log</span></td>
+<td style="text-align: left;">ATO_log</td>
+<td style="text-align: left;">data.frame</td>
+<td style="text-align: left;">data.table, tibble</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tbl">@tbl</span></td>
+<td style="text-align: left;">ATO_tbl</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table></section><section class="level2"><h2 id="columns">columns<a class="anchor" aria-label="anchor" href="#columns"></a>
 </h2>
-<p>|slot (3 letters) |column name (snake case) |column type |auto or manual |short description ||:——————-|:————————|:———–|:————–|:———————————————————————————————————————————————-||<span class="citation" data-cites="det">@det</span> (detections) |datetime |POSIXct |manual |date and time of the detection (yyyy-mm-dd hh:mm:ss) ||<span class="citation" data-cites="det">@det</span> (detections) |frac_second |numeric |manual |fraction of the second when the detection was received ||<span class="citation" data-cites="det">@det</span> (detections) |receiver_serial |integer |manual |serial number of the receiver that picked up the detection ||<span class="citation" data-cites="det">@det</span> (detections) |transmitter |character |manual |transmitter picked up ||<span class="citation" data-cites="det">@det</span> (detections) |sensor_value |numeric |manual |respective sensor value ||<span class="citation" data-cites="det">@det</span> (detections) |… |any |manual |non-standard column names are allowed ||<span class="citation" data-cites="det">@det</span> (detections) |valid |logical |automatic |Should this detection be used for analyses? ||<span class="citation" data-cites="det">@det</span> (detections) |tag_match |logical |automatic |created by either match_det_tag or match_det_dep, indicates if detection matches a target transmitter (either in the tag slot or the dep slot) ||<span class="citation" data-cites="det">@det</span> (detections) |dep_match |logical |automatic |created by match_det_tag, indicates if detection falls within a deployment period for a known receiver ||<span class="citation" data-cites="det">@det</span> (detections) |animal |character |automatic |created by match_det_ani, when the ATO has both det, tag, and ani. Technically only needs the det and tag slots ||<span class="citation" data-cites="dep">@dep</span> (deployments) |receiver_manufacturer |character |manual |company that made the receiver ||<span class="citation" data-cites="dep">@dep</span> (deployments) |receiver_model |character |manual |model of the receiver ||<span class="citation" data-cites="dep">@dep</span> (deployments) |receiver_serial |integer |manual |serial code of the receiver (this is the column used to match deployments) ||<span class="citation" data-cites="dep">@dep</span> (deployments) |receiver_codeset |character |manual |codeset of the receiver ||<span class="citation" data-cites="dep">@dep</span> (deployments) |transmitter |character |manual |Can either be a beacon located inside a receiver, or a stationary reference transmitter ||<span class="citation" data-cites="dep">@dep</span> (deployments) |transmitter_manufacturer |character |manual |company that made the transmitter ||<span class="citation" data-cites="dep">@dep</span> (deployments) |transmitter_ping_rate |numeric |manual |ping rate of the transmitter ||<span class="citation" data-cites="dep">@dep</span> (deployments) |transmitter_model |character |manual |model of the transmitter ||<span class="citation" data-cites="dep">@dep</span> (deployments) |transmitter_serial |integer |manual |serial code of the transmitter ||<span class="citation" data-cites="dep">@dep</span> (deployments) |deploy_location |character |manual |name of the location where the receiver was deployed ||<span class="citation" data-cites="dep">@dep</span> (deployments) |deploy_datetime |POSIXct |manual |date and time of the deployment (yyyy-mm-dd hh:mm:ss) ||<span class="citation" data-cites="dep">@dep</span> (deployments) |deploy_lat |numeric |manual |latitude of the deployment ||<span class="citation" data-cites="dep">@dep</span> (deployments) |deploy_lon |numeric |manual |longitude of the deployment ||<span class="citation" data-cites="dep">@dep</span> (deployments) |deploy_z |numeric |manual |depth of the deployment (as measured from the reference surface of the waterbody) ||<span class="citation" data-cites="dep">@dep</span> (deployments) |recover_datetime |POSIXct |manual |date and time of the recovery (yyyy-mm-dd hh:mm:ss) ||<span class="citation" data-cites="dep">@dep</span> (deployments) |recover_lat |numeric |manual |latitude of the recovery ||<span class="citation" data-cites="dep">@dep</span> (deployments) |recover_lon |numeric |manual |longitude of the recovery ||<span class="citation" data-cites="dep">@dep</span> (deployments) |… |any |manual |non-standard column names are allowed ||<span class="citation" data-cites="dep">@dep</span> (deployments) |n_detections |numeric |automatic |created by match_det_dep. number of detections recorded during the deployment ||<span class="citation" data-cites="tag">@tag</span> |manufacturer |character |manual |company that made the tag ||<span class="citation" data-cites="tag">@tag</span> |model |character |manual |model of the tag ||<span class="citation" data-cites="tag">@tag</span> |power_level |numeric |manual |power level of the tag ||<span class="citation" data-cites="tag">@tag</span> |ping_rate |numeric |manual |ping rate of the tag ||<span class="citation" data-cites="tag">@tag</span> |ping_variation |numeric |manual |+- variation added to individual pings ||<span class="citation" data-cites="tag">@tag</span> |serial |integer |manual |serial code of the tag ||<span class="citation" data-cites="tag">@tag</span> |transmitter |character |manual |transmitter code emitted by the tag ||<span class="citation" data-cites="tag">@tag</span> |activation_datetime |POSIXct |manual |activation date ||<span class="citation" data-cites="tag">@tag</span> |battery_life |numeric |manual |battery life ||<span class="citation" data-cites="tag">@tag</span> |sensor_type |character |manual |sensor type associated with the transmitter (e.g. temperature) ||<span class="citation" data-cites="tag">@tag</span> |sensor_unit |character |manual |units of the sensor data collected (e.g. C) ||<span class="citation" data-cites="tag">@tag</span> |animal |character |manual |name/code of the animal that received the tag ||<span class="citation" data-cites="tag">@tag</span> |… |any |manual |non-standard column names are allowed ||<span class="citation" data-cites="tag">@tag</span> |det_match |logical |automatic |created by match_det_tag, indicates if the transmitter was ever detected ||<span class="citation" data-cites="tag">@tag</span> |obs_match |logical |automatic |created by match_obs_tag, indicates if the transmitter was ever observed ||<span class="citation" data-cites="tag">@tag</span> |ani_match |logical |automatic |created by match_tag_ani. Indicates if the value in <span class="citation" data-cites="tag$animal">@tag$animal</span> matches a value in <span class="citation" data-cites="ani$animal">@ani$animal</span> ||<span class="citation" data-cites="ani">@ani</span> (animal) |animal |character |manual |name/code of the animal ||<span class="citation" data-cites="ani">@ani</span> (animal) |capture_location |character |manual |place where the animal was caught ||<span class="citation" data-cites="ani">@ani</span> (animal) |capture_datetime |POSIXct |manual |date and time when the animal was caught ||<span class="citation" data-cites="ani">@ani</span> (animal) |capture_lat |numeric |manual |latitude of the capture ||<span class="citation" data-cites="ani">@ani</span> (animal) |capture_lon |numeric |manual |longitude of the capture ||<span class="citation" data-cites="ani">@ani</span> (animal) |release_location |character |manual |place where the animal was released ||<span class="citation" data-cites="ani">@ani</span> (animal) |release_datetime |POSIXct |manual |date and time when the animal was released ||<span class="citation" data-cites="ani">@ani</span> (animal) |release_lat |numeric |manual |latitude of the release ||<span class="citation" data-cites="ani">@ani</span> (animal) |release_lon |numeric |manual |longitude of the release ||<span class="citation" data-cites="ani">@ani</span> (animal) |… |any |manual |non-standard column names are allowed ||<span class="citation" data-cites="ani">@ani</span> (animal) |det_match |logical |automatic |created by match_det_ani, indicates if the animal was ever detected ||<span class="citation" data-cites="ani">@ani</span> (animal) |obs_match |logical |automatic |created by match_obs_ani. indicates if the anmal was ever observed ||<span class="citation" data-cites="ani">@ani</span> (animal) |tag_match |logical |automatic |created by match_tag_ani. Indicates if the animal has associated transmitters ||<span class="citation" data-cites="obs">@obs</span> (observations) |animal |character |manual |name/code of the observed animal ||<span class="citation" data-cites="obs">@obs</span> (observations) |transmitter |character |manual |transmitter detected ||<span class="citation" data-cites="obs">@obs</span> (observations) |type |character |manual |type of observation (e.g. manual tracking, visual, etc) ||<span class="citation" data-cites="obs">@obs</span> (observations) |terminal |logical |manual |does this observation mark the end of tracking for this animal ||<span class="citation" data-cites="obs">@obs</span> (observations) |location |character |manual |location of the observation ||<span class="citation" data-cites="obs">@obs</span> (observations) |datetime |POSIXct |manual |date and time of the observation ||<span class="citation" data-cites="obs">@obs</span> (observations) |lat |numeric |manual |latitude of the observation ||<span class="citation" data-cites="obs">@obs</span> (observations) |lon |numeric |manual |longitude of the observation ||<span class="citation" data-cites="obs">@obs</span> (observations) |… |any |manual |non-standard column names are allowed ||<span class="citation" data-cites="obs">@obs</span> (observations) |valid |logical |automatic |Should this observation be used for analyses? ||<span class="citation" data-cites="obs">@obs</span> (observations) |tag_match |logical |automatic |created by match_obs_tag. indicates if the observation matches a transmitter in the tag slot ||<span class="citation" data-cites="obs">@obs</span> (observations) |ani_match |logical |automatic |created by match_obs_ani. indicates if the observation matches an animal in the ani slot ||<span class="citation" data-cites="log">@log</span> (internal log) |datetime |POSIXct |automatic |date and time of the entry ||<span class="citation" data-cites="log">@log</span> (internal log) |package |character |automatic |package that wrote the entry ||<span class="citation" data-cites="log">@log</span> (internal log) |call |character |automatic |function that wrote the entry ||<span class="citation" data-cites="log">@log</span> (internal log) |log |character |automatic |summary of the changes introduced by the function ||<span class="citation" data-cites="tbl">@tbl</span> |(character string) |character |automatic |Type of tables used in the ATO (data.frame, data.table, or tibble) |</p>
-</section><section class="level2"><h2 id="methods">methods<a class="anchor" aria-label="anchor" href="#methods"></a>
+<table class="table caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 66%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">slot (3 letters)</th>
+<th style="text-align: left;">column name (snake case)</th>
+<th style="text-align: left;">column type</th>
+<th style="text-align: left;">auto or manual</th>
+<th style="text-align: left;">short description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="det">@det</span> (detections)</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">date and time of the detection (yyyy-mm-dd hh:mm:ss)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="det">@det</span> (detections)</td>
+<td style="text-align: left;">frac_second</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">fraction of the second when the detection was received</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="det">@det</span> (detections)</td>
+<td style="text-align: left;">receiver_serial</td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">serial number of the receiver that picked up the detection</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="det">@det</span> (detections)</td>
+<td style="text-align: left;">transmitter</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">transmitter picked up</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="det">@det</span> (detections)</td>
+<td style="text-align: left;">sensor_value</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">respective sensor value</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="det">@det</span> (detections)</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">any</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">non-standard column names are allowed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="det">@det</span> (detections)</td>
+<td style="text-align: left;">valid</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">Should this detection be used for analyses?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="det">@det</span> (detections)</td>
+<td style="text-align: left;">tag_match</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by either match_det_tag or match_det_dep, indicates if detection matches a target transmitter (either in the tag slot or the dep slot)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="det">@det</span> (detections)</td>
+<td style="text-align: left;">dep_match</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_det_tag, indicates if detection falls within a deployment period for a known receiver</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="det">@det</span> (detections)</td>
+<td style="text-align: left;">animal</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_det_ani, when the ATO has both det, tag, and ani. Technically only needs the det and tag slots</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">receiver_manufacturer</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">company that made the receiver</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">receiver_model</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">model of the receiver</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">receiver_serial</td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">serial code of the receiver (this is the column used to match deployments)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">receiver_codeset</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">codeset of the receiver</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">transmitter</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">Can either be a beacon located inside a receiver, or a stationary reference transmitter</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">transmitter_manufacturer</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">company that made the transmitter</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">transmitter_ping_rate</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">ping rate of the transmitter</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">transmitter_model</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">model of the transmitter</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">transmitter_serial</td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">serial code of the transmitter</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">deploy_location</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">name of the location where the receiver was deployed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">deploy_datetime</td>
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">date and time of the deployment (yyyy-mm-dd hh:mm:ss)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">deploy_lat</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">latitude of the deployment</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">deploy_lon</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">longitude of the deployment</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">deploy_z</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">depth of the deployment (as measured from the reference surface of the waterbody)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">recover_datetime</td>
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">date and time of the recovery (yyyy-mm-dd hh:mm:ss)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">recover_lat</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">latitude of the recovery</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">recover_lon</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">longitude of the recovery</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">any</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">non-standard column names are allowed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="dep">@dep</span> (deployments)</td>
+<td style="text-align: left;">n_detections</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_det_dep. number of detections recorded during the deployment</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">manufacturer</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">company that made the tag</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">model</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">model of the tag</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">power_level</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">power level of the tag</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">ping_rate</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">ping rate of the tag</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">ping_variation</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">+- variation added to individual pings</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">serial</td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">serial code of the tag</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">transmitter</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">transmitter code emitted by the tag</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">activation_datetime</td>
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">activation date</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">battery_life</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">battery life</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">sensor_type</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">sensor type associated with the transmitter (e.g. temperature)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">sensor_unit</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">units of the sensor data collected (e.g. C)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">animal</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">name/code of the animal that received the tag</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">any</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">non-standard column names are allowed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">det_match</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_det_tag, indicates if the transmitter was ever detected</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">obs_match</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_obs_tag, indicates if the transmitter was ever observed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tag">@tag</span></td>
+<td style="text-align: left;">ani_match</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_tag_ani. Indicates if the value in <span class="citation" data-cites="tag$animal">@tag$animal</span> matches a value in <span class="citation" data-cites="ani$animal">@ani$animal</span>
+</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">animal</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">name/code of the animal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">capture_location</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">place where the animal was caught</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">capture_datetime</td>
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">date and time when the animal was caught</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">capture_lat</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">latitude of the capture</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">capture_lon</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">longitude of the capture</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">release_location</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">place where the animal was released</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">release_datetime</td>
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">date and time when the animal was released</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">release_lat</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">latitude of the release</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">release_lon</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">longitude of the release</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">any</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">non-standard column names are allowed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">det_match</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_det_ani, indicates if the animal was ever detected</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">obs_match</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_obs_ani. indicates if the anmal was ever observed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="ani">@ani</span> (animal)</td>
+<td style="text-align: left;">tag_match</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_tag_ani. Indicates if the animal has associated transmitters</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">animal</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">name/code of the observed animal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">transmitter</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">transmitter detected</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">type of observation (e.g. manual tracking, visual, etc)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">terminal</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">does this observation mark the end of tracking for this animal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">location</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">location of the observation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">date and time of the observation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">lat</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">latitude of the observation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">lon</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">longitude of the observation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">any</td>
+<td style="text-align: left;">manual</td>
+<td style="text-align: left;">non-standard column names are allowed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">valid</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">Should this observation be used for analyses?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">tag_match</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_obs_tag. indicates if the observation matches a transmitter in the tag slot</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="obs">@obs</span> (observations)</td>
+<td style="text-align: left;">ani_match</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">created by match_obs_ani. indicates if the observation matches an animal in the ani slot</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="log">@log</span> (internal log)</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">date and time of the entry</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="log">@log</span> (internal log)</td>
+<td style="text-align: left;">package</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">package that wrote the entry</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="log">@log</span> (internal log)</td>
+<td style="text-align: left;">call</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">function that wrote the entry</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="log">@log</span> (internal log)</td>
+<td style="text-align: left;">log</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">summary of the changes introduced by the function</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="tbl">@tbl</span></td>
+<td style="text-align: left;">(character string)</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">Type of tables used in the ATO (data.frame, data.table, or tibble)</td>
+</tr>
+</tbody>
+</table></section><section class="level2"><h2 id="methods">methods<a class="anchor" aria-label="anchor" href="#methods"></a>
 </h2>
-<p>|method package |method family |method name |method signature |arguments |description ||:————–|:————-|:———–|:—————-|:————————–|:————————————————————————————————-||ATO |add |add |ATO, ATO_det |x, value |assign “value” to the <span class="citation" data-cites="det">@det</span> slot of the ATO ||ATO |add |add |ATO, ATO_dep |x, value |assign “value” to the <span class="citation" data-cites="dep">@dep</span> slot of the ATO ||ATO |add |add |ATO, ATO_tag |x, value |assign “value” to the <span class="citation" data-cites="tag">@tag</span> slot of the ATO ||ATO |add |add |ATO, ATO_ani |x, value |assign “value” to the <span class="citation" data-cites="ani">@ani</span> slot of the ATO ||ATO |add |add |ATO, ATO_obs |x, value |assign “value” to the <span class="citation" data-cites="obs">@obs</span> slot of the ATO ||ATO |get_ |get_det |ATO |x, receivers, transmitters |extract the <span class="citation" data-cites="det">@det</span> slot from the ATO. arguments allow refining which detections are extracted. ||ATO |get_ |get_det_dep |ATO |x, receivers |wrapper to extract the <span class="citation" data-cites="det">@det</span> slot from the ATO and filter only the transmitters listed in <span class="citation" data-cites="det">@det</span> ||ATO |get_ |get_det_tag |ATO |x, receivers |wrapper to extract the <span class="citation" data-cites="det">@det</span> slot from the ATO and filter only the transmitters listed in the <span class="citation" data-cites="tag">@tag</span> ||ATO |get_ |get_dep |ATO |x |extract the <span class="citation" data-cites="dep">@dep</span> slot from the ATO ||ATO |get_ |det_tag |ATO |x |extract the <span class="citation" data-cites="tag">@tag</span> slot from the ATO ||ATO |get_ |det_ani |ATO |x |extract the <span class="citation" data-cites="ani">@ani</span> slot from the ATO ||ATO |get_ |det_obs |ATO |x |extract the <span class="citation" data-cites="obs">@obs</span> slot from the ATO ||ATO |show |show |ATO |object |default function called when an object of class ATO is displayed on screen ||ATO |summary |summary |ATO_det |object |prints a summary of the det slot ||ATO |summary |summary |ATO_dep |object |prints a summary of the dep slot ||ATO |summary |summary |ATO_tag |object |prints a summary of the tag slot ||ATO |summary |summary |ATO_ani |object |prints a summary of the ani slot ||ATO |summary |summary |ATO_obs |object |prints a summary of the obs slot ||ATO |summary |summary |ATO_log |object |prints a summary of the log slot ||NA |check |NA |NA |NA |NA ||NA |check |NA |NA |NA |NA ||NA |check |NA |NA |NA |NA ||NA |check |NA |NA |NA |NA ||NA |check |NA |NA |NA |NA ||NA |check |NA |NA |NA |NA |</p>
-</section><section class="level2"><h2 id="functions">functions<a class="anchor" aria-label="anchor" href="#functions"></a>
+<table class="table caption-top">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 14%">
+<col style="width: 53%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">method package</th>
+<th style="text-align: left;">method family</th>
+<th style="text-align: left;">method name</th>
+<th style="text-align: left;">method signature</th>
+<th style="text-align: left;">arguments</th>
+<th style="text-align: left;">description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">add</td>
+<td style="text-align: left;">add</td>
+<td style="text-align: left;">ATO, ATO_det</td>
+<td style="text-align: left;">x, value</td>
+<td style="text-align: left;">assign “value” to the <span class="citation" data-cites="det">@det</span> slot of the ATO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">add</td>
+<td style="text-align: left;">add</td>
+<td style="text-align: left;">ATO, ATO_dep</td>
+<td style="text-align: left;">x, value</td>
+<td style="text-align: left;">assign “value” to the <span class="citation" data-cites="dep">@dep</span> slot of the ATO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">add</td>
+<td style="text-align: left;">add</td>
+<td style="text-align: left;">ATO, ATO_tag</td>
+<td style="text-align: left;">x, value</td>
+<td style="text-align: left;">assign “value” to the <span class="citation" data-cites="tag">@tag</span> slot of the ATO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">add</td>
+<td style="text-align: left;">add</td>
+<td style="text-align: left;">ATO, ATO_ani</td>
+<td style="text-align: left;">x, value</td>
+<td style="text-align: left;">assign “value” to the <span class="citation" data-cites="ani">@ani</span> slot of the ATO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">add</td>
+<td style="text-align: left;">add</td>
+<td style="text-align: left;">ATO, ATO_obs</td>
+<td style="text-align: left;">x, value</td>
+<td style="text-align: left;">assign “value” to the <span class="citation" data-cites="obs">@obs</span> slot of the ATO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">get_</td>
+<td style="text-align: left;">get_det</td>
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">x, receivers, transmitters</td>
+<td style="text-align: left;">extract the <span class="citation" data-cites="det">@det</span> slot from the ATO. arguments allow refining which detections are extracted.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">get_</td>
+<td style="text-align: left;">get_det_dep</td>
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">x, receivers</td>
+<td style="text-align: left;">wrapper to extract the <span class="citation" data-cites="det">@det</span> slot from the ATO and filter only the transmitters listed in <span class="citation" data-cites="det">@det</span>
+</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">get_</td>
+<td style="text-align: left;">get_det_tag</td>
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">x, receivers</td>
+<td style="text-align: left;">wrapper to extract the <span class="citation" data-cites="det">@det</span> slot from the ATO and filter only the transmitters listed in the <span class="citation" data-cites="tag">@tag</span>
+</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">get_</td>
+<td style="text-align: left;">get_dep</td>
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">extract the <span class="citation" data-cites="dep">@dep</span> slot from the ATO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">get_</td>
+<td style="text-align: left;">det_tag</td>
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">extract the <span class="citation" data-cites="tag">@tag</span> slot from the ATO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">get_</td>
+<td style="text-align: left;">det_ani</td>
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">extract the <span class="citation" data-cites="ani">@ani</span> slot from the ATO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">get_</td>
+<td style="text-align: left;">det_obs</td>
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">extract the <span class="citation" data-cites="obs">@obs</span> slot from the ATO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">show</td>
+<td style="text-align: left;">show</td>
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">default function called when an object of class ATO is displayed on screen</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">ATO_det</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">prints a summary of the det slot</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">ATO_dep</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">prints a summary of the dep slot</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">ATO_tag</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">prints a summary of the tag slot</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">ATO_ani</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">prints a summary of the ani slot</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">ATO_obs</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">prints a summary of the obs slot</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">ATO_log</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">prints a summary of the log slot</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table></section><section class="level2"><h2 id="functions">functions<a class="anchor" aria-label="anchor" href="#functions"></a>
 </h2>
-<p>|function package |function family |function name |description ||:—————-|:—————|:——————–|:———–||ATO |make_ |make_det |NA ||ATO |make_ |make_dep |NA ||ATO |make_ |make_tag |NA ||ATO |make_ |make_ani |NA ||ATO |make_ |make_obs |NA ||ATO |check_ |check_ato_table_type |NA ||ATO |check_ |check_ato_table_cols |NA ||ATO |calc_ |calc_det_interval |NA ||ATO |dot |.dyn_round |NA ||ATO |filter_ |filter_targeted |NA ||ATO |filter_ |filter_ping_dev |NA ||ATO |filter_ |filter_datetime |NA ||ATO |match_ |match_det_tag |NA ||ATO |match_ |match_det_dep |NA ||ATO |match_ |match_tag_ani |NA ||ATO |match_ |match_obs_tag |NA ||ATO |match_ |match_obs_ani |NA ||ATO |match_ |match_det_ani |NA |</p>
-</section><script id="quarto-html-after-body" type="application/javascript">
+<table class="table caption-top">
+<thead><tr class="header">
+<th style="text-align: left;">function package</th>
+<th style="text-align: left;">function family</th>
+<th style="text-align: left;">function name</th>
+<th style="text-align: left;">description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">make_</td>
+<td style="text-align: left;">make_det</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">make_</td>
+<td style="text-align: left;">make_dep</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">make_</td>
+<td style="text-align: left;">make_tag</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">make_</td>
+<td style="text-align: left;">make_ani</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">make_</td>
+<td style="text-align: left;">make_obs</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">check_</td>
+<td style="text-align: left;">check_ato_table_type</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">check_</td>
+<td style="text-align: left;">check_ato_table_cols</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">calc_</td>
+<td style="text-align: left;">calc_det_interval</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">dot</td>
+<td style="text-align: left;">.dyn_round</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">filter_</td>
+<td style="text-align: left;">filter_targeted</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">filter_</td>
+<td style="text-align: left;">filter_ping_dev</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">filter_</td>
+<td style="text-align: left;">filter_datetime</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">match_</td>
+<td style="text-align: left;">match_det_tag</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">match_</td>
+<td style="text-align: left;">match_det_dep</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">match_</td>
+<td style="text-align: left;">match_tag_ani</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">match_</td>
+<td style="text-align: left;">match_obs_tag</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">match_</td>
+<td style="text-align: left;">match_obs_ani</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATO</td>
+<td style="text-align: left;">match_</td>
+<td style="text-align: left;">match_det_ani</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
