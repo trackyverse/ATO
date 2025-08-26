@@ -31,7 +31,7 @@ sheets_data <- lapply(sheets, {
 #| echo: false
 #| results: asis
 for(i in seq_along(sheets)){
-  cat('## ', sheets[i], '\n', 
+  cat('## ', sheets[i], '\n\n', 
     knitr::kable(sheets_data[[i]]), '\n\n',
     sep = "")
 }
