@@ -52,48 +52,55 @@ The great thing about the ATO ecosystem is that no, complex analysis pipelines d
 
 ## ATO object inputs
 
-	- detections
-	- deployments
-	- tags
-	- shapefile
+- detections
+- deployments
+- tags
+- shapefile
 
 
 ## ATO encapsulation function families
 
 ### ATO (the function that makes the ATO)
-	-	make/as/is_
-	- ATO
+
+-	make/as/is_
+- ATO
 
 ### add_
-	- dets
-	- deps
-	- tags
+
+- dets
+- deps
+- tags
 
 ### filter_
-	- moves_
-	- dets_
+
+- moves_
+- dets_
 
 ### check_
-	- move_
-	- det_
+
+- move_
+- det_
 
 ### make_
-	- moves
-	- spatial
+
+- moves
+- spatial
 
 ### view_
-	- dets
-	- deps
-	- tags
-	- map
-	- report
+
+- dets
+- deps
+- tags
+- map
+- report
 
 ### get_
-	- distances
-	- speeds
-	- times
-	- efficiency
-	- etc
+
+- distances
+- speeds
+- times
+- efficiency
+- etc
 
 ::: {.callout-note}
 Not sure if `view_` and `get_` are the same… I intended `view_` to be more like a summary of a particular aspect of the object, while get exports data/calculates metrics out of the ATO.
