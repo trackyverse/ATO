@@ -1,0 +1,89 @@
+---
+title: "The ATO ecosystem"
+date: 2024-11-19
+author: Hugo Flávio
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ATO-ecosystem}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
+---
+
+## My perspective on the ATO
+
+The Acoustic Telemetry Object (ATO) ecosystem is a proposed standard that is intended to take acoustic telemetry data analysis reproducibility to a new level. When I first envisioned actel, I intended for it to serve exactly the purpose I just described above, which I find somewhat amusing. Back when actel first came out, users quickly recognized that the detailed level of reporting and the rigidity of a predetermined analysis path were indeed big steps forward in making the data analysis in our field more reproducible and easier to remember. However, the rigidity of it all is ultimately one of its biggest flaws. When you use actel, you _must_ follow those predetermined paths. There is no room for growth. And if there is one thing that will kill a package/standard faster than anything else, it is being unable to grow. In the years since actel came out, attempts were made to slightly alleviate this rigidity by e.g. introducing the preload() function, which allowed users to manipulate their objects in R before introducing them into one of actel’s “big three” analysis functions (explore, migration, or residency). But this was a band-aid solution where deep surgery was what was really necessary. Further, as the universe of telemetry packages kept expanding, it became clear that (almost) every package was an isolated world, drifting alone. Moving from actel to glatos to yaps to others requires whole tutorials on how to convert data formats from one to the other. Again, if each is isolated, we don’t evolve, and if we do not evolve, we fall behind.
+
+Long discussions have been had (even before I joined this topic) about how to deal with this. Package maintainers should talk to each other. Packages should be designed for separate tasks. Care should be given to guide the community of users towards the trusted, updated packages so their analyses are sound. Graduate students shouldn’t keep reinventing the wheel and falling on the same pitfalls we all did as we worked on our code. But always there was the elephant in the room: our packages don’t talk the same language (i.e. they don’t accept the same inputs). This is not only essential to allow users to move from package to package, it is also essential for importing data from ever-growing and ever-refined data storage and manage systems (such as OTN, ETN, BTN, FACT, IMOS, among others that I keep learning about). The concept of the package [“surimi”](https://github.com/ocean-tracking-network/surimi) was – in my time as part of this discussion – the first big step towards saying “our packages need to talk to each other.” Surimi was envisioned as the centre of a spoke wheel, facilitating the conversion of data from package A to package B, and providing input methods for gathering data from data management systems. But as Bruce Delo, Jon Pye, and I sat down and discussed surimi on different occasions, something became apparent: any conversion would potentially cause data loss, which was not something we were very happy about. It was at this point, if memory serves me right, that the thought appeared: “We need a common data format for everyone…” This is a daunting idea, as immediately the widely known [xkcd comic](https://xkcd.com/927/) comes to mind, and one thinks this will be a lost cause. But alas, despite the warnings of the world-beloved stick figure, this is exactly what we are going to try to do.
+
+## Creating an ATO
+
+ATO is intended to be an S4 object class meant to hold all the data pertaining to a specific acoustic telemetry study. This class is essentially a wrapper of smaller objects of specific S4 classes, three of which are essential for the ATO object to be usable: detections, receiver deployments, and tag information[^1]. Assembling these three data sources into an ATO object makes it “usable.” And it is here that the first innovation comes in: the ATO object will check itself for quality. So, as you bring these three data sources together, the resulting ATO object will immediately let you know if, e.g., there are detections for receivers not listed in the deployments, there are receivers for which there are no detections, there are detections for tags not listed, etc. The combinations are rather extensive, and deciding on what is appropriate to check for at each step will be one of the great challenges of this new ecosystem. If you have ever used actel, what I just described to you will likely sound familiar. But where in actel there was rigidity, here there will be flexibility. Dedicated functions will allow adding more detections, deployments, tags, etc. – all of which are checked on-the-fly against the already existing data contained in the ATO. Optional elements such as a shapefile of the study area may also be provided, further enabling other functionalities for the packages which adopt the ATO standard. For example, actel can calculate distances between receivers given their positions and a shapefile, and RSP uses shape files to refine movement paths and trim space-usage models.
+
+[^1]: You would be excused for thinking we’re just reinventing the wheel, but anyone who has ever changed tires knows not all wheels are the same, and here we are aiming to build the “one size fits all” version of it.
+
+## Quality-checking an ATO
+
+One of the biggest steps in any telemetry analysis is determining the quality of the detections we’ve collected. The binary decision of keeping or discarding a detection has the power to change the outcome of a study, and as such it is something researchers often struggle with. It is also one of the steps where reproducibility is often lost. Which detections were excluded? Why were they excluded? How did that impact the results? The answers to these questions are often hard to track. My solution for this in actel was to lock the entire process behind a rigid pipeline that records everything that was done during the analysis. Again, over time, this rigidity has proven to be problematic as it limits innovation and isolates actel from the rest of the telemetry package universe. In the ATO ecosystem, “filter_” and “check_” functions will give users the flexibility to perform different quality-control actions according to their preferences. This might feel like going back to what actel attempted to prevent in the first place, but there’s a catch: These “filter_” and “check_” functions are all equipped to record their actions (and their consequences) into a central log contained within the ATO. This log is a central piece of the ATO, and allows users to review the changes made throughout the analysis of this particular telemetry dataset. Further, these logs will allow the ATO to automatically propagate the changes applied to a part of itself to the remaining sub-objects contained within it (i.e. if I invalidate detections, the respective movement events – we’ll get there – will get updated as well). Importantly, these quality-checking never delete detections (the working unit of the ATO). Rather, as soon as a data-quality function is used, a new object containing filtered detections is created within the ATO. Finally, these data-quality functions no longer have to live locked within a predetermined analysis or within a specific package. Users wanting to expand on the types of quality control to be performed may simply join the ecosystem and develop their own filter_ or check_ functions. Quality-control functions which require elements that do not currently exist in the ATO must instead guide the user on what is missing and how to incorporate it.
+
+## Expanding the ATO
+
+This is where the unified object format really starts to shine. From the three essential inputs (detections, deployments, tags) one may, for example, create movements (combining all three). One may make a dedicated spatial data frame by condensing the deployments. One may provide additional inputs (such as a shapefile) to make a distances matrix between receivers. And then there are other things we can make which work on this first level, e.g. survival tables, residency times, etc. All of these elements sound familiar to actel’s outputs as they are what I am most familiar with, but _anything_ can be added to an ATO by bringing together different components of the ATO through the use of the “make_” family of functions. In turn, an expanded ATO opens the possibility for more refined quality checking, thus allowing the user to move back and forth between elements of the analysis as they progress towards their final result.
+
+Importantly, expanding the ATO does not alter its core structure. This is essential for the whole ecosystem to work, because it allows the user to carry their ATO from package A to package B without fear that it might no longer work for a given analysis.
+
+Version control will be an essential part of the ATO framework. Because users may expand on the ATO and then refilter it again, the ATO must be able to determine which parts of itself are affected by the changes, and either recompute or mark them as obsolete. This will strongly be supported by the internal log, which the object may use to determine if something has been changed or not.
+
+## Viewing and extracting data from an ATO
+
+Throughout the process of making different elements of the ATO, the user may want to view summaries of different elements, display their full contents, and/or calculate specific metrics. “view_” and “get_” functions would assist with that. Using again the example of actel; an important view_ function would be view_report() (PS this should maybe be a get_report() instead?). Similarly, one could calculate and recalculate different flavours of distances and speeds using get_distances() and get_speeds() functions with different argument combinations. The same applies to times of arrival, times of residence, numbers of detections, etc; with more of these functions being usable in more complex ATOs. Further, this opens the door to new developers creating their own functions for calculating metrics and contributing them to the ecosystem (e.g., someone could develop a get_overlaps() function).
+
+## So… are the actel analyses going away?
+
+The great thing about the ATO ecosystem is that no, complex analysis pipelines do not need to go away! In fact, this will open a whole new avenue for developers to tailor their own analysis pipelines, and encapsulate them within “actel-analysis-like” functions that others can use. The ATO ecosystem should allow us to break free from the rigidity that limits actel’s expansion and lead to a future where new pipelines can be created and improved by several people.
+
+
+::: {.callout-note}
+2025 Note: The names below are generally outdated. They are kept here as a record of how things started.
+:::
+
+## ATO object inputs
+- detections
+- deployments
+- tags
+- shapefile
+
+
+## ATO encapsulation function families
+ATO (the function that makes the ATO)
+make/as/is_
+	ATO
+add_
+	dets
+	deps
+	tags
+filter_
+	moves_
+	dets_
+check_
+	move_
+	det_
+make_
+	moves
+	spatial
+view_
+	dets
+	deps
+	tags
+	map
+	report
+get_
+	distances
+	speeds
+	times
+	efficiency
+	etc
+(not sure if view_ and get_ are the same… I intended view_ to be more like a summary of a particular aspect of the object, while get exports data/calculates metrics out of the ATO)

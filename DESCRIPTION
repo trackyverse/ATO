@@ -17,6 +17,10 @@ Imports:
 Suggests:
     data.table,
     tibble,
-    testthat
+    testthat,
+    knitr,
+    quarto,
+    rmarkdown
 URL: https://github.com/trackyverse/ATO, http://ato.trackyverse.org, https://trackyverse.github.io/ATO/
 BugReports: https://github.com/trackyverse/ATO/issues
+VignetteBuilder: quarto
