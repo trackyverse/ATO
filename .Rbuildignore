@@ -1,6 +1,7 @@
-working_script.R
+^working_script\.R$
 ^ATO_logo.*\.(png|svg)$
 ^\.github$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^vignettes/*_files$
