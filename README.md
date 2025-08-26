@@ -1,5 +1,12 @@
 # Acoustic Telemetry Object <img src="man/figures/ATO_logo_150.png" align="right" width="120" />
 
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![name status badge](https://trackyverse.r-universe.dev/badges/:name)](https://trackyverse.r-universe.dev/)
+[![ATO status badge](https://trackyverse.r-universe.dev/ATO/badges/version)](https://trackyverse.r-universe.dev/ATO)
+[![R-CMD-check](https://github.com/trackyverse/ATO/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/trackyverse/ATO/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 This repository is a fastly evolving work in progress, with the intent to provide S4 classes to create, edit and expand ATOs. 
 
 What _is_ an ATO? Read [Hugo's early vision of the ATO here](https://ato.trackyverse.org/articles/ATO-ecosystem.html).
