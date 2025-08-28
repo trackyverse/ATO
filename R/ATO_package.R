@@ -1,4 +1,4 @@
-#' ATO: Acoustic Telemetry Object Class
+#' ATO: Animal Telemetry Object Class
 #'
 #' @importFrom methods is new slot show validObject
 #' @import stats

@@ -1,4 +1,4 @@
-# Acoustic Telemetry Object <img src="man/figures/ATO_logo_150.png" align="right" width="120" />
+# Animal Telemetry Object <img src="man/figures/ATO_logo_150.png" align="right" width="120" />
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)

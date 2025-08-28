@@ -355,7 +355,7 @@ class(.ATO_tbl) <- c("ATO_tbl", "character")
 
 #' S4 class: ATO
 #'
-#' The Acoustic Telemetry Object (ATO) class contains slots that allow
+#' The Animal Telemetry Object (ATO) class contains slots that allow
 #' researchers to package their study data in a standard format, to be used
 #' by the R packages that collectively make the trackyverse.
 #'

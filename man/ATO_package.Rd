@@ -5,7 +5,7 @@
 \alias{ATO}
 \alias{ATO-package}
 \alias{ATO_package}
-\title{ATO: Acoustic Telemetry Object Class}
+\title{ATO: Animal Telemetry Object Class}
 \description{
 Class and methods to create, edit, and expand an ATO.
 }
@@ -13,7 +13,8 @@ Class and methods to create, edit, and expand an ATO.
 Useful links:
 \itemize{
   \item \url{https://github.com/trackyverse/ATO}
-  \item \url{http://www.trackyverse.com/ATO}
+  \item \url{http://ato.trackyverse.org}
+  \item \url{https://trackyverse.github.io/ATO/}
   \item Report bugs at \url{https://github.com/trackyverse/ATO/issues}
 }
 
