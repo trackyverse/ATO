@@ -1,5 +1,5 @@
 Package: ATO
-Title: Acoustic Telemetry Object Class
+Title: Animal Tracking Object Class
 Version: 0.0.0.9001
 Authors@R: c(person("Hugo", "Flávio", role = c("aut", "cre"), email = "hflavio@dal.ca"))
 Description: Class and methods to create, edit, and expand an ATO.
@@ -16,7 +16,6 @@ Imports:
     utils
 Suggests:
     data.table,
-    googlesheets4,
     tibble,
     testthat,
     knitr,
@@ -25,3 +24,4 @@ Suggests:
 URL: https://github.com/trackyverse/ATO, http://ato.trackyverse.org, https://trackyverse.github.io/ATO/
 BugReports: https://github.com/trackyverse/ATO/issues
 VignetteBuilder: quarto
+Config/Needs/website: quarto

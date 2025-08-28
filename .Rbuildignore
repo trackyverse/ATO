@@ -7,3 +7,6 @@
 ^vignettes/*_files$
 ^vignettes/\.quarto$
 ^CNAME$
+^vignettes/articles/\.quarto$
+^vignettes/articles/*_files$
+^vignettes/articles$
