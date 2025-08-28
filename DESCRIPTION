@@ -1,5 +1,5 @@
 Package: ATO
-Title: Animal Telemetry Object Class
+Title: Animal Tracking Object Class
 Version: 0.0.0.9001
 Authors@R: c(person("Hugo", "Flávio", role = c("aut", "cre"), email = "hflavio@dal.ca"))
 Description: Class and methods to create, edit, and expand an ATO.
