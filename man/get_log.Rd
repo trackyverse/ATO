@@ -11,6 +11,8 @@ get_log(x, debug = FALSE)
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}
+
+\item{debug}{should debug entries and the call column be displayed?}
 }
 \value{
 The log slot as a table

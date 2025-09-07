@@ -184,6 +184,7 @@ setMethod("get_obs", "ATO", function(x, type = c("all", "valid", "invalid")) {
 #' Generic to extract the log slot as a table
 #'
 #' @param x an \code{\link{ATO}} object
+#' @param debug should debug entries and the call column be displayed?
 #'
 #' @return The log slot as a table
 #'
