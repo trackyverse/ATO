@@ -28,6 +28,7 @@ class(dets)
 
 my_ATO <- add(my_ATO, dets)
 my_ATO
+get_log(my_ATO)
 
 head(actel:::example.deployments)
 head(actel:::example.spatial)
