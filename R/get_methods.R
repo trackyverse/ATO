@@ -181,6 +181,29 @@ setMethod("get_obs", "ATO", function(x, type = c("all", "valid", "invalid")) {
   }
 })
 
+#' Generic to extract the log slot as a table
+#'
+#' @param x an \code{\link{ATO}} object
+#' @param debug should debug entries and the call column be displayed?
+#'
+#' @return The log slot as a table
+#'
+#' @export
+#'
+setGeneric(
+  "get_log",
+  function(x, debug = FALSE) standardGeneric("get_log")
+)
+
+#' @rdname get_log
+setMethod("get_log", "ATO", function(x, debug = FALSE) {
+  if (debug) {
+    return(x@log)
+  } else {
+    return(x@log[x@log$type != "debug", colnames(x@log) != "call"])
+  }
+})
+
 #' `$` Method to extract ATO slots directly
 #'
 #' @param x an \code{\link{ATO}} object

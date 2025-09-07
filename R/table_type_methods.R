@@ -44,6 +44,7 @@ setMethod("table_type<-", "ATO", function(x, value) {
     tag <- as.data.frame(x@tag)
     ani <- as.data.frame(x@ani)
     obs <- as.data.frame(x@obs)
+    log <- as.data.frame(x@log)
   }
   if (value == "data.table") {
     det <- data.table::as.data.table(x@det)
@@ -51,6 +52,7 @@ setMethod("table_type<-", "ATO", function(x, value) {
     tag <- data.table::as.data.table(x@tag)
     ani <- data.table::as.data.table(x@ani)
     obs <- data.table::as.data.table(x@obs)
+    log <- data.table::as.data.table(x@log)
   }
   if (value == "tibble") {
     det <- tibble::as_tibble(x@det)
@@ -58,17 +60,20 @@ setMethod("table_type<-", "ATO", function(x, value) {
     tag <- tibble::as_tibble(x@tag)
     ani <- tibble::as_tibble(x@ani)
     obs <- tibble::as_tibble(x@obs)
+    log <- tibble::as_tibble(x@log)
   }
   class(det) <- c("ATO_det", class(det))
   class(dep) <- c("ATO_dep", class(dep))
   class(tag) <- c("ATO_tag", class(tag))
   class(ani) <- c("ATO_ani", class(ani))
   class(obs) <- c("ATO_obs", class(obs))
+  class(log) <- c("ATO_log", class(log))
   x@det <- det
   x@dep <- dep
   x@tag <- tag
   x@ani <- ani
   x@obs <- obs
+  x@log <- log
 
   validObject(x)
   return(x)
