@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   articles/ato-dictionary: ato-dictionary.html
   articles/ATO-ecosystem: ATO-ecosystem.html
-last_built: 2025-08-28T16:43Z
+last_built: 2025-09-07T22:55Z
 urls:
   reference: https://trackyverse.github.io/ATO/reference
   article: https://trackyverse.github.io/ATO/articles

@@ -27,12 +27,15 @@
 <url><loc>https://trackyverse.github.io/ATO/reference/get_det.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/get_det_dep.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/get_det_tag.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/get_log.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/get_obs.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/get_tag.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/has.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/index.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/init_ato.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/is_ato.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/log_comment.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/log_event.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/make_ani.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/make_dep.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/make_det.html</loc></url>
