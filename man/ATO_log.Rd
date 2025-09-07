@@ -14,7 +14,7 @@ A data frame with 0 rows and 4 variables:
 \item{log}{log entry, character.}
 }
 
-An object of class \code{ATO_log} (inherits from \code{data.frame}) with 0 rows and 4 columns.
+An object of class \code{ATO_log} (inherits from \code{data.frame}) with 0 rows and 6 columns.
 }
 \usage{
 .ATO_log

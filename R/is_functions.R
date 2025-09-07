@@ -12,7 +12,7 @@
 #' @export
 #' 
 is_ato <- function(x, error = TRUE) {
-  if (!is(x, "ATO")) {
+  if (missing(x) || !is(x, "ATO")) {
     if (error) {
       stop("input is not an ATO object.",
            call. = FALSE)

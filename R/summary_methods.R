@@ -245,11 +245,14 @@ setMethod("summary", "ATO_obs", function(object) {
 #' 
 setMethod("summary", "ATO_log", function(object) {
   cat("@log:\n")
-  aux <- length(unique(object@package))
-  cat(" -", nrow(object), "log entries from ",
+  aux <- length(unique(object$pkg))
+  cat(" -", nrow(object), "log",
+      ifelse(aux > 1,
+             "entries",
+             "entry"),
       aux,
       ifelse(aux > 1,
-             " packages",
-             " package"))
+             "packages",
+             "package"))
   cat("\n")
 })

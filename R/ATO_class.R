@@ -326,8 +326,10 @@ setClass("ATO_log")
 #' @name .ATO_log
 #' @export
 .ATO_log <- data.frame(
-  datetime = as.POSIXct(NA_real_),
-  package = NA_character_,
+  datetime = as.POSIXct(NA_real_, tz = "UTC"),
+  type = NA_character_,
+  pkg = NA_character_,
+  fun = NA_character_,
   call = NA_character_,
   log = NA_character_
 )[-1, ]
