@@ -1,0 +1,103 @@
+---
+title: "Creating an ATO"
+date: 2025-09-07
+author: Hugo Flávio
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{creating-ATO}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
+---
+
+## data.frame, data.table, or tibble?
+
+The Animal Tracking Object (ATO) supports the three types of tables[^1], so R users can use the flavour they prefer. The default table type of an ATO is data.frame. You may change this for all future ATOs in the current R session by running either `ato_table_type_global("data.table")` or `ato_table_type_global("tibble")`. To check the table type of an already-created ATO, use `table_type(ato)`, and to modify it, run e.g. `table_type(ato) <- "data.table"`. ATOs also indicate their table types when you show them in the console. 
+
+Packages within the trackyverse may change the internal table formats of an ATO provided to them, but should always return the ATO in the format that it was provided in the first place. Packages should _not_ use `ato_table_type_global()`. Further, if your package uses data.table ATOs, you should make it clear to the user whether or not your package is making a copy of the ATO and editing it, or working directly on the provided object (which might affect its contents even if the function eventually crashes).
+
+[^1]: Provided you have the respective packages installed.
+
+## Creating the ATO object
+
+The correct way to create an ATO is through the function `init_ato()`. This will ensure that the created ATO respects the current settings (e.g. the default table type). The `init_ato()` function can be called without arguments, which will generate an empty ATO.
+
+
+```{r}
+#| label: setup
+#| echo: true
+#| message: true
+library(ATO)
+
+ato <- init_ato()
+ato
+```
+
+When you open an ATO, you'll find a short summary of its contents. The output above shows us that our newly created ATO is empty, and also reveals the six core slots of the ATO. You can find more about those in the [article about the ATO structure[still to be written]](https://ato.trackyverse.org/articles/ATO-structure.html). The family of "make" functions (e.g. `make_det()`) is responsible for creating each of the slots, which can then be integrated into your ATO object using `add()`. You may also initiate an ATO already with data by using the respective arguments within `init_ato()`. Below is an example with dummy data. Note: `add()` has an `append` argument that you can use to add more data to a slot that already contains some information.
+
+```{r}
+#| label: data
+#| echo: true
+#| message: true
+ani <- make_ani(
+  animal = "A1",
+  length = 123,
+  weight = 55,
+  release_date = Sys.time() - 20,
+  tz = "America/Halifax"
+)
+
+tag <- make_tag(
+  transmitter = c("R64K-1234", "R64K-1235"),
+  animal = c("A1", "A1"),
+  tz = "America/Halifax"
+)
+
+dep <- make_dep(
+  receiver_serial = as.integer(c(11111, 22222)),
+  deploy_lat = c(11.123, 11.124),
+  deploy_lon = c(21.234, 21.235),
+  deploy_z = c(20, 30),
+  tz = "America/Halifax"
+)
+
+det <- make_det(
+  datetime = c(Sys.time(), Sys.time() + 1),
+  frac_second = c(0.1, 0.2),
+  receiver_serial = as.integer(c(11111, 22222)),
+  transmitter = c("R64K-1234", "R64K-1234"),
+  tz = "America/Halifax"
+)
+
+# method 1: use add()
+ato <- add(ato, ani)
+ato
+
+ato <- add(ato, tag)
+ato
+
+ato <- add(ato, det)
+ato
+
+ato <- add(ato, dep)
+ato
+
+# Method 2: initiate the ATO already with data
+ato <- init_ato(
+  ani = ani,
+  tag = tag,
+  dep = dep,
+  det = det
+)
+ato
+```
+
+And that's it! Now you have an ATO you can use in further analyses.
+
+
+For package developers: [how should I handle an ATO inside my functions?[still to be written]](https://ato.trackyverse.org/articles/ATO-manipulation.html)
+
+For users: [what can I do with my ATO?[still to be written]](https://ato.trackyverse.org/articles/tracky-packages.html)
