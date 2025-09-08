@@ -1,0 +1,8 @@
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+
+# Request review of changes to files in /R by H. Flavio OR M. O'Brien
+/R/ @hugomflavio @mhpob
+
+# Request review of GitHub interactions by M. O'Brien
+/.github/ @mhpob
