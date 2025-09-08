@@ -39,30 +39,38 @@ ato
 When you open an ATO, you'll find a short summary of its contents. The output above shows us that our newly created ATO is empty, and also reveals the six core slots of the ATO. You can find more about those in the [article about the ATO structure[still to be written]](https://ato.trackyverse.org/articles/ATO-structure.html). The family of "make" functions (e.g. `make_det()`) is responsible for creating each of the slots, which can then be integrated into your ATO object using `add()`. You may also initiate an ATO already with data by using the respective arguments within `init_ato()`. Below is an example with dummy data. Note: `add()` has an `append` argument that you can use to add more data to a slot that already contains some information.
 
 ```{r}
-#| label: setup
+#| label: data
 #| echo: true
 #| message: true
-ani <- make_ani(animal = "A1",
-                length = 123,
-                weight = 55,
-                release_date = Sys.time() - 20,
-                tz = "America/Halifax")
+ani <- make_ani(
+  animal = "A1",
+  length = 123,
+  weight = 55,
+  release_date = Sys.time() - 20,
+  tz = "America/Halifax"
+)
 
-tag <- make_tag(transmitter = c("R64K-1234", "R64K-1235"),
-                animal = c("A1", "A1"),
-                tz = "America/Halifax")
+tag <- make_tag(
+  transmitter = c("R64K-1234", "R64K-1235"),
+  animal = c("A1", "A1"),
+  tz = "America/Halifax"
+)
 
-dep <- make_dep(receiver_serial = as.integer(c(11111, 22222)),
-                deploy_lat = c(11.123, 11.124),
-                deploy_lon = c(21.234, 21.235),
-                deploy_z = c(20, 30),
-                tz = "America/Halifax")
+dep <- make_dep(
+  receiver_serial = as.integer(c(11111, 22222)),
+  deploy_lat = c(11.123, 11.124),
+  deploy_lon = c(21.234, 21.235),
+  deploy_z = c(20, 30),
+  tz = "America/Halifax"
+)
 
-det <- make_det(datetime = c(Sys.time(), Sys.time()+1),
-                frac_second = c(0.1, 0.2),
-                receiver_serial = as.integer(c(11111, 22222)),
-                transmitter = c("R64K-1234", "R64K-1234"),
-                tz = "America/Halifax")
+det <- make_det(
+  datetime = c(Sys.time(), Sys.time() + 1),
+  frac_second = c(0.1, 0.2),
+  receiver_serial = as.integer(c(11111, 22222)),
+  transmitter = c("R64K-1234", "R64K-1234"),
+  tz = "America/Halifax"
+)
 
 # method 1: use add()
 ato <- add(ato, ani)
@@ -78,10 +86,12 @@ ato <- add(ato, dep)
 ato
 
 # Method 2: initiate the ATO already with data
-ato <- init_ato(ani = ani,
-                tag = tag,
-                dep = dep,
-                det = det)
+ato <- init_ato(
+  ani = ani,
+  tag = tag,
+  dep = dep,
+  det = det
+)
 ato
 ```
 
