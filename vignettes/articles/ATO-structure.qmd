@@ -1,0 +1,133 @@
+---
+title: "What's inside an ATO"
+date: 2025-09-07
+author: Hugo Flávio
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ATO-structure}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+library(googlesheets4)
+gs4_deauth()
+
+ato_url <- 'https://docs.google.com/spreadsheets/d/1YKL4qaIcM70KUY9LssGDrd0aKtEecHlCv1XotF2EJfY/'
+
+sheets <- sheet_names(ato_url)
+
+sheets_data <- lapply(sheets, {
+  \(.x) with_gs4_quiet(read_sheet(ato_url, sheet = .x))
+})
+names(sheets_data) <- sheets
+```
+
+## Slot based data storage
+
+The Animal Tracking Object (ATO) is an S4 object made of several slots. These were designed to be broadly applicable to tracking data of any kind (e.g. acoustic telemetry, satellite, radio). The slots are interconnected, so the ATO automatically checks e.g. which of your tags were detected or observed (different things, see below) throughout the study.
+
+```{r}
+#| echo: true
+#| results: asis
+print(knitr::kable(sheets_data$slots))
+```
+
+### @ani
+
+The animals slot contains information on the animals tracked.
+
+```{r}
+#| echo: true
+#| results: asis
+x <- sheets_data$columns
+x <- x[grep("@ani", unlist(x[, 1])), ]
+x <- x[unlist(x[, 4]) == "manual", ]
+x <- x[, -c(1, 4)]
+print(knitr::kable(x))
+```
+
+### @tag
+
+The tags slot contains information on the transmitters that were used to track the animals. 
+
+```{r}
+#| echo: true
+#| results: asis
+x <- sheets_data$columns
+x <- x[grep("@tag", unlist(x[, 1])), ]
+x <- x[unlist(x[, 4]) == "manual", ]
+x <- x[, -c(1, 4)]
+print(knitr::kable(x))
+```
+
+The `animal` column will be matched against the animal names provided in the @ani slot.
+
+### @dep
+
+The deployments slot contains information on autonomous, stationary receivers that were deployed to listen to the transmitters.
+
+```{r}
+#| echo: true
+#| results: asis
+x <- sheets_data$columns
+x <- x[grep("@dep", unlist(x[, 1])), ]
+x <- x[unlist(x[, 4]) == "manual", ]
+x <- x[, -c(1, 4)]
+print(knitr::kable(x))
+```
+
+### @det
+
+The detections slot contains the detection extracts obtained from the stationary receivers deployed.
+
+```{r}
+#| echo: true
+#| results: asis
+x <- sheets_data$columns
+x <- x[grep("@det", unlist(x[, 1])), ]
+x <- x[unlist(x[, 4]) == "manual", ]
+x <- x[, -c(1, 4)]
+print(knitr::kable(x))
+```
+
+The `receiver_serial` column will be matched to the receivers listed in the @dep slot.
+
+### @obs
+
+The observations slot contains records of direct and indirect observations of an animal or tag. For example, a photo of the tail of a whale is a **direct** observation of the **animal**. A reported capture of a fish by an angler is also a **direct** observation of the **animal**. On the other hand, a satellite-estimated position of a transmitter is an **indirect** observation of a **tag**. A detection of a tag using a mobile receiver is also an **indirect** observation of a **tag**. The choice between direct and indirect observation types declares the confidence you have on that observation. This information may be used by modelling tools to determine which positions to rely on more heavily.
+
+```{r}
+#| echo: true
+#| results: asis
+x <- sheets_data$columns
+x <- x[grep("@obs", unlist(x[, 1])), ]
+x <- x[unlist(x[, 4]) == "manual", ]
+x <- x[, -c(1, 4)]
+print(knitr::kable(x))
+```
+
+The `animal` column is matched to the animal names in the @ani slot, while the `tag` column is matched to the `transmitter` column in the @tag slot. Observations typically only use one of the two columns.
+
+### @log
+
+The log slot keeps track of the operations performed to the ATO since it was initialized to its current state. It is a great tool both for debugging and for increasing the reproducibility of animal tracking analyses.
+
+```{r}
+#| echo: true
+#| results: asis
+x <- sheets_data$columns
+x <- x[grep("@obs", unlist(x[, 1])), ]
+x <- x[unlist(x[, 4]) == "manual", ]
+x <- x[, -c(1, 4)]
+print(knitr::kable(x))
+```
+
+Next: [How do I create an ATO?](https://ato.trackyverse.org/articles/creating-ATO.html)
