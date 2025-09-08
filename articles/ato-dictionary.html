@@ -37,6 +37,8 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/ato-dictionary.html">The ATO Dictionary</a></li>
     <li><a class="dropdown-item" href="../articles/ATO-ecosystem.html">The ATO ecosystem</a></li>
+    <li><a class="dropdown-item" href="../articles/ATO-structure.html">What's inside an ATO</a></li>
+    <li><a class="dropdown-item" href="../articles/creating_an_ato.html">Creating an ATO</a></li>
   </ul>
 </li>
       </ul>
@@ -119,7 +121,7 @@
 <td style="text-align: left;"><span class="citation" data-cites="tbl">@tbl</span></td>
 <td style="text-align: left;">ATO_tbl</td>
 <td style="text-align: left;">character</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">-</td>
 </tr>
 </tbody>
 </table></section><section class="level2"><h2 id="columns">columns<a class="anchor" aria-label="anchor" href="#columns"></a>
@@ -488,7 +490,7 @@
 <tr class="even">
 <td style="text-align: left;">
 <span class="citation" data-cites="ani">@ani</span> (animal)</td>
-<td style="text-align: left;">animal</td>
+<td style="text-align: left;">`</td>
 <td style="text-align: left;">character</td>
 <td style="text-align: left;">manual</td>
 <td style="text-align: left;">name/code of the animal</td>
@@ -696,10 +698,26 @@
 <tr class="even">
 <td style="text-align: left;">
 <span class="citation" data-cites="log">@log</span> (internal log)</td>
-<td style="text-align: left;">package</td>
+<td style="text-align: left;">type</td>
 <td style="text-align: left;">character</td>
 <td style="text-align: left;">automatic</td>
-<td style="text-align: left;">package that wrote the entry</td>
+<td style="text-align: left;">the type of event</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<span class="citation" data-cites="log">@log</span> (internal log)</td>
+<td style="text-align: left;">pkg</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">package to which the funciton belongs</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<span class="citation" data-cites="log">@log</span> (internal log)</td>
+<td style="text-align: left;">fun</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">automatic</td>
+<td style="text-align: left;">function that wrote the entry</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">
@@ -707,7 +725,7 @@
 <td style="text-align: left;">call</td>
 <td style="text-align: left;">character</td>
 <td style="text-align: left;">automatic</td>
-<td style="text-align: left;">function that wrote the entry</td>
+<td style="text-align: left;">the full function call</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">
