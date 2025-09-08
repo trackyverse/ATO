@@ -27,7 +27,7 @@ add(x, value, append = FALSE)
 \item{value}{The data to be included.
 The output of one of the make_* functions.}
 
-\item{append}{Logical: Should the new data add to the
+\item{append}{Logical: Should the new data be appended to the
 data already present in the ATO?}
 }
 \value{

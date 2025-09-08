@@ -7,7 +7,7 @@
 #' @param x an ATO
 #' @param value The data to be included.
 #'   The output of one of the make_* functions.
-#' @param append Logical: Should the new data add to the
+#' @param append Logical: Should the new data be appended to the
 #'   data already present in the ATO?
 #' 
 #' @return The updated ATO
@@ -19,17 +19,28 @@ setGeneric("add", function(x, value, append = FALSE) standardGeneric("add"))
 #' @rdname add
 setMethod("add", c(x = "ATO", value = "ATO_det"), function(x, value, append) {
   if (append) {
-    original <- x@det[colnames(.ATO_det), ]
-    to_add <- rbind(original, value)
-    if (table_type(x) == "data.table") {
-      to_add <- data.table::as.data.table(to_add)
+    check1 <- any(colnames(value) %in% colnames(x@det))
+    check2 <- any(colnames(value) %in% colnames(x@det))
+    if (check1 | check2) {
+      stop("append is set to TRUE but column names of new detection data",
+           " doesn't match the column names in @det.", call. = FALSE)
     }
-    if (table_type(x) == "tibble") {
-      to_add <- tibble::as_tibble(to_add)
-    }
-    class(to_add) <- c("ATO_det", class(to_add))
+    to_add <- rbind(x@det, value)
+    class(to_add) <- class(x@det)
     x@det <- to_add
+    x <- log_event(x, "log", 
+                   "Appended ", nrow(value),
+                   " new detections to the @det slot.")
   } else {
+    if (has(x, "det")) {
+      x <- log_event(x, "log", 
+                     "Overwrote the @det slot with ", nrow(value),
+                     " detections.")
+    } else {
+      x <- log_event(x, "log", 
+                     "Added a new @det slot with ", nrow(value),
+                     " detections.")
+    }
     x@det <- value
   }
   validObject(x)
@@ -45,17 +56,28 @@ setMethod("add", c(x = "ATO", value = "ATO_det"), function(x, value, append) {
 #' @rdname add
 setMethod("add", c(x = "ATO", value = "ATO_dep"), function(x, value, append) {
   if (append) {
-    original <- x@dep[colnames(.ATO_dep), ]
-    to_add <- rbind(original, value)
-    if (table_type(x) == "data.table") {
-      to_add <- data.table::as.data.table(to_add)
+    check1 <- any(colnames(value) %in% colnames(x@dep))
+    check2 <- any(colnames(value) %in% colnames(x@dep))
+    if (check1 | check2) {
+      stop("append is set to TRUE but column names of new deployment data",
+           " doesn't match the column names in @dep.", call. = FALSE)
     }
-    if (table_type(x) == "tibble") {
-      to_add <- tibble::as_tibble(to_add)
-    }
-    class(to_add) <- c("ATO_dep", class(to_add))
+    to_add <- rbind(x@dep, value)
+    class(to_add) <- class(x@dep)
     x@dep <- to_add
+    x <- log_event(x, "log", 
+                   "Appended ", nrow(value),
+                   " new deployments to the @dep slot.")
   } else {
+    if (has(x, "dep")) {
+      x <- log_event(x, "log", 
+                     "Overwrote the @dep slot with ", nrow(value),
+                     " deployments.")
+    } else {
+      x <- log_event(x, "log", 
+                     "Added a new @dep slot with ", nrow(value),
+                     " deployments.")
+    }
     x@dep <- value
   }
   validObject(x)
@@ -68,17 +90,28 @@ setMethod("add", c(x = "ATO", value = "ATO_dep"), function(x, value, append) {
 #' @rdname add
 setMethod("add", c(x = "ATO", value = "ATO_tag"), function(x, value, append) {
   if (append) {
-    original <- x@tag[colnames(.ATO_tag), ]
-    to_add <- rbind(original, value)
-    if (table_type(x) == "data.table") {
-      to_add <- data.table::as.data.table(to_add)
+    check1 <- any(colnames(value) %in% colnames(x@tag))
+    check2 <- any(colnames(value) %in% colnames(x@tag))
+    if (check1 | check2) {
+      stop("append is set to TRUE but column names of new tag data",
+           " doesn't match the column names in @tag.", call. = FALSE)
     }
-    if (table_type(x) == "tibble") {
-      to_add <- tibble::as_tibble(to_add)
-    }
-    class(to_add) <- c("ATO_tag", class(to_add))
+    to_add <- rbind(x@tag, value)
+    class(to_add) <- class(x@tag)
     x@tag <- to_add
+    x <- log_event(x, "log", 
+                   "Appended ", nrow(value),
+                   " new tags to the @tag slot.")
   } else {
+    if (has(x, "tag")) {
+      x <- log_event(x, "log", 
+                     "Overwrote the @tag slot with ", nrow(value),
+                     " tags.")
+    } else {
+      x <- log_event(x, "log", 
+                     "Added a new @tag slot with ", nrow(value),
+                     " tags.")
+    }
     x@tag <- value
   }
   validObject(x)
@@ -97,17 +130,28 @@ setMethod("add", c(x = "ATO", value = "ATO_tag"), function(x, value, append) {
 #' @rdname add
 setMethod("add", c(x = "ATO", value = "ATO_ani"), function(x, value, append) {
   if (append) {
-    original <- x@ani[colnames(.ATO_ani), ]
-    to_add <- rbind(original, value)
-    if (table_type(x) == "data.table") {
-      to_add <- data.table::as.data.table(to_add)
+    check1 <- any(colnames(value) %in% colnames(x@ani))
+    check2 <- any(colnames(value) %in% colnames(x@ani))
+    if (check1 | check2) {
+      stop("append is set to TRUE but column names of new animal data",
+           " doesn't match the column names in @ani.", call. = FALSE)
     }
-    if (table_type(x) == "tibble") {
-      to_add <- tibble::as_tibble(to_add)
-    }
-    class(to_add) <- c("ATO_ani", class(to_add))
+    to_add <- rbind(x@ani, value)
+    class(to_add) <- class(x@ani)
     x@ani <- to_add
+    x <- log_event(x, "log", 
+                   "Appended ", nrow(value),
+                   " new animals to the @ani slot.")
   } else {
+    if (has(x, "ani")) {
+      x <- log_event(x, "log", 
+                     "Overwrote the @ani slot with ", nrow(value),
+                     " animals.")
+    } else {
+      x <- log_event(x, "log", 
+                     "Added a new @ani slot with ", nrow(value),
+                     " animals.")
+    }
     x@ani <- value
   }
   validObject(x)
@@ -123,17 +167,28 @@ setMethod("add", c(x = "ATO", value = "ATO_ani"), function(x, value, append) {
 #' @rdname add
 setMethod("add", c(x = "ATO", value = "ATO_obs"), function(x, value, append) {
   if (append) {
-    original <- x@obs[colnames(.ATO_obs), ]
-    to_add <- rbind(original, value)
-    if (table_type(x) == "data.table") {
-      to_add <- data.table::as.data.table(to_add)
+    check1 <- any(colnames(value) %in% colnames(x@obs))
+    check2 <- any(colnames(value) %in% colnames(x@obs))
+    if (check1 | check2) {
+      stop("append is set to TRUE but column names of new observation data",
+           " doesn't match the column names in @obs.", call. = FALSE)
     }
-    if (table_type(x) == "tibble") {
-      to_add <- tibble::as_tibble(to_add)
-    }
-    class(to_add) <- c("ATO_obs", class(to_add))
+    to_add <- rbind(x@obs, value)
+    class(to_add) <- class(x@obs)
     x@obs <- to_add
+    x <- log_event(x, "log", 
+                   "Appended ", nrow(value),
+                   " new observations to the @obs slot.")
   } else {
+    if (has(x, "obs")) {
+      x <- log_event(x, "log", 
+                     "Overwrote the @obs slot with ", nrow(value),
+                     " observations.")
+    } else {
+      x <- log_event(x, "log", 
+                     "Added a new @obs slot with ", nrow(value),
+                     " observations.")
+    }
     x@obs <- value
   }
   validObject(x)
