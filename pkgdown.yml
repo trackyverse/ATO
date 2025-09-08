@@ -5,8 +5,8 @@ articles:
   articles/ato-dictionary: ato-dictionary.html
   articles/ATO-ecosystem: ATO-ecosystem.html
   articles/ATO-structure: ATO-structure.html
-  articles/creating_an_ato: creating_an_ato.html
-last_built: 2025-09-08T15:51Z
+  articles/creating-an-ATO: creating-an-ATO.html
+last_built: 2025-09-08T17:03Z
 urls:
   reference: https://trackyverse.github.io/ATO/reference
   article: https://trackyverse.github.io/ATO/articles

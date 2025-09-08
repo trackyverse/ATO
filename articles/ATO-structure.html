@@ -38,7 +38,7 @@
 <li><a class="dropdown-item" href="../articles/ato-dictionary.html">The ATO Dictionary</a></li>
     <li><a class="dropdown-item" href="../articles/ATO-ecosystem.html">The ATO ecosystem</a></li>
     <li><a class="dropdown-item" href="../articles/ATO-structure.html">What's inside an ATO</a></li>
-    <li><a class="dropdown-item" href="../articles/creating_an_ato.html">Creating an ATO</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-an-ATO.html">Creating an ATO</a></li>
   </ul>
 </li>
       </ul>
@@ -73,8 +73,6 @@
     <section class="level2"><h2 id="slot-based-data-storage">Slot based data storage<a class="anchor" aria-label="anchor" href="#slot-based-data-storage"></a>
 </h2>
 <p>The Animal Tracking Object (ATO) is an S4 object made of several slots. These were designed to be broadly applicable to tracking data of any kind (e.g. acoustic telemetry, satellite, radio). The slots are interconnected, so the ATO automatically checks e.g. which of your tags were detected or observed (different things, see below) throughout the study.</p>
-<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">sheets_data</span><span class="op">$</span><span class="va">slots</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table caption-top">
 <thead><tr class="header">
 <th style="text-align: left;">slot</th>
@@ -131,12 +129,6 @@
 <span class="citation" data-cites="ani">@ani</span><a class="anchor" aria-label="anchor" href="#ani"></a>
 </h3>
 <p>The animals slot contains information on the animals tracked.</p>
-<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sheets_data</span><span class="op">$</span><span class="va">columns</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"@ani"</span>, <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">==</span> <span class="st">"manual"</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table caption-top">
 <colgroup>
 <col style="width: 31%">
@@ -150,7 +142,7 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">`</td>
+<td style="text-align: left;">animal</td>
 <td style="text-align: left;">character</td>
 <td style="text-align: left;">name/code of the animal</td>
 </tr>
@@ -204,12 +196,6 @@
 <span class="citation" data-cites="tag">@tag</span><a class="anchor" aria-label="anchor" href="#tag"></a>
 </h3>
 <p>The tags slot contains information on the transmitters that were used to track the animals.</p>
-<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sheets_data</span><span class="op">$</span><span class="va">columns</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"@tag"</span>, <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">==</span> <span class="st">"manual"</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table caption-top">
 <colgroup>
 <col style="width: 25%">
@@ -294,12 +280,6 @@
 <span class="citation" data-cites="dep">@dep</span><a class="anchor" aria-label="anchor" href="#dep"></a>
 </h3>
 <p>The deployments slot contains information on autonomous, stationary receivers that were deployed to listen to the transmitters.</p>
-<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sheets_data</span><span class="op">$</span><span class="va">columns</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"@dep"</span>, <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">==</span> <span class="st">"manual"</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table caption-top">
 <colgroup>
 <col style="width: 20%">
@@ -407,12 +387,6 @@
 <span class="citation" data-cites="det">@det</span><a class="anchor" aria-label="anchor" href="#det"></a>
 </h3>
 <p>The detections slot contains the detection extracts obtained from the stationary receivers deployed.</p>
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sheets_data</span><span class="op">$</span><span class="va">columns</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"@det"</span>, <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">==</span> <span class="st">"manual"</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table caption-top">
 <colgroup>
 <col style="width: 26%">
@@ -462,12 +436,6 @@
 <span class="citation" data-cites="obs">@obs</span><a class="anchor" aria-label="anchor" href="#obs"></a>
 </h3>
 <p>The observations slot contains records of direct and indirect observations of an animal or tag. For example, a photo of the tail of a whale is a <strong>direct</strong> observation of the <strong>animal</strong>. A reported capture of a fish by an angler is also a <strong>direct</strong> observation of the <strong>animal</strong>. On the other hand, a satellite-estimated position of a transmitter is an <strong>indirect</strong> observation of a <strong>tag</strong>. A detection of a tag using a mobile receiver is also an <strong>indirect</strong> observation of a <strong>tag</strong>. The choice between direct and indirect observation types declares the confidence you have on that observation. This information may be used by modelling tools to determine which positions to rely on more heavily.</p>
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sheets_data</span><span class="op">$</span><span class="va">columns</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"@obs"</span>, <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">==</span> <span class="st">"manual"</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table caption-top">
 <colgroup>
 <col style="width: 25%">
@@ -532,12 +500,6 @@
 <span class="citation" data-cites="log">@log</span><a class="anchor" aria-label="anchor" href="#log"></a>
 </h3>
 <p>The log slot keeps track of the operations performed to the ATO since it was initialized to its current state. It is a great tool both for debugging and for increasing the reproducibility of animal tracking analyses.</p>
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">sheets_data</span><span class="op">$</span><span class="va">columns</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"@obs"</span>, <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">==</span> <span class="st">"manual"</span>, <span class="op">]</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table caption-top">
 <colgroup>
 <col style="width: 25%">
@@ -597,7 +559,7 @@
 </tr>
 </tbody>
 </table>
-<p>Next: <a href="https://ato.trackyverse.org/articles/creating-ATO.html" class="external-link">How do I create an ATO?</a></p>
+<p>Next: <a href="https://ato.trackyverse.org/articles/creating-an-ATO.html" class="external-link">How do I create an ATO?</a></p>
 </section></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
