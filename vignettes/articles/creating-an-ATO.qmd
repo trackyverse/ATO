@@ -36,7 +36,7 @@ ato <- init_ato()
 ato
 ```
 
-When you open an ATO, you'll find a short summary of its contents. The output above shows us that our newly created ATO is empty, and also reveals the six core slots of the ATO. You can find more about those in the [article about the ATO structure[still to be written]](https://ato.trackyverse.org/articles/ATO-structure.html). The family of "make" functions (e.g. `make_det()`) is responsible for creating each of the slots, which can then be integrated into your ATO object using `add()`. You may also initiate an ATO already with data by using the respective arguments within `init_ato()`. Below is an example with dummy data. Note: `add()` has an `append` argument that you can use to add more data to a slot that already contains some information.
+When you open an ATO, you'll find a short summary of its contents. The output above shows us that our newly created ATO is empty, and also reveals the six core slots of the ATO. You can find more about those in the [article about the ATO structure](https://ato.trackyverse.org/articles/ATO-structure.html). The family of "make" functions (e.g. `make_det()`) is responsible for creating each of the slots, which can then be integrated into your ATO object using `add()`. You may also initiate an ATO already with data by using the respective arguments within `init_ato()`. Below is an example with dummy data. Note: `add()` has an `append` argument that you can use to add more data to a slot that already contains some information.
 
 ```{r}
 #| label: data

@@ -5,7 +5,7 @@
 \alias{ATO-class}
 \title{S4 class: ATO}
 \description{
-The Animal Telemetry Object (ATO) class contains slots that allow
+The Animal Tracking Object (ATO) class contains slots that allow
 researchers to package their study data in a standard format, to be used
 by the R packages that collectively make the trackyverse.
 }

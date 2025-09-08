@@ -5,7 +5,7 @@
 \alias{ATO}
 \alias{ATO-package}
 \alias{ATO_package}
-\title{ATO: Animal Telemetry Object Class}
+\title{ATO: Animal Tracking Object Class}
 \description{
 Class and methods to create, edit, and expand an ATO.
 }
