@@ -61,10 +61,13 @@ setMethod("summary", "ATO_det", function(object) {
     }
   }
   cat("\n")
-  cat(" - Data range:", 
+  cat(" - Data range: ",
       as.character(min(object$datetime)),
-      "to", 
-      as.character(max(object$datetime)), "\n")
+      " to ",
+      as.character(max(object$datetime)),
+      " (",
+      attributes(object$datetime)$tzone,
+      ")\n", sep = "")
 })
 
 #' Summary method for an ATO_dep object
