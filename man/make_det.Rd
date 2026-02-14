@@ -7,7 +7,7 @@
 make_det(
   datetime = as.POSIXct(NA_real_),
   frac_second = NA_real_,
-  receiver_serial = NA_integer_,
+  receiver_serial = NA_character_,
   transmitter = NA_character_,
   sensor_value = NA_real_,
   tz,

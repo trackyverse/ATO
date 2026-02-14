@@ -9,7 +9,7 @@
 A data frame with 0 rows and 16 variables:
 \describe{
 \item{receiver_model}{Model of the receiver, character.}
-\item{receiver_serial}{Receiver serial number, integer.}
+\item{receiver_serial}{Receiver serial number, character.}
 \item{receiver_codeset}{Codeset of the receiver, character.}
 \item{deploy_location}{Name of the location where the receiver was deployed, character.}
 \item{deploy_datetime}{date and time of the deployment, posixct.}
@@ -23,7 +23,7 @@ A data frame with 0 rows and 16 variables:
 \item{transmitter_manufacturer}{Manufacturer of the transmitter, character.}
 \item{transmitter_ping_rate}{Expected ping rate of the transmitter, numeric. In seconds.}
 \item{transmitter_model}{Model of the transmitter, character.}
-\item{transmitter_serial}{Serial number of the transmitter, integer.}
+\item{transmitter_serial}{Serial number of the transmitter, character.}
 }
 
 An object of class \code{ATO_dep} (inherits from \code{data.frame}) with 0 rows and 16 columns.
