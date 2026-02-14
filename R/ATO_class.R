@@ -17,7 +17,7 @@
 #' \describe{
 #'   \item{datetime}{date and time, posixct format.}
 #'   \item{frac_second}{fractional second, numeric.}
-#'   \item{receiver_serial}{receiver serial number, integer.}
+#'   \item{receiver_serial}{receiver serial number, character.}
 #'   \item{transmitter}{transmitter code, character.}
 #'   \item{sensor_value}{reported sensor value, numeric.}
 #' }
@@ -36,7 +36,7 @@ setClass("ATO_det")
 .ATO_det <- data.frame(
   datetime = as.POSIXct(NA_real_),
   frac_second = NA_real_,
-  receiver_serial = NA_integer_,
+  receiver_serial = NA_character_,
   transmitter = NA_character_,
   sensor_value = NA_real_,
   valid = NA
@@ -68,7 +68,7 @@ class(.ATO_det) <- c("ATO_det", "data.frame")
 #' @format A data frame with 0 rows and 16 variables:
 #' \describe{
 #'   \item{receiver_model}{Model of the receiver, character.}
-#'   \item{receiver_serial}{Receiver serial number, integer.}
+#'   \item{receiver_serial}{Receiver serial number, character.}
 #'   \item{receiver_codeset}{Codeset of the receiver, character.}
 #'   \item{deploy_location}{Name of the location where the receiver was deployed, character.}
 #'   \item{deploy_datetime}{date and time of the deployment, posixct.}
@@ -82,7 +82,7 @@ class(.ATO_det) <- c("ATO_det", "data.frame")
 #'   \item{transmitter_manufacturer}{Manufacturer of the transmitter, character.}
 #'   \item{transmitter_ping_rate}{Expected ping rate of the transmitter, numeric. In seconds.}
 #'   \item{transmitter_model}{Model of the transmitter, character.}
-#'   \item{transmitter_serial}{Serial number of the transmitter, integer.}
+#'   \item{transmitter_serial}{Serial number of the transmitter, character.}
 #' }
 #'
 #' @keywords classes
@@ -98,7 +98,7 @@ setClass("ATO_dep")
 #' @export
 .ATO_dep <- data.frame(
   receiver_model = NA_character_,
-  receiver_serial = NA_integer_,
+  receiver_serial = NA_character_,
   receiver_codeset = NA_character_,
   deploy_location = NA_character_,
   deploy_datetime = as.POSIXct(NA_real_),
@@ -112,7 +112,7 @@ setClass("ATO_dep")
   transmitter_manufacturer = NA_character_,
   transmitter_ping_rate = NA_real_,
   transmitter_model = NA_character_,
-  transmitter_serial = NA_integer_
+  transmitter_serial = NA_character_
 )[-1, ]
 class(.ATO_dep) <- c("ATO_dep", "data.frame")
 
@@ -143,7 +143,7 @@ class(.ATO_dep) <- c("ATO_dep", "data.frame")
 #'   \item{power_level}{Power level of the transmitter, real.}
 #'   \item{ping_rate}{Expected ping rate of the transmitter, numeric. In seconds.}
 #'   \item{ping_variation}{Range of the variation added between pings, to reduce tag collisions, numeric. In seconds}
-#'   \item{serial}{Serial number of the tag, integer.}
+#'   \item{serial}{Serial number of the tag, character.}
 #'   \item{transmitter}{Transmitter code, character.}
 #'   \item{activation_datetime}{date and time of the tag activation, posixct.}
 #'   \item{battery_life}{expected battery duration of the tag, numeric.}
@@ -169,7 +169,7 @@ setClass("ATO_tag")
   power_level = NA_real_,
   ping_rate = NA_real_, # seconds
   ping_variation = NA_real_, # 0 if fixed ping rate
-  serial = NA_integer_,
+  serial = NA_character_,
   transmitter = NA_character_,
   activation_datetime = as.POSIXct(NA_real_),
   battery_life = NA_real_, # days
