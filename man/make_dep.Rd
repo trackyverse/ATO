@@ -6,7 +6,7 @@
 \usage{
 make_dep(
   receiver_model = NA_character_,
-  receiver_serial = NA_integer_,
+  receiver_serial = NA_character_,
   receiver_codeset = NA_character_,
   deploy_location = NA_character_,
   deploy_datetime = as.POSIXct(NA_real_),
@@ -20,7 +20,7 @@ make_dep(
   transmitter_manufacturer = NA_character_,
   transmitter_ping_rate = NA_real_,
   transmitter_model = NA_character_,
-  transmitter_serial = NA_integer_,
+  transmitter_serial = NA_character_,
   tz,
   ...
 )

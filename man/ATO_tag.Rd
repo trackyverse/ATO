@@ -13,7 +13,7 @@ A data frame with 0 rows and 12 variables:
 \item{power_level}{Power level of the transmitter, real.}
 \item{ping_rate}{Expected ping rate of the transmitter, numeric. In seconds.}
 \item{ping_variation}{Range of the variation added between pings, to reduce tag collisions, numeric. In seconds}
-\item{serial}{Serial number of the tag, integer.}
+\item{serial}{Serial number of the tag, character.}
 \item{transmitter}{Transmitter code, character.}
 \item{activation_datetime}{date and time of the tag activation, posixct.}
 \item{battery_life}{expected battery duration of the tag, numeric.}

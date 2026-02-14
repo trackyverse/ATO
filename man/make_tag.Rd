@@ -10,7 +10,7 @@ make_tag(
   power_level = NA_real_,
   ping_rate = NA_real_,
   ping_variation = NA_real_,
-  serial = NA_integer_,
+  serial = NA_character_,
   transmitter = NA_character_,
   activation_datetime = as.POSIXct(NA_real_),
   battery_life = NA_real_,

@@ -10,7 +10,7 @@ A data frame with 0 rows and 5 variables:
 \describe{
 \item{datetime}{date and time, posixct format.}
 \item{frac_second}{fractional second, numeric.}
-\item{receiver_serial}{receiver serial number, integer.}
+\item{receiver_serial}{receiver serial number, character.}
 \item{transmitter}{transmitter code, character.}
 \item{sensor_value}{reported sensor value, numeric.}
 }
