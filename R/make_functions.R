@@ -2,13 +2,13 @@
 #' 
 #' Formats the input data into the ATO format and appends the ATO_det class.
 #' 
-#' @param datetime date and time, posixct format.
-#' @param frac_second fractional second, numeric.
-#' @param receiver_serial receiver serial number, integer.
-#' @param transmitter transmitter code, character.
-#' @param sensor_value reported sensor value, numeric.
-#' @param tz the timezone of the datetime data.
-#' @param ... Non-standard columns to be added to the table.
+#' @param datetime date and time, posixct format. Mandatory.
+#' @param frac_second fractional second, numeric. Optional.
+#' @param receiver_serial Mandatory. receiver serial number, integer. Mandatory.
+#' @param transmitter Mandatory. transmitter code, character. Mandatory.
+#' @param sensor_value reported sensor value, numeric. Optional.
+#' @param tz the timezone of the datetime data. Mandatory.
+#' @param ... Non-standard columns to be added to the table. Optional.
 #' 
 #' @return an ATO_det object, ready to be used by \code{\link{add}} or
 #'   \code{\link{init_ato}}.
@@ -17,17 +17,14 @@
 #' 
 #' @seealso ATO_det
 #' 
-make_det <- function(datetime = as.POSIXct(NA_real_),
+make_det <- function(datetime,
                      frac_second = NA_real_,
-                     receiver_serial = NA_character_,
-                     transmitter = NA_character_,
+                     receiver_serial,
+                     transmitter,
                      sensor_value = NA_real_,
                      tz,
                      ...) {
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
-  if (missing(tz)) {
-    stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
-  }
   # detections objects can be very big.
   # to avoid spending a long time loading everything
   # before checking the quality of the data, we can make
@@ -38,8 +35,7 @@ make_det <- function(datetime = as.POSIXct(NA_real_),
                        receiver_serial = receiver_serial[1],
                        transmitter = transmitter[1],
                        sensor_value = sensor_value[1],
-                       valid = TRUE,
-                       ...)
+                       valid = TRUE)
   }
   if (ato_table_type == "data.table") {
     .data.table_exists()
@@ -48,8 +44,7 @@ make_det <- function(datetime = as.POSIXct(NA_real_),
                                   receiver_serial = receiver_serial[1],
                                   transmitter = transmitter[1],
                                   sensor_value = sensor_value[1],
-                                  valid = TRUE,
-                                  ...)
+                                  valid = TRUE)
   }
   if (ato_table_type == "tibble") {
     .tibble_exists()
@@ -58,12 +53,48 @@ make_det <- function(datetime = as.POSIXct(NA_real_),
                            receiver_serial = receiver_serial[1],
                            transmitter = transmitter[1],
                            sensor_value = sensor_value[1],
-                           valid = TRUE,
-                           ...)
+                           valid = TRUE)
   }
   class(mock) <- c("ATO_det", class(mock))
   attributes(mock$datetime)$tzone <- tz
   check(mock)
+
+  # now check for potential issues with fractional seconds
+  # more info here: https://github.com/trackyverse/ATO/issues/18
+  if (length(frac_second) == 1 & is.na(frac_second)) {
+    frac_from_dt <- as.numeric(datetime) %% 1
+    if (!all(frac_from_dt == 0)) { # same speed as all(!frac_from_dt)
+      # This is situation 1, pick solution 1A
+      warning("datetime contains millisecond information. Because frac_second",
+              " was not provided, fractional seconds will be stripped from the",
+              " datetime and stored in the frac_second column instead.", 
+              " To avoid this warning, strip fractional seconds from the",
+              " timestamps and optionally add them through the frac_second",
+              " argument.", call. = FALSE, immediate. = TRUE)
+      datetime <- datetime - frac_from_dt
+      frac_second <- frac_from_dt
+    }
+  } else {
+    frac_from_dt <- as.numeric(datetime) %% 1
+    if (!all(frac_from_dt == 0)) {
+      if (all(frac_second == frac_from_dt)) {
+        # This is situation 2.1, pick solution 1B
+        warning("datetime contains millisecond information. This information",
+                " matches the values provided through frac_second. Discarding",
+                " millisecond information in datetime. To avoid this warning,",
+                " strip fractional seconds from the timestamps.",
+                call. = FALSE, immediate. = TRUE)
+        datetime <- datetime - frac_from_dt
+      } else {
+        # This is situation 2.2, pick solution 2.2B (error out)
+        stop("datetime contains millisecond information that does not match",
+             " the values provided through frac_second. Please resolve this",
+             " conflict manually before building the det slot.",
+             call. = FALSE)
+      }
+    }
+  }
+
   # now the real thing, which should run smoothly.
   if (ato_table_type == "data.frame") {
     output <- data.frame(datetime = datetime,
