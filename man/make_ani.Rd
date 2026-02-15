@@ -5,13 +5,13 @@
 \title{Make an ATO animals object}
 \usage{
 make_ani(
-  animal = NA_character_,
+  animal,
   capture_location = NA_character_,
   capture_datetime = as.POSIXct(NA_real_),
   capture_lat = NA_real_,
   capture_lon = NA_real_,
-  release_location = NA_character_,
-  release_datetime = as.POSIXct(NA_real_),
+  release_location,
+  release_datetime,
   release_lat = NA_real_,
   release_lon = NA_real_,
   tz,
@@ -19,25 +19,29 @@ make_ani(
 )
 }
 \arguments{
-\item{animal}{Name of the animal that received the tag, character.}
+\item{animal}{Name of the animal that received the tag, character. Mandatory.}
 
 \item{capture_location}{Name of the location where the animal was captured,
-character.}
+character. Optional.}
 
-\item{capture_datetime}{date and time of the capture, posixct.}
+\item{capture_datetime}{date and time of the capture, posixct. Optional.}
 
-\item{capture_lat}{latitude of the capture. Preferably in WGS84, numeric.}
+\item{capture_lat}{latitude of the capture. Preferably in WGS84, numeric.
+Optional.}
 
-\item{capture_lon}{longitude of the capture. Preferably in WGS84, numeric.}
+\item{capture_lon}{longitude of the capture. Preferably in WGS84, numeric.
+Optional.}
 
 \item{release_location}{Name of the location where the animal was released,
-character.}
+character. Mandatory.}
 
-\item{release_datetime}{date and time of the release, posixct.}
+\item{release_datetime}{date and time of the release, posixct. Mandatory.}
 
-\item{release_lat}{latitude of the release. Preferably in WGS84, numeric.}
+\item{release_lat}{latitude of the release. Preferably in WGS84, numeric.
+Optional.}
 
-\item{release_lon}{longitude of the release. Preferably in WGS84, numeric.}
+\item{release_lon}{longitude of the release. Preferably in WGS84, numeric.
+Optional.}
 
 \item{tz}{the timezone of the datetime data.}
 
