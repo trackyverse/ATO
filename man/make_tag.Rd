@@ -11,7 +11,7 @@ make_tag(
   ping_rate = NA_real_,
   ping_variation = NA_real_,
   serial = NA_character_,
-  transmitter = NA_character_,
+  transmitter,
   activation_datetime = as.POSIXct(NA_real_),
   battery_life = NA_real_,
   sensor_type = NA_character_,
@@ -22,34 +22,34 @@ make_tag(
 )
 }
 \arguments{
-\item{manufacturer}{Manufacturer of the transmitter, character.}
+\item{manufacturer}{Manufacturer of the transmitter, character. Optional.}
 
-\item{model}{Model of the transmitter, character.}
+\item{model}{Model of the transmitter, character. Optional.}
 
-\item{power_level}{Power level of the transmitter, real.}
+\item{power_level}{Power level of the transmitter, real. Optional.}
 
-\item{ping_rate}{Expected ping rate of the transmitter, numeric. In seconds.}
+\item{ping_rate}{Expected ping rate of the transmitter, numeric. In seconds. Optional.}
 
 \item{ping_variation}{Range of the variation added between pings,
-to reduce tag collisions, numeric. In seconds}
+to reduce tag collisions, numeric. In seconds. Optional.}
 
-\item{serial}{Serial number of the tag, integer.}
+\item{serial}{Serial number of the tag, integer. Optional.}
 
-\item{transmitter}{Transmitter code, character.}
+\item{transmitter}{Transmitter code, character. Mandatory.}
 
-\item{activation_datetime}{date and time of the tag activation, posixct.}
+\item{activation_datetime}{date and time of the tag activation, posixct. Optional.}
 
-\item{battery_life}{expected battery duration of the tag, numeric.}
+\item{battery_life}{expected battery duration of the tag, numeric. Optional.}
 
 \item{sensor_type}{Type of sensor data associated with the transmitter,
-character.}
+character. Optional.}
 
 \item{sensor_unit}{Unit of the data associated with the transmitter,
-character.}
+character. Optional.}
 
-\item{animal}{Name of the animal that received the tag, character.}
+\item{animal}{Name of the animal that received the tag, character. Optional.}
 
-\item{tz}{the timezone of the datetime data.}
+\item{tz}{the timezone of the datetime data. Mandatory.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }

@@ -8,9 +8,9 @@ make_obs(
   animal = NA_character_,
   transmitter = NA_character_,
   type = NA_character_,
-  terminal = NA,
-  location = NA_character_,
-  datetime = as.POSIXct(NA_real_),
+  terminal,
+  location,
+  datetime,
   lat = NA_real_,
   lon = NA_real_,
   tz,
@@ -18,25 +18,31 @@ make_obs(
 )
 }
 \arguments{
-\item{animal}{Name of the animal that was observed, character.}
+\item{animal}{Name of the animal that was observed, character. Each
+observation must have an animal or transmitter code (or both).}
 
-\item{transmitter}{Transmitter code that was observed, character.}
+\item{transmitter}{Transmitter code that was observed, character. Each
+observation must have an animal or transmitter code (or both).}
 
 \item{type}{Type of observation (e.g. directly seen, manual tracking),
-character.}
+character. Optional.}
 
 \item{terminal}{Was the animal permanently captured at the moment of
-observation? logical.}
+observation? logical. Mandatory.}
 
-\item{location}{Name of the place where the observation occurred, character.}
+\item{location}{Name of the place where the observation occurred, character.
+Mandatory.}
 
-\item{datetime}{date and time of the observation, posixct format.}
+\item{datetime}{date and time of the observation, posixct format.
+Mandatory.}
 
-\item{lat}{latitude of the observation. Preferably in WGS84, numeric.}
+\item{lat}{latitude of the observation. Preferably in WGS84, numeric.
+Optional.}
 
-\item{lon}{longitude of the observation. Preferably in WGS84, numeric.}
+\item{lon}{longitude of the observation. Preferably in WGS84, numeric.
+Optional.}
 
-\item{tz}{the timezone of the datetime data.}
+\item{tz}{the timezone of the datetime data. Mandatory.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }

@@ -103,28 +103,33 @@ make_det <- function(datetime = as.POSIXct(NA_real_),
 #' 
 #' Formats the input data into the ATO format and appends the ATO_dep class.
 #' 
-#' @param receiver_model Model of the receiver, character.
-#' @param receiver_serial Receiver serial number, integer.
-#' @param receiver_codeset Codeset of the receiver, character.
+#' @param receiver_model Model of the receiver, character. Optional.
+#' @param receiver_serial Receiver serial number, integer. Mandatory.
+#' @param receiver_codeset Codeset of the receiver, character. Optional.
 #' @param deploy_location Name of the location where the receiver was deployed,
-#'   character.
-#' @param deploy_datetime date and time of the deployment, posixct.
+#'   character. Mandatory.
+#' @param deploy_datetime date and time of the deployment, posixct. Mandatory.
 #' @param deploy_lat latitude of the deployment. Preferably in WGS84, numeric.
+#'   Optional.
 #' @param deploy_lon longitude of the deployment. Preferably in WGS84, numeric.
+#'   Optional.
 #' @param deploy_z depth of the deployment, as measured from the reference
-#'   surface of the water body, numeric.
-#' @param recover_datetime date and time of the recovery, posixct.
+#'   surface of the water body, numeric. Optional.
+#' @param recover_datetime date and time of the recovery, posixct. Mandatory.
 #' @param recover_lat latitude of the recovery point. Preferably in WGS84,
-#'   numeric.
+#'   numeric. Optional.
 #' @param recover_lon longitude of the recovery point. Preferably in WGS84,
-#'   numeric.
+#'   numeric. Optional.
 #' @param transmitter Transmitter code for a beacon/reference tag, character.
+#'   Optional.
 #' @param transmitter_manufacturer Manufacturer of the transmitter, character.
+#'   Optional.
 #' @param transmitter_ping_rate Expected ping rate of the transmitter, numeric.
-#'   In seconds.
-#' @param transmitter_model Model of the transmitter, character.
+#'   In seconds. Required if transmitter is provided.
+#' @param transmitter_model Model of the transmitter, character. Optional.
 #' @param transmitter_serial Serial number of the transmitter, integer.
-#' @param tz the timezone of the datetime data.
+#'   Required if transmitter is provided.
+#' @param tz the timezone of the datetime data. Mandatory.
 #' @param ... Non-standard columns to be added to the table.
 #' 
 #' @return an ATO_dep object, ready to be used by \code{\link{add}} or
@@ -135,14 +140,14 @@ make_det <- function(datetime = as.POSIXct(NA_real_),
 #' @seealso ATO_dep
 #' 
 make_dep <- function(receiver_model = NA_character_,
-                     receiver_serial = NA_character_,
+                     receiver_serial,
                      receiver_codeset = NA_character_,
-                     deploy_location = NA_character_,
-                     deploy_datetime = as.POSIXct(NA_real_),
+                     deploy_location,
+                     deploy_datetime,
                      deploy_lat = NA_real_,
                      deploy_lon = NA_real_,
                      deploy_z = NA_real_,
-                     recover_datetime = as.POSIXct(NA_real_),
+                     recover_datetime,
                      recover_lat = NA_real_,
                      recover_lon = NA_real_,
                      transmitter = NA_character_,
@@ -156,6 +161,13 @@ make_dep <- function(receiver_model = NA_character_,
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
   }
+
+  # if receivers have transmitters, then their ping rate must be provided
+  if (any(!is.na(transmitter) & is.na(transmitter_ping_rate))) {
+    stop("transmitter provided but transmitter_ping_rate missing.",
+         call. = FALSE)
+  }
+
   output <- data.frame(receiver_model = receiver_model,
                        receiver_serial = receiver_serial,
                        receiver_codeset = receiver_codeset,
@@ -192,22 +204,22 @@ make_dep <- function(receiver_model = NA_character_,
 #' 
 #' Formats the input data into the ATO format and appends the ATO_tag class.
 #' 
-#' @param manufacturer Manufacturer of the transmitter, character.
-#' @param model Model of the transmitter, character.
-#' @param power_level Power level of the transmitter, real.
-#' @param ping_rate Expected ping rate of the transmitter, numeric. In seconds.
+#' @param manufacturer Manufacturer of the transmitter, character. Optional.
+#' @param model Model of the transmitter, character. Optional.
+#' @param power_level Power level of the transmitter, real. Optional.
+#' @param ping_rate Expected ping rate of the transmitter, numeric. In seconds. Optional.
 #' @param ping_variation Range of the variation added between pings,
-#'   to reduce tag collisions, numeric. In seconds
-#' @param serial Serial number of the tag, integer.
-#' @param transmitter Transmitter code, character.
-#' @param activation_datetime date and time of the tag activation, posixct.
-#' @param battery_life expected battery duration of the tag, numeric.
+#'   to reduce tag collisions, numeric. In seconds. Optional.
+#' @param serial Serial number of the tag, integer. Optional.
+#' @param transmitter Transmitter code, character. Mandatory.
+#' @param activation_datetime date and time of the tag activation, posixct. Optional.
+#' @param battery_life expected battery duration of the tag, numeric. Optional.
 #' @param sensor_type Type of sensor data associated with the transmitter,
-#'   character.
+#'   character. Optional.
 #' @param sensor_unit Unit of the data associated with the transmitter,
-#'   character.
-#' @param animal Name of the animal that received the tag, character.
-#' @param tz the timezone of the datetime data.
+#'   character. Optional.
+#' @param animal Name of the animal that received the tag, character. Optional.
+#' @param tz the timezone of the datetime data. Mandatory.
 #' @param ... Non-standard columns to be added to the table.
 #' 
 #' @return an ATO_tag object, ready to be used by \code{\link{add}} or
@@ -223,7 +235,7 @@ make_tag <- function(manufacturer = NA_character_,
                      ping_rate = NA_real_,
                      ping_variation = NA_real_,
                      serial = NA_character_,
-                     transmitter = NA_character_,
+                     transmitter,
                      activation_datetime = as.POSIXct(NA_real_),
                      battery_life = NA_real_,
                      sensor_type = NA_character_,
@@ -265,17 +277,21 @@ make_tag <- function(manufacturer = NA_character_,
 #' 
 #' Formats the input data into the ATO format and appends the ATO_ani class.
 #' 
-#' @param animal Name of the animal that received the tag, character.
+#' @param animal Name of the animal that received the tag, character. Mandatory.
 #' @param capture_location Name of the location where the animal was captured,
-#'   character.
-#' @param capture_datetime date and time of the capture, posixct.
+#'   character. Optional.
+#' @param capture_datetime date and time of the capture, posixct. Optional.
 #' @param capture_lat latitude of the capture. Preferably in WGS84, numeric.
+#'   Optional.
 #' @param capture_lon longitude of the capture. Preferably in WGS84, numeric.
+#'   Optional.
 #' @param release_location Name of the location where the animal was released,
-#'   character.
-#' @param release_datetime date and time of the release, posixct.
+#'   character. Mandatory.
+#' @param release_datetime date and time of the release, posixct. Mandatory.
 #' @param release_lat latitude of the release. Preferably in WGS84, numeric.
+#'   Optional.
 #' @param release_lon longitude of the release. Preferably in WGS84, numeric.
+#'   Optional.
 #' @param tz the timezone of the datetime data.
 #' @param ... Non-standard columns to be added to the table.
 #' 
@@ -286,13 +302,13 @@ make_tag <- function(manufacturer = NA_character_,
 #' 
 #' @seealso ATO_ani
 #' 
-make_ani <- function(animal = NA_character_,
+make_ani <- function(animal,
                      capture_location = NA_character_,
                      capture_datetime = as.POSIXct(NA_real_),
                      capture_lat = NA_real_,
                      capture_lon = NA_real_,
-                     release_location = NA_character_,
-                     release_datetime = as.POSIXct(NA_real_),
+                     release_location,
+                     release_datetime,
                      release_lat = NA_real_,
                      release_lon = NA_real_,
                      tz,
@@ -330,17 +346,23 @@ make_ani <- function(animal = NA_character_,
 #' 
 #' Formats the input data into the ATO format and appends the ATO_obs class.
 #' 
-#' @param animal Name of the animal that was observed, character.
-#' @param transmitter Transmitter code that was observed, character.
+#' @param animal Name of the animal that was observed, character. Each
+#'   observation must have an animal or transmitter code (or both).
+#' @param transmitter Transmitter code that was observed, character. Each
+#'   observation must have an animal or transmitter code (or both).
 #' @param type Type of observation (e.g. directly seen, manual tracking),
-#'   character.
+#'   character. Optional.
 #' @param terminal Was the animal permanently captured at the moment of
-#'   observation? logical.
+#'   observation? logical. Mandatory.
 #' @param location Name of the place where the observation occurred, character.
+#'   Mandatory.
 #' @param datetime date and time of the observation, posixct format.
+#'   Mandatory.
 #' @param lat latitude of the observation. Preferably in WGS84, numeric.
+#'   Optional.
 #' @param lon longitude of the observation. Preferably in WGS84, numeric.
-#' @param tz the timezone of the datetime data.
+#'   Optional.
+#' @param tz the timezone of the datetime data. Mandatory.
 #' @param ... Non-standard columns to be added to the table.
 #' 
 #' @return an ATO_obs object, ready to be used by \code{\link{add}} or
@@ -353,9 +375,9 @@ make_ani <- function(animal = NA_character_,
 make_obs <- function(animal = NA_character_,
                      transmitter = NA_character_,
                      type = NA_character_,
-                     terminal = NA, # logical
-                     location = NA_character_,
-                     datetime = as.POSIXct(NA_real_),
+                     terminal,
+                     location,
+                     datetime,
                      lat = NA_real_,
                      lon = NA_real_,
                      tz,
@@ -363,6 +385,11 @@ make_obs <- function(animal = NA_character_,
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
+  }
+
+  if (any(is.na(animal) & is.na(transmitter))) {
+    stop("Each observation must be associated to either an animal or a",
+         " transmitter, or both", call. = FALSE)
   }
   if (ato_table_type == "data.frame") {
     output <- data.frame(animal = animal,
