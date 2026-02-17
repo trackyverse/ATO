@@ -5,29 +5,29 @@
 \title{Make an ATO detections object}
 \usage{
 make_det(
-  datetime = as.POSIXct(NA_real_),
+  datetime,
   frac_second = NA_real_,
-  receiver_serial = NA_character_,
-  transmitter = NA_character_,
+  receiver_serial,
+  transmitter,
   sensor_value = NA_real_,
   tz,
   ...
 )
 }
 \arguments{
-\item{datetime}{date and time, posixct format.}
+\item{datetime}{date and time, posixct format. Mandatory.}
 
-\item{frac_second}{fractional second, numeric.}
+\item{frac_second}{fractional second, numeric. Optional.}
 
-\item{receiver_serial}{receiver serial number, integer.}
+\item{receiver_serial}{Mandatory. receiver serial number, integer. Mandatory.}
 
-\item{transmitter}{transmitter code, character.}
+\item{transmitter}{Mandatory. transmitter code, character. Mandatory.}
 
-\item{sensor_value}{reported sensor value, numeric.}
+\item{sensor_value}{reported sensor value, numeric. Optional.}
 
-\item{tz}{the timezone of the datetime data.}
+\item{tz}{the timezone of the datetime data. Mandatory.}
 
-\item{...}{Non-standard columns to be added to the table.}
+\item{...}{Non-standard columns to be added to the table. Optional.}
 }
 \value{
 an ATO_det object, ready to be used by \code{\link{add}} or
