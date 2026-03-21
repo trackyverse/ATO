@@ -14,10 +14,13 @@
 #' 
 #' @export
 #' 
-setGeneric("add", function(x, value, append = FALSE) standardGeneric("add"))
+setGeneric("add",
+           function(x, value, append = FALSE, silent = FALSE)
+           standardGeneric("add"))
 
 #' @rdname add
-setMethod("add", c(x = "ATO", value = "ATO_det"), function(x, value, append) {
+setMethod("add", c(x = "ATO", value = "ATO_det"),
+          function(x, value, append, silent) {
   if (append) {
     check1 <- any(colnames(value) %in% colnames(x@det))
     check2 <- any(colnames(value) %in% colnames(x@det))
@@ -45,16 +48,17 @@ setMethod("add", c(x = "ATO", value = "ATO_det"), function(x, value, append) {
   }
   validObject(x)
   if (nrow(x@tag) > 0) {
-    x <- match_det_tag(x)
+    x <- match_det_tag(x, silent = silent)
   }
   if (nrow(x@dep) > 0) {
-    x <- match_det_dep(x)
+    x <- match_det_dep(x, silent = silent)
   }
   return(x)
 })
 
 #' @rdname add
-setMethod("add", c(x = "ATO", value = "ATO_dep"), function(x, value, append) {
+setMethod("add", c(x = "ATO", value = "ATO_dep"),
+          function(x, value, append, silent) {
   if (append) {
     check1 <- any(colnames(value) %in% colnames(x@dep))
     check2 <- any(colnames(value) %in% colnames(x@dep))
@@ -82,13 +86,14 @@ setMethod("add", c(x = "ATO", value = "ATO_dep"), function(x, value, append) {
   }
   validObject(x)
   if (nrow(x@det) > 0) {
-    x <- match_det_dep(x)
+    x <- match_det_dep(x, silent = silent)
   }
   return(x)
 })
 
 #' @rdname add
-setMethod("add", c(x = "ATO", value = "ATO_tag"), function(x, value, append) {
+setMethod("add", c(x = "ATO", value = "ATO_tag"),
+          function(x, value, append, silent) {
   if (append) {
     check1 <- any(colnames(value) %in% colnames(x@tag))
     check2 <- any(colnames(value) %in% colnames(x@tag))
@@ -116,19 +121,20 @@ setMethod("add", c(x = "ATO", value = "ATO_tag"), function(x, value, append) {
   }
   validObject(x)
   if (nrow(x@ani) > 0) {
-    x <- match_tag_ani(x)
+    x <- match_tag_ani(x, silent = silent)
   }
   if (nrow(x@det) > 0) {
-    x <- match_det_tag(x)
+    x <- match_det_tag(x, silent = silent)
   }
   if (nrow(x@obs) > 0) {
-    x <- match_obs_tag(x)
+    x <- match_obs_tag(x, silent = silent)
   }
   return(x)
 })
 
 #' @rdname add
-setMethod("add", c(x = "ATO", value = "ATO_ani"), function(x, value, append) {
+setMethod("add", c(x = "ATO", value = "ATO_ani"),
+          function(x, value, append, silent) {
   if (append) {
     check1 <- any(colnames(value) %in% colnames(x@ani))
     check2 <- any(colnames(value) %in% colnames(x@ani))
@@ -156,16 +162,17 @@ setMethod("add", c(x = "ATO", value = "ATO_ani"), function(x, value, append) {
   }
   validObject(x)
   if (nrow(x@tag) > 0) {
-    x <- match_tag_ani(x)
+    x <- match_tag_ani(x, silent = silent)
   }
   if (nrow(x@obs) > 0) {
-    x <- match_obs_ani(x)
+    x <- match_obs_ani(x, silent = silent)
   }
   return(x)
 })
 
 #' @rdname add
-setMethod("add", c(x = "ATO", value = "ATO_obs"), function(x, value, append) {
+setMethod("add", c(x = "ATO", value = "ATO_obs"),
+          function(x, value, append, silent) {
   if (append) {
     check1 <- any(colnames(value) %in% colnames(x@obs))
     check2 <- any(colnames(value) %in% colnames(x@obs))
@@ -193,10 +200,10 @@ setMethod("add", c(x = "ATO", value = "ATO_obs"), function(x, value, append) {
   }
   validObject(x)
   if (nrow(x@tag) > 0) {
-    x <- match_obs_tag(x)
+    x <- match_obs_tag(x, silent = silent)
   }
   if (nrow(x@ani) > 0) {
-    x <- match_obs_ani(x)
+    x <- match_obs_ani(x, silent = silent)
   }
   return(x)
 })
