@@ -20,7 +20,8 @@ match_det_tag <- function(x, silent = FALSE) {
   } else {
     new_message <- FALSE
   }
-  x@det$tag_match <- x@det$tag_match | x@det$transmitter %in% x@tag$transmitter
+  tag_dets <- x@det$transmitter %in% x@tag$transmitter
+  x@det$tag_match <- x@det$tag_match | tag_dets
   if (!silent & any(!x@det$tag_match)) {
     if (new_message) {
       message("M: ", sum(!x@det$tag_match),
@@ -35,6 +36,13 @@ match_det_tag <- function(x, silent = FALSE) {
               " stray transmitters).")
     }
   }
+  # assign animals where relevant
+  if (any(tag_dets)) {
+    # TODO: Expand this to match animals based on right datetime! (not just here)
+    link <- match(x@det$transmitter[tag_dets], x@tag$transmitter)
+    x@det$animal[tag_dets] <- x@tag$animal[link]
+  }
+
   x@tag$det_match <- x@tag$transmitter %in% x@det$transmitter
   if (!silent & any(!x@tag$det_match)) {
     message("M: ", sum(!x@tag$det_match),
@@ -124,6 +132,7 @@ match_det_ani <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("det", "tag", "ani"), error = TRUE)
   
+  # TODO: Expand this to match animals based on right datetime! (not just here)
   animal_link <- match(x@det$transmitter, x@tag$transmitter)
   x@det$animal <- x@tag$animal[animal_link]
   x@ani$det_match <- x@ani$animal %in% x@det$animal
@@ -185,7 +194,7 @@ match_obs_ani <- function(x, silent = FALSE) {
   if (!silent & any(strays)) {
     message("M: ", sum(strays),
             " off-target observations (from ",
-            length(unique(x@obs$transmitter[strays])),
+            length(unique(x@obs$animal[strays])),
             " stray animals) found in the dataset.")
   }
   x@ani$obs_match <- x@ani$transmitter %in% x@obs$transmitter
@@ -222,7 +231,7 @@ match_tag_ani <- function(x, silent = FALSE) {
     message("M: ", sum(!x@ani$tag_match),
             " animals do not have associated transmitters")
   }
-  if (nrow(x@det) > 0) {
+  if (has(x, "det")) {
     x <- match_det_ani(x)
   }
   return(x)
