@@ -232,7 +232,7 @@ match_tag_ani <- function(x, silent = FALSE) {
             " animals do not have associated transmitters")
   }
   if (has(x, "det")) {
-    x <- match_det_ani(x)
+    x <- match_det_ani(x, silent = silent)
   }
   return(x)
 }
