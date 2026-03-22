@@ -6,9 +6,10 @@
 #' 
 #' @param x an ATO
 #' @param value The data to be included.
-#'   The output of one of the make_* functions.
+#'   The output of one of the make_*() functions.
 #' @param append Logical: Should the new data be appended to the
 #'   data already present in the ATO?
+#' @param silent Logical: Supress summary messages
 #' 
 #' @return The updated ATO
 #' 

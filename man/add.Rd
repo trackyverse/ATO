@@ -9,26 +9,28 @@
 \alias{add,ATO,ATO_obs-method}
 \title{Generic add function}
 \usage{
-add(x, value, append = FALSE)
+add(x, value, append = FALSE, silent = FALSE)
 
-\S4method{add}{ATO,ATO_det}(x, value, append = FALSE)
+\S4method{add}{ATO,ATO_det}(x, value, append = FALSE, silent = FALSE)
 
-\S4method{add}{ATO,ATO_dep}(x, value, append = FALSE)
+\S4method{add}{ATO,ATO_dep}(x, value, append = FALSE, silent = FALSE)
 
-\S4method{add}{ATO,ATO_tag}(x, value, append = FALSE)
+\S4method{add}{ATO,ATO_tag}(x, value, append = FALSE, silent = FALSE)
 
-\S4method{add}{ATO,ATO_ani}(x, value, append = FALSE)
+\S4method{add}{ATO,ATO_ani}(x, value, append = FALSE, silent = FALSE)
 
-\S4method{add}{ATO,ATO_obs}(x, value, append = FALSE)
+\S4method{add}{ATO,ATO_obs}(x, value, append = FALSE, silent = FALSE)
 }
 \arguments{
 \item{x}{an ATO}
 
 \item{value}{The data to be included.
-The output of one of the make_* functions.}
+The output of one of the make_*() functions.}
 
 \item{append}{Logical: Should the new data be appended to the
 data already present in the ATO?}
+
+\item{silent}{Logical: Supress summary messages}
 }
 \value{
 The updated ATO
