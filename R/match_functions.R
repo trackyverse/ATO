@@ -332,7 +332,7 @@ match_update <- function(x, silent = FALSE) {
       if ("atools" %in% rownames(installed.packages())) {
         checks <- list(transmitter = transmitter,
                        datetime = c(first_time, last_time))
-        link <- create_filter_vec(x, "obs", checks)
+        link <- atools::create_filter_vec(x, "obs", checks)
       } else {
         link <- x@obs$transmitter == transmitter &
                 x@obs$datetime >= first_time &
@@ -439,7 +439,7 @@ match_update <- function(x, silent = FALSE) {
       if ("atools" %in% rownames(installed.packages())) {
         checks <- list(transmitter = transmitter,
                        datetime = c(first_time, last_time))
-        link <- create_filter_vec(x, "det", checks)
+        link <- atools::create_filter_vec(x, "det", checks)
         cat(as.character(Sys.time()), ": vector done\n")
       } else {
         link <- x@det$transmitter == transmitter &
@@ -549,7 +549,7 @@ match_update <- function(x, silent = FALSE) {
         if ("atools" %in% rownames(installed.packages())) {
           checks <- list(receiver_serial = receiver_serial,
                          datetime = c(first_time, last_time))
-          link <- create_filter_vec(x, "det", checks)
+          link <- atools::create_filter_vec(x, "det", checks)
         } else {
           link <- x@det$receiver_serial == receiver_serial &
                   x@det$datetime >= first_time &
@@ -578,7 +578,7 @@ match_update <- function(x, silent = FALSE) {
         if ("atools" %in% rownames(installed.packages())) {
           checks <- list(transmitter = transmitter,
                          datetime = c(first_time, last_time))
-          link <- create_filter_vec(x, "det", checks)
+          link <- atools::create_filter_vec(x, "det", checks)
         } else {
           link <- x@det$receiver_serial == transmitter &
                   x@det$datetime >= first_time &
