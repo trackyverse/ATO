@@ -2,16 +2,16 @@
 % Please edit documentation in R/summary_methods.R
 \name{summary,ATO_det-method}
 \alias{summary,ATO_det-method}
-\title{Summary method for an ATO_det object}
+\title{Summary method for an ATO_det slot object}
 \usage{
 \S4method{summary}{ATO_det}(object)
 }
 \arguments{
-\item{object}{an ATO_det object}
+\item{object}{an ATO_det slot object}
 }
 \value{
 Nothing. Prints a summary.
 }
 \description{
-Summary method for an ATO_det object
+Summary method for an ATO_det slot object
 }

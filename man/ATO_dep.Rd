@@ -26,7 +26,7 @@ A data frame with 0 rows and 16 variables:
 \item{transmitter_serial}{Serial number of the transmitter, character.}
 }
 
-An object of class \code{ATO_dep} (inherits from \code{data.frame}) with 0 rows and 16 columns.
+An object of class \code{ATO_dep} (inherits from \code{data.frame}) with 0 rows and 17 columns.
 }
 \usage{
 .ATO_dep

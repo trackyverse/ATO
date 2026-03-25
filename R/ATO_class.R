@@ -112,7 +112,8 @@ setClass("ATO_dep")
   transmitter_manufacturer = NA_character_,
   transmitter_ping_rate = NA_real_,
   transmitter_model = NA_character_,
-  transmitter_serial = NA_character_
+  transmitter_serial = NA_character_,
+  valid = NA
 )[-1, ]
 class(.ATO_dep) <- c("ATO_dep", "data.frame")
 
@@ -175,7 +176,8 @@ setClass("ATO_tag")
   battery_life = NA_real_, # days
   sensor_type = NA_character_,
   sensor_unit = NA_character_,
-  animal = NA_character_
+  animal = NA_character_,
+  valid = NA
 )[-1, ]
 class(.ATO_tag) <- c("ATO_tag", "data.frame")
 
@@ -230,7 +232,8 @@ setClass("ATO_ani")
   release_location = NA_character_,
   release_datetime = as.POSIXct(NA_real_),
   release_lat = NA_real_,
-  release_lon = NA_real_
+  release_lon = NA_real_,
+  valid = NA
 )[-1, ]
 class(.ATO_ani) <- c("ATO_ani", "data.frame")
 

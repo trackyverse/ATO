@@ -48,12 +48,10 @@ setMethod("add", c(x = "ATO", value = "ATO_det"),
     x@det <- value
   }
   validObject(x)
-  if (nrow(x@tag) > 0) {
-    x <- match_det_tag(x, silent = silent)
+  if (getOption("ATO_match_immediate", default = TRUE)) {
+    x <- match_update(x, silent = silent)
   }
-  if (nrow(x@dep) > 0) {
-    x <- match_det_dep(x, silent = silent)
-  }
+
   return(x)
 })
 
@@ -86,9 +84,10 @@ setMethod("add", c(x = "ATO", value = "ATO_dep"),
     x@dep <- value
   }
   validObject(x)
-  if (nrow(x@det) > 0) {
-    x <- match_det_dep(x, silent = silent)
+  if (getOption("ATO_match_immediate", default = TRUE)) {
+    x <- match_update(x, silent = silent)
   }
+
   return(x)
 })
 
@@ -121,15 +120,10 @@ setMethod("add", c(x = "ATO", value = "ATO_tag"),
     x@tag <- value
   }
   validObject(x)
-  if (nrow(x@ani) > 0) {
-    x <- match_tag_ani(x, silent = silent)
+  if (getOption("ATO_match_immediate", default = TRUE)) {
+    x <- match_update(x, silent = silent)
   }
-  if (nrow(x@det) > 0) {
-    x <- match_det_tag(x, silent = silent)
-  }
-  if (nrow(x@obs) > 0) {
-    x <- match_obs_tag(x, silent = silent)
-  }
+
   return(x)
 })
 
@@ -162,12 +156,10 @@ setMethod("add", c(x = "ATO", value = "ATO_ani"),
     x@ani <- value
   }
   validObject(x)
-  if (nrow(x@tag) > 0) {
-    x <- match_tag_ani(x, silent = silent)
+  if (getOption("ATO_match_immediate", default = TRUE)) {
+    x <- match_update(x, silent = silent)
   }
-  if (nrow(x@obs) > 0) {
-    x <- match_obs_ani(x, silent = silent)
-  }
+
   return(x)
 })
 
@@ -200,11 +192,9 @@ setMethod("add", c(x = "ATO", value = "ATO_obs"),
     x@obs <- value
   }
   validObject(x)
-  if (nrow(x@tag) > 0) {
-    x <- match_obs_tag(x, silent = silent)
+  if (getOption("ATO_match_immediate", default = TRUE)) {
+    x <- match_update(x, silent = silent)
   }
-  if (nrow(x@ani) > 0) {
-    x <- match_obs_ani(x, silent = silent)
-  }
+
   return(x)
 })

@@ -14,7 +14,7 @@
 #'
 #' @export
 #'
-init_ato <- function(det, dep, tag, ani, obs) {
+init_ato <- function(det, dep, tag, ani, obs, silent = FALSE) {
   ato <- new(
     "ATO",
     det = .ATO_det,
@@ -27,20 +27,26 @@ init_ato <- function(det, dep, tag, ani, obs) {
     pkg = list()
   )
 
+  old_match_immediate <- getOption("ATO_match_immediate", default = TRUE)
+  on.exit(options(ATO_match_immediate = old_match_immediate))
+  options(ATO_match_immediate = FALSE)
+  
   if (!missing(det)) {
-    ato <- add(ato, det)
+    ato <- add(ato, det, silent = silent)
   }
   if (!missing(dep)) {
-    ato <- add(ato, dep)
+    ato <- add(ato, dep, silent = silent)
   }
   if (!missing(tag)) {
-    ato <- add(ato, tag)
+    ato <- add(ato, tag, silent = silent)
   }
   if (!missing(ani)) {
-    ato <- add(ato, ani)
+    ato <- add(ato, ani, silent = silent)
   }
   if (!missing(obs)) {
-    ato <- add(ato, obs)
+    ato <- add(ato, obs, silent = silent)
   }
+  ato <- match_update(ato, silent = silent)
+  
   return(ato)
 }

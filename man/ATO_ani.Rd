@@ -19,7 +19,7 @@ A data frame with 0 rows and 9 variables:
 \item{release_lon}{longitude of the release. Preferably in WGS84, numeric.}
 }
 
-An object of class \code{ATO_ani} (inherits from \code{data.frame}) with 0 rows and 9 columns.
+An object of class \code{ATO_ani} (inherits from \code{data.frame}) with 0 rows and 10 columns.
 }
 \usage{
 .ATO_ani

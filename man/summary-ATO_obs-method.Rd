@@ -2,16 +2,16 @@
 % Please edit documentation in R/summary_methods.R
 \name{summary,ATO_obs-method}
 \alias{summary,ATO_obs-method}
-\title{Summary method for an ATO_obs object}
+\title{Summary method for an ATO_obs slot object}
 \usage{
 \S4method{summary}{ATO_obs}(object)
 }
 \arguments{
-\item{object}{an ATO_obs object}
+\item{object}{an ATO_obs slot object}
 }
 \value{
 Nothing. Prints a summary.
 }
 \description{
-Summary method for an ATO_obs object
+Summary method for an ATO_obs slot object
 }

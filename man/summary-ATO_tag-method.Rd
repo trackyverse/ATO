@@ -2,16 +2,16 @@
 % Please edit documentation in R/summary_methods.R
 \name{summary,ATO_tag-method}
 \alias{summary,ATO_tag-method}
-\title{Summary method for an ATO_tag object}
+\title{Summary method for an ATO_tag slot object}
 \usage{
 \S4method{summary}{ATO_tag}(object)
 }
 \arguments{
-\item{object}{an ATO_tag object}
+\item{object}{an ATO_tag slot object}
 }
 \value{
 Nothing. Prints a summary.
 }
 \description{
-Summary method for an ATO_tag object
+Summary method for an ATO_tag slot object
 }

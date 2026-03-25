@@ -215,6 +215,7 @@ make_dep <- function(receiver_model = NA_character_,
                        transmitter_ping_rate = transmitter_ping_rate,
                        transmitter_model = transmitter_model,
                        transmitter_serial = transmitter_serial,
+                       valid = TRUE,
                        ...)
   if (ato_table_type == "data.table") {
     .data.table_exists()
@@ -290,6 +291,7 @@ make_tag <- function(manufacturer = NA_character_,
                        sensor_type = sensor_type,
                        sensor_unit = sensor_unit,
                        animal = animal,
+                       valid = TRUE,
                        ...)
   if (ato_table_type == "data.table") {
     .data.table_exists()
@@ -357,6 +359,7 @@ make_ani <- function(animal,
                        release_datetime = release_datetime,
                        release_lat = release_lat,
                        release_lon = release_lon,
+                       valid = TRUE,
                        ...)
   if (ato_table_type == "data.table") {
     .data.table_exists()
@@ -422,40 +425,23 @@ make_obs <- function(animal = NA_character_,
     stop("Each observation must be associated to either an animal or a",
          " transmitter, or both", call. = FALSE)
   }
-  if (ato_table_type == "data.frame") {
-    output <- data.frame(animal = animal,
-                         transmitter = transmitter,
-                         type = type,
-                         terminal = terminal,
-                         location = location,
-                         datetime = datetime,
-                         lat = lat,
-                         lon = lon,
-                         ...)
-  }
+  output <- data.frame(animal = animal,
+                       transmitter = transmitter,
+                       type = type,
+                       terminal = terminal,
+                       location = location,
+                       datetime = datetime,
+                       lat = lat,
+                       lon = lon,
+                       valid = TRUE,
+                       ...)
   if (ato_table_type == "data.table") {
     .data.table_exists()
-    output <- data.table::data.table(animal = animal,
-                                     transmitter = transmitter,
-                                     type = type,
-                                     terminal = terminal,
-                                     location = location,
-                                     datetime = datetime,
-                                     lat = lat,
-                                     lon = lon,
-                                     ...)
+    output <- data.table::as.data.table(output)
   }
   if (ato_table_type == "tibble") {
     .tibble_exists()
-    output <- tibble::tibble(animal = animal,
-                             transmitter = transmitter,
-                             type = type,
-                             terminal = terminal,
-                             location = location,
-                             datetime = datetime,
-                             lat = lat,
-                             lon = lon,
-                             ...)
+    output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_obs", class(output))
   attributes(output$datetime)$tzone <- tz

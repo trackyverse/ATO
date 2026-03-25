@@ -15,6 +15,7 @@ Imports:
     stats,
     utils
 Suggests:
+    atools,
     data.table,
     tibble,
     testthat,

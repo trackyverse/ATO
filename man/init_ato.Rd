@@ -4,7 +4,7 @@
 \alias{init_ato}
 \title{Initiate an \code{\link{ATO}}}
 \usage{
-init_ato(det, dep, tag, ani, obs)
+init_ato(det, dep, tag, ani, obs, silent = FALSE)
 }
 \arguments{
 \item{det}{an object of class ATO_det. See \code{\link{make_det}}.}
