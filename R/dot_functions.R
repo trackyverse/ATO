@@ -20,9 +20,15 @@
 }
 
 .data.table_exists <- function(error = TRUE) {
+  # data.table's special functions are hard to handle with data.table
+  # as a suggested package because this prevents us from using
+  # importFrom calls. Instead, this function loads all of data.table
+  # if we are about to use it.
+  # However, for code clarity and for the sanity of future developers,
+  # you should still use data.table:: wherever possible!
   if (!"data.table" %in% utils::installed.packages()) {
     if (error) {
-      stop("This function requires package data.table to run.", call. = FALSE)
+      stop("You must install package data.table to run this function.", call. = FALSE)
     } else {
       return(FALSE)
     }

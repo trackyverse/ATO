@@ -29,31 +29,19 @@ make_det <- function(datetime,
   # to avoid spending a long time loading everything
   # before checking the quality of the data, we can make
   # a fast mock output, test it, then compile the real thing.
-  if (ato_table_type == "data.frame") {
-    mock <- data.frame(datetime = datetime[1],
-                       frac_second = frac_second[1],
-                       receiver_serial = receiver_serial[1],
-                       transmitter = transmitter[1],
-                       sensor_value = sensor_value[1],
-                       valid = TRUE)
-  }
+  mock <- data.frame(datetime = datetime[1],
+                     frac_second = frac_second[1],
+                     receiver_serial = receiver_serial[1],
+                     transmitter = transmitter[1],
+                     sensor_value = sensor_value[1],
+                     valid = TRUE)
   if (ato_table_type == "data.table") {
     .data.table_exists()
-    mock <- data.table::data.table(datetime = datetime[1],
-                                  frac_second = frac_second[1],
-                                  receiver_serial = receiver_serial[1],
-                                  transmitter = transmitter[1],
-                                  sensor_value = sensor_value[1],
-                                  valid = TRUE)
+    data.table::setDT(mock)
   }
   if (ato_table_type == "tibble") {
     .tibble_exists()
-    mock <- tibble::tibble(datetime = datetime[1],
-                           frac_second = frac_second[1],
-                           receiver_serial = receiver_serial[1],
-                           transmitter = transmitter[1],
-                           sensor_value = sensor_value[1],
-                           valid = TRUE)
+    mock <- tibble::as.tibble(mock)
   }
   class(mock) <- c("ATO_det", class(mock))
   attributes(mock$datetime)$tzone <- tz
@@ -96,34 +84,20 @@ make_det <- function(datetime,
   }
 
   # now the real thing, which should run smoothly.
-  if (ato_table_type == "data.frame") {
-    output <- data.frame(datetime = datetime,
-                         frac_second = frac_second,
-                         receiver_serial = receiver_serial,
-                         transmitter = transmitter,
-                         sensor_value = sensor_value,
-                         valid = TRUE,
-                         ...)
-  }
+  output <- data.frame(datetime = datetime,
+                       frac_second = frac_second,
+                       receiver_serial = receiver_serial,
+                       transmitter = transmitter,
+                       sensor_value = sensor_value,
+                       valid = TRUE,
+                       ...)
   if (ato_table_type == "data.table") {
     .data.table_exists()
-    output <- data.table::data.table(datetime = datetime,
-                                    frac_second = frac_second,
-                                    receiver_serial = receiver_serial,
-                                    transmitter = transmitter,
-                                    sensor_value = sensor_value,
-                                    valid = TRUE,
-                                    ...)
+    data.table::setDT(output)
   }
   if (ato_table_type == "tibble") {
     .tibble_exists()
-    output <- tibble::tibble(datetime = datetime,
-                             frac_second = frac_second,
-                             receiver_serial = receiver_serial,
-                             transmitter = transmitter,
-                             sensor_value = sensor_value,
-                             valid = TRUE,
-                             ...)
+    output <- tibble::as.tibble(output)
   }
   class(output) <- c("ATO_det", class(output))
   attributes(output$datetime)$tzone <- tz
@@ -219,7 +193,7 @@ make_dep <- function(receiver_model = NA_character_,
                        ...)
   if (ato_table_type == "data.table") {
     .data.table_exists()
-    output <- data.table::as.data.table(output)
+    data.table::setDT(output)
   }
   if (ato_table_type == "tibble") {
     .tibble_exists()
@@ -295,7 +269,7 @@ make_tag <- function(manufacturer = NA_character_,
                        ...)
   if (ato_table_type == "data.table") {
     .data.table_exists()
-    output <- data.table::as.data.table(output)
+    data.table::setDT(output)
   }
   if (ato_table_type == "tibble") {
     .tibble_exists()
@@ -363,7 +337,7 @@ make_ani <- function(animal,
                        ...)
   if (ato_table_type == "data.table") {
     .data.table_exists()
-    output <- data.table::as.data.table(output)
+    data.table::setDT(output)
   }
   if (ato_table_type == "tibble") {
     .tibble_exists()
@@ -437,7 +411,7 @@ make_obs <- function(animal = NA_character_,
                        ...)
   if (ato_table_type == "data.table") {
     .data.table_exists()
-    output <- data.table::as.data.table(output)
+    data.table::setDT(output)
   }
   if (ato_table_type == "tibble") {
     .tibble_exists()
