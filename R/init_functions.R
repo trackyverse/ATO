@@ -46,7 +46,10 @@ init_ato <- function(det, dep, tag, ani, obs, silent = FALSE) {
   if (!missing(obs)) {
     ato <- add(ato, obs, silent = silent)
   }
-  ato <- match_update(ato, silent = silent)
+  
+  if (old_match_immediate) {
+    ato <- match_update(ato, silent = silent)
+  }
   
   return(ato)
 }
