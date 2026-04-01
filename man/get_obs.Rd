@@ -12,10 +12,10 @@ get_obs(x, type = c("all", "valid", "invalid"))
 \arguments{
 \item{x}{an \code{\link{ATO}} object}
 
-\item{type}{the type of observations to return. One of:
-'all' - returns both valid and invalid observations (default);
-'valid' - returns only valid observations;
-'invalid' - returns only invalid observations}
+\item{type}{the type of rows to return. One of:
+'all' - returns both valid and invalid rows (default);
+'valid' - returns only valid rows;
+'invalid' - returns only invalid rows}
 }
 \value{
 The obs slot as a table

@@ -172,7 +172,7 @@ match_update <- function(x, silent = FALSE) {
     n_animals <- length(unique(x@obs$animal[strays]))
     message("M: ", sum(strays),
             " off-target valid observation", .s(sum(strays)),
-            " (from ", n_tags, " stray animal", .s(n_animals),
+            " (from ", n_animals, " stray animal", .s(n_animals),
             ") found in the dataset.")
   }
 
@@ -199,7 +199,7 @@ match_update <- function(x, silent = FALSE) {
     if (x@ani$n_obs[i] > 0) {
       # there should always be something valid or else the n_obs would be 0.
       link <- x@obs$valid & x@obs$ani_match == i
-      aux <- tail(x@obs[link, ], 1)
+      aux <- utils::tail(x@obs[link, ], 1)
       if (aux$terminal) {
         x@ani$terminal_location <- aux$location
         x@ani$terminal_datetime <- aux$datetime
@@ -362,15 +362,9 @@ match_update <- function(x, silent = FALSE) {
         last_time <- x@tag$terminal_datetime[i]
       }
 
-      if ("atools" %in% rownames(installed.packages())) {
-        checks <- list(transmitter = transmitter,
-                       datetime = c(first_time, last_time))
-        link <- atools::create_filter_vec(x, "obs", checks)
-      } else {
-        link <- x@obs$transmitter == transmitter &
-                x@obs$datetime >= first_time &
-                x@obs$datetime <= last_time
-      }
+      link <- x@obs$transmitter == transmitter &
+              x@obs$datetime >= first_time &
+              x@obs$datetime <= last_time
 
       # check for ambiguity
       if (any(!is.na(x@obs$tag_match[link]))) {
@@ -473,7 +467,7 @@ match_update <- function(x, silent = FALSE) {
               x@det$datetime <= last_time
 
       # check for ambiguity
-      .check_dup_tag_base(x@det$tag_match[link], i, "det", "tag")
+      .check_dup_match_base(x@det$tag_match[link], i, "det", "tag")
 
       # and assign the match
       x@det$tag_match[link] <- i
@@ -596,8 +590,8 @@ match_update <- function(x, silent = FALSE) {
 
   on.exit(expr = {
     # reset row order
-    data.table::setkey(x@det, original_row_order)
-    data.table::setkey(x@tag, original_row_order)
+    data.table::setkeyv(x@det, "original_row_order")
+    data.table::setkeyv(x@tag, "original_row_order")
     # reset original keys
     if (is.null(original_det_keys)) {
       data.table::setkey(x@det, NULL)
@@ -628,8 +622,14 @@ match_update <- function(x, silent = FALSE) {
   })
 
   # perform the match
-  data.table::setkey(x@tag, transmitter, first_time, last_time)
-  data.table::setkey(x@det, transmitter, datetime, datetime_dummy)
+  data.table::setkeyv(x@tag, 
+                      c("transmitter",
+                        "first_time",
+                        "last_time"))
+  data.table::setkeyv(x@det, 
+                      c("transmitter",
+                        "datetime",
+                        "datetime_dummy"))
   result <- data.table::foverlaps(x@det, x@tag, nomatch = NA, which = TRUE)
 
   # check for ambiguous matches
@@ -814,8 +814,8 @@ match_update <- function(x, silent = FALSE) {
 
   on.exit(expr = {
     # reset row order
-    data.table::setkey(x@det, original_row_order)
-    data.table::setkey(x@dep, original_row_order)
+    data.table::setkeyv(x@det, "original_row_order")
+    data.table::setkeyv(x@dep, "original_row_order")
     # reset original keys
     if (is.null(original_det_keys)) {
       data.table::setkey(x@det, NULL)
@@ -844,8 +844,14 @@ match_update <- function(x, silent = FALSE) {
   })
 
   # perform the match
-  data.table::setkey(x@dep, receiver_serial, deploy_datetime, recover_datetime)
-  data.table::setkey(x@det, receiver_serial, datetime, datetime_dummy)
+  data.table::setkeyv(x@dep,
+                      c("receiver_serial",
+                        "deploy_datetime",
+                        "recover_datetime"))
+  data.table::setkeyv(x@det,
+                      c("receiver_serial",
+                        "datetime",
+                        "datetime_dummy"))
   result_rec <- data.table::foverlaps(x@det, x@dep, nomatch = NA, which = TRUE)
 
   # check for ambiguous matches
@@ -858,8 +864,14 @@ match_update <- function(x, silent = FALSE) {
   # now do the same thing for the beacon tags
 
   # perform the match
-  data.table::setkey(x@dep, transmitter, deploy_datetime, recover_datetime)
-  data.table::setkey(x@det, transmitter, datetime, datetime_dummy)
+  data.table::setkeyv(x@dep,
+                      c("transmitter",
+                        "deploy_datetime",
+                        "recover_datetime"))
+  data.table::setkeyv(x@det,
+                      c("transmitter",
+                        "datetime",
+                        "datetime_dummy"))
   result_bea <- data.table::foverlaps(x@det, x@dep, nomatch = NA, which = TRUE)
 
   # check for ambiguous matches

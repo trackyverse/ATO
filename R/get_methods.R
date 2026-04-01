@@ -5,10 +5,10 @@
 #'   to extract detections.
 #' @param transmitters An optional vector of transmitters for which to extract
 #'   detections.
-#' @param type the type of detections to return. One of:
-#'   'all' - returns both valid and invalid detections (default);
-#'   'valid' - returns only valid detections;
-#'   'invalid' - returns only invalid detections
+#' @param type the type of rows to return. One of:
+#'   'all' - returns both valid and invalid rows (default);
+#'   'valid' - returns only valid rows;
+#'   'invalid' - returns only invalid rows
 #'
 #' @return a table of detections
 #'
@@ -113,7 +113,7 @@ setMethod(
 
 #' Generic to extract the dep slot as a table
 #'
-#' @param x an \code{\link{ATO}} object
+#' @inheritParams get_det
 #'
 #' @return The dep slot as a table
 #'
@@ -144,7 +144,7 @@ setMethod("get_dep", "ATO",
 
 #' Generic to extract the tag slot as a table
 #'
-#' @param x an \code{\link{ATO}} object
+#' @inheritParams get_det
 #'
 #' @return The tag slot as a table
 #'
@@ -175,7 +175,7 @@ setMethod("get_tag", "ATO",
 
 #' Generic to extract the ani slot as a table
 #'
-#' @param x an \code{\link{ATO}} object
+#' @inheritParams get_det
 #'
 #' @return The ani slot as a table
 #'
@@ -206,11 +206,7 @@ setMethod("get_ani", "ATO",
 
 #' Generic to extract the obs slot as a table
 #'
-#' @param x an \code{\link{ATO}} object
-#' @param type the type of observations to return. One of:
-#'   'all' - returns both valid and invalid observations (default);
-#'   'valid' - returns only valid observations;
-#'   'invalid' - returns only invalid observations
+#' @inheritParams get_det
 #'
 #' @return The obs slot as a table
 #'

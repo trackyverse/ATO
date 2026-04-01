@@ -16,10 +16,10 @@ get_det_dep(x, receivers, type = c("all", "valid", "invalid"))
 \item{receivers}{An optional vector of receiver serial numbers from which
 to extract detections.}
 
-\item{type}{the type of detections to return. One of:
-'all' - returns both valid and invalid detections (default);
-'valid' - returns only valid detections;
-'invalid' - returns only invalid detections}
+\item{type}{the type of rows to return. One of:
+'all' - returns both valid and invalid rows (default);
+'valid' - returns only valid rows;
+'invalid' - returns only invalid rows}
 }
 \value{
 a table of detections

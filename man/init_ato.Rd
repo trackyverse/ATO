@@ -16,6 +16,8 @@ init_ato(det, dep, tag, ani, obs, silent = FALSE)
 \item{ani}{an object of class ATO_ani. See \code{\link{make_ani}}.}
 
 \item{obs}{an object of class ATO_obs. See \code{\link{make_obs}}.}
+
+\item{silent}{Supresses summary messages}
 }
 \value{
 an \code{\link{ATO}}

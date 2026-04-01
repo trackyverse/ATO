@@ -9,6 +9,7 @@
 #' @param tag an object of class ATO_tag. See \code{\link{make_tag}}.
 #' @param ani an object of class ATO_ani. See \code{\link{make_ani}}.
 #' @param obs an object of class ATO_obs. See \code{\link{make_obs}}.
+#' @param silent Supresses summary messages
 #'
 #' @return an \code{\link{ATO}}
 #'
