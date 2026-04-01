@@ -15,7 +15,6 @@ match_update <- function(x, silent = FALSE) {
   
   time_start <- last_break <- Sys.time()
 
-
   if (has(x, c("obs", "ani"))) {
     if (!silent) {
       message("M: Matching @obs to @ani...")
@@ -618,8 +617,14 @@ match_update <- function(x, silent = FALSE) {
     data.table::set(x@tag, j = "original_row_order", value = NULL)
 
     # reset original classes
-    class(x@det) <- original_det_classes
-    class(x@tag) <- original_tag_classes
+    if (!"data.table" %in% original_det_classes) {
+      data.table::setDF(x@det)
+      data.table::setattr(x@det, "class", original_det_classes)
+    }
+    if (!"data.table" %in% original_tag_classes) {
+      data.table::setDF(x@tag)
+      data.table::setattr(x@tag, "class", original_tag_classes)
+    }
   })
 
   # perform the match
@@ -828,8 +833,14 @@ match_update <- function(x, silent = FALSE) {
     data.table::set(x@dep, j = "original_row_order", value = NULL)
 
     # reset original classes
-    class(x@det) <- original_det_classes
-    class(x@dep) <- original_dep_classes
+    if (!"data.table" %in% original_dep_classes) {
+      data.table::setDF(x@dep)
+      data.table::setattr(x@dep, "class", original_dep_classes)
+    }
+    if (!"data.table" %in% original_det_classes) {
+      data.table::setDF(x@det)
+      data.table::setattr(x@det, "class", original_det_classes)
+    }
   })
 
   # perform the match
