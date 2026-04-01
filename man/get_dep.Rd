@@ -5,9 +5,9 @@
 \alias{get_dep,ATO-method}
 \title{Generic to extract the dep slot as a table}
 \usage{
-get_dep(x)
+get_dep(x, type = c("all", "valid", "invalid"))
 
-\S4method{get_dep}{ATO}(x)
+\S4method{get_dep}{ATO}(x, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}

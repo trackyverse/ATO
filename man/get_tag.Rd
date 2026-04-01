@@ -5,9 +5,9 @@
 \alias{get_tag,ATO-method}
 \title{Generic to extract the tag slot as a table}
 \usage{
-get_tag(x)
+get_tag(x, type = c("all", "valid", "invalid"))
 
-\S4method{get_tag}{ATO}(x)
+\S4method{get_tag}{ATO}(x, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}

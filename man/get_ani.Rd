@@ -5,9 +5,9 @@
 \alias{get_ani,ATO-method}
 \title{Generic to extract the ani slot as a table}
 \usage{
-get_ani(x)
+get_ani(x, type = c("all", "valid", "invalid"))
 
-\S4method{get_ani}{ATO}(x)
+\S4method{get_ani}{ATO}(x, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}

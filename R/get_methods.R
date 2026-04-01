@@ -119,10 +119,28 @@ setMethod(
 #'
 #' @export
 #'
-setGeneric("get_dep", function(x) standardGeneric("get_dep"))
+setGeneric(
+  "get_dep",
+  function(x, type = c("all", "valid", "invalid"))
+    standardGeneric("get_dep")
+)
 
 #' @rdname get_dep
-setMethod("get_dep", "ATO", function(x) x@dep)
+setMethod("get_dep", "ATO", 
+          function(x, type = c("all", "valid", "invalid")) {
+    type <- match.arg(type)
+
+    if (type == "all") {
+      return(x@dep)
+    }
+    if (type == "valid") {
+      return(x@dep[x@dep$valid ,])
+    }
+    if (type == "invalid") {
+      return(x@dep[!x@dep$valid ,])
+    }
+  }
+)
 
 #' Generic to extract the tag slot as a table
 #'
@@ -132,10 +150,28 @@ setMethod("get_dep", "ATO", function(x) x@dep)
 #'
 #' @export
 #'
-setGeneric("get_tag", function(x) standardGeneric("get_tag"))
+setGeneric(
+  "get_tag",
+  function(x, type = c("all", "valid", "invalid"))
+    standardGeneric("get_tag")
+)
 
 #' @rdname get_tag
-setMethod("get_tag", "ATO", function(x) x@tag)
+setMethod("get_tag", "ATO",
+          function(x, type = c("all", "valid", "invalid")) {
+    type <- match.arg(type)
+
+    if (type == "all") {
+      return(x@tag)
+    }
+    if (type == "valid") {
+      return(x@tag[x@tag$valid ,])
+    }
+    if (type == "invalid") {
+      return(x@tag[!x@tag$valid ,])
+    }
+  }
+)
 
 #' Generic to extract the ani slot as a table
 #'
@@ -145,10 +181,28 @@ setMethod("get_tag", "ATO", function(x) x@tag)
 #'
 #' @export
 #'
-setGeneric("get_ani", function(x) standardGeneric("get_ani"))
+setGeneric(
+  "get_ani",
+  function(x, type = c("all", "valid", "invalid"))
+    standardGeneric("get_ani")
+)
 
 #' @rdname get_ani
-setMethod("get_ani", "ATO", function(x) x@ani)
+setMethod("get_ani", "ATO",
+          function(x, type = c("all", "valid", "invalid")) {
+    type <- match.arg(type)
+
+    if (type == "all") {
+      return(x@ani)
+    }
+    if (type == "valid") {
+      return(x@ani[x@ani$valid ,])
+    }
+    if (type == "invalid") {
+      return(x@ani[!x@ani$valid ,])
+    }
+  }
+)
 
 #' Generic to extract the obs slot as a table
 #'
@@ -164,7 +218,8 @@ setMethod("get_ani", "ATO", function(x) x@ani)
 #'
 setGeneric(
   "get_obs",
-  function(x, type = c("all", "valid", "invalid")) standardGeneric("get_obs")
+  function(x, type = c("all", "valid", "invalid"))
+    standardGeneric("get_obs")
 )
 
 #' @rdname get_obs
