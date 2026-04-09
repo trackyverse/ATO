@@ -1,0 +1,159 @@
+# Animal Tracking Object ![](reference/figures/ATO_logo_150.png)
+
+This repository is a fastly evolving work in progress, with the intent
+to provide S4 classes to create, edit and expand ATOs.
+
+What *is* an ATO? Read [Hugo’s early vision of the ATO
+here](https://ato.trackyverse.org/articles/ATO-ecosystem.html).
+
+Give it a [test drive with
+webR](https://webr.sh/#code=eJy1VsFu00AQvYefWLmVYkuO0wpUoQgOVU8IRFGTIiSErIk9cVa119buJiFc%2BQL%2BoTf%2BgDv%2FxaztOC7duJYCudibfft25s3OW%2F%2F4fi8gw5%2B3QnOdYnwe3NwXoJe%2Fxss8w%2FEG5%2BFKoRy352PQ8PtZwYXSkKZBAdEdJKjcyB1ezq6HPhtCpDEdej6TWOSKvWY0tdS6UJPxWEvCb9coFQZytBK8eo1xbVbuUGYhTW9AZUEuk%2FHQ8waDlM8lyK1Lu3jNoNyLJk9YJBE0FwkDNgfFI0a4QbYN6cFejZjAjevQu%2BPVfw4GMWplpjK4w5AGLqWGmmdIIYMKPlxP33yKdLXFZDLBr5AVqYlVY6R5LtTpjMAkQ1Z4%2FoD9%2FVtQqqHCKBcxEb6%2FDCnANLQAJUZodCCw5JCa3Q9veVODLTykrVAZ1xolcWy4XnbE7rMClMYz9yqPcUpVRJ85I8dnU54ISD1bRgqFymW4hnSF3VFOS2Tw0SBtkX6j5c7t7IqqEaWglGtqQWXc1wvi2K1GPqsmd2VbIsSWxIo032YoDNKKUHSwSV2Pyl60y164jf4ZSZFWtYqWIA2D7FkwFXChMUHZFVlTPJu4DWlEUSjUPeKoqMM0j8DIbi3JfvOpLlGB6fjDZO0e6CaTuiMk0BaCugSn7%2BihVzF%2BHp2%2F%2FNKVly2lhiQXSScLCZobPXtnlBcdLMdl1LAcl9LDDn%2FqeLTQvY92e01zumlRfbqtS1rNfLCBi1YDa0j2DUgDNwOxWlBIK1nm5cyWmGbgWPbqm0aRb4zauN6hD3kv3WNJKOmEEOzizGcnrHJsdQC6BtKkbrbnJf6M8QVb8K8YlwhmyGzWecDa55xuWi15ZEzTYALxtLfX1u3cXLx4azy7i7SycwslLeLrMpfQfvHtZLMtnoMJhXqUL7CtMAkSw9aiXn136G2BPepXo%2Bn7oI8PguDZzoYboHs%2BETLfPPLjvTZ0x7HHZBEU5iA%2BcNU2bYfWN5gi0NeM4hptou2oOxzJwmbQHWQ9jcluKPtk%2B%2FnSIXcrI%2F0fku2o%2F4lkTZzHSLZP9hjJepimscm9af4BhFCB3g%3D%3D).
+
+Lastly, review and comment on the current [ATO
+Dictionary](https://ato.trackyverse.org/articles/ato-dictionary.html).
+
+# Package index
+
+## All functions
+
+- [`ATO-class`](https://trackyverse.github.io/ATO/reference/ATO-class.md)
+  : S4 class: ATO
+
+- [`.ATO_ani`](https://trackyverse.github.io/ATO/reference/ATO_ani.md) :
+  S4 class: ATO_ani
+
+- [`.ATO_dep`](https://trackyverse.github.io/ATO/reference/ATO_dep.md) :
+  S4 class: ATO_dep
+
+- [`.ATO_det`](https://trackyverse.github.io/ATO/reference/ATO_det.md) :
+  S4 class: ATO_det
+
+- [`.ATO_log`](https://trackyverse.github.io/ATO/reference/ATO_log.md) :
+  S4 class: ATO_log
+
+- [`.ATO_obs`](https://trackyverse.github.io/ATO/reference/ATO_obs.md) :
+  S4 class: ATO_obs
+
+- [`.ATO_tag`](https://trackyverse.github.io/ATO/reference/ATO_tag.md) :
+  S4 class: ATO_tag
+
+- [`.ATO_tbl`](https://trackyverse.github.io/ATO/reference/ATO_tbl.md) :
+  S4 class: ATO_tbl
+
+- [`add()`](https://trackyverse.github.io/ATO/reference/add.md) :
+  Generic add function
+
+- [`ato_table_type_global()`](https://trackyverse.github.io/ATO/reference/ato_table_type_global.md)
+  : Helper function to set the global type of ATO tables
+
+- [`` `$`( ``*`<ATO>`*`)`](https://trackyverse.github.io/ATO/reference/cash-ATO-method.md)
+  :
+
+  `$` Method to extract ATO slots directly
+
+- [`get_ani()`](https://trackyverse.github.io/ATO/reference/get_ani.md)
+  : Generic to extract the ani slot as a table
+
+- [`get_dep()`](https://trackyverse.github.io/ATO/reference/get_dep.md)
+  : Generic to extract the dep slot as a table
+
+- [`get_det()`](https://trackyverse.github.io/ATO/reference/get_det.md)
+  : Generic to extract detections as a table
+
+- [`get_det_dep()`](https://trackyverse.github.io/ATO/reference/get_det_dep.md)
+  :
+
+  A wrapper of `get_det` to extract detections for transmitters listed
+  in the dep slot
+
+- [`get_det_tag()`](https://trackyverse.github.io/ATO/reference/get_det_tag.md)
+  :
+
+  A wrapper of `get_det` to extract detections for transmitters listed
+  in the tag slot
+
+- [`get_log()`](https://trackyverse.github.io/ATO/reference/get_log.md)
+  : Generic to extract the log slot as a table
+
+- [`get_obs()`](https://trackyverse.github.io/ATO/reference/get_obs.md)
+  : Generic to extract the obs slot as a table
+
+- [`get_tag()`](https://trackyverse.github.io/ATO/reference/get_tag.md)
+  : Generic to extract the tag slot as a table
+
+- [`has()`](https://trackyverse.github.io/ATO/reference/has.md) :
+  Generic to check if an ATO has data in a given slot
+
+- [`init_ato()`](https://trackyverse.github.io/ATO/reference/init_ato.md)
+  :
+
+  Initiate an `ATO`
+
+- [`is_ato()`](https://trackyverse.github.io/ATO/reference/is_ato.md) :
+  Wrapper for is(x, "ATO")
+
+- [`log_comment()`](https://trackyverse.github.io/ATO/reference/log_comment.md)
+  : Log a new comment
+
+- [`log_event()`](https://trackyverse.github.io/ATO/reference/log_event.md)
+  : Log a new event
+
+- [`make_ani()`](https://trackyverse.github.io/ATO/reference/make_ani.md)
+  : Make an ATO animals object
+
+- [`make_dep()`](https://trackyverse.github.io/ATO/reference/make_dep.md)
+  : Make an ATO deployments object
+
+- [`make_det()`](https://trackyverse.github.io/ATO/reference/make_det.md)
+  : Make an ATO detections object
+
+- [`make_obs()`](https://trackyverse.github.io/ATO/reference/make_obs.md)
+  : Make an ATO observations object
+
+- [`make_tag()`](https://trackyverse.github.io/ATO/reference/make_tag.md)
+  : Make an ATO tags object
+
+- [`match_update()`](https://trackyverse.github.io/ATO/reference/match_update.md)
+  : Match the various slots of the ATO object
+
+- [`show(`*`<ATO>`*`)`](https://trackyverse.github.io/ATO/reference/show-ATO-method.md)
+  :
+
+  Method to show an `ATO`
+
+- [`summary(`*`<ATO_ani>`*`)`](https://trackyverse.github.io/ATO/reference/summary-ATO_ani-method.md)
+  : Summary method for an ATO_ani slot object
+
+- [`summary(`*`<ATO_dep>`*`)`](https://trackyverse.github.io/ATO/reference/summary-ATO_dep-method.md)
+  : Summary method for an ATO_dep object
+
+- [`summary(`*`<ATO_det>`*`)`](https://trackyverse.github.io/ATO/reference/summary-ATO_det-method.md)
+  : Summary method for an ATO_det slot object
+
+- [`summary(`*`<ATO_log>`*`)`](https://trackyverse.github.io/ATO/reference/summary-ATO_log-method.md)
+  : Summary method for an ATO_log slot object
+
+- [`summary(`*`<ATO_obs>`*`)`](https://trackyverse.github.io/ATO/reference/summary-ATO_obs-method.md)
+  : Summary method for an ATO_obs slot object
+
+- [`summary(`*`<ATO_tag>`*`)`](https://trackyverse.github.io/ATO/reference/summary-ATO_tag-method.md)
+  : Summary method for an ATO_tag slot object
+
+- [`` `table_type<-`() ``](https://trackyverse.github.io/ATO/reference/table_type-set.md)
+  : Assign a new table type to the ATO
+
+- [`table_type()`](https://trackyverse.github.io/ATO/reference/table_type.md)
+  : What is the table type of this ATO?
+
+# Articles
+
+### All vignettes
+
+- [The ATO
+  Dictionary](https://trackyverse.github.io/ATO/articles/ato-dictionary.md):
+- [The ATO
+  ecosystem](https://trackyverse.github.io/ATO/articles/ATO-ecosystem.md):
+- [What's inside an
+  ATO](https://trackyverse.github.io/ATO/articles/ATO-structure.md):
+- [Creating an
+  ATO](https://trackyverse.github.io/ATO/articles/creating-an-ATO.md):

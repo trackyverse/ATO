@@ -24,6 +24,13 @@
 <url><loc>https://trackyverse.github.io/ATO/reference/check_ato_table_cols.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/check_ato_table_type.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/dot-dyn_round.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/dot-match_ani_tag.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/dot-match_dep_det_base.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/dot-match_dep_det_datatable.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/dot-match_det_tag_base.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/dot-match_det_tag_datatable.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/dot-match_obs_ani.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/dot-match_obs_tag.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/get_ani.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/get_dep.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/get_det.html</loc></url>
@@ -43,12 +50,7 @@
 <url><loc>https://trackyverse.github.io/ATO/reference/make_det.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/make_obs.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/make_tag.html</loc></url>
-<url><loc>https://trackyverse.github.io/ATO/reference/match_det_ani.html</loc></url>
-<url><loc>https://trackyverse.github.io/ATO/reference/match_det_dep.html</loc></url>
-<url><loc>https://trackyverse.github.io/ATO/reference/match_det_tag.html</loc></url>
-<url><loc>https://trackyverse.github.io/ATO/reference/match_obs_ani.html</loc></url>
-<url><loc>https://trackyverse.github.io/ATO/reference/match_obs_tag.html</loc></url>
-<url><loc>https://trackyverse.github.io/ATO/reference/match_tag_ani.html</loc></url>
+<url><loc>https://trackyverse.github.io/ATO/reference/match_update.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/show-ATO-method.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/summary-ATO_ani-method.html</loc></url>
 <url><loc>https://trackyverse.github.io/ATO/reference/summary-ATO_dep-method.html</loc></url>

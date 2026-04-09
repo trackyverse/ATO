@@ -47,21 +47,21 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_dep</span><span class="op">(</span></span>
 <span>  receiver_model <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  receiver_serial <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
+<span>  <span class="va">receiver_serial</span>,</span>
 <span>  receiver_codeset <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  deploy_location <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  deploy_datetime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="cn">NA_real_</span><span class="op">)</span>,</span>
+<span>  <span class="va">deploy_location</span>,</span>
+<span>  <span class="va">deploy_datetime</span>,</span>
 <span>  deploy_lat <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
 <span>  deploy_lon <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
 <span>  deploy_z <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
-<span>  recover_datetime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="cn">NA_real_</span><span class="op">)</span>,</span>
+<span>  <span class="va">recover_datetime</span>,</span>
 <span>  recover_lat <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
 <span>  recover_lon <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
 <span>  transmitter <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  transmitter_manufacturer <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  transmitter_ping_rate <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
 <span>  transmitter_model <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  transmitter_serial <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
+<span>  transmitter_serial <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  <span class="va">tz</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -72,76 +72,81 @@
 
 
 <dl><dt id="arg-receiver-model">receiver_model<a class="anchor" aria-label="anchor" href="#arg-receiver-model"></a></dt>
-<dd><p>Model of the receiver, character.</p></dd>
+<dd><p>Model of the receiver, character. Optional.</p></dd>
 
 
 <dt id="arg-receiver-serial">receiver_serial<a class="anchor" aria-label="anchor" href="#arg-receiver-serial"></a></dt>
-<dd><p>Receiver serial number, integer.</p></dd>
+<dd><p>Receiver serial number, integer. Mandatory.</p></dd>
 
 
 <dt id="arg-receiver-codeset">receiver_codeset<a class="anchor" aria-label="anchor" href="#arg-receiver-codeset"></a></dt>
-<dd><p>Codeset of the receiver, character.</p></dd>
+<dd><p>Codeset of the receiver, character. Optional.</p></dd>
 
 
 <dt id="arg-deploy-location">deploy_location<a class="anchor" aria-label="anchor" href="#arg-deploy-location"></a></dt>
 <dd><p>Name of the location where the receiver was deployed,
-character.</p></dd>
+character. Mandatory.</p></dd>
 
 
 <dt id="arg-deploy-datetime">deploy_datetime<a class="anchor" aria-label="anchor" href="#arg-deploy-datetime"></a></dt>
-<dd><p>date and time of the deployment, posixct.</p></dd>
+<dd><p>date and time of the deployment, posixct. Mandatory.</p></dd>
 
 
 <dt id="arg-deploy-lat">deploy_lat<a class="anchor" aria-label="anchor" href="#arg-deploy-lat"></a></dt>
-<dd><p>latitude of the deployment. Preferably in WGS84, numeric.</p></dd>
+<dd><p>latitude of the deployment. Preferably in WGS84, numeric.
+Optional.</p></dd>
 
 
 <dt id="arg-deploy-lon">deploy_lon<a class="anchor" aria-label="anchor" href="#arg-deploy-lon"></a></dt>
-<dd><p>longitude of the deployment. Preferably in WGS84, numeric.</p></dd>
+<dd><p>longitude of the deployment. Preferably in WGS84, numeric.
+Optional.</p></dd>
 
 
 <dt id="arg-deploy-z">deploy_z<a class="anchor" aria-label="anchor" href="#arg-deploy-z"></a></dt>
 <dd><p>depth of the deployment, as measured from the reference
-surface of the water body, numeric.</p></dd>
+surface of the water body, numeric. Optional.</p></dd>
 
 
 <dt id="arg-recover-datetime">recover_datetime<a class="anchor" aria-label="anchor" href="#arg-recover-datetime"></a></dt>
-<dd><p>date and time of the recovery, posixct.</p></dd>
+<dd><p>date and time of the recovery, posixct. Mandatory.</p></dd>
 
 
 <dt id="arg-recover-lat">recover_lat<a class="anchor" aria-label="anchor" href="#arg-recover-lat"></a></dt>
 <dd><p>latitude of the recovery point. Preferably in WGS84,
-numeric.</p></dd>
+numeric. Optional.</p></dd>
 
 
 <dt id="arg-recover-lon">recover_lon<a class="anchor" aria-label="anchor" href="#arg-recover-lon"></a></dt>
 <dd><p>longitude of the recovery point. Preferably in WGS84,
-numeric.</p></dd>
+numeric. Optional.</p></dd>
 
 
 <dt id="arg-transmitter">transmitter<a class="anchor" aria-label="anchor" href="#arg-transmitter"></a></dt>
-<dd><p>Transmitter code for a beacon/reference tag, character.</p></dd>
+<dd><p>Transmitter code for a beacon/reference tag, character.
+Optional.</p></dd>
 
 
 <dt id="arg-transmitter-manufacturer">transmitter_manufacturer<a class="anchor" aria-label="anchor" href="#arg-transmitter-manufacturer"></a></dt>
-<dd><p>Manufacturer of the transmitter, character.</p></dd>
+<dd><p>Manufacturer of the transmitter, character.
+Optional.</p></dd>
 
 
 <dt id="arg-transmitter-ping-rate">transmitter_ping_rate<a class="anchor" aria-label="anchor" href="#arg-transmitter-ping-rate"></a></dt>
 <dd><p>Expected ping rate of the transmitter, numeric.
-In seconds.</p></dd>
+In seconds. Required if transmitter is provided.</p></dd>
 
 
 <dt id="arg-transmitter-model">transmitter_model<a class="anchor" aria-label="anchor" href="#arg-transmitter-model"></a></dt>
-<dd><p>Model of the transmitter, character.</p></dd>
+<dd><p>Model of the transmitter, character. Optional.</p></dd>
 
 
 <dt id="arg-transmitter-serial">transmitter_serial<a class="anchor" aria-label="anchor" href="#arg-transmitter-serial"></a></dt>
-<dd><p>Serial number of the transmitter, integer.</p></dd>
+<dd><p>Serial number of the transmitter, integer.
+Required if transmitter is provided.</p></dd>
 
 
 <dt id="arg-tz">tz<a class="anchor" aria-label="anchor" href="#arg-tz"></a></dt>
-<dd><p>the timezone of the datetime data.</p></dd>
+<dd><p>the timezone of the datetime data. Mandatory.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -167,7 +172,7 @@ In seconds.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

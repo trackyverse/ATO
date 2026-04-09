@@ -131,64 +131,64 @@
 <p>The animals slot contains information on the animals tracked.</p>
 <table class="table caption-top">
 <colgroup>
-<col style="width: 31%">
-<col style="width: 15%">
-<col style="width: 53%">
+<col style="width: 27%">
+<col style="width: 13%">
+<col style="width: 11%">
+<col style="width: 47%">
 </colgroup>
 <thead><tr class="header">
 <th style="text-align: left;">column name (snake case)</th>
 <th style="text-align: left;">column type</th>
+<th style="text-align: left;">mandatory</th>
 <th style="text-align: left;">short description</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">animal</td>
-<td style="text-align: left;">character</td>
-<td style="text-align: left;">name/code of the animal</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">capture_location</td>
-<td style="text-align: left;">character</td>
-<td style="text-align: left;">place where the animal was caught</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">capture_datetime</td>
-<td style="text-align: left;">POSIXct</td>
-<td style="text-align: left;">date and time when the animal was caught</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">capture_lat</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">latitude of the capture</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">capture_lon</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">longitude of the capture</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">release_location</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">place where the animal was released</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">release_datetime</td>
 <td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">date and time when the animal was released</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">release_lat</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">latitude of the release</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">release_lon</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">longitude of the release</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tz</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">timezone of the datetime data</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">…</td>
 <td style="text-align: left;">any</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">non-standard column names are allowed</td>
 </tr>
 </tbody>
@@ -198,79 +198,94 @@
 <p>The tags slot contains information on the transmitters that were used to track the animals.</p>
 <table class="table caption-top">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 12%">
-<col style="width: 63%">
+<col style="width: 22%">
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 57%">
 </colgroup>
 <thead><tr class="header">
 <th style="text-align: left;">column name (snake case)</th>
 <th style="text-align: left;">column type</th>
+<th style="text-align: left;">mandatory</th>
 <th style="text-align: left;">short description</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">manufacturer</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">company that made the tag</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">model</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">model of the tag</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">power_level</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">power level of the tag</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">ping_rate</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">ping rate of the tag</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ping_variation</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">+- variation added to individual pings</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">serial</td>
-<td style="text-align: left;">integer</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">serial code of the tag</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">transmitter</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">transmitter code emitted by the tag</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">activation_datetime</td>
 <td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">activation date</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">battery_life</td>
 <td style="text-align: left;">numeric</td>
-<td style="text-align: left;">battery life</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;">battery life, in days</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">sensor_type</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">sensor type associated with the transmitter (e.g. temperature)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">sensor_unit</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">units of the sensor data collected (e.g. C)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">animal</td>
 <td style="text-align: left;">character</td>
-<td style="text-align: left;">name/code of the animal that received the tag</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;">name of the animal that received the tag</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">…</td>
 <td style="text-align: left;">any</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">non-standard column names are allowed</td>
 </tr>
 </tbody>
@@ -282,104 +297,130 @@
 <p>The deployments slot contains information on autonomous, stationary receivers that were deployed to listen to the transmitters.</p>
 <table class="table caption-top">
 <colgroup>
+<col style="width: 15%">
+<col style="width: 7%">
 <col style="width: 20%">
-<col style="width: 9%">
-<col style="width: 70%">
+<col style="width: 55%">
 </colgroup>
 <thead><tr class="header">
 <th style="text-align: left;">column name (snake case)</th>
 <th style="text-align: left;">column type</th>
+<th style="text-align: left;">mandatory</th>
 <th style="text-align: left;">short description</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">receiver_manufacturer</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">missing in R code</td>
 <td style="text-align: left;">company that made the receiver</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">receiver_model</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">model of the receiver</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">receiver_serial</td>
-<td style="text-align: left;">integer</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">no if transmitter provided</td>
 <td style="text-align: left;">serial code of the receiver (this is the column used to match deployments)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">receiver_codeset</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">codeset of the receiver</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">deploy_location</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">name of the location where the receiver was deployed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">deploy_datetime</td>
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">date and time of the deployment (yyyy-mm-dd hh:mm:ss)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">deploy_lat</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;">latitude of the deployment</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">deploy_lon</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;">longitude of the deployment</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">deploy_z</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;">depth of the deployment (as measured from the reference surface of the waterbody)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">recover_datetime</td>
+<td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">date and time of the recovery (yyyy-mm-dd hh:mm:ss)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">recover_lat</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;">latitude of the recovery</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">recover_lon</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;">longitude of the recovery</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">transmitter</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no if receiver_serial provided</td>
 <td style="text-align: left;">Can either be a beacon located inside a receiver, or a stationary reference transmitter</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">transmitter_manufacturer</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">company that made the transmitter</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">transmitter_ping_rate</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no (yes if transmitter provided)</td>
 <td style="text-align: left;">ping rate of the transmitter</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">transmitter_model</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">model of the transmitter</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">transmitter_serial</td>
-<td style="text-align: left;">integer</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">serial code of the transmitter</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">deploy_location</td>
+<td style="text-align: left;">tz</td>
 <td style="text-align: left;">character</td>
-<td style="text-align: left;">name of the location where the receiver was deployed</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">timezone of the datetime data</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">deploy_datetime</td>
-<td style="text-align: left;">POSIXct</td>
-<td style="text-align: left;">date and time of the deployment (yyyy-mm-dd hh:mm:ss)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">deploy_lat</td>
-<td style="text-align: left;">numeric</td>
-<td style="text-align: left;">latitude of the deployment</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">deploy_lon</td>
-<td style="text-align: left;">numeric</td>
-<td style="text-align: left;">longitude of the deployment</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">deploy_z</td>
-<td style="text-align: left;">numeric</td>
-<td style="text-align: left;">depth of the deployment (as measured from the reference surface of the waterbody)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">recover_datetime</td>
-<td style="text-align: left;">POSIXct</td>
-<td style="text-align: left;">date and time of the recovery (yyyy-mm-dd hh:mm:ss)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">recover_lat</td>
-<td style="text-align: left;">numeric</td>
-<td style="text-align: left;">latitude of the recovery</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">recover_lon</td>
-<td style="text-align: left;">numeric</td>
-<td style="text-align: left;">longitude of the recovery</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">…</td>
 <td style="text-align: left;">any</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">non-standard column names are allowed</td>
 </tr>
 </tbody>
@@ -389,44 +430,58 @@
 <p>The detections slot contains the detection extracts obtained from the stationary receivers deployed.</p>
 <table class="table caption-top">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 12%">
-<col style="width: 61%">
+<col style="width: 23%">
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 55%">
 </colgroup>
 <thead><tr class="header">
 <th style="text-align: left;">column name (snake case)</th>
 <th style="text-align: left;">column type</th>
+<th style="text-align: left;">mandatory</th>
 <th style="text-align: left;">short description</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">datetime</td>
 <td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">date and time of the detection (yyyy-mm-dd hh:mm:ss)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">frac_second</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">fraction of the second when the detection was received</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">receiver_serial</td>
-<td style="text-align: left;">integer</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">serial number of the receiver that picked up the detection</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">transmitter</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">transmitter that was picked up</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">sensor_value</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">respective sensor value</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">tz</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">timezone of the datetime data</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">…</td>
 <td style="text-align: left;">any</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">non-standard column names are allowed</td>
 </tr>
 </tbody>
@@ -438,60 +493,77 @@
 <p>The observations slot contains records of direct and indirect observations of an animal or tag. For example, a photo of the tail of a whale is a <strong>direct</strong> observation of the <strong>animal</strong>. A reported capture of a fish by an angler is also a <strong>direct</strong> observation of the <strong>animal</strong>. On the other hand, a satellite-estimated position of a transmitter is an <strong>indirect</strong> observation of a <strong>tag</strong>. A detection of a tag using a mobile receiver is also an <strong>indirect</strong> observation of a <strong>tag</strong>. The choice between direct and indirect observation types declares the confidence you have on that observation. This information may be used by modelling tools to determine which positions to rely on more heavily.</p>
 <table class="table caption-top">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 12%">
-<col style="width: 63%">
+<col style="width: 17%">
+<col style="width: 8%">
+<col style="width: 30%">
+<col style="width: 43%">
 </colgroup>
 <thead><tr class="header">
 <th style="text-align: left;">column name (snake case)</th>
 <th style="text-align: left;">column type</th>
+<th style="text-align: left;">mandatory</th>
 <th style="text-align: left;">short description</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">animal</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no if not terminal and transmitter provided</td>
 <td style="text-align: left;">name/code of the observed animal</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">transmitter</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no if animal provided</td>
 <td style="text-align: left;">transmitter detected</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">type of observation (e.g. manual tracking, visual, etc)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">terminal</td>
 <td style="text-align: left;">logical</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">does this observation mark the end of tracking for this animal</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">location</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">location of the observation</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">datetime</td>
 <td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">date and time of the observation</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">lat</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">latitude of the observation</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">lon</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">longitude of the observation</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">…</td>
 <td style="text-align: left;">any</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">non-standard column names are allowed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tz</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">timezone of the datetime data</td>
 </tr>
 </tbody>
 </table>
@@ -502,60 +574,77 @@
 <p>The log slot keeps track of the operations performed to the ATO since it was initialized to its current state. It is a great tool both for debugging and for increasing the reproducibility of animal tracking analyses.</p>
 <table class="table caption-top">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 12%">
-<col style="width: 63%">
+<col style="width: 17%">
+<col style="width: 8%">
+<col style="width: 30%">
+<col style="width: 43%">
 </colgroup>
 <thead><tr class="header">
 <th style="text-align: left;">column name (snake case)</th>
 <th style="text-align: left;">column type</th>
+<th style="text-align: left;">mandatory</th>
 <th style="text-align: left;">short description</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">animal</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no if not terminal and transmitter provided</td>
 <td style="text-align: left;">name/code of the observed animal</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">transmitter</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no if animal provided</td>
 <td style="text-align: left;">transmitter detected</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">type of observation (e.g. manual tracking, visual, etc)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">terminal</td>
 <td style="text-align: left;">logical</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">does this observation mark the end of tracking for this animal</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">location</td>
 <td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">location of the observation</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">datetime</td>
 <td style="text-align: left;">POSIXct</td>
+<td style="text-align: left;">yes</td>
 <td style="text-align: left;">date and time of the observation</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">lat</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">latitude of the observation</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">lon</td>
 <td style="text-align: left;">numeric</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">longitude of the observation</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">…</td>
 <td style="text-align: left;">any</td>
+<td style="text-align: left;">no</td>
 <td style="text-align: left;">non-standard column names are allowed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tz</td>
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">timezone of the datetime data</td>
 </tr>
 </tbody>
 </table>
@@ -653,7 +742,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

@@ -49,9 +49,9 @@
 <span>  animal <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  transmitter <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  terminal <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  location <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  datetime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="cn">NA_real_</span><span class="op">)</span>,</span>
+<span>  <span class="va">terminal</span>,</span>
+<span>  <span class="va">location</span>,</span>
+<span>  <span class="va">datetime</span>,</span>
 <span>  lat <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
 <span>  lon <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
 <span>  <span class="va">tz</span>,</span>
@@ -64,41 +64,47 @@
 
 
 <dl><dt id="arg-animal">animal<a class="anchor" aria-label="anchor" href="#arg-animal"></a></dt>
-<dd><p>Name of the animal that was observed, character.</p></dd>
+<dd><p>Name of the animal that was observed, character. Each
+observation must have an animal or transmitter code (or both).</p></dd>
 
 
 <dt id="arg-transmitter">transmitter<a class="anchor" aria-label="anchor" href="#arg-transmitter"></a></dt>
-<dd><p>Transmitter code that was observed, character.</p></dd>
+<dd><p>Transmitter code that was observed, character. Each
+observation must have an animal or transmitter code (or both).</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>Type of observation (e.g. directly seen, manual tracking),
-character.</p></dd>
+character. Optional.</p></dd>
 
 
 <dt id="arg-terminal">terminal<a class="anchor" aria-label="anchor" href="#arg-terminal"></a></dt>
 <dd><p>Was the animal permanently captured at the moment of
-observation? logical.</p></dd>
+observation? logical. Mandatory.</p></dd>
 
 
 <dt id="arg-location">location<a class="anchor" aria-label="anchor" href="#arg-location"></a></dt>
-<dd><p>Name of the place where the observation occurred, character.</p></dd>
+<dd><p>Name of the place where the observation occurred, character.
+Mandatory.</p></dd>
 
 
 <dt id="arg-datetime">datetime<a class="anchor" aria-label="anchor" href="#arg-datetime"></a></dt>
-<dd><p>date and time of the observation, posixct format.</p></dd>
+<dd><p>date and time of the observation, posixct format.
+Mandatory.</p></dd>
 
 
 <dt id="arg-lat">lat<a class="anchor" aria-label="anchor" href="#arg-lat"></a></dt>
-<dd><p>latitude of the observation. Preferably in WGS84, numeric.</p></dd>
+<dd><p>latitude of the observation. Preferably in WGS84, numeric.
+Optional.</p></dd>
 
 
 <dt id="arg-lon">lon<a class="anchor" aria-label="anchor" href="#arg-lon"></a></dt>
-<dd><p>longitude of the observation. Preferably in WGS84, numeric.</p></dd>
+<dd><p>longitude of the observation. Preferably in WGS84, numeric.
+Optional.</p></dd>
 
 
 <dt id="arg-tz">tz<a class="anchor" aria-label="anchor" href="#arg-tz"></a></dt>
-<dd><p>the timezone of the datetime data.</p></dd>
+<dd><p>the timezone of the datetime data. Mandatory.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -124,7 +130,7 @@ observation? logical.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

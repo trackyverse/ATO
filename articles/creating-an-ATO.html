@@ -92,35 +92,16 @@
 <span><span class="co">#&gt; @log slot is empty.</span></span></code></pre></div>
 </div>
 <p>When you open an ATO, you’ll find a short summary of its contents. The output above shows us that our newly created ATO is empty, and also reveals the six core slots of the ATO. You can find more about those in the <a href="https://ato.trackyverse.org/articles/ATO-structure.html" class="external-link">article about the ATO structure</a>. The family of “make” functions (e.g. <code><a href="../reference/make_det.html">make_det()</a></code>) is responsible for creating each of the slots, which can then be integrated into your ATO object using <code><a href="../reference/add.html">add()</a></code>. You may also initiate an ATO already with data by using the respective arguments within <code><a href="../reference/init_ato.html">init_ato()</a></code>. Below is an example with dummy data. Note: <code><a href="../reference/add.html">add()</a></code> has an <code>append</code> argument that you can use to add more data to a slot that already contains some information.</p>
+<p>Note that functions in ATO are designed to be verbose in the choices they make. This can be annoying, but it is an effort to prevent the ATO from becoming a “black box”. Some warnings will be shown in the workflow below.</p>
+<p>We’ll start by creating a simple ATO containing information on one animal:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ani</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_ani.html">make_ani</a></span><span class="op">(</span></span>
 <span>  animal <span class="op">=</span> <span class="st">"A1"</span>,</span>
 <span>  length <span class="op">=</span> <span class="fl">123</span>,</span>
 <span>  weight <span class="op">=</span> <span class="fl">55</span>,</span>
-<span>  release_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">20</span>,</span>
-<span>  tz <span class="op">=</span> <span class="st">"America/Halifax"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tag</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_tag.html">make_tag</a></span><span class="op">(</span></span>
-<span>  transmitter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"R64K-1234"</span>, <span class="st">"R64K-1235"</span><span class="op">)</span>,</span>
-<span>  animal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"A1"</span><span class="op">)</span>,</span>
-<span>  tz <span class="op">=</span> <span class="st">"America/Halifax"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">dep</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_dep.html">make_dep</a></span><span class="op">(</span></span>
-<span>  receiver_serial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11111</span>, <span class="fl">22222</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  deploy_lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11.123</span>, <span class="fl">11.124</span><span class="op">)</span>,</span>
-<span>  deploy_lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">21.234</span>, <span class="fl">21.235</span><span class="op">)</span>,</span>
-<span>  deploy_z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">30</span><span class="op">)</span>,</span>
-<span>  tz <span class="op">=</span> <span class="st">"America/Halifax"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">det</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_det.html">make_det</a></span><span class="op">(</span></span>
-<span>  datetime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  frac_second <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.2</span><span class="op">)</span>,</span>
-<span>  receiver_serial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11111</span>, <span class="fl">22222</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  transmitter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"R64K-1234"</span>, <span class="st">"R64K-1234"</span><span class="op">)</span>,</span>
+<span>  release_datetime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">20</span>,</span>
+<span>  release_location <span class="op">=</span> <span class="st">"Narnia"</span>,</span>
 <span>  tz <span class="op">=</span> <span class="st">"America/Halifax"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -132,104 +113,206 @@
 <span><span class="co">#&gt; @dep slot is empty.</span></span>
 <span><span class="co">#&gt; @tag slot is empty.</span></span>
 <span><span class="co">#&gt; @ani:</span></span>
-<span><span class="co">#&gt;  - 1 animal</span></span>
+<span><span class="co">#&gt;  - 1 animal in total</span></span>
+<span><span class="co">#&gt;  - Not yet matched to @tag</span></span>
+<span><span class="co">#&gt;  - Not yet matched to @det (through @tag)</span></span>
+<span><span class="co">#&gt;  - Not yet matched to @obs</span></span>
 <span><span class="co">#&gt;  - 1 release location</span></span>
 <span><span class="co">#&gt; @obs slot is empty.</span></span>
 <span><span class="co">#&gt; @log:</span></span>
-<span><span class="co">#&gt;  - 1 log entry 1 package</span></span>
-<span></span>
+<span><span class="co">#&gt;  - 1 log entry from 1 package</span></span></code></pre></div>
+</div>
+<p>We can add in some tag information. Note that this information is automatically matched to the <code>@ani</code> slot (the animals) created above.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tag</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_tag.html">make_tag</a></span><span class="op">(</span></span>
+<span>  transmitter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"R64K-1234"</span>, <span class="st">"R64K-1235"</span><span class="op">)</span>,</span>
+<span>  animal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"A1"</span><span class="op">)</span>,</span>
+<span>  tz <span class="op">=</span> <span class="st">"America/Halifax"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">ato</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add.html">add</a></span><span class="op">(</span><span class="va">ato</span>, <span class="va">tag</span><span class="op">)</span></span>
+<span><span class="co">#&gt; M: Matching @ani to @tag...</span></span>
+<span><span class="co">#&gt; M: Matching @ani to @tag took 0.002s</span></span>
 <span><span class="va">ato</span></span>
 <span><span class="co">#&gt; data.frame ATO object:</span></span>
 <span><span class="co">#&gt; @det slot is empty.</span></span>
 <span><span class="co">#&gt; @dep slot is empty.</span></span>
 <span><span class="co">#&gt; @tag:</span></span>
 <span><span class="co">#&gt;  - 2 transmitter codes</span></span>
-<span><span class="co">#&gt;  - 1 tag</span></span>
+<span><span class="co">#&gt;  - All matched to animals</span></span>
+<span><span class="co">#&gt;  - Not yet matched to @det</span></span>
+<span><span class="co">#&gt;  - Not yet matched to @obs</span></span>
 <span><span class="co">#&gt; @ani:</span></span>
-<span><span class="co">#&gt;  - 1 animal</span></span>
+<span><span class="co">#&gt;  - 1 animal in total</span></span>
+<span><span class="co">#&gt;  - All with associated tags</span></span>
+<span><span class="co">#&gt;  - Not yet matched to @det (through @tag)</span></span>
+<span><span class="co">#&gt;  - Not yet matched to @obs</span></span>
 <span><span class="co">#&gt;  - 1 release location</span></span>
 <span><span class="co">#&gt; @obs slot is empty.</span></span>
 <span><span class="co">#&gt; @log:</span></span>
-<span><span class="co">#&gt;  - 2 log entry 1 package</span></span>
-<span></span>
-<span><span class="va">ato</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add.html">add</a></span><span class="op">(</span><span class="va">ato</span>, <span class="va">det</span><span class="op">)</span></span>
-<span><span class="co">#&gt; M: 1 target trasmitters were never detected.</span></span>
-<span><span class="va">ato</span></span>
-<span><span class="co">#&gt; data.frame ATO object:</span></span>
-<span><span class="co">#&gt; @det:</span></span>
-<span><span class="co">#&gt;  - 2 detections (0% off-target)</span></span>
-<span><span class="co">#&gt;  - 1 transmitters (all on-target)</span></span>
-<span><span class="co">#&gt;  - 2 receivers</span></span>
-<span><span class="co">#&gt;  - Data range: 2025-09-11 16:33:14.764395 to 2025-09-11 16:33:15.7644 (America/Halifax)</span></span>
-<span><span class="co">#&gt; @dep slot is empty.</span></span>
-<span><span class="co">#&gt; @tag:</span></span>
-<span><span class="co">#&gt;  - 2 transmitter codes (of which 1 was never detected)</span></span>
-<span><span class="co">#&gt;  - 1 tag (of which 1 was never detected)</span></span>
-<span><span class="co">#&gt; @ani:</span></span>
-<span><span class="co">#&gt;  - 1 animal</span></span>
-<span><span class="co">#&gt;  - 1 release location</span></span>
-<span><span class="co">#&gt; @obs slot is empty.</span></span>
-<span><span class="co">#&gt; @log:</span></span>
-<span><span class="co">#&gt;  - 3 log entry 1 package</span></span>
+<span><span class="co">#&gt;  - 2 log entries from 1 package</span></span></code></pre></div>
+</div>
+<p>Similarly, let’s add receiver deployments…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dep</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_dep.html">make_dep</a></span><span class="op">(</span></span>
+<span>  receiver_serial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11111</span>, <span class="fl">22222</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  deploy_location <span class="op">=</span> <span class="st">"Narnia"</span>,</span>
+<span>  deploy_datetime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">60</span>,</span>
+<span>  deploy_lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11.123</span>, <span class="fl">11.124</span><span class="op">)</span>,</span>
+<span>  deploy_lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">21.234</span>, <span class="fl">21.235</span><span class="op">)</span>,</span>
+<span>  deploy_z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">30</span><span class="op">)</span>,</span>
+<span>  recover_datetime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">120</span>,</span>
+<span>  tz <span class="op">=</span> <span class="st">"America/Halifax"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ato</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add.html">add</a></span><span class="op">(</span><span class="va">ato</span>, <span class="va">dep</span><span class="op">)</span></span>
-<span><span class="co">#&gt; M: 2 detections do not fall within deployment periods or do not belong to receivers listed in the deployments.</span></span>
-<span><span class="co">#&gt; M: 2 deployed receivers have no detections.</span></span>
-<span><span class="va">ato</span></span>
+<span><span class="co">#&gt; M: Matching @ani to @tag...</span></span>
+<span><span class="co">#&gt; M: Matching @ani to @tag took 0.001s</span></span></code></pre></div>
+</div>
+<p>…and animal detections.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">det</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_det.html">make_det</a></span><span class="op">(</span></span>
+<span>  datetime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  receiver_serial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11111</span>, <span class="fl">22222</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  transmitter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"R64K-1234"</span>, <span class="st">"R64K-1234"</span><span class="op">)</span>,</span>
+<span>  tz <span class="op">=</span> <span class="st">"America/Halifax"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: datetime contains millisecond information. Because frac_second was not</span></span>
+<span><span class="co">#&gt; provided, fractional seconds will be stripped from the datetime and stored in</span></span>
+<span><span class="co">#&gt; the frac_second column instead. To avoid this warning, strip fractional seconds</span></span>
+<span><span class="co">#&gt; from the timestamps and optionally add them through the frac_second argument.</span></span></code></pre></div>
+</div>
+<p>Wait a minute, what’s that warning?? Nothing to worry about! ATO found that we provided sub-second information and broke it out into a column called <code>frac_second</code> for us to protect it from being overwritten if the <code>datetime</code> column is modified.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">det</span></span>
+<span><span class="co">#&gt;              datetime frac_second receiver_serial transmitter sensor_value</span></span>
+<span><span class="co">#&gt; 1 2026-04-09 16:44:28   0.5457439           11111   R64K-1234           NA</span></span>
+<span><span class="co">#&gt; 2 2026-04-09 16:44:29   0.5457473           22222   R64K-1234           NA</span></span>
+<span><span class="co">#&gt;   valid</span></span>
+<span><span class="co">#&gt; 1  TRUE</span></span>
+<span><span class="co">#&gt; 2  TRUE</span></span></code></pre></div>
+</div>
+<p>We can accept this warning and move on, or strip out the fractional second information ourselves and supply it directly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">times</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">frac_seconds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">times</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">1</span></span>
+<span></span>
+<span><span class="va">det</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_det.html">make_det</a></span><span class="op">(</span></span>
+<span>  datetime <span class="op">=</span> <span class="va">times</span> <span class="op">-</span> <span class="va">frac_seconds</span>,</span>
+<span>  frac_second <span class="op">=</span> <span class="va">frac_seconds</span>,</span>
+<span>  receiver_serial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11111</span>, <span class="fl">22222</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  transmitter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"R64K-1234"</span>, <span class="st">"R64K-1234"</span><span class="op">)</span>,</span>
+<span>  tz <span class="op">=</span> <span class="st">"America/Halifax"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ato</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add.html">add</a></span><span class="op">(</span><span class="va">ato</span>, <span class="va">det</span><span class="op">)</span></span>
+<span><span class="co">#&gt; M: Matching @ani to @tag...</span></span>
+<span><span class="co">#&gt; M: Matching @ani to @tag took 0.001s</span></span>
+<span><span class="co">#&gt; M: Matching @det to @tag...</span></span>
+<span><span class="co">#&gt; Warning in data.table::foverlaps(x@det, x@tag, nomatch = NA, which = TRUE):</span></span>
+<span><span class="co">#&gt; POSIXct interval cols have mixed timezones. Overlaps are performed on the</span></span>
+<span><span class="co">#&gt; internal numerical representation of POSIXct objects (always in UTC epoch</span></span>
+<span><span class="co">#&gt; time), therefore printed values may give the impression that values don't</span></span>
+<span><span class="co">#&gt; overlap but their internal representations do Please ensure that POSIXct type</span></span>
+<span><span class="co">#&gt; interval cols have identical 'tzone' attributes to avoid confusion.</span></span>
+<span><span class="co">#&gt; M: 1 valid tag has no valid detection.</span></span>
+<span><span class="co">#&gt; M: Matching @det to @tag took 0.059s</span></span>
+<span><span class="co">#&gt; M: Matching @dep to @det...</span></span>
+<span><span class="co">#&gt; M: 2 valid transmitter deployments have no valid detections.</span></span>
+<span><span class="co">#&gt; M: Matching @dep to @det took 0.012s</span></span></code></pre></div>
+</div>
+<p>Oh, no! Another warning. This one stems directly from <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread</a></code>, the function being used to join everything together under the hood. In this instance, the time zone of the <code>datetime</code> column is different to the time zone specified (“America/Halifax”). We are warned that the join has been conducted in UTC, but might be confusing if you are expecting times in one of the other time zones on offer. This warning can be avoided by making sure all time zones are the same!</p>
+<p>Here is what the final ATO looks like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ato</span></span>
 <span><span class="co">#&gt; data.frame ATO object:</span></span>
 <span><span class="co">#&gt; @det:</span></span>
-<span><span class="co">#&gt;  - 2 detections (0% off-target, 100% orphan)</span></span>
-<span><span class="co">#&gt;  - 1 transmitters (all on-target)</span></span>
-<span><span class="co">#&gt;  - 2 receivers (of which 2 have deployments mismatches)</span></span>
-<span><span class="co">#&gt;  - Data range: 2025-09-11 16:33:14.764395 to 2025-09-11 16:33:15.7644 (America/Halifax)</span></span>
+<span><span class="co">#&gt;  - 2 detections in total</span></span>
+<span><span class="co">#&gt;  - No stray detections</span></span>
+<span><span class="co">#&gt;  - No orphan detections</span></span>
+<span><span class="co">#&gt;  - No invalid detections</span></span>
+<span><span class="co">#&gt;  - 1 transmitter detected in total</span></span>
+<span><span class="co">#&gt;  - 2 receivers in total</span></span>
+<span><span class="co">#&gt;  - Data range: 2026-04-09 16:44:28 to 2026-04-09 16:44:29 (America/Halifax)</span></span>
 <span><span class="co">#&gt; @dep:</span></span>
-<span><span class="co">#&gt;  - 2 deployments (of which 2 had no detections)</span></span>
-<span><span class="co">#&gt;  - 2 receivers (of which 2 had no detections)</span></span>
-<span><span class="co">#&gt;  - 2 beacon transmitters</span></span>
-<span><span class="co">#&gt;  - 1 locations</span></span>
+<span><span class="co">#&gt;  - 2 deployments in total</span></span>
+<span><span class="co">#&gt;  - No invalid deployments</span></span>
+<span><span class="co">#&gt;  - 2 receivers deployed</span></span>
+<span><span class="co">#&gt;  - 1 beacon transmitter deployed</span></span>
+<span><span class="co">#&gt;  - 1 listed deployment location</span></span>
 <span><span class="co">#&gt; @tag:</span></span>
-<span><span class="co">#&gt;  - 2 transmitter codes (of which 1 was never detected)</span></span>
-<span><span class="co">#&gt;  - 1 tag (of which 1 was never detected)</span></span>
+<span><span class="co">#&gt;  - 2 transmitter codes</span></span>
+<span><span class="co">#&gt;  - All matched to animals</span></span>
+<span><span class="co">#&gt;  - 1 never detected - Not yet matched to @obs</span></span>
 <span><span class="co">#&gt; @ani:</span></span>
-<span><span class="co">#&gt;  - 1 animal</span></span>
+<span><span class="co">#&gt;  - 1 animal in total</span></span>
+<span><span class="co">#&gt;  - All with associated tags</span></span>
+<span><span class="co">#&gt;  - All detected</span></span>
+<span><span class="co">#&gt;  - Not yet matched to @obs</span></span>
 <span><span class="co">#&gt;  - 1 release location</span></span>
 <span><span class="co">#&gt; @obs slot is empty.</span></span>
 <span><span class="co">#&gt; @log:</span></span>
-<span><span class="co">#&gt;  - 4 log entry 1 package</span></span>
-<span></span>
-<span><span class="co"># Method 2: initiate the ATO already with data</span></span>
-<span><span class="va">ato</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/init_ato.html">init_ato</a></span><span class="op">(</span></span>
+<span><span class="co">#&gt;  - 4 log entries from 1 package</span></span></code></pre></div>
+</div>
+</section><section class="level2"><h2 id="all-at-once">All at once<a class="anchor" aria-label="anchor" href="#all-at-once"></a>
+</h2>
+<p>Rather than build the ATO up sequentially via <code>add</code>, we can do it all at once when initiating the ATO:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ato</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/init_ato.html">init_ato</a></span><span class="op">(</span></span>
 <span>  ani <span class="op">=</span> <span class="va">ani</span>,</span>
 <span>  tag <span class="op">=</span> <span class="va">tag</span>,</span>
 <span>  dep <span class="op">=</span> <span class="va">dep</span>,</span>
 <span>  det <span class="op">=</span> <span class="va">det</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; M: 2 detections do not fall within deployment periods or do not belong to receivers listed in the deployments.</span></span>
-<span><span class="co">#&gt; M: 2 beacon detections found in the dataset.</span></span>
-<span><span class="co">#&gt; M: 2 deployed receivers have no detections.</span></span>
-<span><span class="co">#&gt; M: 1 target trasmitters were never detected.</span></span>
+<span><span class="co">#&gt; M: Matching @ani to @tag...</span></span>
+<span><span class="co">#&gt; M: Matching @ani to @tag took 0.001s</span></span>
+<span><span class="co">#&gt; M: Matching @det to @tag...</span></span>
+<span><span class="co">#&gt; Warning in data.table::foverlaps(x@det, x@tag, nomatch = NA, which = TRUE):</span></span>
+<span><span class="co">#&gt; POSIXct interval cols have mixed timezones. Overlaps are performed on the</span></span>
+<span><span class="co">#&gt; internal numerical representation of POSIXct objects (always in UTC epoch</span></span>
+<span><span class="co">#&gt; time), therefore printed values may give the impression that values don't</span></span>
+<span><span class="co">#&gt; overlap but their internal representations do Please ensure that POSIXct type</span></span>
+<span><span class="co">#&gt; interval cols have identical 'tzone' attributes to avoid confusion.</span></span>
+<span><span class="co">#&gt; M: 1 valid tag has no valid detection.</span></span>
+<span><span class="co">#&gt; M: Matching @det to @tag took 0.012s</span></span>
+<span><span class="co">#&gt; M: Matching @dep to @det...</span></span>
+<span><span class="co">#&gt; M: 2 valid transmitter deployments have no valid detections.</span></span>
+<span><span class="co">#&gt; M: Matching @dep to @det took 0.01s</span></span>
 <span><span class="va">ato</span></span>
 <span><span class="co">#&gt; data.frame ATO object:</span></span>
 <span><span class="co">#&gt; @det:</span></span>
-<span><span class="co">#&gt;  - 2 detections (0% off-target, 100% orphan)</span></span>
-<span><span class="co">#&gt;  - 1 transmitters (all on-target)</span></span>
-<span><span class="co">#&gt;  - 2 receivers (of which 2 have deployments mismatches)</span></span>
-<span><span class="co">#&gt;  - Data range: 2025-09-11 16:33:14.764395 to 2025-09-11 16:33:15.7644 (America/Halifax)</span></span>
+<span><span class="co">#&gt;  - 2 detections in total</span></span>
+<span><span class="co">#&gt;  - No stray detections</span></span>
+<span><span class="co">#&gt;  - No orphan detections</span></span>
+<span><span class="co">#&gt;  - No invalid detections</span></span>
+<span><span class="co">#&gt;  - 1 transmitter detected in total</span></span>
+<span><span class="co">#&gt;  - 2 receivers in total</span></span>
+<span><span class="co">#&gt;  - Data range: 2026-04-09 16:44:28 to 2026-04-09 16:44:29 (America/Halifax)</span></span>
 <span><span class="co">#&gt; @dep:</span></span>
-<span><span class="co">#&gt;  - 2 deployments (of which 2 had no detections)</span></span>
-<span><span class="co">#&gt;  - 2 receivers (of which 2 had no detections)</span></span>
-<span><span class="co">#&gt;  - 2 beacon transmitters</span></span>
-<span><span class="co">#&gt;  - 1 locations</span></span>
+<span><span class="co">#&gt;  - 2 deployments in total</span></span>
+<span><span class="co">#&gt;  - No invalid deployments</span></span>
+<span><span class="co">#&gt;  - 2 receivers deployed</span></span>
+<span><span class="co">#&gt;  - 1 beacon transmitter deployed</span></span>
+<span><span class="co">#&gt;  - 1 listed deployment location</span></span>
 <span><span class="co">#&gt; @tag:</span></span>
-<span><span class="co">#&gt;  - 2 transmitter codes (of which 1 was never detected)</span></span>
-<span><span class="co">#&gt;  - 1 tag (of which 1 was never detected)</span></span>
+<span><span class="co">#&gt;  - 2 transmitter codes</span></span>
+<span><span class="co">#&gt;  - All matched to animals</span></span>
+<span><span class="co">#&gt;  - 1 never detected - Not yet matched to @obs</span></span>
 <span><span class="co">#&gt; @ani:</span></span>
-<span><span class="co">#&gt;  - 1 animal (all detected)</span></span>
+<span><span class="co">#&gt;  - 1 animal in total</span></span>
+<span><span class="co">#&gt;  - All with associated tags</span></span>
+<span><span class="co">#&gt;  - All detected</span></span>
+<span><span class="co">#&gt;  - Not yet matched to @obs</span></span>
 <span><span class="co">#&gt;  - 1 release location</span></span>
 <span><span class="co">#&gt; @obs slot is empty.</span></span>
 <span><span class="co">#&gt; @log:</span></span>
-<span><span class="co">#&gt;  - 4 log entry 1 package</span></span></code></pre></div>
+<span><span class="co">#&gt;  - 4 log entries from 1 package</span></span></code></pre></div>
 </div>
 <p>And that’s it! Now you have an ATO you can use in further analyses.</p>
 <p>For package developers: <a href="https://ato.trackyverse.org/articles/ATO-manipulation.html" class="external-link">how should I handle an ATO inside my functions?[still to be written]</a></p>
@@ -327,7 +410,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

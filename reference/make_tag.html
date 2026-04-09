@@ -51,8 +51,8 @@
 <span>  power_level <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
 <span>  ping_rate <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
 <span>  ping_variation <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
-<span>  serial <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
-<span>  transmitter <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
+<span>  serial <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
+<span>  <span class="va">transmitter</span>,</span>
 <span>  activation_datetime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="cn">NA_real_</span><span class="op">)</span>,</span>
 <span>  battery_life <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
 <span>  sensor_type <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
@@ -68,58 +68,58 @@
 
 
 <dl><dt id="arg-manufacturer">manufacturer<a class="anchor" aria-label="anchor" href="#arg-manufacturer"></a></dt>
-<dd><p>Manufacturer of the transmitter, character.</p></dd>
+<dd><p>Manufacturer of the transmitter, character. Optional.</p></dd>
 
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
-<dd><p>Model of the transmitter, character.</p></dd>
+<dd><p>Model of the transmitter, character. Optional.</p></dd>
 
 
 <dt id="arg-power-level">power_level<a class="anchor" aria-label="anchor" href="#arg-power-level"></a></dt>
-<dd><p>Power level of the transmitter, real.</p></dd>
+<dd><p>Power level of the transmitter, real. Optional.</p></dd>
 
 
 <dt id="arg-ping-rate">ping_rate<a class="anchor" aria-label="anchor" href="#arg-ping-rate"></a></dt>
-<dd><p>Expected ping rate of the transmitter, numeric. In seconds.</p></dd>
+<dd><p>Expected ping rate of the transmitter, numeric. In seconds. Optional.</p></dd>
 
 
 <dt id="arg-ping-variation">ping_variation<a class="anchor" aria-label="anchor" href="#arg-ping-variation"></a></dt>
 <dd><p>Range of the variation added between pings,
-to reduce tag collisions, numeric. In seconds</p></dd>
+to reduce tag collisions, numeric. In seconds. Optional.</p></dd>
 
 
 <dt id="arg-serial">serial<a class="anchor" aria-label="anchor" href="#arg-serial"></a></dt>
-<dd><p>Serial number of the tag, integer.</p></dd>
+<dd><p>Serial number of the tag, integer. Optional.</p></dd>
 
 
 <dt id="arg-transmitter">transmitter<a class="anchor" aria-label="anchor" href="#arg-transmitter"></a></dt>
-<dd><p>Transmitter code, character.</p></dd>
+<dd><p>Transmitter code, character. Mandatory.</p></dd>
 
 
 <dt id="arg-activation-datetime">activation_datetime<a class="anchor" aria-label="anchor" href="#arg-activation-datetime"></a></dt>
-<dd><p>date and time of the tag activation, posixct.</p></dd>
+<dd><p>date and time of the tag activation, posixct. Optional.</p></dd>
 
 
 <dt id="arg-battery-life">battery_life<a class="anchor" aria-label="anchor" href="#arg-battery-life"></a></dt>
-<dd><p>expected battery duration of the tag, numeric.</p></dd>
+<dd><p>expected battery duration of the tag, numeric. Optional.</p></dd>
 
 
 <dt id="arg-sensor-type">sensor_type<a class="anchor" aria-label="anchor" href="#arg-sensor-type"></a></dt>
 <dd><p>Type of sensor data associated with the transmitter,
-character.</p></dd>
+character. Optional.</p></dd>
 
 
 <dt id="arg-sensor-unit">sensor_unit<a class="anchor" aria-label="anchor" href="#arg-sensor-unit"></a></dt>
 <dd><p>Unit of the data associated with the transmitter,
-character.</p></dd>
+character. Optional.</p></dd>
 
 
 <dt id="arg-animal">animal<a class="anchor" aria-label="anchor" href="#arg-animal"></a></dt>
-<dd><p>Name of the animal that received the tag, character.</p></dd>
+<dd><p>Name of the animal that received the tag, character. Optional.</p></dd>
 
 
 <dt id="arg-tz">tz<a class="anchor" aria-label="anchor" href="#arg-tz"></a></dt>
-<dd><p>the timezone of the datetime data.</p></dd>
+<dd><p>the timezone of the datetime data. Mandatory.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -145,7 +145,7 @@ character.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
