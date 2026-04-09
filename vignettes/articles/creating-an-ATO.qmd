@@ -38,6 +38,9 @@ ato
 
 When you open an ATO, you'll find a short summary of its contents. The output above shows us that our newly created ATO is empty, and also reveals the six core slots of the ATO. You can find more about those in the [article about the ATO structure](https://ato.trackyverse.org/articles/ATO-structure.html). The family of "make" functions (e.g. `make_det()`) is responsible for creating each of the slots, which can then be integrated into your ATO object using `add()`. You may also initiate an ATO already with data by using the respective arguments within `init_ato()`. Below is an example with dummy data. Note: `add()` has an `append` argument that you can use to add more data to a slot that already contains some information.
 
+Note that functions in ATO are designed to be verbose in the choices they make. This can be annoying, but it is an effort to prevent the ATO from becoming a "black box". Some warnings will be shown in the workflow below.
+
+We'll start by creating a simple ATO containing information on one animal:
 ```{r}
 #| label: data
 #| echo: true
@@ -46,46 +49,91 @@ ani <- make_ani(
   animal = "A1",
   length = 123,
   weight = 55,
-  release_date = Sys.time() - 20,
-  tz = "America/Halifax"
-)
-
-tag <- make_tag(
-  transmitter = c("R64K-1234", "R64K-1235"),
-  animal = c("A1", "A1"),
-  tz = "America/Halifax"
-)
-
-dep <- make_dep(
-  receiver_serial = as.integer(c(11111, 22222)),
-  deploy_lat = c(11.123, 11.124),
-  deploy_lon = c(21.234, 21.235),
-  deploy_z = c(20, 30),
-  tz = "America/Halifax"
-)
-
-det <- make_det(
-  datetime = c(Sys.time(), Sys.time() + 1),
-  frac_second = c(0.1, 0.2),
-  receiver_serial = as.integer(c(11111, 22222)),
-  transmitter = c("R64K-1234", "R64K-1234"),
+  release_datetime = Sys.time() - 20,
+  release_location = "Narnia",
   tz = "America/Halifax"
 )
 
 # method 1: use add()
 ato <- add(ato, ani)
 ato
+```
 
+We can add in some tag information. Note that this information is automatically matched to the `@ani` slot (the animals) created above.
+
+```{r}
+tag <- make_tag(
+  transmitter = c("R64K-1234", "R64K-1235"),
+  animal = c("A1", "A1"),
+  tz = "America/Halifax"
+)
 ato <- add(ato, tag)
 ato
+```
 
-ato <- add(ato, det)
-ato
+Similarly, let's add receiver deployments...
+
+```{r}
+dep <- make_dep(
+  receiver_serial = as.character(c(11111, 22222)),
+  deploy_location = "Narnia",
+  deploy_datetime = Sys.time() - 60,
+  deploy_lat = c(11.123, 11.124),
+  deploy_lon = c(21.234, 21.235),
+  deploy_z = c(20, 30),
+  recover_datetime = Sys.time() + 120,
+  tz = "America/Halifax"
+)
 
 ato <- add(ato, dep)
-ato
+```
 
-# Method 2: initiate the ATO already with data
+...and animal detections.
+
+```{r}
+det <- make_det(
+  datetime = c(Sys.time(), Sys.time() + 1),
+  receiver_serial = as.character(c(11111, 22222)),
+  transmitter = c("R64K-1234", "R64K-1234"),
+  tz = "America/Halifax"
+)
+```
+Wait a minute, what's that warning?? Nothing to worry about! ATO found that we provided sub-second information and broke it out into a column called `frac_second` for us to protect it from being overwritten if the `datetime` column is modified.
+
+```{r}
+det
+```
+
+We can accept this warning and move on, or strip out the fractional second information ourselves and supply it directly.
+
+```{r}
+times <- c(Sys.time(), Sys.time() + 1)
+frac_seconds <- as.numeric(times) %% 1
+
+det <- make_det(
+  datetime = times - frac_seconds,
+  frac_second = frac_seconds,
+  receiver_serial = as.character(c(11111, 22222)),
+  transmitter = c("R64K-1234", "R64K-1234"),
+  tz = "America/Halifax"
+)
+
+ato <- add(ato, det)
+```
+
+Oh, no! Another warning. This one stems directly from `data.table::fread`, the function being used to join everything together under the hood. In this instance, the time zone of the `datetime` column is different to the time zone specified ("America/Halifax"). We are warned that the join has been conducted in UTC, but might be confusing if you are expecting times in one of the other time zones on offer. This warning can be avoided by making sure all time zones are the same!
+
+Here is what the final ATO looks like:
+
+```{r}
+ato
+```
+
+## All at once
+
+Rather than build the ATO up sequentially via `add`, we can do it all at once when initiating the ATO:
+
+```{r}
 ato <- init_ato(
   ani = ani,
   tag = tag,
