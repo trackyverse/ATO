@@ -11,6 +11,22 @@
 #' @param obs an object of class ATO_obs. See \code{\link{make_obs}}.
 #' @param silent Supresses summary messages
 #'
+#' @examples
+#' # split apart the example ATO
+#' ani <- get_ani(example_ato)
+#' dep <- get_dep(example_ato)
+#' det <- get_det(example_ato)
+#' tag <- get_tag(example_ato)
+#' 
+#' # and now use the parts to build a new ato
+#' x <- init_ato(ani = ani,
+#'               dep = dep,
+#'               det = det,
+#'               tag = tag)
+#' 
+#' # clean up
+#' rm(ani, dep, det, tag, x)
+#' 
 #' @return an \code{\link{ATO}}
 #'
 #' @export

@@ -28,3 +28,21 @@ a table of detections
 A wrapper of \code{\link{get_det}} to extract detections for transmitters listed
 in the dep slot
 }
+\examples{
+# wrapper to extract all detections that match transmitters
+# listed in the @dep slot (beacon tags)
+det <- get_det_dep(example_ato)
+summary(det)
+# note: The example_ato does not have beacon detections,
+# so this returns a table with 0 rows
+
+# extract only detections from one or more specific receivers
+det <- get_det_dep(example_ato, receivers = "132908")
+summary(det)
+# note: The example_ato does not have beacon detections,
+# so this returns a table with 0 rows
+
+# clean up
+rm(det)
+
+}

@@ -25,11 +25,19 @@ log_event(
 
 \item{...}{The text fragments that compose the event message.}
 
-\item{blame}{Not used currently}
+\item{blame}{Not used yet; functionality to come in the future.}
 }
 \value{
 The updated ATO.
 }
 \description{
-Logs useful information as the analysis progresses.
+Logs useful information as the analysis progresses. This function is meant to
+be used by other functions within the trackyverse. If you are looking for a
+way to add comments to the analysis, look at \code{\link{log_comment}}.
+}
+\examples{
+# add an event to the ato
+x <- log_event(example_ato, type = "msg", "M: just a test")
+get_log(x)
+
 }

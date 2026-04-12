@@ -9,6 +9,16 @@
 #' @return TRUE if x is an ATO, FALSE if it is not an ATO and error = FALSE.
 #' Throws an error if x is not an ATO and error = TRUE.
 #' 
+#' @examples
+#' # check if object is an ato
+#' is_ato(example_ato)
+#' 
+#' # by default, errors if not an ATO
+#' # is_ato(1:5)
+#' 
+#' # But can be set to return FALSE
+#' # is_ato(1:5, FALSE)
+#' 
 #' @export
 #' 
 is_ato <- function(x, error = TRUE) {

@@ -15,3 +15,7 @@ Nothing. Prints a summary.
 \description{
 Summary method for an ATO_tag slot object
 }
+\examples{
+summary(get_tag(example_ato))
+
+}

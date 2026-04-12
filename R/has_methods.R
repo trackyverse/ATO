@@ -7,6 +7,16 @@
 #' @return TRUE if the slots have data, FALSE if they're empty and
 #'   error = FALSE. Throws an error if the slots are empty and error = TRUE.
 #' 
+#' @examples
+#' # check if ATO object has detections
+#' has(example_ato, "det")
+#' 
+#' # check if ATO has observations
+#' has(example_ato, "obs")
+#' 
+#' # alternatively, this would error
+#' # has(example_ato, "obs", TRUE)
+#' 
 #' @export
 #' 
 setGeneric("has", function(object, value, error = FALSE) standardGeneric("has"))

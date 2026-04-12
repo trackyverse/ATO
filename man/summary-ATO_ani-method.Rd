@@ -15,3 +15,7 @@ Nothing. Prints a summary.
 \description{
 Summary method for an ATO_ani slot object
 }
+\examples{
+summary(get_ani(example_ato))
+
+}

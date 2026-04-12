@@ -28,3 +28,16 @@ a table of detections
 A wrapper of \code{\link{get_det}} to extract detections for transmitters
 listed in the tag slot
 }
+\examples{
+# wrapper to extract all detections that match transmitters
+# listed in the @tag slot
+det <- get_det_tag(example_ato)
+
+# extract only detections from one or more specific receivers
+det <- get_det_tag(example_ato, receivers = "132908")
+summary(det)
+
+# clean up
+rm(det)
+
+}

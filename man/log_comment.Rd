@@ -17,3 +17,9 @@ the updated ATO.
 \description{
 Logs a user-written comment into the log.
 }
+\examples{
+# add an event to the ato
+x <- log_comment(example_ato, "M: just a comment")
+get_log(x)
+
+}

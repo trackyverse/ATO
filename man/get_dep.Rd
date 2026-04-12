@@ -23,3 +23,12 @@ The dep slot as a table
 \description{
 Generic to extract the dep slot as a table
 }
+\examples{
+# extract all the deployments from an ATO in table format
+dep <- get_dep(example_ato)
+summary(dep)
+
+# clean up
+rm(dep)
+
+}

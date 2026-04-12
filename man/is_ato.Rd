@@ -19,3 +19,14 @@ Throws an error if x is not an ATO and error = TRUE.
 This function allows an easy check if the input is an \code{\link{ATO}} and
 throw an error if that is not the case.
 }
+\examples{
+# check if object is an ato
+is_ato(example_ato)
+
+# by default, errors if not an ATO
+# is_ato(1:5)
+
+# But can be set to return FALSE
+# is_ato(1:5, FALSE)
+
+}

@@ -23,3 +23,12 @@ The ani slot as a table
 \description{
 Generic to extract the ani slot as a table
 }
+\examples{
+# extract all the animals from an ATO in table format
+ani <- get_ani(example_ato)
+summary(ani)
+
+# clean up
+rm(ani)
+
+}

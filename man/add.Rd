@@ -36,7 +36,24 @@ data already present in the ATO?}
 The updated ATO
 }
 \description{
-Brings already-formatted data into the ATO.
+Brings already-formatted ATO data into an ATO object.
 Adequated methods are picked based on the type of data
 being incorporated.
+}
+\examples{
+# split away parts of the example ATO for the example
+ani <- get_ani(example_ato)
+dep <- get_dep(example_ato)
+
+# add them to the ATO object using the add methods
+x <- add(example_ato, ani)
+x <- add(x, dep)
+
+# clean up
+rm(ani, dep, x)
+
+}
+\seealso{
+\code{\link{make_ani}}, \code{\link{make_dep}},
+\code{\link{make_det}}, \code{\link{make_tag}}, \code{\link{make_obs}}
 }

@@ -12,6 +12,28 @@
 #'
 #' @return a table of detections
 #'
+#' @examples
+#' # extract all the detections from an ATO in table format
+#' det <- get_det(example_ato)
+#' summary(det)
+#' 
+#' # extract only detections from one or more specific receivers
+#' sub_det <- get_det(example_ato, receivers = "132908")
+#' summary(sub_det)
+#' 
+#' # or matching one or more specific transmitters
+#' sub_det <- get_det(example_ato, transmitters = "R64K-4529")
+#' summary(sub_det)
+#' 
+#' # or both!
+#' sub_det <- get_det(example_ato,
+#'                    receivers = "132908",
+#'                    transmitters = "R64K-4529")
+#' summary(sub_det)
+#' 
+#' # clean up
+#' rm(det, sub_det)
+#' 
 #' @export
 #'
 setGeneric(
@@ -58,6 +80,18 @@ setMethod(
 #'
 #' @return a table of detections
 #'
+#' @examples
+#' # wrapper to extract all detections that match transmitters
+#' # listed in the @tag slot
+#' det <- get_det_tag(example_ato)
+#' 
+#' # extract only detections from one or more specific receivers
+#' det <- get_det_tag(example_ato, receivers = "132908")
+#' summary(det)
+#' 
+#' # clean up
+#' rm(det)
+#' 
 #' @export
 #'
 setGeneric(
@@ -88,6 +122,23 @@ setMethod(
 #'
 #' @return a table of detections
 #'
+#' @examples
+#' # wrapper to extract all detections that match transmitters
+#' # listed in the @dep slot (beacon tags)
+#' det <- get_det_dep(example_ato)
+#' summary(det)
+#' # note: The example_ato does not have beacon detections,
+#' # so this returns a table with 0 rows
+#' 
+#' # extract only detections from one or more specific receivers
+#' det <- get_det_dep(example_ato, receivers = "132908")
+#' summary(det)
+#' # note: The example_ato does not have beacon detections,
+#' # so this returns a table with 0 rows
+#' 
+#' # clean up
+#' rm(det)
+#' 
 #' @export
 #'
 setGeneric(
@@ -117,6 +168,14 @@ setMethod(
 #'
 #' @return The dep slot as a table
 #'
+#' @examples
+#' # extract all the deployments from an ATO in table format
+#' dep <- get_dep(example_ato)
+#' summary(dep)
+#' 
+#' # clean up
+#' rm(dep)
+#' 
 #' @export
 #'
 setGeneric(
@@ -148,6 +207,14 @@ setMethod("get_dep", "ATO",
 #'
 #' @return The tag slot as a table
 #'
+#' @examples
+#' # extract all the tags from an ATO in table format
+#' tag <- get_tag(example_ato)
+#' summary(tag)
+#' 
+#' # clean up
+#' rm(tag)
+#' 
 #' @export
 #'
 setGeneric(
@@ -179,6 +246,14 @@ setMethod("get_tag", "ATO",
 #'
 #' @return The ani slot as a table
 #'
+#' @examples
+#' # extract all the animals from an ATO in table format
+#' ani <- get_ani(example_ato)
+#' summary(ani)
+#' 
+#' # clean up
+#' rm(ani)
+#' 
 #' @export
 #'
 setGeneric(
@@ -210,6 +285,16 @@ setMethod("get_ani", "ATO",
 #'
 #' @return The obs slot as a table
 #'
+#' @examples
+#' # extract all the observations from an ATO in table format
+#' obs <- get_obs(example_ato)
+#' summary(obs)
+#' # note: The example ato object has no observations, so this
+#' # returns 0 rows.
+#' 
+#' # clean up
+#' rm(obs)
+#' 
 #' @export
 #'
 setGeneric(
@@ -239,6 +324,14 @@ setMethod("get_obs", "ATO", function(x, type = c("all", "valid", "invalid")) {
 #'
 #' @return The log slot as a table
 #'
+#' @examples
+#' # extract all the log lines from an ATO in table format
+#' log <- get_log(example_ato)
+#' head(log)
+#' 
+#' # clean up
+#' rm(log)
+#' 
 #' @export
 #'
 setGeneric(
@@ -265,6 +358,14 @@ setMethod("get_log", "ATO", function(x, debug = FALSE) {
 #'
 #' @seealso [Extract]
 #'
+#' @examples
+#' # access a slot using $ instead of @
+#' dep <- example_ato$dep
+#' summary(dep)
+#' 
+#' # clean up
+#' rm(dep)
+#' 
 #' @export
 setMethod("$", "ATO", function(x, name) {
   left <- substitute(x)

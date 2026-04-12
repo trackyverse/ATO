@@ -80,5 +80,5 @@ an ATO_dep object, ready to be used by \code{\link{add}} or
 Formats the input data into the ATO format and appends the ATO_dep class.
 }
 \seealso{
-ATO_dep
+\code{\link{ATO_dep}}
 }

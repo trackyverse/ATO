@@ -20,3 +20,12 @@ The log slot as a table
 \description{
 Generic to extract the log slot as a table
 }
+\examples{
+# extract all the log lines from an ATO in table format
+log <- get_log(example_ato)
+head(log)
+
+# clean up
+rm(log)
+
+}

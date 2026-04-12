@@ -4,6 +4,9 @@
 #' 
 #' @return Nothing. Prints a summary.
 #' 
+#' @examples
+#' summary(get_det(example_ato))
+#' 
 #' @export
 #' 
 setMethod("summary", "ATO_det", function(object) {
@@ -11,10 +14,11 @@ setMethod("summary", "ATO_det", function(object) {
   beacon_check <- any(colnames(object) %in% "beacon_match")
   dep_check <- any(colnames(object) %in% "dep_match")
   cat("@det:\n")
-  cat(" - ", nrow(object), " detection", .s(nrow(object)), " in total\n", sep = "")
+  cat(" - ", nrow(object), " detection",
+      .s(nrow(object)), " in total\n", sep = "")
   # count strays
   if (tag_check | beacon_check) {
-    stray_link <- rep(FALSE, nrow(object))
+    stray_link <- rep(TRUE, nrow(object))
     if (tag_check) {
       stray_link <- stray_link & is.na(object$tag_match)
     } else {
@@ -82,13 +86,15 @@ setMethod("summary", "ATO_det", function(object) {
     }
   }
 
-  cat(" - Data range: ",
-      as.character(min(object$datetime)),
-      " to ",
-      as.character(max(object$datetime)),
-      " (",
-      attributes(object$datetime)$tzone,
-      ")\n", sep = "")
+  if (nrow(object) > 0) {
+    cat(" - Data range: ",
+        as.character(min(object$datetime)),
+        " to ",
+        as.character(max(object$datetime)),
+        " (",
+        attributes(object$datetime)$tzone,
+        ")\n", sep = "")
+  }
 })
 
 #' Summary method for an ATO_dep object
@@ -96,6 +102,9 @@ setMethod("summary", "ATO_det", function(object) {
 #' @param object an ATO_dep object
 #' 
 #' @return Nothing. Prints a summary.
+#' 
+#' @examples
+#' summary(get_dep(example_ato))
 #' 
 #' @export
 #' 
@@ -153,6 +162,9 @@ setMethod("summary", "ATO_dep", function(object) {
 #' 
 #' @return Nothing. Prints a summary.
 #' 
+#' @examples
+#' summary(get_tag(example_ato))
+#' 
 #' @export
 #' 
 setMethod("summary", "ATO_tag", function(object) {
@@ -176,7 +188,7 @@ setMethod("summary", "ATO_tag", function(object) {
   if (det_check) {
     n <- sum(object$n_det == 0)
     if (n > 0) {
-      cat(" - ", n, " never detected", sep = "")
+      cat(" - ", n, " never detected\n", sep = "")
     } else {
       cat(" - All detected\n")
     }
@@ -186,7 +198,7 @@ setMethod("summary", "ATO_tag", function(object) {
   if (obs_check) {
     n <- sum(object$n_obs == 0)
     if (n > 0) {
-      cat(" - ", n, " never observed", sep = "")
+      cat(" - ", n, " never observed\n", sep = "")
     } else {
       cat("- All observed\n")
     }
@@ -200,6 +212,9 @@ setMethod("summary", "ATO_tag", function(object) {
 #' @param object an ATO_ani slot object
 #' 
 #' @return Nothing. Prints a summary.
+#' 
+#' @examples
+#' summary(get_ani(example_ato))
 #' 
 #' @export
 #' 
@@ -249,6 +264,9 @@ setMethod("summary", "ATO_ani", function(object) {
 #' 
 #' @return Nothing. Prints a summary.
 #' 
+#' @examples
+#' summary(get_obs(example_ato))
+#' 
 #' @export
 #' 
 setMethod("summary", "ATO_obs", function(object) {
@@ -288,6 +306,9 @@ setMethod("summary", "ATO_obs", function(object) {
 #' Summary method for an ATO_log slot object
 #' 
 #' @param object an ATO_log slot object
+#' 
+#' @examples
+#' summary(get_log(example_ato))
 #' 
 #' @return Nothing. Prints a summary.
 #' 

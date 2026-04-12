@@ -1,3 +1,10 @@
+# NOTE
+# This file is meant to hold non-exported functions that do not belong
+# exclusively with any of the overall family functions. When creating
+# an internal function that is specific to a family, keep it within the
+# respective family file.
+#
+
 #' Round value to a reasonable number of decimal places
 #' 
 #' @param value the value to be rounded
@@ -135,10 +142,10 @@
 #' @keywords internal
 #' 
 .has <- function(n) {
-  if (n > 1) {
-    return("have")
-  } else {
+  if (n == 1) {
     return("has")
+  } else {
+    return("have")
   }
 }
 
@@ -151,10 +158,10 @@
 #' @keywords internal
 #' 
 .was <- function(n) {
-  if (n > 1) {
-    return("were")
-  } else {
+  if (n == 1) {
     return("was")
+  } else {
+    return("were")
   }
 }
 
@@ -167,10 +174,10 @@
 #' @keywords internal
 #' 
 .is <- function(n) {
-  if (n > 1) {
-    return("are")
-  } else {
+  if (n == 1) {
     return("is")
+  } else {
+    return("are")
   }
 }
 
@@ -189,17 +196,17 @@
 #' @keywords internal
 #' 
 .s <- function(n, reverse = FALSE) {
-  if (n > 1) {
+  if (n == 1) {
     if (reverse) {
-      return("")
-    } else {
       return("s")
+    } else {
+      return("")
     }
   } else {
     if (reverse) {
-      return("s")
-    } else {
       return("")
+    } else {
+      return("s")
     }
   }
 }
@@ -219,17 +226,17 @@
 #' @keywords internal
 #' 
 .es <- function(n, reverse = FALSE) {
-  if (n > 1) {
+  if (n == 1) {
     if (reverse) {
-      return("")
-    } else {
       return("es")
+    } else {
+      return("")
     }
   } else {
     if (reverse) {
-      return("es")
-    } else {
       return("")
+    } else {
+      return("es")
     }
   }
 }
@@ -245,9 +252,9 @@
 #' @keywords internal
 #'
 .y <- function(n) {
-  if (n > 1) {
-    return("ies")
-  } else {
+  if (n == 1) {
     return("y")
+  } else {
+    return("ies")
   }
 }

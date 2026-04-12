@@ -15,7 +15,7 @@
 #'
 #' @export
 #'
-#' @seealso ATO_det
+#' @seealso \code{\link{ATO_det}}
 #'
 make_det <- function(
   datetime,
@@ -158,7 +158,7 @@ make_det <- function(
 #'
 #' @export
 #'
-#' @seealso ATO_dep
+#' @seealso \code{\link{ATO_dep}}
 #'
 make_dep <- function(
   receiver_model = NA_character_,
@@ -255,7 +255,7 @@ make_dep <- function(
 #'
 #' @export
 #'
-#' @seealso ATO_tag
+#' @seealso \code{\link{ATO_tag}}
 #'
 make_tag <- function(
   manufacturer = NA_character_,
@@ -333,7 +333,7 @@ make_tag <- function(
 #'
 #' @export
 #'
-#' @seealso ATO_ani
+#' @seealso \code{\link{ATO_ani}}
 #'
 make_ani <- function(
   animal,
@@ -408,7 +408,7 @@ make_ani <- function(
 #'
 #' @export
 #'
-#' @seealso ATO_obs
+#' @seealso \code{\link{ATO_obs}}
 #'
 make_obs <- function(
   animal = NA_character_,

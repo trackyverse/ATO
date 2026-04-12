@@ -1,6 +1,8 @@
 #' Log a new event
 #'
-#' Logs useful information as the analysis progresses.
+#' Logs useful information as the analysis progresses. This function is meant to
+#' be used by other functions within the trackyverse. If you are looking for a
+#' way to add comments to the analysis, look at \code{\link{log_comment}}.
 #'
 #' @param ato the ATO object to which to log the entry.
 #' @param type One of several event flags:
@@ -12,7 +14,12 @@
 #'    \item 'comment' user comment entry.
 #'  }
 #' @param ... The text fragments that compose the event message.
-#' @param blame Not used currently
+#' @param blame Not used yet; functionality to come in the future.
+#' 
+#' @examples
+#' # add an event to the ato
+#' x <- log_event(example_ato, type = "msg", "M: just a test")
+#' get_log(x)
 #' 
 #' @return The updated ATO.
 #'
@@ -25,7 +32,11 @@ log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
   type <- match.arg(type)
   if (type == "msg") type <- "message"
 
-  fun_call <- sys.calls()[[sys.nframe()-1]]
+  if (sys.nframe() > 1) {
+    fun_call <- sys.calls()[[sys.nframe() - 1]]
+  } else {
+    fun_call <- sys.calls()[[sys.nframe()]]
+  }
   fun <- deparse(fun_call[[1]])
   fun_call <- deparse(fun_call)
   pkg <- findFunction(fun)
@@ -68,6 +79,11 @@ log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
 #'
 #' @param ato the ATO object to which to log the comment
 #' @param ... The text fragments that compose the comment.
+#' 
+#' @examples
+#' # add an event to the ato
+#' x <- log_comment(example_ato, "M: just a comment")
+#' get_log(x)
 #' 
 #' @return the updated ATO.
 #'

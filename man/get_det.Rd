@@ -29,3 +29,26 @@ a table of detections
 \description{
 Generic to extract detections as a table
 }
+\examples{
+# extract all the detections from an ATO in table format
+det <- get_det(example_ato)
+summary(det)
+
+# extract only detections from one or more specific receivers
+sub_det <- get_det(example_ato, receivers = "132908")
+summary(sub_det)
+
+# or matching one or more specific transmitters
+sub_det <- get_det(example_ato, transmitters = "R64K-4529")
+summary(sub_det)
+
+# or both!
+sub_det <- get_det(example_ato,
+                   receivers = "132908",
+                   transmitters = "R64K-4529")
+summary(sub_det)
+
+# clean up
+rm(det, sub_det)
+
+}

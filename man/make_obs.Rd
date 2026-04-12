@@ -54,5 +54,5 @@ an ATO_obs object, ready to be used by \code{\link{add}} or
 Formats the input data into the ATO format and appends the ATO_obs class.
 }
 \seealso{
-ATO_obs
+\code{\link{ATO_obs}}
 }

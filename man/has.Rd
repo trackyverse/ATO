@@ -23,3 +23,14 @@ error = FALSE. Throws an error if the slots are empty and error = TRUE.
 \description{
 Generic to check if an ATO has data in a given slot
 }
+\examples{
+# check if ATO object has detections
+has(example_ato, "det")
+
+# check if ATO has observations
+has(example_ato, "obs")
+
+# alternatively, this would error
+# has(example_ato, "obs", TRUE)
+
+}

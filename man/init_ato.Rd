@@ -27,3 +27,20 @@ This is a wrapper around the usual way of creating S4 objects through new().
 The main purpose of this function is to ensure the ATO is created with the
 right table type. See \code{\link{table_type}} for more details.
 }
+\examples{
+# split apart the example ATO
+ani <- get_ani(example_ato)
+dep <- get_dep(example_ato)
+det <- get_det(example_ato)
+tag <- get_tag(example_ato)
+
+# and now use the parts to build a new ato
+x <- init_ato(ani = ani,
+              dep = dep,
+              det = det,
+              tag = tag)
+
+# clean up
+rm(ani, dep, det, tag, x)
+
+}

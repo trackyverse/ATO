@@ -23,3 +23,14 @@ The obs slot as a table
 \description{
 Generic to extract the obs slot as a table
 }
+\examples{
+# extract all the observations from an ATO in table format
+obs <- get_obs(example_ato)
+summary(obs)
+# note: The example ato object has no observations, so this
+# returns 0 rows.
+
+# clean up
+rm(obs)
+
+}

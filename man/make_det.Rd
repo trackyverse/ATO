@@ -37,5 +37,5 @@ an ATO_det object, ready to be used by \code{\link{add}} or
 Formats the input data into the ATO format and appends the ATO_det class.
 }
 \seealso{
-ATO_det
+\code{\link{ATO_det}}
 }

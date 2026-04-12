@@ -18,6 +18,15 @@ extract slots in the future.
 \description{
 \code{$} Method to extract ATO slots directly
 }
+\examples{
+# access a slot using $ instead of @
+dep <- example_ato$dep
+summary(dep)
+
+# clean up
+rm(dep)
+
+}
 \seealso{
 \link{Extract}
 }

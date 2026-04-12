@@ -15,3 +15,7 @@ Nothing. Prints a summary.
 \description{
 Summary method for an ATO_det slot object
 }
+\examples{
+summary(get_det(example_ato))
+
+}

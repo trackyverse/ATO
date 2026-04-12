@@ -23,3 +23,12 @@ The tag slot as a table
 \description{
 Generic to extract the tag slot as a table
 }
+\examples{
+# extract all the tags from an ATO in table format
+tag <- get_tag(example_ato)
+summary(tag)
+
+# clean up
+rm(tag)
+
+}

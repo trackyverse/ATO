@@ -15,3 +15,7 @@ Nothing. Prints a summary.
 \description{
 Summary method for an ATO_dep object
 }
+\examples{
+summary(get_dep(example_ato))
+
+}
