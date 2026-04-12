@@ -18,3 +18,14 @@ summary(object)
 ## Value
 
 Nothing. Prints a summary.
+
+## Examples
+
+``` r
+summary(get_tag(example_ato))
+#> @tag:
+#>  - 60 transmitter codes
+#>  - All matched to animals
+#>  - 6 never detected
+#>  - Not yet matched to @obs
+```

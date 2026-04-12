@@ -33,3 +33,26 @@ get_det_tag(x, receivers, type = c("all", "valid", "invalid"))
 ## Value
 
 a table of detections
+
+## Examples
+
+``` r
+# wrapper to extract all detections that match transmitters
+# listed in the @tag slot
+det <- get_det_tag(example_ato)
+
+# extract only detections from one or more specific receivers
+det <- get_det_tag(example_ato, receivers = "132908")
+summary(det)
+#> @det:
+#>  - 708 detections in total
+#>  - No stray detections
+#>  - No orphan detections
+#>  - No invalid detections
+#>  - 54 transmitters detected in total
+#>  - 1 receiver in total
+#>  - Data range: 2018-04-14 01:26:37 to 2018-05-02 06:14:42 (Europe/Copenhagen)
+
+# clean up
+rm(det)
+```

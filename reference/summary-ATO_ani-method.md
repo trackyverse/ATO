@@ -18,3 +18,15 @@ summary(object)
 ## Value
 
 Nothing. Prints a summary.
+
+## Examples
+
+``` r
+summary(get_ani(example_ato))
+#> @ani:
+#>  - 60 animals in total
+#>  - All with associated tags
+#>  - 6 with no detections
+#>  - Not yet matched to @obs
+#>  - 1 release location
+```

@@ -92,4 +92,4 @@ an ATO_tag object, ready to be used by
 
 ## See also
 
-ATO_tag
+[`ATO_tag`](https://trackyverse.github.io/ATO/reference/ATO_tag.md)

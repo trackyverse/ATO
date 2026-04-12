@@ -55,4 +55,4 @@ an ATO_det object, ready to be used by
 
 ## See also
 
-ATO_det
+[`ATO_det`](https://trackyverse.github.io/ATO/reference/ATO_det.md)

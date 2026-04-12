@@ -26,3 +26,20 @@ get_ani(x, type = c("all", "valid", "invalid"))
 ## Value
 
 The ani slot as a table
+
+## Examples
+
+``` r
+# extract all the animals from an ATO in table format
+ani <- get_ani(example_ato)
+summary(ani)
+#> @ani:
+#>  - 60 animals in total
+#>  - All with associated tags
+#>  - 6 with no detections
+#>  - Not yet matched to @obs
+#>  - 1 release location
+
+# clean up
+rm(ani)
+```

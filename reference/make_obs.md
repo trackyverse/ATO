@@ -75,4 +75,4 @@ an ATO_obs object, ready to be used by
 
 ## See also
 
-ATO_obs
+[`ATO_obs`](https://trackyverse.github.io/ATO/reference/ATO_obs.md)

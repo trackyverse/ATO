@@ -18,3 +18,11 @@ summary(object)
 ## Value
 
 Nothing. Prints a summary.
+
+## Examples
+
+``` r
+summary(get_log(example_ato))
+#> @log:
+#>  - 4 log entries from 1 package
+```

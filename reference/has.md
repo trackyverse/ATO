@@ -29,3 +29,18 @@ has(object, value, error = FALSE)
 
 TRUE if the slots have data, FALSE if they're empty and error = FALSE.
 Throws an error if the slots are empty and error = TRUE.
+
+## Examples
+
+``` r
+# check if ATO object has detections
+has(example_ato, "det")
+#> [1] TRUE
+
+# check if ATO has observations
+has(example_ato, "obs")
+#> [1] FALSE
+
+# alternatively, this would error
+# has(example_ato, "obs", TRUE)
+```

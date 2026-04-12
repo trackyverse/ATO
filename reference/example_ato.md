@@ -1,7 +1,13 @@
 # Example ATO object
 
 The ATO package comes with a small example ATO object to allow for quick
-exploration of the object's structure
+exploration of the object structure
+
+## Usage
+
+``` r
+example_ato
+```
 
 ## Format
 
@@ -34,7 +40,8 @@ An S4 object with 8 slots:
 
 - log:
 
-  Log of actions. See `event`
+  Log of actions. See
+  [`log_event`](https://trackyverse.github.io/ATO/reference/log_event.md)
 
 - tbl:
 

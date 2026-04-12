@@ -26,3 +26,19 @@ get_tag(x, type = c("all", "valid", "invalid"))
 ## Value
 
 The tag slot as a table
+
+## Examples
+
+``` r
+# extract all the tags from an ATO in table format
+tag <- get_tag(example_ato)
+summary(tag)
+#> @tag:
+#>  - 60 transmitter codes
+#>  - All matched to animals
+#>  - 6 never detected
+#>  - Not yet matched to @obs
+
+# clean up
+rm(tag)
+```

@@ -26,3 +26,19 @@ get_obs(x, type = c("all", "valid", "invalid"))
 ## Value
 
 The obs slot as a table
+
+## Examples
+
+``` r
+# extract all the observations from an ATO in table format
+obs <- get_obs(example_ato)
+summary(obs)
+#> @obs:
+#>  -0observations
+#>  - No terminal observations
+# note: The example ato object has no observations, so this
+# returns 0 rows.
+
+# clean up
+rm(obs)
+```

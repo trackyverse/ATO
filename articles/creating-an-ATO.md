@@ -173,8 +173,8 @@ called `frac_second` for us to protect it from being overwritten if the
 ``` r
 det
 #>              datetime frac_second receiver_serial transmitter sensor_value
-#> 1 2026-04-11 21:18:20   0.1323228           11111   R64K-1234           NA
-#> 2 2026-04-11 21:18:21   0.1323259           22222   R64K-1234           NA
+#> 1 2026-04-12 19:39:27   0.2824123           11111   R64K-1234           NA
+#> 2 2026-04-12 19:39:28   0.2824159           22222   R64K-1234           NA
 #>   valid
 #> 1  TRUE
 #> 2  TRUE
@@ -206,10 +206,10 @@ ato <- add(ato, det)
 #> overlap but their internal representations do Please ensure that POSIXct type
 #> interval cols have identical 'tzone' attributes to avoid confusion.
 #> M: 1 valid tag has no valid detection.
-#> M: Matching @det to @tag took 0.057s
+#> M: Matching @det to @tag took 0.053s
 #> M: Matching @dep to @det...
 #> M: 2 valid transmitter deployments have no valid detections.
-#> M: Matching @dep to @det took 0.011s
+#> M: Matching @dep to @det took 0.01s
 ```
 
 Oh, no! Another warning. This one stems directly from
@@ -233,7 +233,7 @@ ato
 #>  - No invalid detections
 #>  - 1 transmitter detected in total
 #>  - 2 receivers in total
-#>  - Data range: 2026-04-11 21:18:20 to 2026-04-11 21:18:21 (America/Halifax)
+#>  - Data range: 2026-04-12 19:39:27 to 2026-04-12 19:39:28 (America/Halifax)
 #> @dep:
 #>  - 2 deployments in total
 #>  - No invalid deployments
@@ -243,7 +243,8 @@ ato
 #> @tag:
 #>  - 2 transmitter codes
 #>  - All matched to animals
-#>  - 1 never detected - Not yet matched to @obs
+#>  - 1 never detected
+#>  - Not yet matched to @obs
 #> @ani:
 #>  - 1 animal in total
 #>  - All with associated tags
@@ -290,7 +291,7 @@ ato
 #>  - No invalid detections
 #>  - 1 transmitter detected in total
 #>  - 2 receivers in total
-#>  - Data range: 2026-04-11 21:18:20 to 2026-04-11 21:18:21 (America/Halifax)
+#>  - Data range: 2026-04-12 19:39:27 to 2026-04-12 19:39:28 (America/Halifax)
 #> @dep:
 #>  - 2 deployments in total
 #>  - No invalid deployments
@@ -300,7 +301,8 @@ ato
 #> @tag:
 #>  - 2 transmitter codes
 #>  - All matched to animals
-#>  - 1 never detected - Not yet matched to @obs
+#>  - 1 never detected
+#>  - Not yet matched to @obs
 #> @ani:
 #>  - 1 animal in total
 #>  - All with associated tags

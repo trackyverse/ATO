@@ -27,3 +27,22 @@ slots in the future.
 ## See also
 
 [Extract](https://rdrr.io/r/base/Extract.html)
+
+## Examples
+
+``` r
+# access a slot using $ instead of @
+dep <- example_ato$dep
+#> Warning: `example_ato$dep` converted to `example_ato@dep` for convenience, please use `example_ato@dep` in the future.
+#>   See `?slot` for more information.
+summary(dep)
+#> @dep:
+#>  - 17 deployments in total
+#>  - No invalid deployments
+#>  - 17 receivers deployed
+#>  - 1 beacon transmitter deployed
+#>  - 17 listed deployment locations
+
+# clean up
+rm(dep)
+```

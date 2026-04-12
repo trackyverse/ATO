@@ -77,4 +77,4 @@ an ATO_ani object, ready to be used by
 
 ## See also
 
-ATO_ani
+[`ATO_ani`](https://trackyverse.github.io/ATO/reference/ATO_ani.md)

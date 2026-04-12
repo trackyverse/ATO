@@ -116,4 +116,4 @@ an ATO_dep object, ready to be used by
 
 ## See also
 
-ATO_dep
+[`ATO_dep`](https://trackyverse.github.io/ATO/reference/ATO_dep.md)

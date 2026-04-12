@@ -26,3 +26,20 @@ get_dep(x, type = c("all", "valid", "invalid"))
 ## Value
 
 The dep slot as a table
+
+## Examples
+
+``` r
+# extract all the deployments from an ATO in table format
+dep <- get_dep(example_ato)
+summary(dep)
+#> @dep:
+#>  - 17 deployments in total
+#>  - No invalid deployments
+#>  - 17 receivers deployed
+#>  - 1 beacon transmitter deployed
+#>  - 17 listed deployment locations
+
+# clean up
+rm(dep)
+```

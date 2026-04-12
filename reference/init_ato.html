@@ -87,6 +87,34 @@ right table type. See <code><a href="table_type.html">table_type</a></code> for 
     <p>an <code><a href="ATO.html">ATO</a></code></p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># split apart the example ATO</span></span></span>
+<span class="r-in"><span><span class="va">ani</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_ani.html">get_ani</a></span><span class="op">(</span><span class="va">example_ato</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dep</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_dep.html">get_dep</a></span><span class="op">(</span><span class="va">example_ato</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">det</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_det.html">get_det</a></span><span class="op">(</span><span class="va">example_ato</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tag</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_tag.html">get_tag</a></span><span class="op">(</span><span class="va">example_ato</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># and now use the parts to build a new ato</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">init_ato</span><span class="op">(</span>ani <span class="op">=</span> <span class="va">ani</span>,</span></span>
+<span class="r-in"><span>              dep <span class="op">=</span> <span class="va">dep</span>,</span></span>
+<span class="r-in"><span>              det <span class="op">=</span> <span class="va">det</span>,</span></span>
+<span class="r-in"><span>              tag <span class="op">=</span> <span class="va">tag</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> M: Matching @ani to @tag...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> M: Matching @ani to @tag took 0.001s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> M: Matching @det to @tag...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> M: 6 valid tags have no valid detection.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> M: Matching @det to @tag took 0.016s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> M: Matching @dep to @det...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> M: 1 valid receiver deployment has no valid detections.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> M: 17 valid transmitter deployments have no valid detections.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> M: Matching @dep to @det took 0.017s</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># clean up</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">ani</span>, <span class="va">dep</span>, <span class="va">det</span>, <span class="va">tag</span>, <span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -71,6 +71,22 @@
     <p>The obs slot as a table</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># extract all the observations from an ATO in table format</span></span></span>
+<span class="r-in"><span><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu">get_obs</span><span class="op">(</span><span class="va">example_ato</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">obs</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @obs:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -0observations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - No terminal observations</span>
+<span class="r-in"><span><span class="co"># note: The example ato object has no observations, so this</span></span></span>
+<span class="r-in"><span><span class="co"># returns 0 rows.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># clean up</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">obs</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

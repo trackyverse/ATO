@@ -71,6 +71,25 @@ extract slots in the future.</p>
     <div class="dont-index"><p><a href="https://rdrr.io/r/base/Extract.html" class="external-link">Extract</a></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># access a slot using $ instead of @</span></span></span>
+<span class="r-in"><span><span class="va">dep</span> <span class="op">&lt;-</span> <span class="va">example_ato</span><span class="op">$</span><span class="va">dep</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`example_ato$dep` converted to `example_ato@dep` for convenience, please use `example_ato@dep` in the future.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   See `?slot` for more information.</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">dep</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @dep:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - 17 deployments in total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - No invalid deployments</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - 17 receivers deployed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - 1 beacon transmitter deployed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - 17 listed deployment locations</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># clean up</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">dep</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

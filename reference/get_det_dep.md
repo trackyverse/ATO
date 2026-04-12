@@ -33,3 +33,37 @@ get_det_dep(x, receivers, type = c("all", "valid", "invalid"))
 ## Value
 
 a table of detections
+
+## Examples
+
+``` r
+# wrapper to extract all detections that match transmitters
+# listed in the @dep slot (beacon tags)
+det <- get_det_dep(example_ato)
+summary(det)
+#> @det:
+#>  - 0 detections in total
+#>  - No stray detections
+#>  - No orphan detections
+#>  - No invalid detections
+#>  - 0 transmitters detected in total
+#>  - 0 receivers in total
+# note: The example_ato does not have beacon detections,
+# so this returns a table with 0 rows
+
+# extract only detections from one or more specific receivers
+det <- get_det_dep(example_ato, receivers = "132908")
+summary(det)
+#> @det:
+#>  - 0 detections in total
+#>  - No stray detections
+#>  - No orphan detections
+#>  - No invalid detections
+#>  - 0 transmitters detected in total
+#>  - 0 receivers in total
+# note: The example_ato does not have beacon detections,
+# so this returns a table with 0 rows
+
+# clean up
+rm(det)
+```

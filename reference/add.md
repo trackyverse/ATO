@@ -1,7 +1,7 @@
 # Generic add function
 
-Brings already-formatted data into the ATO. Adequated methods are picked
-based on the type of data being incorporated.
+Brings already-formatted ATO data into an ATO object. Adequated methods
+are picked based on the type of data being incorporated.
 
 ## Usage
 
@@ -47,3 +47,44 @@ add(x, value, append = FALSE, silent = FALSE)
 ## Value
 
 The updated ATO
+
+## See also
+
+[`make_ani`](https://trackyverse.github.io/ATO/reference/make_ani.md),
+[`make_dep`](https://trackyverse.github.io/ATO/reference/make_dep.md),
+[`make_det`](https://trackyverse.github.io/ATO/reference/make_det.md),
+[`make_tag`](https://trackyverse.github.io/ATO/reference/make_tag.md),
+[`make_obs`](https://trackyverse.github.io/ATO/reference/make_obs.md)
+
+## Examples
+
+``` r
+# split away parts of the example ATO for the example
+ani <- get_ani(example_ato)
+dep <- get_dep(example_ato)
+
+# add them to the ATO object using the add methods
+x <- add(example_ato, ani)
+#> M: Matching @ani to @tag...
+#> M: Matching @ani to @tag took 0.002s
+#> M: Matching @det to @tag...
+#> M: 6 valid tags have no valid detection.
+#> M: Matching @det to @tag took 0.073s
+#> M: Matching @dep to @det...
+#> M: 1 valid receiver deployment has no valid detections.
+#> M: 17 valid transmitter deployments have no valid detections.
+#> M: Matching @dep to @det took 0.02s
+x <- add(x, dep)
+#> M: Matching @ani to @tag...
+#> M: Matching @ani to @tag took 0.001s
+#> M: Matching @det to @tag...
+#> M: 6 valid tags have no valid detection.
+#> M: Matching @det to @tag took 0.014s
+#> M: Matching @dep to @det...
+#> M: 1 valid receiver deployment has no valid detections.
+#> M: 17 valid transmitter deployments have no valid detections.
+#> M: Matching @dep to @det took 0.02s
+
+# clean up
+rm(ani, dep, x)
+```

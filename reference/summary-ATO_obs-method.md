@@ -18,3 +18,12 @@ summary(object)
 ## Value
 
 Nothing. Prints a summary.
+
+## Examples
+
+``` r
+summary(get_obs(example_ato))
+#> @obs:
+#>  -0observations
+#>  - No terminal observations
+```

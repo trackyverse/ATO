@@ -24,3 +24,17 @@ is_ato(x, error = TRUE)
 
 TRUE if x is an ATO, FALSE if it is not an ATO and error = FALSE. Throws
 an error if x is not an ATO and error = TRUE.
+
+## Examples
+
+``` r
+# check if object is an ato
+is_ato(example_ato)
+#> [1] TRUE
+
+# by default, errors if not an ATO
+# is_ato(1:5)
+
+# But can be set to return FALSE
+# is_ato(1:5, FALSE)
+```
