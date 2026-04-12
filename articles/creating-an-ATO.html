@@ -189,8 +189,8 @@
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">det</span></span>
 <span><span class="co">#&gt;              datetime frac_second receiver_serial transmitter sensor_value</span></span>
-<span><span class="co">#&gt; 1 2026-04-09 16:44:28   0.5457439           11111   R64K-1234           NA</span></span>
-<span><span class="co">#&gt; 2 2026-04-09 16:44:29   0.5457473           22222   R64K-1234           NA</span></span>
+<span><span class="co">#&gt; 1 2026-04-11 21:18:20   0.1323228           11111   R64K-1234           NA</span></span>
+<span><span class="co">#&gt; 2 2026-04-11 21:18:21   0.1323259           22222   R64K-1234           NA</span></span>
 <span><span class="co">#&gt;   valid</span></span>
 <span><span class="co">#&gt; 1  TRUE</span></span>
 <span><span class="co">#&gt; 2  TRUE</span></span></code></pre></div>
@@ -220,10 +220,10 @@
 <span><span class="co">#&gt; overlap but their internal representations do Please ensure that POSIXct type</span></span>
 <span><span class="co">#&gt; interval cols have identical 'tzone' attributes to avoid confusion.</span></span>
 <span><span class="co">#&gt; M: 1 valid tag has no valid detection.</span></span>
-<span><span class="co">#&gt; M: Matching @det to @tag took 0.059s</span></span>
+<span><span class="co">#&gt; M: Matching @det to @tag took 0.057s</span></span>
 <span><span class="co">#&gt; M: Matching @dep to @det...</span></span>
 <span><span class="co">#&gt; M: 2 valid transmitter deployments have no valid detections.</span></span>
-<span><span class="co">#&gt; M: Matching @dep to @det took 0.012s</span></span></code></pre></div>
+<span><span class="co">#&gt; M: Matching @dep to @det took 0.011s</span></span></code></pre></div>
 </div>
 <p>Oh, no! Another warning. This one stems directly from <code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread</a></code>, the function being used to join everything together under the hood. In this instance, the time zone of the <code>datetime</code> column is different to the time zone specified (“America/Halifax”). We are warned that the join has been conducted in UTC, but might be confusing if you are expecting times in one of the other time zones on offer. This warning can be avoided by making sure all time zones are the same!</p>
 <p>Here is what the final ATO looks like:</p>
@@ -238,7 +238,7 @@
 <span><span class="co">#&gt;  - No invalid detections</span></span>
 <span><span class="co">#&gt;  - 1 transmitter detected in total</span></span>
 <span><span class="co">#&gt;  - 2 receivers in total</span></span>
-<span><span class="co">#&gt;  - Data range: 2026-04-09 16:44:28 to 2026-04-09 16:44:29 (America/Halifax)</span></span>
+<span><span class="co">#&gt;  - Data range: 2026-04-11 21:18:20 to 2026-04-11 21:18:21 (America/Halifax)</span></span>
 <span><span class="co">#&gt; @dep:</span></span>
 <span><span class="co">#&gt;  - 2 deployments in total</span></span>
 <span><span class="co">#&gt;  - No invalid deployments</span></span>
@@ -280,7 +280,7 @@
 <span><span class="co">#&gt; overlap but their internal representations do Please ensure that POSIXct type</span></span>
 <span><span class="co">#&gt; interval cols have identical 'tzone' attributes to avoid confusion.</span></span>
 <span><span class="co">#&gt; M: 1 valid tag has no valid detection.</span></span>
-<span><span class="co">#&gt; M: Matching @det to @tag took 0.012s</span></span>
+<span><span class="co">#&gt; M: Matching @det to @tag took 0.008s</span></span>
 <span><span class="co">#&gt; M: Matching @dep to @det...</span></span>
 <span><span class="co">#&gt; M: 2 valid transmitter deployments have no valid detections.</span></span>
 <span><span class="co">#&gt; M: Matching @dep to @det took 0.01s</span></span>
@@ -293,7 +293,7 @@
 <span><span class="co">#&gt;  - No invalid detections</span></span>
 <span><span class="co">#&gt;  - 1 transmitter detected in total</span></span>
 <span><span class="co">#&gt;  - 2 receivers in total</span></span>
-<span><span class="co">#&gt;  - Data range: 2026-04-09 16:44:28 to 2026-04-09 16:44:29 (America/Halifax)</span></span>
+<span><span class="co">#&gt;  - Data range: 2026-04-11 21:18:20 to 2026-04-11 21:18:21 (America/Halifax)</span></span>
 <span><span class="co">#&gt; @dep:</span></span>
 <span><span class="co">#&gt;  - 2 deployments in total</span></span>
 <span><span class="co">#&gt;  - No invalid deployments</span></span>

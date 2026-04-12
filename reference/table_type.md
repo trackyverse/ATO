@@ -15,7 +15,7 @@ table_type(x, expect)
 
 - x:
 
-  an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
+  an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md)
 
 - expect:
 

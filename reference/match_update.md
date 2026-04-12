@@ -13,7 +13,7 @@ match_update(x, silent = FALSE)
 
 - x:
 
-  an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
+  an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md)
 
 - silent:
 

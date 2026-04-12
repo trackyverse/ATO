@@ -1,7 +1,7 @@
-# Method to show an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
+# Method to show an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md)
 
 Method to show an
-[`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
+[`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md)
 
 ## Usage
 

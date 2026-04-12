@@ -15,8 +15,7 @@ get_det(x, receivers, transmitters, type = c("all", "valid", "invalid"))
 
 - x:
 
-  an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
-  object
+  an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md) object
 
 - receivers:
 

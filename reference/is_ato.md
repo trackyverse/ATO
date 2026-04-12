@@ -1,8 +1,8 @@
 # Wrapper for is(x, "ATO")
 
 This function allows an easy check if the input is an
-[`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md) and
-throw an error if that is not the case.
+[`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md) and throw an
+error if that is not the case.
 
 ## Usage
 

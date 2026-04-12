@@ -1,4 +1,4 @@
-# Initiate an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
+# Initiate an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md)
 
 This is a wrapper around the usual way of creating S4 objects through
 new(). The main purpose of this function is to ensure the ATO is created
@@ -45,4 +45,4 @@ init_ato(det, dep, tag, ani, obs, silent = FALSE)
 
 ## Value
 
-an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
+an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md)

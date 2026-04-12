@@ -13,8 +13,7 @@ x$name
 
 - x:
 
-  an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
-  object
+  an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md) object
 
 - name:
 

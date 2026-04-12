@@ -173,8 +173,8 @@ called `frac_second` for us to protect it from being overwritten if the
 ``` r
 det
 #>              datetime frac_second receiver_serial transmitter sensor_value
-#> 1 2026-04-09 16:44:28   0.5457439           11111   R64K-1234           NA
-#> 2 2026-04-09 16:44:29   0.5457473           22222   R64K-1234           NA
+#> 1 2026-04-11 21:18:20   0.1323228           11111   R64K-1234           NA
+#> 2 2026-04-11 21:18:21   0.1323259           22222   R64K-1234           NA
 #>   valid
 #> 1  TRUE
 #> 2  TRUE
@@ -206,10 +206,10 @@ ato <- add(ato, det)
 #> overlap but their internal representations do Please ensure that POSIXct type
 #> interval cols have identical 'tzone' attributes to avoid confusion.
 #> M: 1 valid tag has no valid detection.
-#> M: Matching @det to @tag took 0.059s
+#> M: Matching @det to @tag took 0.057s
 #> M: Matching @dep to @det...
 #> M: 2 valid transmitter deployments have no valid detections.
-#> M: Matching @dep to @det took 0.012s
+#> M: Matching @dep to @det took 0.011s
 ```
 
 Oh, no! Another warning. This one stems directly from
@@ -233,7 +233,7 @@ ato
 #>  - No invalid detections
 #>  - 1 transmitter detected in total
 #>  - 2 receivers in total
-#>  - Data range: 2026-04-09 16:44:28 to 2026-04-09 16:44:29 (America/Halifax)
+#>  - Data range: 2026-04-11 21:18:20 to 2026-04-11 21:18:21 (America/Halifax)
 #> @dep:
 #>  - 2 deployments in total
 #>  - No invalid deployments
@@ -277,7 +277,7 @@ ato <- init_ato(
 #> overlap but their internal representations do Please ensure that POSIXct type
 #> interval cols have identical 'tzone' attributes to avoid confusion.
 #> M: 1 valid tag has no valid detection.
-#> M: Matching @det to @tag took 0.012s
+#> M: Matching @det to @tag took 0.008s
 #> M: Matching @dep to @det...
 #> M: 2 valid transmitter deployments have no valid detections.
 #> M: Matching @dep to @det took 0.01s
@@ -290,7 +290,7 @@ ato
 #>  - No invalid detections
 #>  - 1 transmitter detected in total
 #>  - 2 receivers in total
-#>  - Data range: 2026-04-09 16:44:28 to 2026-04-09 16:44:29 (America/Halifax)
+#>  - Data range: 2026-04-11 21:18:20 to 2026-04-11 21:18:21 (America/Halifax)
 #> @dep:
 #>  - 2 deployments in total
 #>  - No invalid deployments

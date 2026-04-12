@@ -1,9 +1,9 @@
 # S4 class: ATO_dep
 
 An S4 class for the
-[`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
-deployments (@dep). Does not contain internal slots. It is a table of
-either data.frame, data.table, or tibble format.
+[`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md) deployments
+(@dep). Does not contain internal slots. It is a table of either
+data.frame, data.table, or tibble format.
 
 ## Usage
 
@@ -100,8 +100,7 @@ Can be of type data.frame, data.table, or tibble, depending on the @tbl
 slot. See
 [`table_type`](https://trackyverse.github.io/ATO/reference/table_type.md)
 for more details on
-[`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
-table types.
+[`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md) table types.
 
 ## See also
 

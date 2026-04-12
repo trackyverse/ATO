@@ -15,7 +15,7 @@ has(object, value, error = FALSE)
 
 - object:
 
-  an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO_package.md)
+  an [`ATO`](https://trackyverse.github.io/ATO/reference/ATO.md)
 
 - value:
 
