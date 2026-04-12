@@ -51,8 +51,8 @@ setMethod(
   }
 )
 
-#' A wrapper of \code{\link{get_det}} to extract detections for transmitters listed
-#' in the tag slot
+#' A wrapper of \code{\link{get_det}} to extract detections for transmitters
+#' listed in the tag slot
 #'
 #' @inheritParams get_det
 #'

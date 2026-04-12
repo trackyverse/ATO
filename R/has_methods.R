@@ -10,6 +10,7 @@
 #' @export
 #' 
 setGeneric("has", function(object, value, error = FALSE) standardGeneric("has"))
+
 #' @rdname has
 setMethod("has", c(object = "ATO"), function(object, value, error = FALSE) {
   is_ato(object) # not necessary, the method won't let it pass if it is not ATO.
