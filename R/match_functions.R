@@ -453,7 +453,7 @@ match_update <- function(x, silent = FALSE) {
       if (!is.na(x@tag$activation_datetime[i]) &
           !is.na(x@tag$battery_life[i])) {
         last_time <- x@tag$activation_datetime[i] +
-                     x@tag$battery_life[i] * 3600
+                     x@tag$battery_life[i] * 24 * 3600
       }
       # if the tag has an associated terminal time,
       # detections must be before that.
@@ -551,7 +551,7 @@ match_update <- function(x, silent = FALSE) {
   if (any(is.na(last_time))) {
     aux <- is.na(last_time)
     last_time[aux] <- x@tag$activation_datetime[aux] +
-                      x@tag$battery_life[aux] * 3600
+                      x@tag$battery_life[aux] * 24 * 3600
   }
   # if any still missing after that, make those Inf
   if (any(is.na(last_time))) {
