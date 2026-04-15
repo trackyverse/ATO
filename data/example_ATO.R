@@ -83,9 +83,9 @@
 # summary(tag)
 # # 
 # example_ato <- init_ato(ani = ani,
-#                 dep = dep,
-#                 det = det,
-#                 tag = tag)
+#                         dep = dep,
+#                         det = det,
+#                         tag = tag)
 # # 
 # example_ato
 # # 

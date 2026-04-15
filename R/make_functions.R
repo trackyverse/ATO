@@ -48,8 +48,7 @@ make_det <- function(
     mock <- tibble::as.tibble(mock)
   }
   class(mock) <- c("ATO_det", class(mock))
-  attributes(mock$datetime)$tzone <- tz
-  check(mock)
+  mock <- check(mock, tz = tz)
 
   # now check for potential issues with fractional seconds
   # more info here: https://github.com/trackyverse/ATO/issues/18
@@ -116,7 +115,8 @@ make_det <- function(
     output <- tibble::as.tibble(output)
   }
   class(output) <- c("ATO_det", class(output))
-  attributes(output$datetime)$tzone <- tz
+  # run only the timezone checks here to save computing time
+  output <- .check_column_tzones(output, tz = tz)
   return(output)
 }
 
@@ -222,9 +222,7 @@ make_dep <- function(
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_dep", class(output))
-  attributes(output$deploy_datetime)$tzone <- tz
-  attributes(output$recover_datetime)$tzone <- tz
-  check(output)
+  output <- check(output, tz = tz)
   return(output)
 }
 
@@ -302,7 +300,7 @@ make_tag <- function(
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_tag", class(output))
-  check(output)
+  output <- check(output, tz = tz)
   return(output)
 }
 
@@ -374,9 +372,7 @@ make_ani <- function(
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_ani", class(output))
-  attributes(output$capture_datetime)$tzone <- tz
-  attributes(output$release_datetime)$tzone <- tz
-  check(output)
+  output <- check(output, tz = tz)
   return(output)
 }
 
@@ -455,7 +451,6 @@ make_obs <- function(
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_obs", class(output))
-  attributes(output$datetime)$tzone <- tz
-  check(output)
+  output <- check(output, tz = tz)
   return(output)
 }

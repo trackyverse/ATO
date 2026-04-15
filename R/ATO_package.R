@@ -61,7 +61,7 @@
 #' store them inside this slot.
 #'
 #'
-#' @importFrom methods is new slot show validObject findFunction
+#' @importFrom methods is new slot slot<- show validObject findFunction
 #' @importFrom utils flush.console
 #' @import stats
 #'

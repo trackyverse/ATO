@@ -42,7 +42,7 @@ setMethod("add", c(x = "ATO", value = "ATO_det"),
     check2 <- any(colnames(value) %in% colnames(x@det))
     if (check1 | check2) {
       stop("append is set to TRUE but column names of new detection data",
-           " doesn't match the column names in @det.", call. = FALSE)
+           " don't match the column names in @det.", call. = FALSE)
     }
     to_add <- rbind(x@det, value)
     class(to_add) <- class(x@det)

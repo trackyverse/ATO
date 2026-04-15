@@ -10,17 +10,17 @@
 \alias{check,ATO_tbl-method}
 \title{check generic}
 \usage{
-check(object)
+check(object, tz)
 
-\S4method{check}{ATO_det}(object)
+\S4method{check}{ATO_det}(object, tz)
 
-\S4method{check}{ATO_dep}(object)
+\S4method{check}{ATO_dep}(object, tz)
 
-\S4method{check}{ATO_tag}(object)
+\S4method{check}{ATO_tag}(object, tz)
 
-\S4method{check}{ATO_ani}(object)
+\S4method{check}{ATO_ani}(object, tz)
 
-\S4method{check}{ATO_obs}(object)
+\S4method{check}{ATO_obs}(object, tz)
 
 \S4method{check}{ATO_tbl}(object)
 }
@@ -28,7 +28,7 @@ check(object)
 \item{object}{The prospective ATO slot object}
 }
 \value{
-Nothing. Called to stop() if needed.
+the checked ATO object
 }
 \description{
 Checks a prospective ATO slot object to confirm that the
