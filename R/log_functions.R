@@ -32,13 +32,15 @@ log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
   type <- match.arg(type)
   if (type == "msg") type <- "message"
 
-  if (sys.nframe() > 1) {
-    fun_call <- sys.calls()[[sys.nframe() - 1]]
-  } else {
-    fun_call <- sys.calls()[[sys.nframe()]]
-  }
+  # if (sys.nframe() > 1) {
+  #   fun_call <- sys.calls()[[sys.nframe() - 1]]
+  # } else {
+    fun_call <- sys.calls()[[1]]
+  # }
+
   fun <- deparse(fun_call[[1]])
   fun_call <- deparse(fun_call)
+
   pkg <- findFunction(fun)
   if (length(pkg) == 0) {
     pkg <- "not loaded (likely :: call)"

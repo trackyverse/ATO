@@ -47,8 +47,8 @@ Optional.}
 \item{...}{Non-standard columns to be added to the table.}
 }
 \value{
-an ATO_obs object, ready to be used by \code{\link{add}} or
-\code{\link{init_ato}}.
+an ATO_obs object, ready to be used by one of the \code{\link{set}}
+functions or \code{\link{init_ato}}.
 }
 \description{
 Formats the input data into the ATO format and appends the ATO_obs class.

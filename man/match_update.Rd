@@ -15,5 +15,5 @@ match_update(x, silent = FALSE)
 the updated ATO
 }
 \description{
-Automatically called by the \code{\link{add}} functions.
+Automatically called by the \code{\link{set}} functions.
 }
