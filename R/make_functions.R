@@ -10,8 +10,8 @@
 #' @param tz the timezone of the datetime data. Mandatory.
 #' @param ... Non-standard columns to be added to the table. Optional.
 #'
-#' @return an ATO_det object, ready to be used by \code{\link{add}} or
-#'   \code{\link{init_ato}}.
+#' @return an ATO_det object, ready to be used by one of the \code{\link{set}} 
+#'  functions or \code{\link{init_ato}}.
 #'
 #' @export
 #'
@@ -153,8 +153,8 @@ make_det <- function(
 #' @param tz the timezone of the datetime data. Mandatory.
 #' @param ... Non-standard columns to be added to the table.
 #'
-#' @return an ATO_dep object, ready to be used by \code{\link{add}} or
-#'   \code{\link{init_ato}}.
+#' @return an ATO_dep object, ready to be used by one of the \code{\link{set}} 
+#'  functions or \code{\link{init_ato}}.
 #'
 #' @export
 #'
@@ -248,8 +248,8 @@ make_dep <- function(
 #' @param tz the timezone of the datetime data. Mandatory.
 #' @param ... Non-standard columns to be added to the table.
 #'
-#' @return an ATO_tag object, ready to be used by \code{\link{add}} or
-#'   \code{\link{init_ato}}.
+#' @return an ATO_tag object, ready to be used by one of the \code{\link{set}} 
+#'  functions or \code{\link{init_ato}}.
 #'
 #' @export
 #'
@@ -326,8 +326,8 @@ make_tag <- function(
 #' @param tz the timezone of the datetime data.
 #' @param ... Non-standard columns to be added to the table.
 #'
-#' @return an ATO_ani object, ready to be used by \code{\link{add}} or
-#'   \code{\link{init_ato}}.
+#' @return an ATO_ani object, ready to be used by one of the \code{\link{set}} 
+#'  functions or \code{\link{init_ato}}.
 #'
 #' @export
 #'
@@ -399,8 +399,8 @@ make_ani <- function(
 #' @param tz the timezone of the datetime data. Mandatory.
 #' @param ... Non-standard columns to be added to the table.
 #'
-#' @return an ATO_obs object, ready to be used by \code{\link{add}} or
-#'   \code{\link{init_ato}}.
+#' @return an ATO_obs object, ready to be used by one of the \code{\link{set}} 
+#'  functions or \code{\link{init_ato}}.
 #'
 #' @export
 #'
