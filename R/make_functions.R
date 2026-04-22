@@ -26,6 +26,20 @@ make_det <- function(
   tz,
   ...
 ) {
+  mandatory_cols <- c(
+    "datetime",
+    "receiver_serial",
+    "transmitter"
+  )
+  for (i in mandatory_cols) {
+    if (any(is.na(get(i)))) {
+      stop(
+        "Missing data detected in ", i, ".",
+        "All detections must have ", i, " information.",
+        call. = FALSE
+      )
+    }
+  }
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   # detections objects can be very big.
   # to avoid spending a long time loading everything
@@ -180,6 +194,21 @@ make_dep <- function(
   tz,
   ...
 ) {
+  mandatory_cols <- c(
+    "receiver_serial",
+    "deploy_location",
+    "deploy_datetime",
+    "recover_datetime"
+  )
+  for (i in mandatory_cols) {
+    if (any(is.na(get(i)))) {
+      stop(
+        "Missing data detected in ", i, ".",
+        "All deployments must have ", i, " information.",
+        call. = FALSE
+      )
+    }
+  }
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
@@ -271,6 +300,18 @@ make_tag <- function(
   tz,
   ...
 ) {
+  mandatory_cols <- c(
+    "transmitter"
+  )
+  for (i in mandatory_cols) {
+    if (any(is.na(get(i)))) {
+      stop(
+        "Missing data detected in ", i, ".",
+        "All tags must have ", i, " information.",
+        call. = FALSE
+      )
+    }
+  }
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
@@ -346,6 +387,20 @@ make_ani <- function(
   tz,
   ...
 ) {
+  mandatory_cols <- c(
+    "animal",
+    "release_location",
+    "release_datetime"
+  )
+  for (i in mandatory_cols) {
+    if (any(is.na(get(i)))) {
+      stop(
+        "Missing data detected in ", i, ".",
+        "All animals must have ", i, " information.",
+        call. = FALSE
+      )
+    }
+  }
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
@@ -418,6 +473,21 @@ make_obs <- function(
   tz,
   ...
 ) {
+  mandatory_cols <- c(
+    "terminal",
+    "location",
+    "datetime"
+  )
+  for (i in mandatory_cols) {
+    if (any(is.na(get(i)))) {
+      stop(
+        "Missing data detected in ", i, ".",
+        "All observations must have ", i, " information.",
+        call. = FALSE
+      )
+    }
+  }
+
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   if (missing(tz)) {
     stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
