@@ -34,7 +34,7 @@ setClass("ATO_det")
 #' @name .ATO_det
 #' @export
 .ATO_det <- data.frame(
-  datetime = as.POSIXct(NA_real_),
+  datetime = as.POSIXct(NA_real_, tz = "UTC"),
   frac_second = NA_real_,
   receiver_serial = NA_character_,
   transmitter = NA_character_,
@@ -101,11 +101,11 @@ setClass("ATO_dep")
   receiver_serial = NA_character_,
   receiver_codeset = NA_character_,
   deploy_location = NA_character_,
-  deploy_datetime = as.POSIXct(NA_real_),
+  deploy_datetime = as.POSIXct(NA_real_, tz = "UTC"),
   deploy_lat = NA_real_,
   deploy_lon = NA_real_,
   deploy_z = NA_real_,
-  recover_datetime = as.POSIXct(NA_real_),
+  recover_datetime = as.POSIXct(NA_real_, tz = "UTC"),
   recover_lat = NA_real_,
   recover_lon = NA_real_,
   transmitter = NA_character_,
@@ -172,7 +172,7 @@ setClass("ATO_tag")
   ping_variation = NA_real_, # 0 if fixed ping rate
   serial = NA_character_,
   transmitter = NA_character_,
-  activation_datetime = as.POSIXct(NA_real_),
+  activation_datetime = as.POSIXct(NA_real_, tz = "UTC"),
   battery_life = NA_real_, # days
   sensor_type = NA_character_,
   sensor_unit = NA_character_,
@@ -226,11 +226,11 @@ setClass("ATO_ani")
 .ATO_ani <- data.frame(
   animal = NA_character_,
   capture_location = NA_character_,
-  capture_datetime = as.POSIXct(NA_real_),
+  capture_datetime = as.POSIXct(NA_real_, tz = "UTC"),
   capture_lat = NA_real_,
   capture_lon = NA_real_,
   release_location = NA_character_,
-  release_datetime = as.POSIXct(NA_real_),
+  release_datetime = as.POSIXct(NA_real_, tz = "UTC"),
   release_lat = NA_real_,
   release_lon = NA_real_,
   valid = NA
@@ -286,7 +286,7 @@ setClass("ATO_obs")
   type = NA_character_,
   terminal = NA, # logical
   location = NA_character_,
-  datetime = as.POSIXct(NA_real_),
+  datetime = as.POSIXct(NA_real_, tz = "UTC"),
   lat = NA_real_,
   lon = NA_real_,
   valid = NA

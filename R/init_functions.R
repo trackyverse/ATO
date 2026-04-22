@@ -49,19 +49,19 @@ init_ato <- function(det, dep, tag, ani, obs, silent = FALSE) {
   options(ATO_match_immediate = FALSE)
   
   if (!missing(det)) {
-    ato <- add(ato, det, silent = silent)
+    ato <- set_det(ato, det, silent = silent)
   }
   if (!missing(dep)) {
-    ato <- add(ato, dep, silent = silent)
+    ato <- set_dep(ato, dep, silent = silent)
   }
   if (!missing(tag)) {
-    ato <- add(ato, tag, silent = silent)
+    ato <- set_tag(ato, tag, silent = silent)
   }
   if (!missing(ani)) {
-    ato <- add(ato, ani, silent = silent)
+    ato <- set_ani(ato, ani, silent = silent)
   }
   if (!missing(obs)) {
-    ato <- add(ato, obs, silent = silent)
+    ato <- set_obs(ato, obs, silent = silent)
   }
   
   if (old_match_immediate) {

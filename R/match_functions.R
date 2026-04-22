@@ -1,6 +1,6 @@
 #' Match the various slots of the ATO object
 #' 
-#' Automatically called by the \code{\link{add}} functions.
+#' Automatically called by the \code{\link{set}} functions.
 #' 
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
@@ -146,7 +146,7 @@ match_update <- function(x, silent = FALSE) {
 
 #' Match animals in the observations to the target animals
 #' 
-#' Automatically called by the \code{\link{add}} functions.
+#' Automatically called by the \code{\link{set}} functions.
 #' 
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
@@ -214,7 +214,7 @@ match_update <- function(x, silent = FALSE) {
 
 #' Match animals listed in the target tags to the target animals
 #' 
-#' Automatically called by the \code{\link{add}} functions.
+#' Automatically called by the \code{\link{set}} functions.
 #' 
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
@@ -322,7 +322,7 @@ match_update <- function(x, silent = FALSE) {
 
 #' Match transmitters in the observations to the target tags
 #' 
-#' Automatically called by the \code{\link{add}} functions.
+#' Automatically called by the \code{\link{set}} functions.
 #' 
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
@@ -410,7 +410,7 @@ match_update <- function(x, silent = FALSE) {
 
 #' Match transmitters in the detections to the target tags
 #' 
-#' Automatically called by the \code{\link{add}} functions.
+#' Automatically called by the \code{\link{set}} functions.
 #' 
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
@@ -679,7 +679,7 @@ match_update <- function(x, silent = FALSE) {
 #' Match transmitters in the detections to
 #' beacon/reference transmitters in the deployments
 #' 
-#' Automatically called by the \code{\link{add}} functions.
+#' Automatically called by the \code{\link{set}} functions.
 #' 
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
