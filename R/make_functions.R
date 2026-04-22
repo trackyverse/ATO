@@ -209,10 +209,8 @@ make_dep <- function(
       )
     }
   }
+
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
-  if (missing(tz)) {
-    stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
-  }
 
   # if receivers have transmitters, then their ping rate must be provided
   if (any(!is.na(transmitter) & is.na(transmitter_ping_rate))) {
@@ -312,10 +310,9 @@ make_tag <- function(
       )
     }
   }
+
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
-  if (missing(tz)) {
-    stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
-  }
+
   output <- data.frame(
     manufacturer = manufacturer,
     model = model,
@@ -401,10 +398,9 @@ make_ani <- function(
       )
     }
   }
+
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
-  if (missing(tz)) {
-    stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
-  }
+
   output <- data.frame(
     animal = animal,
     capture_location = capture_location,
@@ -489,9 +485,6 @@ make_obs <- function(
   }
 
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
-  if (missing(tz)) {
-    stop("Please use 'tz' to define the study area timezone.", call. = FALSE)
-  }
 
   if (any(is.na(animal) & is.na(transmitter))) {
     stop(
@@ -500,6 +493,7 @@ make_obs <- function(
       call. = FALSE
     )
   }
+
   output <- data.frame(
     animal = animal,
     transmitter = transmitter,
