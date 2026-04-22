@@ -35,7 +35,7 @@ make_det <- function(
     if (any(is.na(get(i)))) {
       stop(
         "Missing data detected in ", i, ".",
-        "All detections must have ", i, " information.",
+        " All detections must have ", i, " information.",
         call. = FALSE
       )
     }
@@ -204,7 +204,7 @@ make_dep <- function(
     if (any(is.na(get(i)))) {
       stop(
         "Missing data detected in ", i, ".",
-        "All deployments must have ", i, " information.",
+        " All deployments must have ", i, " information.",
         call. = FALSE
       )
     }
@@ -305,7 +305,7 @@ make_tag <- function(
     if (any(is.na(get(i)))) {
       stop(
         "Missing data detected in ", i, ".",
-        "All tags must have ", i, " information.",
+        " All tags must have ", i, " information.",
         call. = FALSE
       )
     }
@@ -393,7 +393,7 @@ make_ani <- function(
     if (any(is.na(get(i)))) {
       stop(
         "Missing data detected in ", i, ".",
-        "All animals must have ", i, " information.",
+        " All animals must have ", i, " information.",
         call. = FALSE
       )
     }
@@ -478,7 +478,7 @@ make_obs <- function(
     if (any(is.na(get(i)))) {
       stop(
         "Missing data detected in ", i, ".",
-        "All observations must have ", i, " information.",
+        " All observations must have ", i, " information.",
         call. = FALSE
       )
     }
