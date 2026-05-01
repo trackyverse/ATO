@@ -75,10 +75,16 @@
         attributes(object[[i]])$tzone <- tz
       }
     } else {
-      tzones <- sapply(time_cols, function(i) attributes(object[[i]])$tzone)
+      tzones <- sapply(time_cols, function(i) {
+        if (is.null(attributes(object[[i]])$tzone)) {
+          return("")
+        } else {
+          return(attributes(object[[i]])$tzone)
+        }
+      })
       # check if any tz is missing
       if (any(tzones == "")) {
-        aux <- which(tzones == "")
+        aux <- which(is.null(tzones) | tzones == "")
         stop("The POSIXt data in column", .s(length(aux)),
              " ", .comma(time_cols[aux]), " ", .is(length(aux)),
              " missing timezone information. Use argument tz to",
