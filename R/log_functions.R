@@ -27,6 +27,10 @@
 #'
 log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
                       "comment"), ..., blame) {
+  if (!getOption("ATO_log_events", default = TRUE)) {
+    return(ato)
+  }
+
   is_ato(ato)
 
   type <- match.arg(type)
@@ -40,6 +44,8 @@ log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
 
   fun <- deparse(fun_call[[1]])
   fun_call <- deparse(fun_call)
+  # fun_call <- gsub("\\n", "", fun_call)
+  fun_call <- paste(fun_call, collapse = " ")
 
   pkg <- findFunction(fun)
   if (length(pkg) == 0) {
