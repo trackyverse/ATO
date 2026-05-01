@@ -127,7 +127,11 @@ setMethod(
   target <- sub("ATO_", "", class(value)[1])
 
   # make sure everything is in the same time zone
-  value <- .check_column_tzones(value, tzone(x))
+  if (!is.null(tzone(x))) {
+    value <- .check_column_tzones(value, tzone(x))
+  } else {
+    value <- .check_column_tzones(value)
+  }
 
   if (append) {
     check1 <- any(colnames(value) %in% colnames(slot(x, target)))
