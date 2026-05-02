@@ -36,23 +36,32 @@ log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
   type <- match.arg(type)
   if (type == "msg") type <- "message"
 
-  # if (sys.nframe() > 1) {
-  #   fun_call <- sys.calls()[[sys.nframe() - 1]]
-  # } else {
-    fun_call <- sys.calls()[[1]]
-  # }
+  i = 1
+  while (i <= sys.nframe()) {
+    fun_call <- sys.calls()[[i]]
 
-  fun <- deparse(fun_call[[1]])
-  fun_call <- deparse(fun_call)
-  # fun_call <- gsub("\\n", "", fun_call)
-  fun_call <- paste(fun_call, collapse = " ")
+    fun <- deparse(fun_call[[1]])
+    fun_call <- deparse(fun_call)
 
-  pkg <- findFunction(fun)
-  if (length(pkg) == 0) {
-    pkg <- "not loaded (likely :: call)"
-  } else {
-    pkg <- unlist(lapply(pkg, attributes))["name"]
-    pkg <- sub("package:", "", pkg)
+    fun_call <- paste(fun_call, collapse = " ")
+    fun_call <- gsub(" +", " ", fun_call)
+
+    if (grepl("::", fun)) {
+      pkg <- strsplit(fun, ":")[[1]][1]
+    } else {
+      pkg <- findFunction(fun)
+      if (length(pkg) == 0) {
+        pkg <- "Unknown"
+      } else {
+        pkg <- environmentName(pkg[[1]])
+        pkg <- sub("package:", "", pkg)
+      }
+    }
+    if (pkg %in% c("base", "Unknown")) {
+      i <- i + 1
+    } else {
+      break
+    }
   }
 
   event_text <- paste0(...)
@@ -65,6 +74,7 @@ log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
     call = fun_call,
     log = event_text
   )
+
   updated_log <- rbind(ato@log, new_line)
   rownames(updated_log) <- NULL
   class(updated_log) <- class(ato@log)
