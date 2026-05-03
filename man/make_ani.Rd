@@ -6,42 +6,38 @@
 \usage{
 make_ani(
   animal,
-  capture_location = NA_character_,
-  capture_datetime = as.POSIXct(NA_real_),
-  capture_lat = NA_real_,
-  capture_lon = NA_real_,
-  release_location,
   release_datetime,
+  release_location = NA_character_,
   release_lat = NA_real_,
   release_lon = NA_real_,
+  capture_datetime = as.POSIXct(NA_real_),
+  capture_location = NA_character_,
+  capture_lat = NA_real_,
+  capture_lon = NA_real_,
   tz,
   ...
 )
 }
 \arguments{
-\item{animal}{Name of the animal that received the tag, character. Mandatory.}
+\item{animal}{Name of the animal being tracked (character). Required.}
 
-\item{capture_location}{Name of the location where the animal was captured,
-character. Optional.}
+\item{release_datetime}{date and time of the release (POSIXct). Required.}
 
-\item{capture_datetime}{date and time of the capture, posixct. Optional.}
+\item{release_location}{Name of the location where the animal was released
+character).}
 
-\item{capture_lat}{latitude of the capture. Preferably in WGS84, numeric.
-Optional.}
+\item{release_lat}{Latitude of the release. Preferably in WGS84 (numeric).}
 
-\item{capture_lon}{longitude of the capture. Preferably in WGS84, numeric.
-Optional.}
+\item{release_lon}{Longitude of the release. Preferably in WGS84 (numeric).}
 
-\item{release_location}{Name of the location where the animal was released,
-character. Mandatory.}
+\item{capture_datetime}{Date and time of the capture (POSIXct).}
 
-\item{release_datetime}{date and time of the release, posixct. Mandatory.}
+\item{capture_location}{Name of the location where the animal was captured
+(character).}
 
-\item{release_lat}{latitude of the release. Preferably in WGS84, numeric.
-Optional.}
+\item{capture_lat}{Latitude of the capture. Preferably in WGS84 (numeric).}
 
-\item{release_lon}{longitude of the release. Preferably in WGS84, numeric.
-Optional.}
+\item{capture_lon}{Longitude of the capture. Preferably in WGS84 (numeric).}
 
 \item{tz}{the timezone of the datetime data.}
 

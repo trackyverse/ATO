@@ -6,28 +6,28 @@
 \usage{
 make_det(
   datetime,
-  frac_second = NA_real_,
   receiver_serial,
   transmitter,
+  frac_second = NA_real_,
   sensor_value = NA_real_,
   tz,
   ...
 )
 }
 \arguments{
-\item{datetime}{date and time, posixct format. Mandatory.}
+\item{datetime}{date and time of the detection (POSIXct). Required.}
 
-\item{frac_second}{fractional second, numeric. Optional.}
+\item{receiver_serial}{Receiver serial (character). Required.}
 
-\item{receiver_serial}{Mandatory. receiver serial number, integer. Mandatory.}
+\item{transmitter}{Transmitter code (character). Required.}
 
-\item{transmitter}{Mandatory. transmitter code, character. Mandatory.}
+\item{frac_second}{fractional second of the detection (numeric).}
 
-\item{sensor_value}{reported sensor value, numeric. Optional.}
+\item{sensor_value}{reported sensor value (numeric).}
 
-\item{tz}{the timezone of the datetime data. Mandatory.}
+\item{tz}{the timezone of the datetime data.}
 
-\item{...}{Non-standard columns to be added to the table. Optional.}
+\item{...}{Non-standard columns to be added to the table.}
 }
 \value{
 an ATO_det object, ready to be used by one of the \code{\link{set}}

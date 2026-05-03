@@ -5,70 +5,68 @@
 \title{Make an ATO deployments object}
 \usage{
 make_dep(
-  receiver_model = NA_character_,
-  receiver_serial,
-  receiver_codeset = NA_character_,
-  deploy_location,
   deploy_datetime,
+  recover_datetime,
+  deploy_location = NA_character_,
   deploy_lat = NA_real_,
   deploy_lon = NA_real_,
   deploy_z = NA_real_,
-  recover_datetime,
   recover_lat = NA_real_,
   recover_lon = NA_real_,
+  receiver_manufacturer = NA_character_,
+  receiver_model = NA_character_,
+  receiver_serial = NA_character_,
+  receiver_codeset = NA_character_,
   transmitter = NA_character_,
   transmitter_manufacturer = NA_character_,
-  transmitter_ping_rate = NA_real_,
   transmitter_model = NA_character_,
   transmitter_serial = NA_character_,
+  transmitter_ping_rate = NA_real_,
   tz,
   ...
 )
 }
 \arguments{
-\item{receiver_model}{Model of the receiver, character. Optional.}
+\item{deploy_datetime}{date and time of the deployment (POSIXct). Required.}
 
-\item{receiver_serial}{Receiver serial number, integer. Mandatory.}
+\item{recover_datetime}{date and time of the recovery (POSIXct). Required.}
 
-\item{receiver_codeset}{Codeset of the receiver, character. Optional.}
+\item{deploy_location}{Name of the location where the receiver was deployed
+(character).}
 
-\item{deploy_location}{Name of the location where the receiver was deployed,
-character. Mandatory.}
+\item{deploy_lat}{latitude of the deployment. Preferably in WGS84 (numeric).}
 
-\item{deploy_datetime}{date and time of the deployment, posixct. Mandatory.}
-
-\item{deploy_lat}{latitude of the deployment. Preferably in WGS84, numeric.
-Optional.}
-
-\item{deploy_lon}{longitude of the deployment. Preferably in WGS84, numeric.
-Optional.}
+\item{deploy_lon}{longitude of the deployment. Preferably in WGS84 (numeric).}
 
 \item{deploy_z}{depth of the deployment, as measured from the reference
-surface of the water body, numeric. Optional.}
+surface of the water body (numeric).}
 
-\item{recover_datetime}{date and time of the recovery, posixct. Mandatory.}
+\item{recover_lat}{latitude of the recovery point. Preferably in WGS84
+(numeric).}
 
-\item{recover_lat}{latitude of the recovery point. Preferably in WGS84,
-numeric. Optional.}
+\item{recover_lon}{longitude of the recovery point. Preferably in WGS84
+(numeric).}
 
-\item{recover_lon}{longitude of the recovery point. Preferably in WGS84,
-numeric. Optional.}
+\item{receiver_manufacturer}{Maker of the receiver (character).}
 
-\item{transmitter}{Transmitter code for a beacon/reference tag, character.
-Optional.}
+\item{receiver_model}{Model of the receiver (character).}
 
-\item{transmitter_manufacturer}{Manufacturer of the transmitter, character.
-Optional.}
+\item{receiver_serial}{Receiver serial number (character).}
 
-\item{transmitter_ping_rate}{Expected ping rate of the transmitter, numeric.
-In seconds. Required if transmitter is provided.}
+\item{receiver_codeset}{Codeset of the receiver (character).}
 
-\item{transmitter_model}{Model of the transmitter, character. Optional.}
+\item{transmitter}{Transmitter code for a beacon/reference tag (character).}
 
-\item{transmitter_serial}{Serial number of the transmitter, integer.
-Required if transmitter is provided.}
+\item{transmitter_manufacturer}{Manufacturer of the transmitter (character).}
 
-\item{tz}{the timezone of the datetime data. Mandatory.}
+\item{transmitter_model}{Model of the transmitter (character).}
+
+\item{transmitter_serial}{Serial number of the transmitter (integer).}
+
+\item{transmitter_ping_rate}{Expected ping rate of the transmitter,
+in seconds (numeric).}
+
+\item{tz}{the timezone of the datetime data.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }

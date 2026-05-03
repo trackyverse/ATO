@@ -5,13 +5,13 @@
 \title{Make an ATO tags object}
 \usage{
 make_tag(
+  transmitter,
   manufacturer = NA_character_,
   model = NA_character_,
+  serial = NA_character_,
   power_level = NA_real_,
   ping_rate = NA_real_,
   ping_variation = NA_real_,
-  serial = NA_character_,
-  transmitter,
   activation_datetime = as.POSIXct(NA_real_),
   battery_life = NA_real_,
   sensor_type = NA_character_,
@@ -22,34 +22,34 @@ make_tag(
 )
 }
 \arguments{
-\item{manufacturer}{Manufacturer of the transmitter, character. Optional.}
+\item{transmitter}{Transmitter code (character). Required.}
 
-\item{model}{Model of the transmitter, character. Optional.}
+\item{manufacturer}{Manufacturer of the transmitter (character).}
 
-\item{power_level}{Power level of the transmitter, real. Optional.}
+\item{model}{Model of the transmitter (character).}
 
-\item{ping_rate}{Expected ping rate of the transmitter, numeric. In seconds. Optional.}
+\item{serial}{Serial number of the tag (integer).}
 
-\item{ping_variation}{Range of the variation added between pings,
-to reduce tag collisions, numeric. In seconds. Optional.}
+\item{power_level}{Power level of the transmitter (real).}
 
-\item{serial}{Serial number of the tag, integer. Optional.}
+\item{ping_rate}{Expected ping rate of the transmitter, in seconds (numeric).}
 
-\item{transmitter}{Transmitter code, character. Mandatory.}
+\item{ping_variation}{Range of the variation added between pings, in seconds
+(numeric).}
 
-\item{activation_datetime}{date and time of the tag activation, posixct. Optional.}
+\item{activation_datetime}{Date and time of the tag activation (POSIXct).}
 
-\item{battery_life}{expected battery duration of the tag, numeric. Optional.}
+\item{battery_life}{Expected battery duration of the tag, in days (numeric).}
 
-\item{sensor_type}{Type of sensor data associated with the transmitter,
-character. Optional.}
+\item{sensor_type}{Type of sensor data associated with the transmitter
+(character).}
 
-\item{sensor_unit}{Unit of the data associated with the transmitter,
-character. Optional.}
+\item{sensor_unit}{Unit of the data associated with the transmitter
+(character).}
 
-\item{animal}{Name of the animal that received the tag, character. Optional.}
+\item{animal}{Name of the animal that received the tag (character).}
 
-\item{tz}{the timezone of the datetime data. Mandatory.}
+\item{tz}{the timezone of the datetime data.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }

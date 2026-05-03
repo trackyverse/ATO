@@ -5,12 +5,12 @@
 \title{Make an ATO observations object}
 \usage{
 make_obs(
+  datetime,
   animal = NA_character_,
   transmitter = NA_character_,
-  type = NA_character_,
   terminal,
+  type = NA_character_,
   location,
-  datetime,
   lat = NA_real_,
   lon = NA_real_,
   tz,
@@ -18,31 +18,27 @@ make_obs(
 )
 }
 \arguments{
-\item{animal}{Name of the animal that was observed, character. Each
-observation must have an animal or transmitter code (or both).}
+\item{datetime}{date and time of the observation (POSIXct). Required.}
 
-\item{transmitter}{Transmitter code that was observed, character. Each
-observation must have an animal or transmitter code (or both).}
+\item{animal}{Name of the animal that was observed (character). Each
+observation must have animal or transmitter information (or both).}
 
-\item{type}{Type of observation (e.g. directly seen, manual tracking),
-character. Optional.}
+\item{transmitter}{Transmitter code that was observed (character). Each
+observation must have animal or transmitter information (or both).}
 
-\item{terminal}{Was the animal permanently captured at the moment of
-observation? logical. Mandatory.}
+\item{terminal}{Was the animal/transmitter permanently captured at the
+moment of observation (logical)? Required.}
 
-\item{location}{Name of the place where the observation occurred, character.
-Mandatory.}
+\item{type}{Type of observation (e.g. directly seen, manual tracking)
+(character).}
 
-\item{datetime}{date and time of the observation, posixct format.
-Mandatory.}
+\item{location}{Name of the place where the observation occurred (character).}
 
-\item{lat}{latitude of the observation. Preferably in WGS84, numeric.
-Optional.}
+\item{lat}{latitude of the observation. Preferably in WGS84 (numeric).}
 
-\item{lon}{longitude of the observation. Preferably in WGS84, numeric.
-Optional.}
+\item{lon}{longitude of the observation. Preferably in WGS84 (numeric).}
 
-\item{tz}{the timezone of the datetime data. Mandatory.}
+\item{tz}{the timezone of the datetime data.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }
