@@ -1,3 +1,198 @@
+#' Make an ATO animals object
+#'
+#' Formats the input data into the ATO format and appends the ATO_ani class.
+#'
+#' @param animal Name of the animal being tracked (character). Required.
+#' @param release_datetime date and time of the release (POSIXct). Required.
+#' @param release_location Name of the location where the animal was released
+#'   character).
+#' @param release_lat Latitude of the release. Preferably in WGS84 (numeric).
+#' @param release_lon Longitude of the release. Preferably in WGS84 (numeric).
+#' @param capture_location Name of the location where the animal was captured
+#'   (character).
+#' @param capture_datetime Date and time of the capture (POSIXct).
+#' @param capture_lat Latitude of the capture. Preferably in WGS84 (numeric).
+#' @param capture_lon Longitude of the capture. Preferably in WGS84 (numeric).
+#' @param tz the timezone of the datetime data.
+#' @param ... Non-standard columns to be added to the table.
+#'
+#' @return an ATO_ani object, ready to be used by one of the \code{\link{set}} 
+#'  functions or \code{\link{init_ato}}.
+#'
+#' @export
+#'
+#' @seealso \code{\link{ATO_ani}}
+#'
+make_ani <- function(
+  animal,
+  release_datetime,
+  release_location = NA_character_,
+  release_lat = NA_real_,
+  release_lon = NA_real_,
+  capture_datetime = as.POSIXct(NA_real_),
+  capture_location = NA_character_,
+  capture_lat = NA_real_,
+  capture_lon = NA_real_,
+  tz,
+  ...
+) {
+  mandatory_cols <- c(
+    "animal",
+    "release_datetime"
+  )
+  for (i in mandatory_cols) {
+    if (any(is.na(get(i)))) {
+      stop(
+        "Missing data detected in ", i, ".",
+        " All animals must have ", i, " information.",
+        call. = FALSE
+      )
+    }
+  }
+
+  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+
+  output <- data.frame(
+    animal = animal,
+    release_location = release_location,
+    release_datetime = release_datetime,
+    release_lat = release_lat,
+    release_lon = release_lon,
+    capture_location = capture_location,
+    capture_datetime = capture_datetime,
+    capture_lat = capture_lat,
+    capture_lon = capture_lon,
+    valid = TRUE,
+    ...
+  )
+  if (ato_table_type == "data.table") {
+    .data.table_exists()
+    data.table::setDT(output)
+  }
+  if (ato_table_type == "tibble") {
+    .tibble_exists()
+    output <- tibble::as_tibble(output)
+  }
+  class(output) <- c("ATO_ani", class(output))
+  output <- check(output, tz = tz)
+  return(output)
+}
+
+#' Make an ATO deployments object
+#'
+#' Formats the input data into the ATO format and appends the ATO_dep class.
+#'
+#' @param deploy_datetime date and time of the deployment (POSIXct). Required.
+#' @param recover_datetime date and time of the recovery (POSIXct). Required.
+#' @param deploy_location Name of the location where the receiver was deployed
+#'   (character).
+#' @param deploy_lat latitude of the deployment. Preferably in WGS84 (numeric).
+#' @param deploy_lon longitude of the deployment. Preferably in WGS84 (numeric).
+#' @param deploy_z depth of the deployment, as measured from the reference
+#'   surface of the water body (numeric).
+#' @param recover_lat latitude of the recovery point. Preferably in WGS84
+#'   (numeric).
+#' @param recover_lon longitude of the recovery point. Preferably in WGS84
+#'   (numeric).
+#' @param receiver_manufacturer Maker of the receiver (character).
+#' @param receiver_model Model of the receiver (character).
+#' @param receiver_serial Receiver serial number (character).
+#' @param receiver_codeset Codeset of the receiver (character).
+#' @param transmitter Transmitter code for a beacon/reference tag (character).
+#' @param transmitter_manufacturer Manufacturer of the transmitter (character).
+#' @param transmitter_model Model of the transmitter (character).
+#' @param transmitter_serial Serial number of the transmitter (integer).
+#' @param transmitter_ping_rate Expected ping rate of the transmitter,
+#'   in seconds (numeric).
+#' @param tz the timezone of the datetime data.
+#' @param ... Non-standard columns to be added to the table.
+#'
+#' @return an ATO_dep object, ready to be used by one of the \code{\link{set}} 
+#'  functions or \code{\link{init_ato}}.
+#'
+#' @export
+#'
+#' @seealso \code{\link{ATO_dep}}
+#'
+make_dep <- function(
+  deploy_datetime,
+  recover_datetime,
+  deploy_location = NA_character_,
+  deploy_lat = NA_real_,
+  deploy_lon = NA_real_,
+  deploy_z = NA_real_,
+  recover_lat = NA_real_,
+  recover_lon = NA_real_,
+  receiver_manufacturer = NA_character_,
+  receiver_model = NA_character_,
+  receiver_serial = NA_character_,
+  receiver_codeset = NA_character_,
+  transmitter = NA_character_,
+  transmitter_manufacturer = NA_character_,
+  transmitter_model = NA_character_,
+  transmitter_serial = NA_character_,
+  transmitter_ping_rate = NA_real_,
+  tz,
+  ...
+) {
+  mandatory_cols <- c(
+    "deploy_datetime",
+    "recover_datetime"
+  )
+  for (i in mandatory_cols) {
+    if (any(is.na(get(i)))) {
+      stop(
+        "Missing data detected in ", i, ".",
+        " All deployments must have ", i, " information.",
+        call. = FALSE
+      )
+    }
+  }
+
+  if (any(is.na(receiver_serial) & is.na(transmitter))) {
+    stop(
+      "Each deployment must be associated to either a receiver_serial or a",
+      " transmitter, or both",
+      call. = FALSE
+    )
+  }
+  
+  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+
+  output <- data.frame(
+    deploy_datetime = deploy_datetime,
+    recover_datetime = recover_datetime,
+    deploy_location = deploy_location,
+    deploy_lat = deploy_lat,
+    deploy_lon = deploy_lon,
+    deploy_z = deploy_z,
+    recover_lat = recover_lat,
+    recover_lon = recover_lon,
+    receiver_manufacturer = receiver_manufacturer,
+    receiver_model = receiver_model,
+    receiver_serial = receiver_serial,
+    receiver_codeset = receiver_codeset,
+    transmitter = transmitter,
+    transmitter_manufacturer = transmitter_manufacturer,
+    transmitter_model = transmitter_model,
+    transmitter_serial = transmitter_serial,
+    transmitter_ping_rate = transmitter_ping_rate,
+    valid = TRUE,
+    ...
+  )
+  if (ato_table_type == "data.table") {
+    .data.table_exists()
+    data.table::setDT(output)
+  }
+  if (ato_table_type == "tibble") {
+    .tibble_exists()
+    output <- tibble::as_tibble(output)
+  }
+  class(output) <- c("ATO_dep", class(output))
+  output <- check(output, tz = tz)
+  return(output)
+}
+
 #' Make an ATO detections object
 #'
 #' Formats the input data into the ATO format and appends the ATO_det class.
@@ -134,121 +329,6 @@ make_det <- function(
   return(output)
 }
 
-#' Make an ATO deployments object
-#'
-#' Formats the input data into the ATO format and appends the ATO_dep class.
-#'
-#' @param deploy_datetime date and time of the deployment (POSIXct). Required.
-#' @param recover_datetime date and time of the recovery (POSIXct). Required.
-#' @param deploy_location Name of the location where the receiver was deployed
-#'   (character).
-#' @param deploy_lat latitude of the deployment. Preferably in WGS84 (numeric).
-#' @param deploy_lon longitude of the deployment. Preferably in WGS84 (numeric).
-#' @param deploy_z depth of the deployment, as measured from the reference
-#'   surface of the water body (numeric).
-#' @param recover_lat latitude of the recovery point. Preferably in WGS84
-#'   (numeric).
-#' @param recover_lon longitude of the recovery point. Preferably in WGS84
-#'   (numeric).
-#' @param receiver_manufacturer Maker of the receiver (character).
-#' @param receiver_model Model of the receiver (character).
-#' @param receiver_serial Receiver serial number (character).
-#' @param receiver_codeset Codeset of the receiver (character).
-#' @param transmitter Transmitter code for a beacon/reference tag (character).
-#' @param transmitter_manufacturer Manufacturer of the transmitter (character).
-#' @param transmitter_model Model of the transmitter (character).
-#' @param transmitter_serial Serial number of the transmitter (integer).
-#' @param transmitter_ping_rate Expected ping rate of the transmitter,
-#'   in seconds (numeric).
-#' @param tz the timezone of the datetime data.
-#' @param ... Non-standard columns to be added to the table.
-#'
-#' @return an ATO_dep object, ready to be used by one of the \code{\link{set}} 
-#'  functions or \code{\link{init_ato}}.
-#'
-#' @export
-#'
-#' @seealso \code{\link{ATO_dep}}
-#'
-make_dep <- function(
-  deploy_datetime,
-  recover_datetime,
-  deploy_location = NA_character_,
-  deploy_lat = NA_real_,
-  deploy_lon = NA_real_,
-  deploy_z = NA_real_,
-  recover_lat = NA_real_,
-  recover_lon = NA_real_,
-  receiver_manufacturer = NA_character_,
-  receiver_model = NA_character_,
-  receiver_serial = NA_character_,
-  receiver_codeset = NA_character_,
-  transmitter = NA_character_,
-  transmitter_manufacturer = NA_character_,
-  transmitter_model = NA_character_,
-  transmitter_serial = NA_character_,
-  transmitter_ping_rate = NA_real_,
-  tz,
-  ...
-) {
-  mandatory_cols <- c(
-    "deploy_datetime",
-    "recover_datetime"
-  )
-  for (i in mandatory_cols) {
-    if (any(is.na(get(i)))) {
-      stop(
-        "Missing data detected in ", i, ".",
-        " All deployments must have ", i, " information.",
-        call. = FALSE
-      )
-    }
-  }
-
-  if (any(is.na(receiver_serial) & is.na(transmitter))) {
-    stop(
-      "Each deployment must be associated to either a receiver_serial or a",
-      " transmitter, or both",
-      call. = FALSE
-    )
-  }
-  
-  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
-
-  output <- data.frame(
-    deploy_datetime = deploy_datetime,
-    recover_datetime = recover_datetime,
-    deploy_location = deploy_location,
-    deploy_lat = deploy_lat,
-    deploy_lon = deploy_lon,
-    deploy_z = deploy_z,
-    recover_lat = recover_lat,
-    recover_lon = recover_lon,
-    receiver_manufacturer = receiver_manufacturer,
-    receiver_model = receiver_model,
-    receiver_serial = receiver_serial,
-    receiver_codeset = receiver_codeset,
-    transmitter = transmitter,
-    transmitter_manufacturer = transmitter_manufacturer,
-    transmitter_model = transmitter_model,
-    transmitter_serial = transmitter_serial,
-    transmitter_ping_rate = transmitter_ping_rate,
-    valid = TRUE,
-    ...
-  )
-  if (ato_table_type == "data.table") {
-    .data.table_exists()
-    data.table::setDT(output)
-  }
-  if (ato_table_type == "tibble") {
-    .tibble_exists()
-    output <- tibble::as_tibble(output)
-  }
-  class(output) <- c("ATO_dep", class(output))
-  output <- check(output, tz = tz)
-  return(output)
-}
-
 #' Make an ATO tags object
 #'
 #' Formats the input data into the ATO format and appends the ATO_tag class.
@@ -334,86 +414,6 @@ make_tag <- function(
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_tag", class(output))
-  output <- check(output, tz = tz)
-  return(output)
-}
-
-#' Make an ATO animals object
-#'
-#' Formats the input data into the ATO format and appends the ATO_ani class.
-#'
-#' @param animal Name of the animal being tracked (character). Required.
-#' @param release_datetime date and time of the release (POSIXct). Required.
-#' @param release_location Name of the location where the animal was released
-#'   character).
-#' @param release_lat Latitude of the release. Preferably in WGS84 (numeric).
-#' @param release_lon Longitude of the release. Preferably in WGS84 (numeric).
-#' @param capture_location Name of the location where the animal was captured
-#'   (character).
-#' @param capture_datetime Date and time of the capture (POSIXct).
-#' @param capture_lat Latitude of the capture. Preferably in WGS84 (numeric).
-#' @param capture_lon Longitude of the capture. Preferably in WGS84 (numeric).
-#' @param tz the timezone of the datetime data.
-#' @param ... Non-standard columns to be added to the table.
-#'
-#' @return an ATO_ani object, ready to be used by one of the \code{\link{set}} 
-#'  functions or \code{\link{init_ato}}.
-#'
-#' @export
-#'
-#' @seealso \code{\link{ATO_ani}}
-#'
-make_ani <- function(
-  animal,
-  release_datetime,
-  release_location = NA_character_,
-  release_lat = NA_real_,
-  release_lon = NA_real_,
-  capture_datetime = as.POSIXct(NA_real_),
-  capture_location = NA_character_,
-  capture_lat = NA_real_,
-  capture_lon = NA_real_,
-  tz,
-  ...
-) {
-  mandatory_cols <- c(
-    "animal",
-    "release_datetime"
-  )
-  for (i in mandatory_cols) {
-    if (any(is.na(get(i)))) {
-      stop(
-        "Missing data detected in ", i, ".",
-        " All animals must have ", i, " information.",
-        call. = FALSE
-      )
-    }
-  }
-
-  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
-
-  output <- data.frame(
-    animal = animal,
-    release_location = release_location,
-    release_datetime = release_datetime,
-    release_lat = release_lat,
-    release_lon = release_lon,
-    capture_location = capture_location,
-    capture_datetime = capture_datetime,
-    capture_lat = capture_lat,
-    capture_lon = capture_lon,
-    valid = TRUE,
-    ...
-  )
-  if (ato_table_type == "data.table") {
-    .data.table_exists()
-    data.table::setDT(output)
-  }
-  if (ato_table_type == "tibble") {
-    .tibble_exists()
-    output <- tibble::as_tibble(output)
-  }
-  class(output) <- c("ATO_ani", class(output))
   output <- check(output, tz = tz)
   return(output)
 }
