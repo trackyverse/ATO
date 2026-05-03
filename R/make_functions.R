@@ -329,6 +329,93 @@ make_det <- function(
   return(output)
 }
 
+#' Make an ATO observations object
+#'
+#' Formats the input data into the ATO format and appends the ATO_obs class.
+#'
+#' @param datetime date and time of the observation (POSIXct). Required.
+#' @param animal Name of the animal that was observed (character). Each
+#'   observation must have animal or transmitter information (or both).
+#' @param transmitter Transmitter code that was observed (character). Each
+#'   observation must have animal or transmitter information (or both).
+#' @param terminal Was the animal/transmitter permanently captured at the
+#'   moment of observation (logical)? Required.
+#' @param type Type of observation (e.g. directly seen, manual tracking)
+#'   (character).
+#' @param location Name of the place where the observation occurred (character).
+#' @param lat latitude of the observation. Preferably in WGS84 (numeric).
+#' @param lon longitude of the observation. Preferably in WGS84 (numeric).
+#' @param tz the timezone of the datetime data.
+#' @param ... Non-standard columns to be added to the table.
+#'
+#' @return an ATO_obs object, ready to be used by one of the \code{\link{set}} 
+#'  functions or \code{\link{init_ato}}.
+#'
+#' @export
+#'
+#' @seealso \code{\link{ATO_obs}}
+#'
+make_obs <- function(
+  datetime,
+  animal = NA_character_,
+  transmitter = NA_character_,
+  terminal,
+  type = NA_character_,
+  location,
+  lat = NA_real_,
+  lon = NA_real_,
+  tz,
+  ...
+) {
+  mandatory_cols <- c(
+    "terminal",
+    "datetime"
+  )
+  for (i in mandatory_cols) {
+    if (any(is.na(get(i)))) {
+      stop(
+        "Missing data detected in ", i, ".",
+        " All observations must have ", i, " information.",
+        call. = FALSE
+      )
+    }
+  }
+
+  if (any(is.na(animal) & is.na(transmitter))) {
+    stop(
+      "Each observation must be associated to either an animal or a",
+      " transmitter, or both",
+      call. = FALSE
+    )
+  }
+
+  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+
+  output <- data.frame(
+    animal = animal,
+    transmitter = transmitter,
+    type = type,
+    terminal = terminal,
+    location = location,
+    datetime = datetime,
+    lat = lat,
+    lon = lon,
+    valid = TRUE,
+    ...
+  )
+  if (ato_table_type == "data.table") {
+    .data.table_exists()
+    data.table::setDT(output)
+  }
+  if (ato_table_type == "tibble") {
+    .tibble_exists()
+    output <- tibble::as_tibble(output)
+  }
+  class(output) <- c("ATO_obs", class(output))
+  output <- check(output, tz = tz)
+  return(output)
+}
+
 #' Make an ATO tags object
 #'
 #' Formats the input data into the ATO format and appends the ATO_tag class.
@@ -414,93 +501,6 @@ make_tag <- function(
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_tag", class(output))
-  output <- check(output, tz = tz)
-  return(output)
-}
-
-#' Make an ATO observations object
-#'
-#' Formats the input data into the ATO format and appends the ATO_obs class.
-#'
-#' @param datetime date and time of the observation (POSIXct). Required.
-#' @param animal Name of the animal that was observed (character). Each
-#'   observation must have animal or transmitter information (or both).
-#' @param transmitter Transmitter code that was observed (character). Each
-#'   observation must have animal or transmitter information (or both).
-#' @param terminal Was the animal/transmitter permanently captured at the
-#'   moment of observation (logical)? Required.
-#' @param type Type of observation (e.g. directly seen, manual tracking)
-#'   (character).
-#' @param location Name of the place where the observation occurred (character).
-#' @param lat latitude of the observation. Preferably in WGS84 (numeric).
-#' @param lon longitude of the observation. Preferably in WGS84 (numeric).
-#' @param tz the timezone of the datetime data.
-#' @param ... Non-standard columns to be added to the table.
-#'
-#' @return an ATO_obs object, ready to be used by one of the \code{\link{set}} 
-#'  functions or \code{\link{init_ato}}.
-#'
-#' @export
-#'
-#' @seealso \code{\link{ATO_obs}}
-#'
-make_obs <- function(
-  datetime,
-  animal = NA_character_,
-  transmitter = NA_character_,
-  terminal,
-  type = NA_character_,
-  location,
-  lat = NA_real_,
-  lon = NA_real_,
-  tz,
-  ...
-) {
-  mandatory_cols <- c(
-    "terminal",
-    "datetime"
-  )
-  for (i in mandatory_cols) {
-    if (any(is.na(get(i)))) {
-      stop(
-        "Missing data detected in ", i, ".",
-        " All observations must have ", i, " information.",
-        call. = FALSE
-      )
-    }
-  }
-
-  if (any(is.na(animal) & is.na(transmitter))) {
-    stop(
-      "Each observation must be associated to either an animal or a",
-      " transmitter, or both",
-      call. = FALSE
-    )
-  }
-
-  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
-
-  output <- data.frame(
-    animal = animal,
-    transmitter = transmitter,
-    type = type,
-    terminal = terminal,
-    location = location,
-    datetime = datetime,
-    lat = lat,
-    lon = lon,
-    valid = TRUE,
-    ...
-  )
-  if (ato_table_type == "data.table") {
-    .data.table_exists()
-    data.table::setDT(output)
-  }
-  if (ato_table_type == "tibble") {
-    .tibble_exists()
-    output <- tibble::as_tibble(output)
-  }
-  class(output) <- c("ATO_obs", class(output))
   output <- check(output, tz = tz)
   return(output)
 }

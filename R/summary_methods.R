@@ -1,3 +1,113 @@
+#' Summary method for an ATO_ani slot object
+#' 
+#' @param object an ATO_ani slot object
+#' 
+#' @return Nothing. Prints a summary.
+#' 
+#' @examples
+#' summary(get_ani(example_ato))
+#' 
+#' @export
+#' 
+setMethod("summary", "ATO_ani", function(object) {
+  ani_check <- any(colnames(object) %in% "n_tag")
+  det_check <- any(colnames(object) %in% "n_det")
+  obs_check <- any(colnames(object) %in% "n_obs")
+  cat("@ani:\n")
+  cat(" - ", nrow(object), " animal", .s(nrow(object)), " in total\n", sep = "")
+  if (ani_check) {
+    n <- sum(object$n_ani == 0)
+    if (n > 0) {
+      cat(" - ", n, " without associated tags\n", sep = "")
+    } else {
+      cat(" - All with associated tags\n")
+    }
+  } else {
+    cat(" - Not yet matched to @tag\n")
+  }
+  if (det_check) {
+    n <- sum(object$n_det == 0)
+    if (n > 0) {
+      cat(" - ", n, " with no detections\n", sep = "")
+    } else {
+      cat(" - All detected\n")
+    }
+  } else {
+    cat(" - Not yet matched to @det (through @tag)\n")
+  }
+  if (obs_check) {
+    n <- sum(object$n_obs == 0)
+    if (n > 0) {
+      cat(" - ", n, " with no observations\n", sep = "")
+    } else {
+      cat(" - All observed\n")
+    }
+  } else {
+    cat(" - Not yet matched to @obs\n")
+  }
+  n <- length(unique(object$release_location))
+  cat(" - ", n, " release location", .s(n), "\n", sep = "")
+})
+
+#' Summary method for an ATO_dep object
+#' 
+#' @param object an ATO_dep object
+#' 
+#' @return Nothing. Prints a summary.
+#' 
+#' @examples
+#' summary(get_dep(example_ato))
+#' 
+#' @export
+#' 
+setMethod("summary", "ATO_dep", function(object) {
+  det_check <- any(colnames(object) %in% "n_det")
+  beacon_check <- any(colnames(object) %in% "n_beacon_det")
+
+  cat("@dep:\n")
+  cat(" - ", nrow(object), " deployment", .s(nrow(object)), " in total\n", sep = "")
+
+  if (det_check | beacon_check) {
+    zero_link <- rep(FALSE, nrow(object))
+    if (det_check) {
+      zero_link <- zero_link & object$n_det == 0
+    } else {
+      cat(" - Not yet matched to @det\n")
+    }
+    if (beacon_check) {
+      zero_link <- zero_link & object$n_beacon_det == 0
+    } else {
+      # already said above
+      # cat(" - Not yet matched to @det\n")
+    }
+    if (sum(zero_link) > 0) {
+      cat(" - ", sum(zero_link), " deployment", .s(sum(zero_link)),
+          "with no detections (", 
+          .dyn_round(sum(zero_link)/nrow(object) * 100, 3), "%)\n", sep = "")
+    }
+  }
+
+  if (any(!object$valid)) {
+    cat(" - ", sum(!object$valid), " invalid deployment", .s(sum(!object$valid)),
+        " (", .dyn_round(sum(!object$valid)/nrow(object) * 100, 3), "%)\n", sep = "")
+  } else {
+    cat(" - No invalid deployments\n")
+  }
+
+  n <- length(unique(object$receiver_serial))
+  cat(" - ", n, " receiver", .s(n), " deployed\n", sep = "")
+
+  n <- length(unique(object$transmitter))
+  cat(" - ", n, " beacon transmitter", .s(n), " deployed\n", sep = "")
+
+  if (any(!is.na(object$deploy_location))) {
+    n <- length(unique(object$deploy_location))
+    cat(" - ", n, " listed deployment location", .s(n), "\n", sep = "")
+  } else {
+    cat(" - No named deployment locations\n")
+  }
+})
+
 #' Summary method for an ATO_det slot object
 #' 
 #' @param object an ATO_det slot object
@@ -97,62 +207,48 @@ setMethod("summary", "ATO_det", function(object) {
   }
 })
 
-#' Summary method for an ATO_dep object
+#' Summary method for an ATO_obs slot object
 #' 
-#' @param object an ATO_dep object
+#' @param object an ATO_obs slot object
 #' 
 #' @return Nothing. Prints a summary.
 #' 
 #' @examples
-#' summary(get_dep(example_ato))
+#' summary(get_obs(example_ato))
 #' 
 #' @export
 #' 
-setMethod("summary", "ATO_dep", function(object) {
-  det_check <- any(colnames(object) %in% "n_det")
-  beacon_check <- any(colnames(object) %in% "n_beacon_det")
+setMethod("summary", "ATO_obs", function(object) {
+  tag_check <- any(colnames(object) %in% "tag_match")
+  ani_check <- any(colnames(object) %in% "ani_match")
+  cat("@obs:\n")
+  cat(" -", nrow(object), "observations\n", sep = "")
 
-  cat("@dep:\n")
-  cat(" - ", nrow(object), " deployment", .s(nrow(object)), " in total\n", sep = "")
 
-  if (det_check | beacon_check) {
-    zero_link <- rep(FALSE, nrow(object))
-    if (det_check) {
-      zero_link <- zero_link & object$n_det == 0
+  if (tag_check | ani_check) {
+    stray_link <- rep(FALSE, nrow(object))
+    if (!tag_check & ani_check) {
+      stray_link <- stray_link & is.na(object$ani_match)
     } else {
-      cat(" - Not yet matched to @det\n")
+      cat(" - Not yet matched to @ani\n")
     }
-    if (beacon_check) {
-      zero_link <- zero_link & object$n_beacon_det == 0
+    if (tag_check & !ani_check) {
+      stray_link <- stray_link & is.na(object$tag_match)
     } else {
-      # already said above
-      # cat(" - Not yet matched to @det\n")
+      cat(" - Not yet matched to @tag\n")
     }
-    if (sum(zero_link) > 0) {
-      cat(" - ", sum(zero_link), " deployment", .s(sum(zero_link)),
-          "with no detections (", 
-          .dyn_round(sum(zero_link)/nrow(object) * 100, 3), "%)\n", sep = "")
+    if (sum(stray_link) > 0) {
+      cat(" - ", sum(stray_link), " stray observations", .s(sum(stray_link)),
+          " (", .dyn_round(sum(stray_link)/nrow(object) * 100, 3), "%)\n", sep = "")
+    } else {
+      cat(" - No stray observations\n")
     }
   }
-
-  if (any(!object$valid)) {
-    cat(" - ", sum(!object$valid), " invalid deployment", .s(sum(!object$valid)),
-        " (", .dyn_round(sum(!object$valid)/nrow(object) * 100, 3), "%)\n", sep = "")
+  n <- sum(object$terminal)
+  if (n) {
+    cat(" -", sum(object$terminal), " observations are terminal\n", sep = "")
   } else {
-    cat(" - No invalid deployments\n")
-  }
-
-  n <- length(unique(object$receiver_serial))
-  cat(" - ", n, " receiver", .s(n), " deployed\n", sep = "")
-
-  n <- length(unique(object$transmitter))
-  cat(" - ", n, " beacon transmitter", .s(n), " deployed\n", sep = "")
-
-  if (any(!is.na(object$deploy_location))) {
-    n <- length(unique(object$deploy_location))
-    cat(" - ", n, " listed deployment location", .s(n), "\n", sep = "")
-  } else {
-    cat(" - No named deployment locations\n")
+    cat(" - No terminal observations\n")
   }
 })
 
@@ -204,102 +300,6 @@ setMethod("summary", "ATO_tag", function(object) {
     }
   } else {
     cat(" - Not yet matched to @obs\n")
-  }
-})
-
-#' Summary method for an ATO_ani slot object
-#' 
-#' @param object an ATO_ani slot object
-#' 
-#' @return Nothing. Prints a summary.
-#' 
-#' @examples
-#' summary(get_ani(example_ato))
-#' 
-#' @export
-#' 
-setMethod("summary", "ATO_ani", function(object) {
-  ani_check <- any(colnames(object) %in% "n_tag")
-  det_check <- any(colnames(object) %in% "n_det")
-  obs_check <- any(colnames(object) %in% "n_obs")
-  cat("@ani:\n")
-  cat(" - ", nrow(object), " animal", .s(nrow(object)), " in total\n", sep = "")
-  if (ani_check) {
-    n <- sum(object$n_ani == 0)
-    if (n > 0) {
-      cat(" - ", n, " without associated tags\n", sep = "")
-    } else {
-      cat(" - All with associated tags\n")
-    }
-  } else {
-    cat(" - Not yet matched to @tag\n")
-  }
-  if (det_check) {
-    n <- sum(object$n_det == 0)
-    if (n > 0) {
-      cat(" - ", n, " with no detections\n", sep = "")
-    } else {
-      cat(" - All detected\n")
-    }
-  } else {
-    cat(" - Not yet matched to @det (through @tag)\n")
-  }
-  if (obs_check) {
-    n <- sum(object$n_obs == 0)
-    if (n > 0) {
-      cat(" - ", n, " with no observations\n", sep = "")
-    } else {
-      cat(" - All observed\n")
-    }
-  } else {
-    cat(" - Not yet matched to @obs\n")
-  }
-  n <- length(unique(object$release_location))
-  cat(" - ", n, " release location", .s(n), "\n", sep = "")
-})
-
-#' Summary method for an ATO_obs slot object
-#' 
-#' @param object an ATO_obs slot object
-#' 
-#' @return Nothing. Prints a summary.
-#' 
-#' @examples
-#' summary(get_obs(example_ato))
-#' 
-#' @export
-#' 
-setMethod("summary", "ATO_obs", function(object) {
-  tag_check <- any(colnames(object) %in% "tag_match")
-  ani_check <- any(colnames(object) %in% "ani_match")
-  cat("@obs:\n")
-  cat(" -", nrow(object), "observations\n", sep = "")
-
-
-  if (tag_check | ani_check) {
-    stray_link <- rep(FALSE, nrow(object))
-    if (!tag_check & ani_check) {
-      stray_link <- stray_link & is.na(object$ani_match)
-    } else {
-      cat(" - Not yet matched to @ani\n")
-    }
-    if (tag_check & !ani_check) {
-      stray_link <- stray_link & is.na(object$tag_match)
-    } else {
-      cat(" - Not yet matched to @tag\n")
-    }
-    if (sum(stray_link) > 0) {
-      cat(" - ", sum(stray_link), " stray observations", .s(sum(stray_link)),
-          " (", .dyn_round(sum(stray_link)/nrow(object) * 100, 3), "%)\n", sep = "")
-    } else {
-      cat(" - No stray observations\n")
-    }
-  }
-  n <- sum(object$terminal)
-  if (n) {
-    cat(" -", sum(object$terminal), " observations are terminal\n", sep = "")
-  } else {
-    cat(" - No terminal observations\n")
   }
 })
 

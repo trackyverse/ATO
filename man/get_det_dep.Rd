@@ -3,8 +3,8 @@
 \name{get_det_dep}
 \alias{get_det_dep}
 \alias{get_det_dep,ATO-method}
-\title{A wrapper of \code{\link{get_det}} to extract detections for transmitters listed
-in the dep slot}
+\title{A wrapper of \code{\link{get_det}} to extract detections for transmitters
+listed in the dep slot}
 \usage{
 get_det_dep(x, receivers, type = c("all", "valid", "invalid"))
 
@@ -25,8 +25,8 @@ to extract detections.}
 a table of detections
 }
 \description{
-A wrapper of \code{\link{get_det}} to extract detections for transmitters listed
-in the dep slot
+A wrapper of \code{\link{get_det}} to extract detections for transmitters
+listed in the dep slot
 }
 \examples{
 # wrapper to extract all detections that match transmitters

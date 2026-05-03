@@ -2,25 +2,25 @@
 % Please edit documentation in R/check_methods.R
 \name{check}
 \alias{check}
-\alias{check,ATO_det-method}
-\alias{check,ATO_dep-method}
-\alias{check,ATO_tag-method}
 \alias{check,ATO_ani-method}
+\alias{check,ATO_dep-method}
+\alias{check,ATO_det-method}
 \alias{check,ATO_obs-method}
+\alias{check,ATO_tag-method}
 \alias{check,ATO_tbl-method}
 \title{check generic}
 \usage{
 check(object, tz)
 
-\S4method{check}{ATO_det}(object, tz)
+\S4method{check}{ATO_ani}(object, tz)
 
 \S4method{check}{ATO_dep}(object, tz)
 
-\S4method{check}{ATO_tag}(object, tz)
-
-\S4method{check}{ATO_ani}(object, tz)
+\S4method{check}{ATO_det}(object, tz)
 
 \S4method{check}{ATO_obs}(object, tz)
+
+\S4method{check}{ATO_tag}(object, tz)
 
 \S4method{check}{ATO_tbl}(object)
 }

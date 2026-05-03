@@ -1,47 +1,47 @@
-#' S4 class: ATO_det
+#' S4 class: ATO_ani
 #'
-#' An S4 class for the \code{\link{ATO}} detections (@det).
+#' An S4 class for the \code{\link{ATO}} animals (@ani).
 #' Does not contain internal slots. It is a table of
 #' either data.frame, data.table, or tibble format.
 #'
-#' The prototype @det slot contains the standard columns
-#' of the @det slot. Other columns are allowed, but these
-#' are necessary, and must be of the designated types.
+#' The prototype @ani slot
+#' contains the standard columns of the @ani slot.
+#' Other columns are allowed, but these are necessary,
+#' and must be of the designated types.
+#'
+#' The ani slot contains information on the animals tagged.
 #'
 #' Can be of type data.frame, data.table, or tibble,
 #' depending on the @tbl slot.
 #' See \code{\link{table_type}} for more details on
 #' \code{\link{ATO}} table types.
 #'
-#' @format A data frame with 0 rows and 5 variables:
-#' \describe{
-#'   \item{datetime}{date and time, posixct format.}
-#'   \item{frac_second}{fractional second, numeric.}
-#'   \item{receiver_serial}{receiver serial number, character.}
-#'   \item{transmitter}{transmitter code, character.}
-#'   \item{sensor_value}{reported sensor value, numeric.}
-#' }
+#' @format See \code{\link{make_ani}}.
 #'
 #' @keywords classes
 #'
-#' @seealso make_det
+#' @seealso \code{\link{make_ani}}
 #'
-#' @name ATO_det
+#' @name ATO_ani
 #'
-setClass("ATO_det")
+setClass("ATO_ani")
 
-#' @rdname ATO_det
-#' @name .ATO_det
+#' @rdname ATO_ani
+#' @name .ATO_ani
 #' @export
-.ATO_det <- data.frame(
-  datetime = as.POSIXct(NA_real_, tz = "UTC"),
-  frac_second = NA_real_,
-  receiver_serial = NA_character_,
-  transmitter = NA_character_,
-  sensor_value = NA_real_,
+.ATO_ani <- data.frame(
+  animal = NA_character_,
+  release_location = NA_character_,
+  release_datetime = as.POSIXct(NA_real_, tz = "UTC"),
+  release_lat = NA_real_,
+  release_lon = NA_real_,
+  capture_location = NA_character_,
+  capture_datetime = as.POSIXct(NA_real_, tz = "UTC"),
+  capture_lat = NA_real_,
+  capture_lon = NA_real_,
   valid = NA
 )[-1, ]
-class(.ATO_det) <- c("ATO_det", "data.frame")
+class(.ATO_ani) <- c("ATO_ani", "data.frame")
 
 #' S4 class: ATO_dep
 #'
@@ -65,29 +65,11 @@ class(.ATO_det) <- c("ATO_det", "data.frame")
 #' See \code{\link{table_type}} for more details on
 #' \code{\link{ATO}} table types.
 #'
-#' @format A data frame with 0 rows and 16 variables:
-#' \describe{
-#'   \item{receiver_model}{Model of the receiver, character.}
-#'   \item{receiver_serial}{Receiver serial number, character.}
-#'   \item{receiver_codeset}{Codeset of the receiver, character.}
-#'   \item{deploy_location}{Name of the location where the receiver was deployed, character.}
-#'   \item{deploy_datetime}{date and time of the deployment, posixct.}
-#'   \item{deploy_lat}{latitude of the deployment. Preferably in WGS84, numeric.}
-#'   \item{deploy_lon}{longitude of the deployment. Preferably in WGS84, numeric.}
-#'   \item{deploy_z}{depth of the deployment, as measured from the reference surface of the water body, numeric.}
-#'   \item{recover_datetime}{date and time of the recovery, posixct.}
-#'   \item{recover_lat}{latitude of the recovery point. Preferably in WGS84, numeric.}
-#'   \item{recover_lon}{longitude of the recovery point. Preferably in WGS84, numeric.}
-#'   \item{transmitter}{Transmitter code for a beacon/reference tag, character.}
-#'   \item{transmitter_manufacturer}{Manufacturer of the transmitter, character.}
-#'   \item{transmitter_ping_rate}{Expected ping rate of the transmitter, numeric. In seconds.}
-#'   \item{transmitter_model}{Model of the transmitter, character.}
-#'   \item{transmitter_serial}{Serial number of the transmitter, character.}
-#' }
+#' @format See \code{\link{make_dep}}.
 #'
 #' @keywords classes
 #'
-#' @seealso make_dep
+#' @seealso \code{\link{make_dep}}
 #'
 #' @name ATO_dep
 #'
@@ -97,17 +79,18 @@ setClass("ATO_dep")
 #' @name .ATO_dep
 #' @export
 .ATO_dep <- data.frame(
-  receiver_model = NA_character_,
-  receiver_serial = NA_character_,
-  receiver_codeset = NA_character_,
-  deploy_location = NA_character_,
   deploy_datetime = as.POSIXct(NA_real_, tz = "UTC"),
+  recover_datetime = as.POSIXct(NA_real_, tz = "UTC"),
+  deploy_location = NA_character_,
   deploy_lat = NA_real_,
   deploy_lon = NA_real_,
   deploy_z = NA_real_,
-  recover_datetime = as.POSIXct(NA_real_, tz = "UTC"),
   recover_lat = NA_real_,
   recover_lon = NA_real_,
+  receiver_manufacturer = NA_character_,
+  receiver_model = NA_character_,
+  receiver_serial = NA_character_,
+  receiver_codeset = NA_character_,
   transmitter = NA_character_,
   transmitter_manufacturer = NA_character_,
   transmitter_ping_rate = NA_real_,
@@ -116,6 +99,90 @@ setClass("ATO_dep")
   valid = NA
 )[-1, ]
 class(.ATO_dep) <- c("ATO_dep", "data.frame")
+
+#' S4 class: ATO_det
+#'
+#' An S4 class for the \code{\link{ATO}} detections (@det).
+#' Does not contain internal slots. It is a table of
+#' either data.frame, data.table, or tibble format.
+#'
+#' The prototype @det slot contains the standard columns
+#' of the @det slot. Other columns are allowed, but these
+#' are necessary, and must be of the designated types.
+#'
+#' Can be of type data.frame, data.table, or tibble,
+#' depending on the @tbl slot.
+#' See \code{\link{table_type}} for more details on
+#' \code{\link{ATO}} table types.
+#'
+#' @format See \code{\link{make_det}}.
+#'
+#' @keywords classes
+#'
+#' @seealso \code{\link{make_det}}
+#'
+#' @name ATO_det
+#'
+setClass("ATO_det")
+
+#' @rdname ATO_det
+#' @name .ATO_det
+#' @export
+.ATO_det <- data.frame(
+  datetime = as.POSIXct(NA_real_, tz = "UTC"),
+  frac_second = NA_real_,
+  receiver_serial = NA_character_,
+  transmitter = NA_character_,
+  sensor_value = NA_real_,
+  valid = NA
+)[-1, ]
+class(.ATO_det) <- c("ATO_det", "data.frame")
+
+#' S4 class: ATO_obs
+#'
+#' An S4 class for the \code{\link{ATO}} observations (@obs).
+#' Does not contain internal slots. It is a table of
+#' either data.frame, data.table, or tibble format.
+#'
+#' The prototype @obs slot
+#' contains the standard columns of the @obs slot.
+#' Other columns are allowed, but these are necessary,
+#' and must be of the designated types.
+#'
+#' The observations slot contains information about locations where an animal
+#' was seen or a tag was heard. E.g. fin observations, or detections through
+#' manual tracking.
+#'
+#' Can be of type data.frame, data.table, or tibble,
+#' depending on the @tbl slot.
+#' See \code{\link{table_type}} for more details on
+#' \code{\link{ATO}} table types.
+#'
+#' @format See \code{\link{make_obs}}.
+#'
+#' @keywords classes
+#'
+#' @seealso \code{\link{make_obs}}
+#'
+#' @name ATO_obs
+#'
+setClass("ATO_obs")
+
+#' @rdname ATO_obs
+#' @name .ATO_obs
+#' @export
+.ATO_obs <- data.frame(
+  datetime = as.POSIXct(NA_real_, tz = "UTC"),
+  animal = NA_character_,
+  transmitter = NA_character_,
+  terminal = NA, # logical
+  type = NA_character_,
+  location = NA_character_,
+  lat = NA_real_,
+  lon = NA_real_,
+  valid = NA
+)[-1, ]
+class(.ATO_obs) <- c("ATO_obs", "data.frame")
 
 #' S4 class: ATO_tag
 #'
@@ -128,34 +195,20 @@ class(.ATO_dep) <- c("ATO_dep", "data.frame")
 #' Other columns are allowed, but these are necessary,
 #' and must be of the designated types.
 #'
-#' The tag slot contains information on the different transmitters being tracked.
-#' Tags with multiple transmitter codes are coded as multiple rows associated
-#' with a single serial number and a single animal.
+#' The tag slot contains information on the different transmitters being
+#' tracked. Tags with multiple transmitter codes are coded as multiple rows
+#' associated with a single serial number and a single animal.
 #'
 #' Can be of type data.frame, data.table, or tibble,
 #' depending on the @tbl slot.
 #' See \code{\link{table_type}} for more details on
 #' \code{\link{ATO}} table types.
 #'
-#' @format A data frame with 0 rows and 12 variables:
-#' \describe{
-#'   \item{manufacturer}{Manufacturer of the transmitter, character.}
-#'   \item{model}{Model of the transmitter, character.}
-#'   \item{power_level}{Power level of the transmitter, real.}
-#'   \item{ping_rate}{Expected ping rate of the transmitter, numeric. In seconds.}
-#'   \item{ping_variation}{Range of the variation added between pings, to reduce tag collisions, numeric. In seconds}
-#'   \item{serial}{Serial number of the tag, character.}
-#'   \item{transmitter}{Transmitter code, character.}
-#'   \item{activation_datetime}{date and time of the tag activation, posixct.}
-#'   \item{battery_life}{expected battery duration of the tag, numeric.}
-#'   \item{sensor_type}{Type of sensor data associated with the transmitter, character.}
-#'   \item{sensor_unit}{Unit of the data associated with the transmitter, character.}
-#'   \item{animal}{Name of the animal that received the tag, character.}
-#' }
+#' @format See \code{\link{make_tag}}.
 #'
 #' @keywords classes
 #'
-#' @seealso make_tag
+#' @seealso \code{\link{make_tag}}
 #'
 #' @name ATO_tag
 #'
@@ -181,118 +234,6 @@ setClass("ATO_tag")
 )[-1, ]
 class(.ATO_tag) <- c("ATO_tag", "data.frame")
 
-#' S4 class: ATO_ani
-#'
-#' An S4 class for the \code{\link{ATO}} animals (@ani).
-#' Does not contain internal slots. It is a table of
-#' either data.frame, data.table, or tibble format.
-#'
-#' The prototype @ani slot
-#' contains the standard columns of the @ani slot.
-#' Other columns are allowed, but these are necessary,
-#' and must be of the designated types.
-#'
-#' The ani slot contains information on the animals tagged.
-#'
-#' Can be of type data.frame, data.table, or tibble,
-#' depending on the @tbl slot.
-#' See \code{\link{table_type}} for more details on
-#' \code{\link{ATO}} table types.
-#'
-#' @format A data frame with 0 rows and 9 variables:
-#' \describe{
-#'   \item{animal}{Name of the animal that received the tag, character.}
-#'   \item{capture_location}{Name of the location where the animal was captured, character.}
-#'   \item{capture_datetime}{date and time of the capture, posixct.}
-#'   \item{capture_lat}{latitude of the capture. Preferably in WGS84, numeric.}
-#'   \item{capture_lon}{longitude of the capture. Preferably in WGS84, numeric.}
-#'   \item{release_location}{Name of the location where the animal was released, character.}
-#'   \item{release_datetime}{date and time of the release, posixct.}
-#'   \item{release_lat}{latitude of the release. Preferably in WGS84, numeric.}
-#'   \item{release_lon}{longitude of the release. Preferably in WGS84, numeric.}
-#' }
-#'
-#' @keywords classes
-#'
-#' @seealso make_ani
-#'
-#' @name ATO_ani
-#'
-setClass("ATO_ani")
-
-#' @rdname ATO_ani
-#' @name .ATO_ani
-#' @export
-.ATO_ani <- data.frame(
-  animal = NA_character_,
-  capture_location = NA_character_,
-  capture_datetime = as.POSIXct(NA_real_, tz = "UTC"),
-  capture_lat = NA_real_,
-  capture_lon = NA_real_,
-  release_location = NA_character_,
-  release_datetime = as.POSIXct(NA_real_, tz = "UTC"),
-  release_lat = NA_real_,
-  release_lon = NA_real_,
-  valid = NA
-)[-1, ]
-class(.ATO_ani) <- c("ATO_ani", "data.frame")
-
-#' S4 class: ATO_obs
-#'
-#' An S4 class for the \code{\link{ATO}} observations (@obs).
-#' Does not contain internal slots. It is a table of
-#' either data.frame, data.table, or tibble format.
-#'
-#' The prototype @obs slot
-#' contains the standard columns of the @obs slot.
-#' Other columns are allowed, but these are necessary,
-#' and must be of the designated types.
-#'
-#' The observations slot contains information about locations where an animal
-#' was seen or a tag was heard. E.g. fin observations, or detections through
-#' manual tracking.
-#'
-#' Can be of type data.frame, data.table, or tibble,
-#' depending on the @tbl slot.
-#' See \code{\link{table_type}} for more details on
-#' \code{\link{ATO}} table types.
-#'
-#' @format A data frame with 0 rows and 8 variables:
-#' \describe{
-#'   \item{animal}{Name of the animal that was observed, character.}
-#'   \item{transmitter}{Transmitter code that was observed, character.}
-#'   \item{type}{Type of observation (e.g. directly seen, manual tracking), character.}
-#'   \item{terminal}{Was the animal permanently captured at the moment of observation? logical.}
-#'   \item{location}{Name of the place where the observation occurred, character.}
-#'   \item{datetime}{date and time of the observation, posixct format.}
-#'   \item{lat}{latitude of the observation. Preferably in WGS84, numeric.}
-#'   \item{lon}{longitude of the observation. Preferably in WGS84, numeric.}
-#' }
-#'
-#' @keywords classes
-#'
-#' @seealso make_obs
-#'
-#' @name ATO_obs
-#'
-setClass("ATO_obs")
-
-#' @rdname ATO_obs
-#' @name .ATO_obs
-#' @export
-.ATO_obs <- data.frame(
-  animal = NA_character_,
-  transmitter = NA_character_,
-  type = NA_character_,
-  terminal = NA, # logical
-  location = NA_character_,
-  datetime = as.POSIXct(NA_real_, tz = "UTC"),
-  lat = NA_real_,
-  lon = NA_real_,
-  valid = NA
-)[-1, ]
-class(.ATO_obs) <- c("ATO_obs", "data.frame")
-
 #' S4 class: ATO_log
 #'
 #' An S4 class for the \code{\link{ATO}} log (@log).
@@ -313,10 +254,12 @@ class(.ATO_obs) <- c("ATO_obs", "data.frame")
 #'
 #' @format A data frame with 0 rows and 4 variables:
 #' \describe{
-#'   \item{datetime}{date and time of the log entry, posixct format.}
-#'   \item{package}{name of the package that hosts the function that made the log entry, character.}
-#'   \item{call}{function call that made the log entry, character.}
-#'   \item{log}{log entry, character.}
+#'   \item{datetime}{date and time of the log entry.}
+#'   \item{type}{type of log entry.}
+#'   \item{pkg}{name of the package that hosts the function that triggered the log entry.}
+#'   \item{fun}{name of the function that triggered the log entry.}
+#'   \item{call}{full function call, for debugging.}
+#'   \item{log}{log entry.}
 #' }
 #'
 #' @keywords classes
@@ -344,11 +287,13 @@ class(.ATO_log) <- c("ATO_log", "data.frame")
 #' Does not contain internal slots. It is a single value.
 #' One of: "data.frame", "data.table", or "tibble"
 #'
-#' The prototype @tbl slot contains the default value for the @log slot.
+#' The prototype @tbl slot contains the default value for the @tbl slot.
 #'
 #' @keywords classes
 #'
 #' @name ATO_tbl
+#' 
+#' @seealso \code{\link{table_type}}
 #'
 setClass("ATO_tbl")
 
@@ -364,35 +309,35 @@ class(.ATO_tbl) <- c("ATO_tbl", "character")
 #' researchers to package their study data in a standard format, to be used
 #' by the R packages that collectively make the trackyverse.
 #'
-#' @slot det The detections slot. See \code{\link{ATO_det}}.
-#' @slot dep The deployments slot. See \code{\link{ATO_dep}}.
-#' @slot tag The tags slot. See \code{\link{ATO_tag}}.
 #' @slot ani The animals slot. See \code{\link{ATO_ani}}.
+#' @slot dep The deployments slot. See \code{\link{ATO_dep}}.
+#' @slot det The detections slot. See \code{\link{ATO_det}}.
 #' @slot obs The observations slot. See \code{\link{ATO_obs}}.
+#' @slot tag The tags slot. See \code{\link{ATO_tag}}.
 #' @slot log The log slot. See \code{\link{ATO_log}}.
 #' @slot tbl The table style slot. See \code{\link{ATO_tbl}}.
 #' @slot pkg A list slot reserved for package outputs.
 #'
 #' @export
-#'
+#' 
 setClass(
   "ATO",
   slots = c(
-    det = "ATO_det",
-    dep = "ATO_dep",
-    tag = "ATO_tag",
     ani = "ATO_ani",
+    dep = "ATO_dep",
+    det = "ATO_det",
     obs = "ATO_obs",
+    tag = "ATO_tag",
     log = "ATO_log",
     tbl = "ATO_tbl",
     pkg = "list"
   ),
   prototype = list(
-    det = .ATO_det,
-    dep = .ATO_dep,
-    tag = .ATO_tag,
     ani = .ATO_ani,
+    dep = .ATO_dep,
+    det = .ATO_det,
     obs = .ATO_obs,
+    tag = .ATO_tag,
     log = .ATO_log,
     tbl = .ATO_tbl,
     pkg = list()
@@ -406,11 +351,11 @@ setClass(
 #' @name ATO validity
 #'
 setValidity("ATO", function(object) {
-  check(object@det)
-  check(object@dep)
-  check(object@tag)
   check(object@ani)
+  check(object@dep)
+  check(object@det)
   check(object@obs)
+  check(object@tag)
   check(object@tbl)
 
   return(TRUE)

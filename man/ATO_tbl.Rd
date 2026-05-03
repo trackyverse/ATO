@@ -17,7 +17,10 @@ Does not contain internal slots. It is a single value.
 One of: "data.frame", "data.table", or "tibble"
 }
 \details{
-The prototype @tbl slot contains the default value for the @log slot.
+The prototype @tbl slot contains the default value for the @tbl slot.
+}
+\seealso{
+\code{\link{table_type}}
 }
 \keyword{classes}
 \keyword{datasets}

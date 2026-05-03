@@ -34,16 +34,16 @@ The @det(ections) slot contains all the detections recorded by stationary
 receivers. See \code{\link{make_det}}.
 }
 
-\section{@tag}{
-The @tag slot contains information on all the (non-stationary) transmitters
-deployed in the study. These tags are then associated with the animals
-listed in the @ani slot. See \code{\link{make_tag}}.
-}
-
 \section{@obs}{
 The @obs(ervations) slot contains information on direct or indirect
 observations that were not recorded by stationary receivers. e.g. manual
 tracking, or binocular spotting. See  \code{\link{make_obs}}
+}
+
+\section{@tag}{
+The @tag slot contains information on all the (non-stationary) transmitters
+deployed in the study. These tags are then associated with the animals
+listed in the @ani slot. See \code{\link{make_tag}}.
 }
 
 \section{@log}{

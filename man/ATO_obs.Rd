@@ -6,17 +6,7 @@
 \alias{.ATO_obs}
 \title{S4 class: ATO_obs}
 \format{
-A data frame with 0 rows and 8 variables:
-\describe{
-\item{animal}{Name of the animal that was observed, character.}
-\item{transmitter}{Transmitter code that was observed, character.}
-\item{type}{Type of observation (e.g. directly seen, manual tracking), character.}
-\item{terminal}{Was the animal permanently captured at the moment of observation? logical.}
-\item{location}{Name of the place where the observation occurred, character.}
-\item{datetime}{date and time of the observation, posixct format.}
-\item{lat}{latitude of the observation. Preferably in WGS84, numeric.}
-\item{lon}{longitude of the observation. Preferably in WGS84, numeric.}
-}
+See \code{\link{make_obs}}.
 
 An object of class \code{ATO_obs} (inherits from \code{data.frame}) with 0 rows and 9 columns.
 }
@@ -44,7 +34,7 @@ See \code{\link{table_type}} for more details on
 \code{\link{ATO}} table types.
 }
 \seealso{
-make_obs
+\code{\link{make_obs}}
 }
 \keyword{classes}
 \keyword{datasets}

@@ -43,7 +43,7 @@ setGeneric("tzone<-", function(x, value) standardGeneric("tzone<-"))
 
 #' @rdname tzone-set
 setMethod("tzone<-", "ATO", function(x, value) {
-  slots <- c("ani", "dep", "det", "tag", "obs")
+  slots <- c("ani", "dep", "det", "obs", "tag")
   
   for (s in slots) {
     if (!has(x, s)) {

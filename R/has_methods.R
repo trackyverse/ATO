@@ -50,7 +50,7 @@ setMethod("has", c(object = "ATO"),
     error = FALSE) {
   is_ato(object) # not necessary, the method won't let it pass if it is not ATO.
   
-  link <- !(value %in% c("det", "dep", "tag", "ani", "obs", "log"))
+  link <- !(value %in% c("ani", "dep", "det", "obs", "tag", "log"))
   if (any(link)) {
     aux <- sum(link)
     stop(.comma(value[link]), " do", .es(aux),

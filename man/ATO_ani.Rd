@@ -6,18 +6,7 @@
 \alias{.ATO_ani}
 \title{S4 class: ATO_ani}
 \format{
-A data frame with 0 rows and 9 variables:
-\describe{
-\item{animal}{Name of the animal that received the tag, character.}
-\item{capture_location}{Name of the location where the animal was captured, character.}
-\item{capture_datetime}{date and time of the capture, posixct.}
-\item{capture_lat}{latitude of the capture. Preferably in WGS84, numeric.}
-\item{capture_lon}{longitude of the capture. Preferably in WGS84, numeric.}
-\item{release_location}{Name of the location where the animal was released, character.}
-\item{release_datetime}{date and time of the release, posixct.}
-\item{release_lat}{latitude of the release. Preferably in WGS84, numeric.}
-\item{release_lon}{longitude of the release. Preferably in WGS84, numeric.}
-}
+See \code{\link{make_ani}}.
 
 An object of class \code{ATO_ani} (inherits from \code{data.frame}) with 0 rows and 10 columns.
 }
@@ -43,7 +32,7 @@ See \code{\link{table_type}} for more details on
 \code{\link{ATO}} table types.
 }
 \seealso{
-make_ani
+\code{\link{make_ani}}
 }
 \keyword{classes}
 \keyword{datasets}

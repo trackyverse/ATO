@@ -6,27 +6,9 @@
 \alias{.ATO_dep}
 \title{S4 class: ATO_dep}
 \format{
-A data frame with 0 rows and 16 variables:
-\describe{
-\item{receiver_model}{Model of the receiver, character.}
-\item{receiver_serial}{Receiver serial number, character.}
-\item{receiver_codeset}{Codeset of the receiver, character.}
-\item{deploy_location}{Name of the location where the receiver was deployed, character.}
-\item{deploy_datetime}{date and time of the deployment, posixct.}
-\item{deploy_lat}{latitude of the deployment. Preferably in WGS84, numeric.}
-\item{deploy_lon}{longitude of the deployment. Preferably in WGS84, numeric.}
-\item{deploy_z}{depth of the deployment, as measured from the reference surface of the water body, numeric.}
-\item{recover_datetime}{date and time of the recovery, posixct.}
-\item{recover_lat}{latitude of the recovery point. Preferably in WGS84, numeric.}
-\item{recover_lon}{longitude of the recovery point. Preferably in WGS84, numeric.}
-\item{transmitter}{Transmitter code for a beacon/reference tag, character.}
-\item{transmitter_manufacturer}{Manufacturer of the transmitter, character.}
-\item{transmitter_ping_rate}{Expected ping rate of the transmitter, numeric. In seconds.}
-\item{transmitter_model}{Model of the transmitter, character.}
-\item{transmitter_serial}{Serial number of the transmitter, character.}
-}
+See \code{\link{make_dep}}.
 
-An object of class \code{ATO_dep} (inherits from \code{data.frame}) with 0 rows and 17 columns.
+An object of class \code{ATO_dep} (inherits from \code{data.frame}) with 0 rows and 18 columns.
 }
 \usage{
 .ATO_dep
@@ -54,7 +36,7 @@ See \code{\link{table_type}} for more details on
 \code{\link{ATO}} table types.
 }
 \seealso{
-make_dep
+\code{\link{make_dep}}
 }
 \keyword{classes}
 \keyword{datasets}

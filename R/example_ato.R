@@ -8,11 +8,11 @@
 #'   \item{ani}{Information about tagged animals. See \code{\link{make_ani}}}
 #'   \item{dep}{Information about deployments. See \code{\link{make_dep}}}
 #'   \item{det}{Information about detections. See \code{\link{make_det}}}
-#'   \item{tag}{Information about tags. See \code{\link{make_tag}}}
 #'   \item{obs}{Information about observations. See \code{\link{make_obs}}}
+#'   \item{tag}{Information about tags. See \code{\link{make_tag}}}
+#'   \item{pkg}{Reserved for other packages of the trackyverse}
 #'   \item{log}{Log of actions. See \code{\link{log_event}}}
 #'   \item{tbl}{ATO table type. See \code{\link{table_type}}}
-#'   \item{pkg}{Reserved for other packages of the trackyverse}
 #' }
 #' @source The data in the example is the same as provided by the package actel,
 #'  and was collected by the author

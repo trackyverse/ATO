@@ -8,10 +8,12 @@
 \format{
 A data frame with 0 rows and 4 variables:
 \describe{
-\item{datetime}{date and time of the log entry, posixct format.}
-\item{package}{name of the package that hosts the function that made the log entry, character.}
-\item{call}{function call that made the log entry, character.}
-\item{log}{log entry, character.}
+\item{datetime}{date and time of the log entry.}
+\item{type}{type of log entry.}
+\item{pkg}{name of the package that hosts the function that triggered the log entry.}
+\item{fun}{name of the function that triggered the log entry.}
+\item{call}{full function call, for debugging.}
+\item{log}{log entry.}
 }
 
 An object of class \code{ATO_log} (inherits from \code{data.frame}) with 0 rows and 6 columns.

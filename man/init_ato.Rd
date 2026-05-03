@@ -4,18 +4,18 @@
 \alias{init_ato}
 \title{Initiate an \code{\link{ATO}}}
 \usage{
-init_ato(det, dep, tag, ani, obs, silent = FALSE)
+init_ato(ani, dep, det, obs, tag, silent = FALSE)
 }
 \arguments{
-\item{det}{an object of class ATO_det. See \code{\link{make_det}}.}
+\item{ani}{an object of class ATO_ani. See \code{\link{make_ani}}.}
 
 \item{dep}{an object of class ATO_dep. See \code{\link{make_dep}}.}
 
-\item{tag}{an object of class ATO_tag. See \code{\link{make_tag}}.}
-
-\item{ani}{an object of class ATO_ani. See \code{\link{make_ani}}.}
+\item{det}{an object of class ATO_det. See \code{\link{make_det}}.}
 
 \item{obs}{an object of class ATO_obs. See \code{\link{make_obs}}.}
+
+\item{tag}{an object of class ATO_tag. See \code{\link{make_tag}}.}
 
 \item{silent}{Supresses summary messages}
 }

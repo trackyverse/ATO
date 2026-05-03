@@ -12,15 +12,15 @@ by the R packages that collectively make the trackyverse.
 \section{Slots}{
 
 \describe{
-\item{\code{det}}{The detections slot. See \code{\link{ATO_det}}.}
+\item{\code{ani}}{The animals slot. See \code{\link{ATO_ani}}.}
 
 \item{\code{dep}}{The deployments slot. See \code{\link{ATO_dep}}.}
 
-\item{\code{tag}}{The tags slot. See \code{\link{ATO_tag}}.}
-
-\item{\code{ani}}{The animals slot. See \code{\link{ATO_ani}}.}
+\item{\code{det}}{The detections slot. See \code{\link{ATO_det}}.}
 
 \item{\code{obs}}{The observations slot. See \code{\link{ATO_obs}}.}
+
+\item{\code{tag}}{The tags slot. See \code{\link{ATO_tag}}.}
 
 \item{\code{log}}{The log slot. See \code{\link{ATO_log}}.}
 

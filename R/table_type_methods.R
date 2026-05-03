@@ -39,40 +39,40 @@ setMethod("table_type<-", "ATO", function(x, value) {
   class(new_format) <- c("ATO_tbl", "character")
   x@tbl <- new_format
   if (value == "data.frame") {
-    det <- as.data.frame(x@det)
-    dep <- as.data.frame(x@dep)
-    tag <- as.data.frame(x@tag)
     ani <- as.data.frame(x@ani)
+    dep <- as.data.frame(x@dep)
+    det <- as.data.frame(x@det)
     obs <- as.data.frame(x@obs)
+    tag <- as.data.frame(x@tag)
     log <- as.data.frame(x@log)
   }
   if (value == "data.table") {
-    det <- data.table::as.data.table(x@det)
-    dep <- data.table::as.data.table(x@dep)
-    tag <- data.table::as.data.table(x@tag)
     ani <- data.table::as.data.table(x@ani)
+    dep <- data.table::as.data.table(x@dep)
+    det <- data.table::as.data.table(x@det)
     obs <- data.table::as.data.table(x@obs)
+    tag <- data.table::as.data.table(x@tag)
     log <- data.table::as.data.table(x@log)
   }
   if (value == "tibble") {
-    det <- tibble::as_tibble(x@det)
-    dep <- tibble::as_tibble(x@dep)
-    tag <- tibble::as_tibble(x@tag)
     ani <- tibble::as_tibble(x@ani)
+    dep <- tibble::as_tibble(x@dep)
+    det <- tibble::as_tibble(x@det)
     obs <- tibble::as_tibble(x@obs)
+    tag <- tibble::as_tibble(x@tag)
     log <- tibble::as_tibble(x@log)
   }
-  class(det) <- c("ATO_det", class(det))
-  class(dep) <- c("ATO_dep", class(dep))
-  class(tag) <- c("ATO_tag", class(tag))
   class(ani) <- c("ATO_ani", class(ani))
+  class(dep) <- c("ATO_dep", class(dep))
+  class(det) <- c("ATO_det", class(det))
   class(obs) <- c("ATO_obs", class(obs))
+  class(tag) <- c("ATO_tag", class(tag))
   class(log) <- c("ATO_log", class(log))
-  x@det <- det
-  x@dep <- dep
-  x@tag <- tag
   x@ani <- ani
+  x@dep <- dep
+  x@det <- det
   x@obs <- obs
+  x@tag <- tag
   x@log <- log
 
   validObject(x)
@@ -101,38 +101,38 @@ ato_table_type_global <- function(type = c("data.frame",
 
   .ATO_tbl <- type
   if (type == "data.frame") {
-    .ATO_det <- as.data.frame(.ATO_det)
-    .ATO_dep <- as.data.frame(.ATO_dep)
-    .ATO_tag <- as.data.frame(.ATO_tag)
     .ATO_ani <- as.data.frame(.ATO_ani)
+    .ATO_dep <- as.data.frame(.ATO_dep)
+    .ATO_det <- as.data.frame(.ATO_det)
     .ATO_obs <- as.data.frame(.ATO_obs)
+    .ATO_tag <- as.data.frame(.ATO_tag)
   }
   if (type == "data.table") {
-    .ATO_det <- data.table::as.data.table(.ATO_det)
-    .ATO_dep <- data.table::as.data.table(.ATO_dep)
-    .ATO_tag <- data.table::as.data.table(.ATO_tag)
     .ATO_ani <- data.table::as.data.table(.ATO_ani)
+    .ATO_dep <- data.table::as.data.table(.ATO_dep)
+    .ATO_det <- data.table::as.data.table(.ATO_det)
     .ATO_obs <- data.table::as.data.table(.ATO_obs)
+    .ATO_tag <- data.table::as.data.table(.ATO_tag)
   }
   if (type == "tibble") {
-    .ATO_det <- tibble::as_tibble(.ATO_det)
-    .ATO_dep <- tibble::as_tibble(.ATO_dep)
-    .ATO_tag <- tibble::as_tibble(.ATO_tag)
     .ATO_ani <- tibble::as_tibble(.ATO_ani)
+    .ATO_dep <- tibble::as_tibble(.ATO_dep)
+    .ATO_det <- tibble::as_tibble(.ATO_det)
     .ATO_obs <- tibble::as_tibble(.ATO_obs)
+    .ATO_tag <- tibble::as_tibble(.ATO_tag)
   }
-  class(.ATO_det) <- c("ATO_det", class(.ATO_det))
-  class(.ATO_dep) <- c("ATO_dep", class(.ATO_dep))
-  class(.ATO_tag) <- c("ATO_tag", class(.ATO_tag))
   class(.ATO_ani) <- c("ATO_ani", class(.ATO_ani))
+  class(.ATO_dep) <- c("ATO_dep", class(.ATO_dep))
+  class(.ATO_det) <- c("ATO_det", class(.ATO_det))
   class(.ATO_obs) <- c("ATO_obs", class(.ATO_obs))
+  class(.ATO_tag) <- c("ATO_tag", class(.ATO_tag))
   class(.ATO_tbl) <- c("ATO_tbl", "character")
 
-  utils::assignInNamespace(".ATO_det", .ATO_det, ns = "ATO", pos = "package:ATO")
-  utils::assignInNamespace(".ATO_dep", .ATO_dep, ns = "ATO", pos = "package:ATO")
-  utils::assignInNamespace(".ATO_tag", .ATO_tag, ns = "ATO", pos = "package:ATO")
   utils::assignInNamespace(".ATO_ani", .ATO_ani, ns = "ATO", pos = "package:ATO")
+  utils::assignInNamespace(".ATO_dep", .ATO_dep, ns = "ATO", pos = "package:ATO")
+  utils::assignInNamespace(".ATO_det", .ATO_det, ns = "ATO", pos = "package:ATO")
   utils::assignInNamespace(".ATO_obs", .ATO_obs, ns = "ATO", pos = "package:ATO")
+  utils::assignInNamespace(".ATO_tag", .ATO_tag, ns = "ATO", pos = "package:ATO")
   utils::assignInNamespace(".ATO_tbl", .ATO_tbl, ns = "ATO", pos = "package:ATO")
 
   message("M: Newly created ATOs will have tables of type ",

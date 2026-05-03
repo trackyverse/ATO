@@ -2,38 +2,38 @@
 % Please edit documentation in R/set_methods.R
 \name{set}
 \alias{set}
-\alias{set_det}
-\alias{set_det,ATO,ATO_det-method}
-\alias{set_dep}
-\alias{set_dep,ATO,ATO_dep-method}
-\alias{set_tag}
-\alias{set_tag,ATO,ATO_tag-method}
 \alias{set_ani}
 \alias{set_ani,ATO,ATO_ani-method}
+\alias{set_dep}
+\alias{set_dep,ATO,ATO_dep-method}
+\alias{set_det}
+\alias{set_det,ATO,ATO_det-method}
 \alias{set_obs}
 \alias{set_obs,ATO,ATO_obs-method}
+\alias{set_tag}
+\alias{set_tag,ATO,ATO_tag-method}
 \alias{.set_worker}
 \title{Set an ATO slot}
 \usage{
-set_det(x, value, append = FALSE, silent = FALSE)
+set_ani(x, value, append = FALSE, silent = FALSE)
 
-\S4method{set_det}{ATO,ATO_det}(x, value, append = FALSE, silent = FALSE)
+\S4method{set_ani}{ATO,ATO_ani}(x, value, append = FALSE, silent = FALSE)
 
 set_dep(x, value, append = FALSE, silent = FALSE)
 
 \S4method{set_dep}{ATO,ATO_dep}(x, value, append = FALSE, silent = FALSE)
 
-set_tag(x, value, append = FALSE, silent = FALSE)
+set_det(x, value, append = FALSE, silent = FALSE)
 
-\S4method{set_tag}{ATO,ATO_tag}(x, value, append = FALSE, silent = FALSE)
-
-set_ani(x, value, append = FALSE, silent = FALSE)
-
-\S4method{set_ani}{ATO,ATO_ani}(x, value, append = FALSE, silent = FALSE)
+\S4method{set_det}{ATO,ATO_det}(x, value, append = FALSE, silent = FALSE)
 
 set_obs(x, value, append = FALSE, silent = FALSE)
 
 \S4method{set_obs}{ATO,ATO_obs}(x, value, append = FALSE, silent = FALSE)
+
+set_tag(x, value, append = FALSE, silent = FALSE)
+
+\S4method{set_tag}{ATO,ATO_tag}(x, value, append = FALSE, silent = FALSE)
 
 .set_worker(x, value, append = FALSE, silent = FALSE)
 }

@@ -6,14 +6,7 @@
 \alias{.ATO_det}
 \title{S4 class: ATO_det}
 \format{
-A data frame with 0 rows and 5 variables:
-\describe{
-\item{datetime}{date and time, posixct format.}
-\item{frac_second}{fractional second, numeric.}
-\item{receiver_serial}{receiver serial number, character.}
-\item{transmitter}{transmitter code, character.}
-\item{sensor_value}{reported sensor value, numeric.}
-}
+See \code{\link{make_det}}.
 
 An object of class \code{ATO_det} (inherits from \code{data.frame}) with 0 rows and 6 columns.
 }
@@ -36,7 +29,7 @@ See \code{\link{table_type}} for more details on
 \code{\link{ATO}} table types.
 }
 \seealso{
-make_det
+\code{\link{make_det}}
 }
 \keyword{classes}
 \keyword{datasets}

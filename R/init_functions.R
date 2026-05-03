@@ -4,11 +4,11 @@
 #' The main purpose of this function is to ensure the ATO is created with the
 #' right table type. See \code{\link{table_type}} for more details.
 #'
-#' @param det an object of class ATO_det. See \code{\link{make_det}}.
-#' @param dep an object of class ATO_dep. See \code{\link{make_dep}}.
-#' @param tag an object of class ATO_tag. See \code{\link{make_tag}}.
 #' @param ani an object of class ATO_ani. See \code{\link{make_ani}}.
+#' @param dep an object of class ATO_dep. See \code{\link{make_dep}}.
+#' @param det an object of class ATO_det. See \code{\link{make_det}}.
 #' @param obs an object of class ATO_obs. See \code{\link{make_obs}}.
+#' @param tag an object of class ATO_tag. See \code{\link{make_tag}}.
 #' @param silent Supresses summary messages
 #'
 #' @examples
@@ -31,14 +31,14 @@
 #'
 #' @export
 #'
-init_ato <- function(det, dep, tag, ani, obs, silent = FALSE) {
+init_ato <- function(ani, dep, det, obs, tag, silent = FALSE) {
   ato <- new(
     "ATO",
-    det = .ATO_det,
-    dep = .ATO_dep,
-    tag = .ATO_tag,
     ani = .ATO_ani,
+    dep = .ATO_dep,
+    det = .ATO_det,
     obs = .ATO_obs,
+    tag = .ATO_tag,
     log = .ATO_log,
     tbl = .ATO_tbl,
     pkg = list()
@@ -48,20 +48,20 @@ init_ato <- function(det, dep, tag, ani, obs, silent = FALSE) {
   on.exit(options(ATO_match_immediate = old_match_immediate))
   options(ATO_match_immediate = FALSE)
   
-  if (!missing(det)) {
-    ato <- set_det(ato, det, silent = silent)
+  if (!missing(ani)) {
+    ato <- set_ani(ato, ani, silent = silent)
   }
   if (!missing(dep)) {
     ato <- set_dep(ato, dep, silent = silent)
   }
-  if (!missing(tag)) {
-    ato <- set_tag(ato, tag, silent = silent)
-  }
-  if (!missing(ani)) {
-    ato <- set_ani(ato, ani, silent = silent)
+  if (!missing(det)) {
+    ato <- set_det(ato, det, silent = silent)
   }
   if (!missing(obs)) {
     ato <- set_obs(ato, obs, silent = silent)
+  }
+  if (!missing(tag)) {
+    ato <- set_tag(ato, tag, silent = silent)
   }
   
   if (old_match_immediate) {

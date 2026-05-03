@@ -1,3 +1,6 @@
+# NOTE:
+# match functions are sorted by order of matching
+
 #' Match the various slots of the ATO object
 #' 
 #' Automatically called by the \code{\link{set}} functions.
@@ -690,7 +693,12 @@ match_update <- function(x, silent = FALSE) {
 #' 
 .match_dep_det_base <- function(x, silent = FALSE) {
   is_ato(x)
-  has(x, c("dep", "det"), error = TRUE)
+  has(x, "dep",
+      c("receiver_serial", "deploy_datetime", "recover_datetime"),
+      allow_NA = FALSE, error = TRUE)
+  has(x, "det",
+      c("receiver_serial", "datetime"),
+      allow_NA = FALSE, error = TRUE)
 
   # assign deps to detections
   x@det$dep_match <- NA
@@ -782,7 +790,13 @@ match_update <- function(x, silent = FALSE) {
 #' @keywords internal
 .match_dep_det_datatable <- function(x, silent) {
   is_ato(x)
-  has(x, c("dep", "det"), error = TRUE)
+  has(x, "dep",
+      c("receiver_serial", "deploy_datetime", "recover_datetime"),
+      allow_NA = FALSE, error = TRUE)
+  has(x, "det",
+      c("receiver_serial", "datetime"),
+      allow_NA = FALSE, error = TRUE)
+
   .data.table_exists()
 
   # start manipulating the slots
@@ -916,7 +930,6 @@ match_update <- function(x, silent = FALSE) {
   # on.exit handles cleaning up the data.table modifications
   return(x)
 }
-
 
 .message_orphan_dets <- function(x, silent = FALSE) {
   orphans <- is.na(x@det$dep_match) & x@det$valid
