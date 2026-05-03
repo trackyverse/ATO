@@ -5,14 +5,18 @@
 \alias{has,ATO-method}
 \title{Generic to check if an ATO has data in a given slot}
 \usage{
-has(object, value, error = FALSE)
+has(object, value, column, allow_NA = TRUE, error = FALSE)
 
-\S4method{has}{ATO}(object, value, error = FALSE)
+\S4method{has}{ATO}(object, value, column, allow_NA = TRUE, error = FALSE)
 }
 \arguments{
 \item{object}{an \code{\link{ATO}}}
 
 \item{value}{a vector with the names of the requested slots}
+
+\item{column}{a vector of column names to find within the requested slots}
+
+\item{allow_NA}{Should NAs be allowed in the inspected columns?}
 
 \item{error}{Should the code execution stop if the requested slots are empty?}
 }
@@ -31,6 +35,16 @@ has(example_ato, "det")
 has(example_ato, "obs")
 
 # alternatively, this would error
-# has(example_ato, "obs", TRUE)
+# has(example_ato, "obs", error = TRUE)
+
+# check specific columns in slot
+has(example_ato, "tag", c("release_datetime", "power_level"))
+has(example_ato, "tag", c("test", "power_level"))
+# has(example_ato, "tag", c("test", "power_level"), error = TRUE)
+
+# check that columns don't have NAs
+# has(example_ato, "tag",
+#    c("release_datetime", "power_level"),
+#    allow_NA = FALSE, error = TRUE)
 
 }
