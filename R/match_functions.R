@@ -272,7 +272,7 @@ match_update <- function(x, silent = FALSE) {
     }
     if (is.null(x@tag$terminal_datetime)) {
       stop("Duplicated transmitters found in @tag but ato has no @obs",
-           " or @obs and @ani have not been matched yet.",
+           " (or @obs and @ani have not been matched yet).",
            " Fatal ambiguity. Can't assign detections correctly.",
            call. = FALSE)      
     }
@@ -303,10 +303,13 @@ match_update <- function(x, silent = FALSE) {
   x@tag$release_datetime <- as.POSIXct(NA_real_, tz = the_tz)
   x@tag$release_lat <- NA_real_
   x@tag$release_lon <- NA_real_
-  x@tag$release_location[!is.na(x@tag$ani_match)] <- x@ani$release_location[x@tag$ani_match]
-  x@tag$release_datetime[!is.na(x@tag$ani_match)] <- x@ani$release_datetime[x@tag$ani_match]
-  x@tag$release_lat[!is.na(x@tag$ani_match)] <- x@ani$release_lat[x@tag$ani_match]
-  x@tag$release_lon[!is.na(x@tag$ani_match)] <- x@ani$release_lon[x@tag$ani_match]
+
+  link <- !is.na(x@tag$ani_match)
+  
+  x@tag$release_location[link] <- x@ani$release_location[x@tag$ani_match]
+  x@tag$release_datetime[link] <- x@ani$release_datetime[x@tag$ani_match]
+  x@tag$release_lat[link] <- x@ani$release_lat[x@tag$ani_match]
+  x@tag$release_lon[link] <- x@ani$release_lon[x@tag$ani_match]
 
   # include terminal details
   if (!is.null(x@ani$terminal_location)) {
@@ -315,10 +318,10 @@ match_update <- function(x, silent = FALSE) {
     x@tag$terminal_datetime <- as.POSIXct(NA_real_, tz = the_tz)
     x@tag$terminal_lat <- NA_real_
     x@tag$terminal_lon <- NA_real_
-    x@tag$terminal_location[!is.na(x@tag$ani_match)] <- x@ani$terminal_location[x@tag$ani_match]
-    x@tag$terminal_datetime[!is.na(x@tag$ani_match)] <- x@ani$terminal_datetime[x@tag$ani_match]
-    x@tag$terminal_lat[!is.na(x@tag$ani_match)] <- x@ani$terminal_lat[x@tag$ani_match]
-    x@tag$terminal_lon[!is.na(x@tag$ani_match)] <- x@ani$terminal_lon[x@tag$ani_match]
+    x@tag$terminal_location[link] <- x@ani$terminal_location[x@tag$ani_match]
+    x@tag$terminal_datetime[link] <- x@ani$terminal_datetime[x@tag$ani_match]
+    x@tag$terminal_lat[link] <- x@ani$terminal_lat[x@tag$ani_match]
+    x@tag$terminal_lon[link] <- x@ani$terminal_lon[x@tag$ani_match]
   }
   return(x)
 }
@@ -348,18 +351,18 @@ match_update <- function(x, silent = FALSE) {
       last_time <- Inf
 
       # if the tag has an associated activation time,
-      # detections must be after that.
+      # observations must be after that.
       if (!is.na(x@tag$activation_datetime[i])) {
         first_time <- x@tag$activation_datetime[i]
       }
       # if the tag has an associated release time,
-      # detections must be after that.
+      # observations must be after that.
       if (!is.null(x@tag$release_datetime) &&
           !is.na(x@tag$release_datetime[i])) {
         first_time <- x@tag$release_datetime[i]
       }
       # if the tag has an associated terminal time,
-      # detections must be before that.
+      # observations must be before that.
       if (!is.null(x@tag$terminal_datetime) &&
           !is.na(x@tag$terminal_datetime[i])) {
         last_time <- x@tag$terminal_datetime[i]
@@ -370,8 +373,9 @@ match_update <- function(x, silent = FALSE) {
               x@obs$datetime <= last_time
 
       # check for ambiguity
-      if (any(!is.na(x@obs$tag_match[link]))) {
-        r <- which(!is.na(x@obs$tag_match[link]))
+      check <- !is.na(x@obs$tag_match[link])
+      if (any(check)) {
+        r <- which(check)
         stop("@obs row", .s(length(r)), " ", .comma(r),
              " match", .es(length(r), TRUE), " @tag rows ",
              .comma(c(unique(x@obs$tag_match[link]), i)), ".",
@@ -534,8 +538,9 @@ match_update <- function(x, silent = FALSE) {
     first_time <- as.POSIXct(first_time, tz = the_tz)
   }
   # if some first times are missing, try the tag activation time
-  if (any(is.na(first_time))) {
-    first_time[is.na(first_time)] <- x@tag$activation_datetime[is.na(first_time)]
+  link <- is.na(first_time)
+  if (any(link)) {
+    first_time[link] <- x@tag$activation_datetime[link]
   }
   # if any still missing after that, make those -Inf
   if (any(is.na(first_time))) {
