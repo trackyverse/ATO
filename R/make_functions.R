@@ -425,9 +425,10 @@ make_obs <- function(
 #' @param model Model of the transmitter (character).
 #' @param serial Serial number of the tag (integer).
 #' @param power_level Power level of the transmitter (real).
-#' @param ping_rate Expected ping rate of the transmitter, in seconds (numeric).
-#' @param ping_variation Range of the variation added between pings, in seconds
-#'  (numeric).
+#' @param ping_rate,ping_variation Expected average ping rate of the
+#'  transmitter and respective variation around the average, in seconds
+#'  (numeric). E.g. if a tag's ping interval may vary between 
+#'  60 and 120s, then ping_rate = 90, and ping_variation = 30.
 #' @param activation_datetime Date and time of the tag activation (POSIXct).
 #' @param battery_life Expected battery duration of the tag, in days (numeric).
 #' @param sensor_type Type of sensor data associated with the transmitter

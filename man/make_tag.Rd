@@ -32,10 +32,10 @@ make_tag(
 
 \item{power_level}{Power level of the transmitter (real).}
 
-\item{ping_rate}{Expected ping rate of the transmitter, in seconds (numeric).}
-
-\item{ping_variation}{Range of the variation added between pings, in seconds
-(numeric).}
+\item{ping_rate, ping_variation}{Expected average ping rate of the
+transmitter and respective variation around the average, in seconds
+(numeric). E.g. if a tag's ping interval may vary between
+60 and 120s, then ping_rate = 90, and ping_variation = 30.}
 
 \item{activation_datetime}{Date and time of the tag activation (POSIXct).}
 
