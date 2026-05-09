@@ -16,7 +16,7 @@
 #' @param tz the timezone of the datetime data.
 #' @param ... Non-standard columns to be added to the table.
 #'
-#' @return an ATO_ani object, ready to be used by one of the \code{\link{set}} 
+#' @return an ATO_ani object, ready to be used by one of the \code{\link{set}}
 #'  functions or \code{\link{init_ato}}.
 #'
 #' @export
@@ -40,14 +40,22 @@ make_ani <- function(
     "animal",
     "release_datetime"
   )
-  for (i in mandatory_cols) {
-    if (any(is.na(get(i)))) {
-      stop(
-        "Missing data detected in ", i, ".",
-        " All animals must have ", i, " information.",
-        call. = FALSE
-      )
-    }
+  check <- sapply(mandatory_cols, function(i) {
+    any(is.na(get(i)))
+  })
+  if (any(check)) {
+    stop(
+      "Missing data detected in ",
+      .comma(mandatory_cols[check]),
+      ". All animals must have ",
+      .comma(mandatory_cols[check]),
+      " information. ",
+      ifelse(check[2],
+        paste0(" If you are unsure what the exact release times were,",
+               " use an approximate value."),
+        ""),
+      call. = FALSE
+    )
   }
 
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
@@ -107,7 +115,7 @@ make_ani <- function(
 #' @param tz the timezone of the datetime data.
 #' @param ... Non-standard columns to be added to the table.
 #'
-#' @return an ATO_dep object, ready to be used by one of the \code{\link{set}} 
+#' @return an ATO_dep object, ready to be used by one of the \code{\link{set}}
 #'  functions or \code{\link{init_ato}}.
 #'
 #' @export
@@ -139,24 +147,33 @@ make_dep <- function(
     "deploy_datetime",
     "recover_datetime"
   )
-  for (i in mandatory_cols) {
-    if (any(is.na(get(i)))) {
-      stop(
-        "Missing data detected in ", i, ".",
-        " All deployments must have ", i, " information.",
-        call. = FALSE
-      )
-    }
+  check <- sapply(mandatory_cols, function(i) {
+    any(is.na(get(i)))
+  })
+  if (any(check)) {
+    stop(
+      "Missing data detected in ",
+      .comma(mandatory_cols[check]),
+      ". All deployments must have ",
+      .comma(mandatory_cols[check]),
+      " information. If you are unsure what the exact deployment and recovery",
+      " times were, use an approximate value.",
+      ifelse(check[2],
+        paste0(" For rolling receiver deployments, use the time of",
+               " last download as the recovery time."),
+        ""),
+      call. = FALSE
+    )
   }
 
   if (any(is.na(receiver_serial) & is.na(transmitter))) {
     stop(
       "Each deployment must be associated to either a receiver_serial or a",
-      " transmitter, or both",
+      " transmitter, or both.",
       call. = FALSE
     )
   }
-  
+
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
 
   output <- data.frame(
@@ -205,7 +222,7 @@ make_dep <- function(
 #' @param tz the timezone of the datetime data.
 #' @param ... Non-standard columns to be added to the table.
 #'
-#' @return an ATO_det object, ready to be used by one of the \code{\link{set}} 
+#' @return an ATO_det object, ready to be used by one of the \code{\link{set}}
 #'  functions or \code{\link{init_ato}}.
 #'
 #' @export
@@ -226,15 +243,20 @@ make_det <- function(
     "receiver_serial",
     "transmitter"
   )
-  for (i in mandatory_cols) {
-    if (any(is.na(get(i)))) {
-      stop(
-        "Missing data detected in ", i, ".",
-        " All detections must have ", i, " information.",
-        call. = FALSE
-      )
-    }
+  check <- sapply(mandatory_cols, function(i) {
+    any(is.na(get(i)))
+  })
+  if (any(check)) {
+    stop(
+      "Missing data detected in ",
+      .comma(mandatory_cols[check]),
+      ". All detections must have ",
+      .comma(mandatory_cols[check]),
+      " information. ",
+      call. = FALSE
+    )
   }
+
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
   # detections objects can be very big.
   # to avoid spending a long time loading everything
@@ -348,7 +370,7 @@ make_det <- function(
 #' @param tz the timezone of the datetime data.
 #' @param ... Non-standard columns to be added to the table.
 #'
-#' @return an ATO_obs object, ready to be used by one of the \code{\link{set}} 
+#' @return an ATO_obs object, ready to be used by one of the \code{\link{set}}
 #'  functions or \code{\link{init_ato}}.
 #'
 #' @export
@@ -371,14 +393,18 @@ make_obs <- function(
     "terminal",
     "datetime"
   )
-  for (i in mandatory_cols) {
-    if (any(is.na(get(i)))) {
-      stop(
-        "Missing data detected in ", i, ".",
-        " All observations must have ", i, " information.",
-        call. = FALSE
-      )
-    }
+  check <- sapply(mandatory_cols, function(i) {
+    any(is.na(get(i)))
+  })
+  if (any(check)) {
+    stop(
+      "Missing data detected in ",
+      .comma(mandatory_cols[check]),
+      ". All observations must have ",
+      .comma(mandatory_cols[check]),
+      " information. ",
+      call. = FALSE
+    )
   }
 
   if (any(is.na(animal) & is.na(transmitter))) {
@@ -427,7 +453,7 @@ make_obs <- function(
 #' @param power_level Power level of the transmitter (real).
 #' @param ping_rate,ping_variation Expected average ping rate of the
 #'  transmitter and respective variation around the average, in seconds
-#'  (numeric). E.g. if a tag's ping interval may vary between 
+#'  (numeric). E.g. if a tag's ping interval may vary between
 #'  60 and 120s, then ping_rate = 90, and ping_variation = 30.
 #' @param activation_datetime Date and time of the tag activation (POSIXct).
 #' @param battery_life Expected battery duration of the tag, in days (numeric).
@@ -439,7 +465,7 @@ make_obs <- function(
 #' @param tz the timezone of the datetime data.
 #' @param ... Non-standard columns to be added to the table.
 #'
-#' @return an ATO_tag object, ready to be used by one of the \code{\link{set}} 
+#' @return an ATO_tag object, ready to be used by one of the \code{\link{set}}
 #'  functions or \code{\link{init_ato}}.
 #'
 #' @export
@@ -462,17 +488,12 @@ make_tag <- function(
   tz,
   ...
 ) {
-  mandatory_cols <- c(
-    "transmitter"
-  )
-  for (i in mandatory_cols) {
-    if (any(is.na(get(i)))) {
-      stop(
-        "Missing data detected in ", i, ".",
-        " All tags must have ", i, " information.",
-        call. = FALSE
-      )
-    }
+  if (any(is.na(get(transmitter)))) {
+    stop(
+      "Missing data detected in transmitter.",
+      " All tags must have transmitter information.",
+      call. = FALSE
+    )
   }
 
   ato_table_type <- getOption("ATO_table_type", default = "data.frame")
