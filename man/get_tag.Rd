@@ -3,11 +3,17 @@
 \name{get_tag}
 \alias{get_tag}
 \alias{get_tag,ATO-method}
+\alias{tag}
+\alias{tag,ATO-method}
 \title{Generic to extract the tag slot as a table}
 \usage{
 get_tag(x, type = c("all", "valid", "invalid"))
 
 \S4method{get_tag}{ATO}(x, type = c("all", "valid", "invalid"))
+
+tag(x, type = c("all", "valid", "invalid"))
+
+\S4method{tag}{ATO}(x, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}
@@ -25,10 +31,14 @@ Generic to extract the tag slot as a table
 }
 \examples{
 # extract all the tags from an ATO in table format
-tag <- get_tag(example_ato)
-summary(tag)
+x <- get_tag(example_ato)
+summary(x)
+
+# short form:
+x <- tag(example_ato)
+summary(x)
 
 # clean up
-rm(tag)
+rm(x)
 
 }

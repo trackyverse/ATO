@@ -3,11 +3,20 @@
 \name{get_dep}
 \alias{get_dep}
 \alias{get_dep,ATO-method}
+\alias{dep}
+\alias{dep,ATO-method}
+\alias{det,ATO-method}
 \title{Generic to extract the dep slot as a table}
 \usage{
 get_dep(x, type = c("all", "valid", "invalid"))
 
 \S4method{get_dep}{ATO}(x, type = c("all", "valid", "invalid"))
+
+dep(x, type = c("all", "valid", "invalid"))
+
+\S4method{dep}{ATO}(x, type = c("all", "valid", "invalid"))
+
+\S4method{det}{ATO}(x, receivers, transmitters, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}
@@ -16,6 +25,12 @@ get_dep(x, type = c("all", "valid", "invalid"))
 'all' - returns both valid and invalid rows (default);
 'valid' - returns only valid rows;
 'invalid' - returns only invalid rows}
+
+\item{receivers}{An optional vector of receiver serial numbers from which
+to extract detections.}
+
+\item{transmitters}{An optional vector of transmitters for which to extract
+detections.}
 }
 \value{
 The dep slot as a table
@@ -25,10 +40,14 @@ Generic to extract the dep slot as a table
 }
 \examples{
 # extract all the deployments from an ATO in table format
-dep <- get_dep(example_ato)
-summary(dep)
+x <- get_dep(example_ato)
+summary(x)
+
+# short form:
+x <- dep(example_ato)
+summary(x)
 
 # clean up
-rm(dep)
+rm(x)
 
 }

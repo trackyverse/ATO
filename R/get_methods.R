@@ -6,11 +6,15 @@
 #'
 #' @examples
 #' # extract all the animals from an ATO in table format
-#' ani <- get_ani(example_ato)
-#' summary(ani)
+#' x <- get_ani(example_ato)
+#' summary(x)
+#' 
+#' # short form:
+#' x <- ani(example_ato)
+#' summary(x)
 #' 
 #' # clean up
-#' rm(ani)
+#' rm(x)
 #' 
 #' @export
 #'
@@ -24,7 +28,9 @@ setGeneric(
 setMethod("get_ani", "ATO",
           function(x, type = c("all", "valid", "invalid")) {
     type <- match.arg(type)
-
+    if (!has(x, "ani")) {
+      return(NULL)
+    }
     if (type == "all") {
       return(x@ani)
     }
@@ -37,6 +43,22 @@ setMethod("get_ani", "ATO",
   }
 )
 
+#' @rdname get_ani
+#' @export
+setGeneric(
+  "ani",
+  function(x, type = c("all", "valid", "invalid"))
+    standardGeneric("ani")
+)
+
+#' @rdname get_ani
+setMethod("ani", "ATO",
+          function(x, type = c("all", "valid", "invalid")) {
+    output <- get_ani(x, type)
+    return(output)
+  }
+)
+
 #' Generic to extract the dep slot as a table
 #'
 #' @inheritParams get_det
@@ -45,11 +67,15 @@ setMethod("get_ani", "ATO",
 #'
 #' @examples
 #' # extract all the deployments from an ATO in table format
-#' dep <- get_dep(example_ato)
-#' summary(dep)
+#' x <- get_dep(example_ato)
+#' summary(x)
+#' 
+#' # short form:
+#' x <- dep(example_ato)
+#' summary(x)
 #' 
 #' # clean up
-#' rm(dep)
+#' rm(x)
 #' 
 #' @export
 #'
@@ -63,7 +89,9 @@ setGeneric(
 setMethod("get_dep", "ATO", 
           function(x, type = c("all", "valid", "invalid")) {
     type <- match.arg(type)
-
+    if (!has(x, "dep")) {
+      return(NULL)
+    }
     if (type == "all") {
       return(x@dep)
     }
@@ -73,6 +101,22 @@ setMethod("get_dep", "ATO",
     if (type == "invalid") {
       return(x@dep[!x@dep$valid ,])
     }
+  }
+)
+
+#' @rdname get_dep
+#' @export
+setGeneric(
+  "dep",
+  function(x, type = c("all", "valid", "invalid"))
+    standardGeneric("dep")
+)
+
+#' @rdname get_dep
+setMethod("dep", "ATO",
+          function(x, type = c("all", "valid", "invalid")) {
+    output <- get_dep(x, type)
+    return(output)
   }
 )
 
@@ -92,25 +136,29 @@ setMethod("get_dep", "ATO",
 #'
 #' @examples
 #' # extract all the detections from an ATO in table format
-#' det <- get_det(example_ato)
-#' summary(det)
+#' x <- get_det(example_ato)
+#' summary(x)
+#' 
+#' # short form:
+#' x <- det(example_ato)
+#' summary(x)
 #' 
 #' # extract only detections from one or more specific receivers
-#' sub_det <- get_det(example_ato, receivers = "132908")
-#' summary(sub_det)
+#' x <- get_det(example_ato, receivers = "132908")
+#' summary(x)
 #' 
 #' # or matching one or more specific transmitters
-#' sub_det <- get_det(example_ato, transmitters = "R64K-4529")
-#' summary(sub_det)
+#' x <- get_det(example_ato, transmitters = "R64K-4529")
+#' summary(x)
 #' 
 #' # or both!
-#' sub_det <- get_det(example_ato,
-#'                    receivers = "132908",
-#'                    transmitters = "R64K-4529")
-#' summary(sub_det)
+#' x <- get_det(example_ato,
+#'              receivers = "132908",
+#'              transmitters = "R64K-4529")
+#' summary(x)
 #' 
 #' # clean up
-#' rm(det, sub_det)
+#' rm(x)
 #' 
 #' @export
 #'
@@ -126,6 +174,9 @@ setMethod(
   "ATO",
   function(x, receivers, transmitters, type = c("all", "valid", "invalid")) {
     type <- match.arg(type)
+    if (!has(x, "det")) {
+      return(NULL)
+    }
 
     if (missing("receivers")) {
       receiver_link <- rep(TRUE, nrow(x@det))
@@ -151,6 +202,22 @@ setMethod(
   }
 )
 
+#' @rdname get_det
+#' @export
+setGeneric(
+  "det",
+  function(x, receivers,transmitters, type = c("all", "valid", "invalid"))
+    standardGeneric("det")
+)
+
+#' @rdname get_dep
+setMethod("det", "ATO",
+  function(x, receivers,transmitters, type = c("all", "valid", "invalid")) {
+    output <- get_det(x, receivers, transmitters, type)
+    return(output)
+  }
+)
+
 #' A wrapper of \code{\link{get_det}} to extract detections for transmitters
 #' listed in the tag slot
 #'
@@ -161,14 +228,14 @@ setMethod(
 #' @examples
 #' # wrapper to extract all detections that match transmitters
 #' # listed in the @tag slot
-#' det <- get_det_tag(example_ato)
+#' x <- get_det_tag(example_ato)
 #' 
 #' # extract only detections from one or more specific receivers
-#' det <- get_det_tag(example_ato, receivers = "132908")
-#' summary(det)
+#' x <- get_det_tag(example_ato, receivers = "132908")
+#' summary(x)
 #' 
 #' # clean up
-#' rm(det)
+#' rm(x)
 #' 
 #' @export
 #'
@@ -203,19 +270,19 @@ setMethod(
 #' @examples
 #' # wrapper to extract all detections that match transmitters
 #' # listed in the @dep slot (beacon tags)
-#' det <- get_det_dep(example_ato)
-#' summary(det)
+#' x <- get_det_dep(example_ato)
+#' summary(x)
 #' # note: The example_ato does not have beacon detections,
 #' # so this returns a table with 0 rows
 #' 
 #' # extract only detections from one or more specific receivers
-#' det <- get_det_dep(example_ato, receivers = "132908")
-#' summary(det)
+#' x <- get_det_dep(example_ato, receivers = "132908")
+#' summary(x)
 #' # note: The example_ato does not have beacon detections,
 #' # so this returns a table with 0 rows
 #' 
 #' # clean up
-#' rm(det)
+#' rm(x)
 #' 
 #' @export
 #'
@@ -248,13 +315,15 @@ setMethod(
 #'
 #' @examples
 #' # extract all the observations from an ATO in table format
-#' obs <- get_obs(example_ato)
-#' summary(obs)
-#' # note: The example ato object has no observations, so this
-#' # returns 0 rows.
+#' x <- get_obs(example_ato)
+#' summary(x)
+#' 
+#' # short form:
+#' x <- obs(example_ato)
+#' summary(x)
 #' 
 #' # clean up
-#' rm(obs)
+#' rm(x)
 #' 
 #' @export
 #'
@@ -267,6 +336,9 @@ setGeneric(
 #' @rdname get_obs
 setMethod("get_obs", "ATO", function(x, type = c("all", "valid", "invalid")) {
   type <- match.arg(type)
+  if (!has(x, "obs")) {
+    return(NULL)
+  }
   if (type == "all") {
     return(x@obs)
   }
@@ -278,6 +350,22 @@ setMethod("get_obs", "ATO", function(x, type = c("all", "valid", "invalid")) {
   }
 })
 
+#' @rdname get_obs
+#' @export
+setGeneric(
+  "obs",
+  function(x, type = c("all", "valid", "invalid"))
+    standardGeneric("obs")
+)
+
+#' @rdname get_obs
+setMethod("obs", "ATO",
+          function(x, type = c("all", "valid", "invalid")) {
+    output <- get_obs(x, type)
+    return(output)
+  }
+)
+
 #' Generic to extract the tag slot as a table
 #'
 #' @inheritParams get_det
@@ -286,11 +374,15 @@ setMethod("get_obs", "ATO", function(x, type = c("all", "valid", "invalid")) {
 #'
 #' @examples
 #' # extract all the tags from an ATO in table format
-#' tag <- get_tag(example_ato)
-#' summary(tag)
+#' x <- get_tag(example_ato)
+#' summary(x)
+#' 
+#' # short form:
+#' x <- tag(example_ato)
+#' summary(x)
 #' 
 #' # clean up
-#' rm(tag)
+#' rm(x)
 #' 
 #' @export
 #'
@@ -305,6 +397,9 @@ setMethod("get_tag", "ATO",
           function(x, type = c("all", "valid", "invalid")) {
     type <- match.arg(type)
 
+    if (!has(x, "tag")) {
+      return(NULL)
+    }
     if (type == "all") {
       return(x@tag)
     }
@@ -314,6 +409,22 @@ setMethod("get_tag", "ATO",
     if (type == "invalid") {
       return(x@tag[!x@tag$valid ,])
     }
+  }
+)
+
+#' @rdname get_tag
+#' @export
+setGeneric(
+  "tag",
+  function(x, type = c("all", "valid", "invalid"))
+    standardGeneric("tag")
+)
+
+#' @rdname get_tag
+setMethod("tag", "ATO",
+          function(x, type = c("all", "valid", "invalid")) {
+    output <- get_tag(x, type)
+    return(output)
   }
 )
 
@@ -341,6 +452,9 @@ setGeneric(
 
 #' @rdname get_log
 setMethod("get_log", "ATO", function(x, debug = FALSE) {
+  if (!has(x, "log")) {
+    return(NULL)
+  }
   if (debug) {
     return(x@log)
   } else {

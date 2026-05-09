@@ -4,14 +4,24 @@
 \alias{set}
 \alias{set_ani}
 \alias{set_ani,ATO,ATO_ani-method}
+\alias{ani<-}
+\alias{ani<-,ATO,ATO_ani-method}
 \alias{set_dep}
 \alias{set_dep,ATO,ATO_dep-method}
+\alias{dep<-}
+\alias{dep<-,ATO,ATO_dep-method}
 \alias{set_det}
 \alias{set_det,ATO,ATO_det-method}
+\alias{det<-}
+\alias{det<-,ATO,ATO_det-method}
 \alias{set_obs}
 \alias{set_obs,ATO,ATO_obs-method}
+\alias{obs<-}
+\alias{obs<-,ATO,ATO_obs-method}
 \alias{set_tag}
 \alias{set_tag,ATO,ATO_tag-method}
+\alias{tag<-}
+\alias{tag<-,ATO,ATO_tag-method}
 \alias{.set_worker}
 \title{Set an ATO slot}
 \usage{
@@ -19,21 +29,41 @@ set_ani(x, value, append = FALSE, silent = FALSE)
 
 \S4method{set_ani}{ATO,ATO_ani}(x, value, append = FALSE, silent = FALSE)
 
+ani(x) <- value
+
+\S4method{ani}{ATO,ATO_ani}(x) <- value
+
 set_dep(x, value, append = FALSE, silent = FALSE)
 
 \S4method{set_dep}{ATO,ATO_dep}(x, value, append = FALSE, silent = FALSE)
+
+dep(x) <- value
+
+\S4method{dep}{ATO,ATO_dep}(x) <- value
 
 set_det(x, value, append = FALSE, silent = FALSE)
 
 \S4method{set_det}{ATO,ATO_det}(x, value, append = FALSE, silent = FALSE)
 
+det(x) <- value
+
+\S4method{det}{ATO,ATO_det}(x) <- value
+
 set_obs(x, value, append = FALSE, silent = FALSE)
 
 \S4method{set_obs}{ATO,ATO_obs}(x, value, append = FALSE, silent = FALSE)
 
+obs(x) <- value
+
+\S4method{obs}{ATO,ATO_obs}(x) <- value
+
 set_tag(x, value, append = FALSE, silent = FALSE)
 
 \S4method{set_tag}{ATO,ATO_tag}(x, value, append = FALSE, silent = FALSE)
+
+tag(x) <- value
+
+\S4method{tag}{ATO,ATO_tag}(x) <- value
 
 .set_worker(x, value, append = FALSE, silent = FALSE)
 }
@@ -58,15 +88,19 @@ brings already-formatted ATO data into an ATO object.
 }
 \examples{
 # split away parts of the example ATO for the example
-ani <- get_ani(example_ato)
-dep <- get_dep(example_ato)
+x <- get_ani(example_ato)
+y <- get_dep(example_ato)
 
 # add them to the ATO object using the set methods
-x <- set_ani(example_ato, ani)
-x <- set_dep(x, dep)
+new_ato <- set_ani(example_ato, x)
+new_ato <- set_dep(new_ato, y)
+
+# short form
+ani(new_ato) <- x
+dep(new_ato) <- y
 
 # clean up
-rm(ani, dep, x)
+rm(x, y, new_ato)
 
 }
 \seealso{

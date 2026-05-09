@@ -31,18 +31,18 @@ listed in the dep slot
 \examples{
 # wrapper to extract all detections that match transmitters
 # listed in the @dep slot (beacon tags)
-det <- get_det_dep(example_ato)
-summary(det)
+x <- get_det_dep(example_ato)
+summary(x)
 # note: The example_ato does not have beacon detections,
 # so this returns a table with 0 rows
 
 # extract only detections from one or more specific receivers
-det <- get_det_dep(example_ato, receivers = "132908")
-summary(det)
+x <- get_det_dep(example_ato, receivers = "132908")
+summary(x)
 # note: The example_ato does not have beacon detections,
 # so this returns a table with 0 rows
 
 # clean up
-rm(det)
+rm(x)
 
 }

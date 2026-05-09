@@ -15,15 +15,19 @@
 #' 
 #' @examples
 #' # split away parts of the example ATO for the example
-#' ani <- get_ani(example_ato)
-#' dep <- get_dep(example_ato)
+#' x <- get_ani(example_ato)
+#' y <- get_dep(example_ato)
 #' 
 #' # add them to the ATO object using the set methods
-#' x <- set_ani(example_ato, ani)
-#' x <- set_dep(x, dep)
+#' new_ato <- set_ani(example_ato, x)
+#' new_ato <- set_dep(new_ato, y)
+#' 
+#' # short form
+#' ani(new_ato) <- x
+#' dep(new_ato) <- y
 #' 
 #' # clean up
-#' rm(ani, dep, x)
+#' rm(x, y, new_ato)
 #' 
 #' @seealso \code{\link{make_ani}}, \code{\link{make_dep}},
 #' \code{\link{make_det}}, \code{\link{make_tag}}, \code{\link{make_obs}}
@@ -52,6 +56,24 @@ setMethod(
 #' @rdname set
 #' @export
 setGeneric(
+  "ani<-",
+  function(x, value)
+    standardGeneric("ani<-"))
+
+#' @rdname set
+#' @export
+setMethod(
+  "ani<-",
+  c(x = "ATO", value = "ATO_ani"),
+  function(x, value) {
+    x <- .set_worker(x, value, append = FALSE, silent = FALSE)
+    return(x)
+  }
+)
+
+#' @rdname set
+#' @export
+setGeneric(
   "set_dep",
   function(x, value, append = FALSE, silent = FALSE)
     standardGeneric("set_dep"))
@@ -63,6 +85,24 @@ setMethod(
   c(x = "ATO", value = "ATO_dep"),
   function(x, value, append, silent) {
     x <- .set_worker(x, value, append, silent)
+    return(x)
+  }
+)
+
+#' @rdname set
+#' @export
+setGeneric(
+  "dep<-",
+  function(x, value)
+    standardGeneric("dep<-"))
+
+#' @rdname set
+#' @export
+setMethod(
+  "dep<-",
+  c(x = "ATO", value = "ATO_dep"),
+  function(x, value) {
+    x <- .set_worker(x, value, append = FALSE, silent = FALSE)
     return(x)
   }
 )
@@ -88,6 +128,24 @@ setMethod(
 #' @rdname set
 #' @export
 setGeneric(
+  "det<-",
+  function(x, value)
+    standardGeneric("det<-"))
+
+#' @rdname set
+#' @export
+setMethod(
+  "det<-",
+  c(x = "ATO", value = "ATO_det"),
+  function(x, value) {
+    x <- .set_worker(x, value, append = FALSE, silent = FALSE)
+    return(x)
+  }
+)
+
+#' @rdname set
+#' @export
+setGeneric(
   "set_obs",
   function(x, value, append = FALSE, silent = FALSE)
     standardGeneric("set_obs"))
@@ -106,6 +164,24 @@ setMethod(
 #' @rdname set
 #' @export
 setGeneric(
+  "obs<-",
+  function(x, value)
+    standardGeneric("obs<-"))
+
+#' @rdname set
+#' @export
+setMethod(
+  "obs<-",
+  c(x = "ATO", value = "ATO_obs"),
+  function(x, value) {
+    x <- .set_worker(x, value, append = FALSE, silent = FALSE)
+    return(x)
+  }
+)
+
+#' @rdname set
+#' @export
+setGeneric(
   "set_tag",
   function(x, value, append = FALSE, silent = FALSE)
     standardGeneric("set_tag"))
@@ -117,6 +193,24 @@ setMethod(
   c(x = "ATO", value = "ATO_tag"),
   function(x, value, append, silent) {
     x <- .set_worker(x, value, append, silent)
+    return(x)
+  }
+)
+
+#' @rdname set
+#' @export
+setGeneric(
+  "tag<-",
+  function(x, value)
+    standardGeneric("tag<-"))
+
+#' @rdname set
+#' @export
+setMethod(
+  "tag<-",
+  c(x = "ATO", value = "ATO_tag"),
+  function(x, value) {
+    x <- .set_worker(x, value, append = FALSE, silent = FALSE)
     return(x)
   }
 )

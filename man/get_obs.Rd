@@ -3,11 +3,17 @@
 \name{get_obs}
 \alias{get_obs}
 \alias{get_obs,ATO-method}
+\alias{obs}
+\alias{obs,ATO-method}
 \title{Generic to extract the obs slot as a table}
 \usage{
 get_obs(x, type = c("all", "valid", "invalid"))
 
 \S4method{get_obs}{ATO}(x, type = c("all", "valid", "invalid"))
+
+obs(x, type = c("all", "valid", "invalid"))
+
+\S4method{obs}{ATO}(x, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}
@@ -25,12 +31,14 @@ Generic to extract the obs slot as a table
 }
 \examples{
 # extract all the observations from an ATO in table format
-obs <- get_obs(example_ato)
-summary(obs)
-# note: The example ato object has no observations, so this
-# returns 0 rows.
+x <- get_obs(example_ato)
+summary(x)
+
+# short form:
+x <- obs(example_ato)
+summary(x)
 
 # clean up
-rm(obs)
+rm(x)
 
 }

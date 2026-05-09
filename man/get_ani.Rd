@@ -3,11 +3,17 @@
 \name{get_ani}
 \alias{get_ani}
 \alias{get_ani,ATO-method}
+\alias{ani}
+\alias{ani,ATO-method}
 \title{Generic to extract the ani slot as a table}
 \usage{
 get_ani(x, type = c("all", "valid", "invalid"))
 
 \S4method{get_ani}{ATO}(x, type = c("all", "valid", "invalid"))
+
+ani(x, type = c("all", "valid", "invalid"))
+
+\S4method{ani}{ATO}(x, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}
@@ -25,10 +31,14 @@ Generic to extract the ani slot as a table
 }
 \examples{
 # extract all the animals from an ATO in table format
-ani <- get_ani(example_ato)
-summary(ani)
+x <- get_ani(example_ato)
+summary(x)
+
+# short form:
+x <- ani(example_ato)
+summary(x)
 
 # clean up
-rm(ani)
+rm(x)
 
 }

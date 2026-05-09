@@ -3,11 +3,14 @@
 \name{get_det}
 \alias{get_det}
 \alias{get_det,ATO-method}
+\alias{det}
 \title{Generic to extract detections as a table}
 \usage{
 get_det(x, receivers, transmitters, type = c("all", "valid", "invalid"))
 
 \S4method{get_det}{ATO}(x, receivers, transmitters, type = c("all", "valid", "invalid"))
+
+det(x, receivers, transmitters, type = c("all", "valid", "invalid"))
 }
 \arguments{
 \item{x}{an \code{\link{ATO}} object}
@@ -31,24 +34,28 @@ Generic to extract detections as a table
 }
 \examples{
 # extract all the detections from an ATO in table format
-det <- get_det(example_ato)
-summary(det)
+x <- get_det(example_ato)
+summary(x)
+
+# short form:
+x <- det(example_ato)
+summary(x)
 
 # extract only detections from one or more specific receivers
-sub_det <- get_det(example_ato, receivers = "132908")
-summary(sub_det)
+x <- get_det(example_ato, receivers = "132908")
+summary(x)
 
 # or matching one or more specific transmitters
-sub_det <- get_det(example_ato, transmitters = "R64K-4529")
-summary(sub_det)
+x <- get_det(example_ato, transmitters = "R64K-4529")
+summary(x)
 
 # or both!
-sub_det <- get_det(example_ato,
-                   receivers = "132908",
-                   transmitters = "R64K-4529")
-summary(sub_det)
+x <- get_det(example_ato,
+             receivers = "132908",
+             transmitters = "R64K-4529")
+summary(x)
 
 # clean up
-rm(det, sub_det)
+rm(x)
 
 }
