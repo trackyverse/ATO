@@ -12,7 +12,6 @@
 #'   \item{tag}{Information about tags. See \code{\link{make_tag}}}
 #'   \item{pkg}{Reserved for other packages of the trackyverse}
 #'   \item{log}{Log of actions. See \code{\link{log_event}}}
-#'   \item{tbl}{ATO table type. See \code{\link{table_type}}}
 #' }
 #' @source The data in the example is the same as provided by the package actel,
 #'  and was collected by the author

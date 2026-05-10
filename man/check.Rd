@@ -7,22 +7,19 @@
 \alias{check,ATO_det-method}
 \alias{check,ATO_obs-method}
 \alias{check,ATO_tag-method}
-\alias{check,ATO_tbl-method}
 \title{check generic}
 \usage{
-check(object, tz)
+check(object, tz, tbl)
 
-\S4method{check}{ATO_ani}(object, tz)
+\S4method{check}{ATO_ani}(object, tz, tbl)
 
-\S4method{check}{ATO_dep}(object, tz)
+\S4method{check}{ATO_dep}(object, tz, tbl)
 
-\S4method{check}{ATO_det}(object, tz)
+\S4method{check}{ATO_det}(object, tz, tbl)
 
-\S4method{check}{ATO_obs}(object, tz)
+\S4method{check}{ATO_obs}(object, tz, tbl)
 
-\S4method{check}{ATO_tag}(object, tz)
-
-\S4method{check}{ATO_tbl}(object)
+\S4method{check}{ATO_tag}(object, tz, tbl)
 }
 \arguments{
 \item{object}{The prospective ATO slot object}

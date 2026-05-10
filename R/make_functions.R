@@ -14,6 +14,9 @@
 #' @param capture_lat Latitude of the capture. Preferably in WGS84 (numeric).
 #' @param capture_lon Longitude of the capture. Preferably in WGS84 (numeric).
 #' @param tz the timezone of the datetime data.
+#' @param tbl The type of table to be generated. One of "data.frame",
+#'   "data.table", or "tibble". If omitted, the output of
+#'   getOption("ATO_table_type", default = "data.frame") is used.
 #' @param ... Non-standard columns to be added to the table.
 #'
 #' @return an ATO_ani object, ready to be used by one of the \code{\link{set}}
@@ -34,6 +37,7 @@ make_ani <- function(
   capture_lat = NA_real_,
   capture_lon = NA_real_,
   tz,
+  tbl,
   ...
 ) {
   mandatory_cols <- c(
@@ -50,15 +54,19 @@ make_ani <- function(
       ". All animals must have ",
       .comma(mandatory_cols[check]),
       " information. ",
-      ifelse(check[2],
-        paste0(" If you are unsure what the exact release times were,",
-               " use an approximate value."),
-        ""),
+      ifelse(
+        check[2],
+        paste0(
+          " If you are unsure what the exact release times were,",
+          " use an approximate value."
+        ),
+        ""
+      ),
       call. = FALSE
     )
   }
 
-  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+  tbl <- .check_tbl_argument(tbl)
 
   output <- data.frame(
     animal = animal,
@@ -73,16 +81,17 @@ make_ani <- function(
     valid = TRUE,
     ...
   )
-  if (ato_table_type == "data.table") {
-    .data.table_exists()
+
+  if (tbl == "data.table") {
     data.table::setDT(output)
   }
-  if (ato_table_type == "tibble") {
-    .tibble_exists()
+  if (tbl == "tibble") {
     output <- tibble::as_tibble(output)
   }
+  
   class(output) <- c("ATO_ani", class(output))
-  output <- check(output, tz = tz)
+  
+  output <- check(output, tz = tz, tbl = tbl)
   return(output)
 }
 
@@ -113,6 +122,9 @@ make_ani <- function(
 #' @param transmitter_ping_rate Expected ping rate of the transmitter,
 #'   in seconds (numeric).
 #' @param tz the timezone of the datetime data.
+#' @param tbl The type of table to be generated. One of "data.frame",
+#'   "data.table", or "tibble". If omitted, the output of
+#'   getOption("ATO_table_type", default = "data.frame") is used.
 #' @param ... Non-standard columns to be added to the table.
 #'
 #' @return an ATO_dep object, ready to be used by one of the \code{\link{set}}
@@ -141,6 +153,7 @@ make_dep <- function(
   transmitter_serial = NA_character_,
   transmitter_ping_rate = NA_real_,
   tz,
+  tbl,
   ...
 ) {
   mandatory_cols <- c(
@@ -158,23 +171,17 @@ make_dep <- function(
       .comma(mandatory_cols[check]),
       " information. If you are unsure what the exact deployment and recovery",
       " times were, use an approximate value.",
-      ifelse(check[2],
-        paste0(" For rolling receiver deployments, use the time of",
-               " last download as the recovery time."),
+      ifelse(
+        check[2],
+        paste0(
+          " For rolling receiver deployments, use the time of",
+          " last download as the recovery time."),
         ""),
       call. = FALSE
     )
   }
 
-  if (any(is.na(receiver_serial) & is.na(transmitter))) {
-    stop(
-      "Each deployment must be associated to either a receiver_serial or a",
-      " transmitter, or both.",
-      call. = FALSE
-    )
-  }
-
-  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+  tbl <- .check_tbl_argument(tbl)
 
   output <- data.frame(
     deploy_datetime = deploy_datetime,
@@ -197,16 +204,14 @@ make_dep <- function(
     valid = TRUE,
     ...
   )
-  if (ato_table_type == "data.table") {
-    .data.table_exists()
+  if (tbl == "data.table") {
     data.table::setDT(output)
   }
-  if (ato_table_type == "tibble") {
-    .tibble_exists()
+  if (tbl == "tibble") {
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_dep", class(output))
-  output <- check(output, tz = tz)
+  output <- check(output, tz = tz, tbl = tbl)
   return(output)
 }
 
@@ -220,6 +225,9 @@ make_dep <- function(
 #' @param frac_second fractional second of the detection (numeric).
 #' @param sensor_value reported sensor value (numeric).
 #' @param tz the timezone of the datetime data.
+#' @param tbl The type of table to be generated. One of "data.frame",
+#'   "data.table", or "tibble". If omitted, the output of
+#'   getOption("ATO_table_type", default = "data.frame") is used.
 #' @param ... Non-standard columns to be added to the table.
 #'
 #' @return an ATO_det object, ready to be used by one of the \code{\link{set}}
@@ -236,6 +244,7 @@ make_det <- function(
   frac_second = NA_real_,
   sensor_value = NA_real_,
   tz,
+  tbl,
   ...
 ) {
   mandatory_cols <- c(
@@ -257,7 +266,8 @@ make_det <- function(
     )
   }
 
-  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+  tbl <- .check_tbl_argument(tbl)
+
   # detections objects can be very big.
   # to avoid spending a long time loading everything
   # before checking the quality of the data, we can make
@@ -270,16 +280,14 @@ make_det <- function(
     sensor_value = sensor_value[1],
     valid = TRUE
   )
-  if (ato_table_type == "data.table") {
-    .data.table_exists()
+  if (tbl == "data.table") {
     data.table::setDT(mock)
   }
-  if (ato_table_type == "tibble") {
-    .tibble_exists()
+  if (tbl == "tibble") {
     mock <- tibble::as.tibble(mock)
   }
   class(mock) <- c("ATO_det", class(mock))
-  mock <- check(mock, tz = tz)
+  mock <- check(mock, tz = tz, tbl = tbl)
 
   # now check for potential issues with fractional seconds
   # more info here: https://github.com/trackyverse/ATO/issues/18
@@ -337,12 +345,10 @@ make_det <- function(
     valid = TRUE,
     ...
   )
-  if (ato_table_type == "data.table") {
-    .data.table_exists()
+  if (tbl == "data.table") {
     data.table::setDT(output)
   }
-  if (ato_table_type == "tibble") {
-    .tibble_exists()
+  if (tbl == "tibble") {
     output <- tibble::as.tibble(output)
   }
   class(output) <- c("ATO_det", class(output))
@@ -368,6 +374,9 @@ make_det <- function(
 #' @param lat latitude of the observation. Preferably in WGS84 (numeric).
 #' @param lon longitude of the observation. Preferably in WGS84 (numeric).
 #' @param tz the timezone of the datetime data.
+#' @param tbl The type of table to be generated. One of "data.frame",
+#'   "data.table", or "tibble". If omitted, the output of
+#'   getOption("ATO_table_type", default = "data.frame") is used.
 #' @param ... Non-standard columns to be added to the table.
 #'
 #' @return an ATO_obs object, ready to be used by one of the \code{\link{set}}
@@ -387,6 +396,7 @@ make_obs <- function(
   lat = NA_real_,
   lon = NA_real_,
   tz,
+  tbl,
   ...
 ) {
   mandatory_cols <- c(
@@ -415,7 +425,7 @@ make_obs <- function(
     )
   }
 
-  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+  tbl <- .check_tbl_argument(tbl)
 
   output <- data.frame(
     animal = animal,
@@ -429,11 +439,11 @@ make_obs <- function(
     valid = TRUE,
     ...
   )
-  if (ato_table_type == "data.table") {
+  if (tbl == "data.table") {
     .data.table_exists()
     data.table::setDT(output)
   }
-  if (ato_table_type == "tibble") {
+  if (tbl == "tibble") {
     .tibble_exists()
     output <- tibble::as_tibble(output)
   }
@@ -463,6 +473,9 @@ make_obs <- function(
 #'   (character).
 #' @param animal Name of the animal that received the tag (character).
 #' @param tz the timezone of the datetime data.
+#' @param tbl The type of table to be generated. One of "data.frame",
+#'   "data.table", or "tibble". If omitted, the output of
+#'   getOption("ATO_table_type", default = "data.frame") is used.
 #' @param ... Non-standard columns to be added to the table.
 #'
 #' @return an ATO_tag object, ready to be used by one of the \code{\link{set}}
@@ -486,9 +499,10 @@ make_tag <- function(
   sensor_unit = NA_character_,
   animal = NA_character_,
   tz,
+  tbl,
   ...
 ) {
-  if (any(is.na(get(transmitter)))) {
+  if (any(is.na(transmitter))) {
     stop(
       "Missing data detected in transmitter.",
       " All tags must have transmitter information.",
@@ -496,7 +510,7 @@ make_tag <- function(
     )
   }
 
-  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
+  tbl <- .check_tbl_argument(tbl)
 
   output <- data.frame(
     transmitter = transmitter,
@@ -514,15 +528,13 @@ make_tag <- function(
     valid = TRUE,
     ...
   )
-  if (ato_table_type == "data.table") {
-    .data.table_exists()
+  if (tbl == "data.table") {
     data.table::setDT(output)
   }
-  if (ato_table_type == "tibble") {
-    .tibble_exists()
+  if (tbl == "tibble") {
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_tag", class(output))
-  output <- check(output, tz = tz)
+  output <- check(output, tz = tz, tbl = tbl)
   return(output)
 }

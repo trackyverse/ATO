@@ -19,6 +19,8 @@
 #                 mass_g = actel:::example.biometrics$Mass.g)
 # summary(ani)
 # head(ani)
+# str(ani)
+# table_type(ani)
 # # 
 # # @dep
 # head(actel:::example.deployments)
@@ -66,9 +68,6 @@
 #               actel:::example.detections$Signal)
 # tag <- make_tag(manufacturer = "Thelma",
 #                 model = "7.3 mm tag",
-#                 power_level = NA_real_,
-#                 ping_rate = NA_real_,
-#                 ping_variation = NA_real_,
 #                 serial = as.character(actel:::example.biometrics$Serial.nr),
 #                 transmitter = paste0("R64K-", actel:::example.biometrics$Signal),
 #                 activation_datetime = as.POSIXct(actel:::example.biometrics$Release.date,
@@ -82,11 +81,14 @@
 #                 mass_water_g = 1.2)
 # summary(tag)
 # # 
+
+
 # example_ato <- init_ato(ani = ani,
 #                         dep = dep,
 #                         det = det,
 #                         tag = tag)
 # # 
 # example_ato
+
 # # 
 # usethis::use_data(example_ato, overwrite = TRUE, internal = FALSE)

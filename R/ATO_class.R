@@ -281,28 +281,6 @@ setClass("ATO_log")
 )[-1, ]
 class(.ATO_log) <- c("ATO_log", "data.frame")
 
-#' S4 class: ATO_tbl
-#'
-#' An S4 class for the \code{\link{ATO}} table format (@tbl).
-#' Does not contain internal slots. It is a single value.
-#' One of: "data.frame", "data.table", or "tibble"
-#'
-#' The prototype @tbl slot contains the default value for the @tbl slot.
-#'
-#' @keywords classes
-#'
-#' @name ATO_tbl
-#' 
-#' @seealso \code{\link{table_type}}
-#'
-setClass("ATO_tbl")
-
-#' @rdname ATO_tbl
-#' @name .ATO_tbl
-#' @export
-.ATO_tbl <- "data.frame"
-class(.ATO_tbl) <- c("ATO_tbl", "character")
-
 #' S4 class: ATO
 #'
 #' The Animal Tracking Object (ATO) class contains slots that allow
@@ -315,7 +293,6 @@ class(.ATO_tbl) <- c("ATO_tbl", "character")
 #' @slot obs The observations slot. See \code{\link{ATO_obs}}.
 #' @slot tag The tags slot. See \code{\link{ATO_tag}}.
 #' @slot log The log slot. See \code{\link{ATO_log}}.
-#' @slot tbl The table style slot. See \code{\link{ATO_tbl}}.
 #' @slot pkg A list slot reserved for package outputs.
 #'
 #' @export
@@ -329,7 +306,6 @@ setClass(
     obs = "ATO_obs",
     tag = "ATO_tag",
     log = "ATO_log",
-    tbl = "ATO_tbl",
     pkg = "list"
   ),
   prototype = list(
@@ -339,7 +315,6 @@ setClass(
     obs = .ATO_obs,
     tag = .ATO_tag,
     log = .ATO_log,
-    tbl = .ATO_tbl,
     pkg = list()
   )
 )
@@ -351,12 +326,9 @@ setClass(
 #' @name ATO validity
 #'
 setValidity("ATO", function(object) {
-  check(object@ani)
-  check(object@dep)
-  check(object@det)
-  check(object@obs)
-  check(object@tag)
-  check(object@tbl)
-
+  slots <- c("ani", "dep", "det", "obs", "tag")
+  for (i in slots) {
+    check(slot(object, i), tz = tzone(object), tbl = table_type(object))
+  }
   return(TRUE)
 })

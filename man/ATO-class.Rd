@@ -24,8 +24,6 @@ by the R packages that collectively make the trackyverse.
 
 \item{\code{log}}{The log slot. See \code{\link{ATO_log}}.}
 
-\item{\code{tbl}}{The table style slot. See \code{\link{ATO_tbl}}.}
-
 \item{\code{pkg}}{A list slot reserved for package outputs.}
 }}
 

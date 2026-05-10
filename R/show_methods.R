@@ -7,7 +7,7 @@
 #' @export
 #' 
 setMethod("show", "ATO", function(object) {
-  cat(object@tbl)
+  cat(table_type(object))
   cat(" ATO object:\n")
   if (nrow(object@ani) == 0) {
     cat("@ani slot is empty.\n")

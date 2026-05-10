@@ -220,12 +220,11 @@ setMethod(
 .set_worker <- function(x, value, append = FALSE, silent = FALSE) {
   target <- sub("ATO_", "", class(value)[1])
 
-  # make sure everything is in the same time zone
-  if (!is.null(tzone(x))) {
-    value <- .check_column_tzones(value, tzone(x))
-  } else {
-    value <- .check_column_tzones(value)
+  if (!is.null(table_type(x))) {
+    table_type(value, table_type(x))
   }
+
+  value <- .check_column_tzones(value, tzone(x))
 
   if (append) {
     check1 <- any(colnames(value) %in% colnames(slot(x, target)))

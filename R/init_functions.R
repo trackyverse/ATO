@@ -40,9 +40,10 @@ init_ato <- function(ani, dep, det, obs, tag, silent = FALSE) {
     obs = .ATO_obs,
     tag = .ATO_tag,
     log = .ATO_log,
-    tbl = .ATO_tbl,
     pkg = list()
   )
+
+  table_type(ato) <- getOption("ATO_table_type", default = "data.frame")
 
   old_match_immediate <- getOption("ATO_match_immediate", default = TRUE)
   on.exit(options(ATO_match_immediate = old_match_immediate))

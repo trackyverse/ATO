@@ -23,6 +23,7 @@ make_dep(
   transmitter_serial = NA_character_,
   transmitter_ping_rate = NA_real_,
   tz,
+  tbl,
   ...
 )
 }
@@ -67,6 +68,10 @@ surface of the water body (numeric).}
 in seconds (numeric).}
 
 \item{tz}{the timezone of the datetime data.}
+
+\item{tbl}{The type of table to be generated. One of "data.frame",
+"data.table", or "tibble". If omitted, the output of
+getOption("ATO_table_type", default = "data.frame") is used.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }

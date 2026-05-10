@@ -4,7 +4,7 @@
 \alias{.check_ato_table_type}
 \title{Check that the table type matches the current global option}
 \usage{
-.check_ato_table_type(object)
+.check_ato_table_type(object, expect)
 }
 \arguments{
 \item{object}{A prospective ATO slot object.}

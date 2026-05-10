@@ -4,22 +4,15 @@
 \alias{ato_table_type_global}
 \title{Helper function to set the global type of ATO tables}
 \usage{
-ato_table_type_global(
-  type = c("data.frame", "data.table", "tibble"),
-  update_all = FALSE
-)
+ato_table_type_global(type = c("data.frame", "data.table", "tibble"))
 }
 \arguments{
 \item{type}{the desired type of ATO tables. One of data.frame (default),
 data.table (requires the package data.table installed), or
 tibble (requires the package tibble installed).}
-
-\item{update_all}{If set to TRUE, this package will search the user's
-global environment for objects of class ATO and will update their
-table types (by calling \code{\link{table_type}} on them).}
 }
 \value{
-Nothing. called for side-effects
+the current global table type if 'type' is missing.
 }
 \description{
 Helper function to set the global type of ATO tables

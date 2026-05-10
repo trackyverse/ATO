@@ -3,20 +3,35 @@
 \name{table_type<-}
 \alias{table_type<-}
 \alias{table_type<-,ATO-method}
-\title{Assign a new table type to the ATO}
+\alias{table_type<-,ATO_ani-method}
+\alias{table_type<-,ATO_dep-method}
+\alias{table_type<-,ATO_det-method}
+\alias{table_type<-,ATO_obs-method}
+\alias{table_type<-,ATO_tag-method}
+\title{Assign a new table type to an ATO or an ATO slot.}
 \usage{
 table_type(x) <- value
 
 \S4method{table_type}{ATO}(x) <- value
+
+\S4method{table_type}{ATO_ani}(x) <- value
+
+\S4method{table_type}{ATO_dep}(x) <- value
+
+\S4method{table_type}{ATO_det}(x) <- value
+
+\S4method{table_type}{ATO_obs}(x) <- value
+
+\S4method{table_type}{ATO_tag}(x) <- value
 }
 \arguments{
 \item{x}{an \code{\link{ATO}}}
 
-\item{value}{The new table type to be used inside the ATO.}
+\item{value}{The new table type.}
 }
 \value{
-Nothing, acts directly on x
+Acts directly on x
 }
 \description{
-Assign a new table type to the ATO
+Assign a new table type to an ATO or an ATO slot.
 }

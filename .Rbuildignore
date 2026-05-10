@@ -11,3 +11,5 @@
 ^vignettes/articles/*_files$
 ^vignettes/articles$
 ^\.devcontainer$
+^data/example_ATO.R$
+

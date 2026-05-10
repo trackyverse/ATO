@@ -6,18 +6,22 @@
 #' 
 #' @return Nothing. Called to stop() if needed.
 #' 
-.check_ato_table_type <- function(object) {
-  ato_table_type <- getOption("ATO_table_type", default = "data.frame")
-  if (is(object, "data.table") & !ato_table_type == "data.table") {
-    stop("object is of type data.table but option ATO_table_type is set to ",
-         ato_table_type, ".",
-         " To change, run options(ATO_table_type = 'data.table').",
+.check_ato_table_type <- function(object, expect) {
+  if (is.null(expect)) {
+    return(invisible())
+  }
+  if (is(object, "data.table") & !expect == "data.table") {
+    stop("object is of type data.table but receiving ATO is of type ",
+         expect,
+         ". Change either the table type of the object or of the ATO.",
+         " See ?table_type().",
          call. = FALSE)
   }
-  if (is(object, "tibble") & !ato_table_type == "tibble") {
-    stop("object is of type tibble but option ATO_table_type is set to ",
-         ato_table_type, ".",
-         " To change, run options(ATO_table_type = 'tibble').",
+  if (is(object, "tibble") & !expect == "tibble") {
+    stop("object is of type tible but receiving ATO is of type ",
+         expect,
+         ". Change either the table type of the object or of the ATO.",
+         " See ?table_type().",
          call. = FALSE)
   }
 }
@@ -40,10 +44,11 @@
          call. = FALSE)
   }
   # column class check
+  ref_classes <- lapply(ref, class)
+  col_classes <- lapply(object, class)
   items <- ""
   for (i in colnames(ref)) {
-    target_col <- match(i, colnames(object))
-    class_check <- class(ref[, i]) %in% class(object[, target_col])
+    class_check <- ref_classes[[i]] %in% col_classes[[i]]
     if (any(!class_check)) {
       items <- paste(items, "\n -", i, "is not",
                      paste(class(ref[, i])[!class_check],
@@ -70,7 +75,7 @@
   link <- sapply(1:ncol(object), function(i) "POSIXt" %in% class(object[[i]]))
   if (any(link)) {
     time_cols <- colnames(object)[link]
-    if (!missing(tz)) {
+    if (!missing(tz) & !is.null(tz)) { # empty ATOs have null tz
       for (i in time_cols) {
         attributes(object[[i]])$tzone <- tz
       }
@@ -186,3 +191,35 @@
 # object <- example_ato
 # attributes(object@det$datetime)$tzone <- "UTC"
 # check_slot_tzones(object)
+
+
+.check_tbl_argument <- function(tbl) {
+  if (!missing(tbl)) {
+    if (!tbl %in% c("data.frame", "data.table", "tibble")) {
+      stop(
+        "tbl was defined but value not recognized. Value be one of",
+        " 'data.frame', 'data.table', or 'tibble'. See ?table_type.",
+        call. = FALSE
+      )
+    }
+  } else {
+    tbl <- getOption("ATO_table_type", default = "data.frame")
+    if (!tbl %in% c("data.frame", "data.table", "tibble")) {
+      stop(
+        "Option ATO_table_type has been modified to a value not",
+        " recognized. Please change it back to one of 'data.frame',",
+        " 'data.table', or 'tibble' to continue creating new ATO data.",
+        call. = FALSE
+        )
+    }
+  }
+
+  if (tbl == "data.table") {
+    .data.table_exists()    
+  }
+
+  if (tbl == "tibble") {
+    .tibble_exists()
+  }
+  return(tbl)
+}

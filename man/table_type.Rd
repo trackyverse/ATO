@@ -3,22 +3,47 @@
 \name{table_type}
 \alias{table_type}
 \alias{table_type,ATO-method}
-\title{What is the table type of this ATO?}
+\alias{table_type,ATO_ani-method}
+\alias{table_type,ATO_dep-method}
+\alias{table_type,ATO_det-method}
+\alias{table_type,ATO_obs-method}
+\alias{table_type,ATO_tag-method}
+\title{Table type of ATO data}
 \usage{
 table_type(x, expect)
 
 \S4method{table_type}{ATO}(x, expect)
+
+\S4method{table_type}{ATO_ani}(x, expect)
+
+\S4method{table_type}{ATO_dep}(x, expect)
+
+\S4method{table_type}{ATO_det}(x, expect)
+
+\S4method{table_type}{ATO_obs}(x, expect)
+
+\S4method{table_type}{ATO_tag}(x, expect)
 }
 \arguments{
 \item{x}{an \code{\link{ATO}}}
 
-\item{expect}{An expected type of table.
-Errors if the ATO is not of this type.}
+\item{expect}{An expected type of table. Optional.
+Errors if x is not of this type.}
 }
 \value{
 if expect is missing, returns the type of table used by the ATO.
 If expect is provided, either errors or returns nothing.
 }
 \description{
-What is the table type of this ATO?
+The tables within an ATO may be of one of three main groups:
+'data.frame', 'data.table', or 'tibble'. By default, the make functions
+(e.g. \code{\link{make_ani}}) create data.frame tables, which in turn create
+a data.frame ATO. This can be modified either by using the tbl argument
+within the make functions, or globally by calling
+\code{\link{ato_table_type_global}}.
+}
+\details{
+table_type may be used on an ATO object to check the type of table within
+its slots, or directly on a slot object. table_type may also be used to
+change the type of tables of a slot object or of an ATO object.
 }

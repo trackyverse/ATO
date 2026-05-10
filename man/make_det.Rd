@@ -11,6 +11,7 @@ make_det(
   frac_second = NA_real_,
   sensor_value = NA_real_,
   tz,
+  tbl,
   ...
 )
 }
@@ -26,6 +27,10 @@ make_det(
 \item{sensor_value}{reported sensor value (numeric).}
 
 \item{tz}{the timezone of the datetime data.}
+
+\item{tbl}{The type of table to be generated. One of "data.frame",
+"data.table", or "tibble". If omitted, the output of
+getOption("ATO_table_type", default = "data.frame") is used.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }

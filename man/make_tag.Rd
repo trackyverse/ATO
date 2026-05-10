@@ -18,6 +18,7 @@ make_tag(
   sensor_unit = NA_character_,
   animal = NA_character_,
   tz,
+  tbl,
   ...
 )
 }
@@ -50,6 +51,10 @@ transmitter and respective variation around the average, in seconds
 \item{animal}{Name of the animal that received the tag (character).}
 
 \item{tz}{the timezone of the datetime data.}
+
+\item{tbl}{The type of table to be generated. One of "data.frame",
+"data.table", or "tibble". If omitted, the output of
+getOption("ATO_table_type", default = "data.frame") is used.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }

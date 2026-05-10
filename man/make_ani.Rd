@@ -15,6 +15,7 @@ make_ani(
   capture_lat = NA_real_,
   capture_lon = NA_real_,
   tz,
+  tbl,
   ...
 )
 }
@@ -40,6 +41,10 @@ character).}
 \item{capture_lon}{Longitude of the capture. Preferably in WGS84 (numeric).}
 
 \item{tz}{the timezone of the datetime data.}
+
+\item{tbl}{The type of table to be generated. One of "data.frame",
+"data.table", or "tibble". If omitted, the output of
+getOption("ATO_table_type", default = "data.frame") is used.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }

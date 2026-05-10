@@ -9,12 +9,12 @@
 #' 
 #' @keywords internal
 #' 
-setGeneric("check", function(object, tz) standardGeneric("check"))
+setGeneric("check", function(object, tz, tbl) standardGeneric("check"))
 
 #' @rdname check
-setMethod("check", "ATO_ani", function(object, tz) {
+setMethod("check", "ATO_ani", function(object, tz, tbl) {
   # object class check
-  .check_ato_table_type(object)
+  .check_ato_table_type(object, expect = tbl)
   # column class check
   .check_ato_table_cols(object, .ATO_ani)
   # check the timezones
@@ -23,9 +23,9 @@ setMethod("check", "ATO_ani", function(object, tz) {
 })
 
 #' @rdname check
-setMethod("check", "ATO_dep", function(object, tz) {
+setMethod("check", "ATO_dep", function(object, tz, tbl) {
   # object class check
-  .check_ato_table_type(object)
+  .check_ato_table_type(object, expect = tbl)
   # column names check
   .check_ato_table_cols(object, .ATO_dep)
   # check the timezones
@@ -34,9 +34,9 @@ setMethod("check", "ATO_dep", function(object, tz) {
 })
 
 #' @rdname check
-setMethod("check", "ATO_det", function(object, tz) {
+setMethod("check", "ATO_det", function(object, tz, tbl) {
   # object class check
-  .check_ato_table_type(object)
+  .check_ato_table_type(object, expect = tbl)
   # column class check
   .check_ato_table_cols(object, .ATO_det)
   # check the timezones
@@ -45,9 +45,9 @@ setMethod("check", "ATO_det", function(object, tz) {
 })
 
 #' @rdname check
-setMethod("check", "ATO_obs", function(object, tz) {
+setMethod("check", "ATO_obs", function(object, tz, tbl) {
   # object class check
-  .check_ato_table_type(object)
+  .check_ato_table_type(object, expect = tbl)
   # column class check
   .check_ato_table_cols(object, .ATO_obs)
   # check the timezones
@@ -56,20 +56,12 @@ setMethod("check", "ATO_obs", function(object, tz) {
 })
 
 #' @rdname check
-setMethod("check", "ATO_tag", function(object, tz) {
+setMethod("check", "ATO_tag", function(object, tz, tbl) {
   # object class check
-  .check_ato_table_type(object)
+  .check_ato_table_type(object, expect = tbl)
   # column class check
   .check_ato_table_cols(object, .ATO_tag)
   # check the timezones
   object <- .check_column_tzones(object, tz = tz)
   return(object)
-})
-
-#' @rdname check
-setMethod("check", "ATO_tbl", function(object) {
-  if (!object %in% c("data.frame", "data.table", "tibble")) {
-    stop("@tbl value is invalid. This should never happen. Contact dev.",
-         call. = FALSE)
-  }
 })
