@@ -1,31 +1,3 @@
-#' Check that the table type matches the current global option
-#' 
-#' @param object A prospective ATO slot object.
-#' 
-#' @keywords internal
-#' 
-#' @return Nothing. Called to stop() if needed.
-#' 
-.check_ato_table_type <- function(object, expect) {
-  if (is.null(expect)) {
-    return(invisible())
-  }
-  if (is(object, "data.table") & !expect == "data.table") {
-    stop("object is of type data.table but receiving ATO is of type ",
-         expect,
-         ". Change either the table type of the object or of the ATO.",
-         " See ?table_type().",
-         call. = FALSE)
-  }
-  if (is(object, "tibble") & !expect == "tibble") {
-    stop("object is of type tible but receiving ATO is of type ",
-         expect,
-         ". Change either the table type of the object or of the ATO.",
-         " See ?table_type().",
-         call. = FALSE)
-  }
-}
-
 #' Check that the table columns match the prototype
 #' 
 #' @param object A prospective ATO slot object

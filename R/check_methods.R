@@ -14,7 +14,9 @@ setGeneric("check", function(object, tz, tbl) standardGeneric("check"))
 #' @rdname check
 setMethod("check", "ATO_ani", function(object, tz, tbl) {
   # object class check
-  .check_ato_table_type(object, expect = tbl)
+  if (!is.null(tbl)) {
+    table_type(object, tbl)
+  }
   # column class check
   .check_ato_table_cols(object, .ATO_ani)
   # check the timezones
@@ -25,7 +27,9 @@ setMethod("check", "ATO_ani", function(object, tz, tbl) {
 #' @rdname check
 setMethod("check", "ATO_dep", function(object, tz, tbl) {
   # object class check
-  .check_ato_table_type(object, expect = tbl)
+  if (!is.null(tbl)) {
+    table_type(object, tbl)
+  }
   # column names check
   .check_ato_table_cols(object, .ATO_dep)
   # check the timezones
@@ -36,7 +40,9 @@ setMethod("check", "ATO_dep", function(object, tz, tbl) {
 #' @rdname check
 setMethod("check", "ATO_det", function(object, tz, tbl) {
   # object class check
-  .check_ato_table_type(object, expect = tbl)
+  if (!is.null(tbl)) {
+    table_type(object, tbl)
+  }
   # column class check
   .check_ato_table_cols(object, .ATO_det)
   # check the timezones
@@ -47,7 +53,9 @@ setMethod("check", "ATO_det", function(object, tz, tbl) {
 #' @rdname check
 setMethod("check", "ATO_obs", function(object, tz, tbl) {
   # object class check
-  .check_ato_table_type(object, expect = tbl)
+  if (!is.null(tbl)) {
+    table_type(object, tbl)
+  }
   # column class check
   .check_ato_table_cols(object, .ATO_obs)
   # check the timezones
@@ -58,7 +66,9 @@ setMethod("check", "ATO_obs", function(object, tz, tbl) {
 #' @rdname check
 setMethod("check", "ATO_tag", function(object, tz, tbl) {
   # object class check
-  .check_ato_table_type(object, expect = tbl)
+  if (!is.null(tbl)) {
+    table_type(object, tbl)
+  }
   # column class check
   .check_ato_table_cols(object, .ATO_tag)
   # check the timezones
