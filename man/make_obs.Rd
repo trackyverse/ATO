@@ -9,8 +9,8 @@ make_obs(
   animal = NA_character_,
   transmitter = NA_character_,
   terminal,
+  location = NA_character_,
   type = NA_character_,
-  location,
   lat = NA_real_,
   lon = NA_real_,
   tz,
@@ -30,10 +30,10 @@ observation must have animal or transmitter information (or both).}
 \item{terminal}{Was the animal/transmitter permanently captured at the
 moment of observation (logical)? Required.}
 
+\item{location}{Name of the place where the observation occurred (character).}
+
 \item{type}{Type of observation (e.g. directly seen, manual tracking)
 (character).}
-
-\item{location}{Name of the place where the observation occurred (character).}
 
 \item{lat}{latitude of the observation. Preferably in WGS84 (numeric).}
 
@@ -43,7 +43,7 @@ moment of observation (logical)? Required.}
 
 \item{tbl}{The type of table to be generated. One of "data.frame",
 "data.table", or "tibble". If omitted, the output of
-getOption("ATO_table_type", default = "data.frame") is used.}
+\code{\link{ato_table_type_global}} is used.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }
@@ -53,6 +53,26 @@ functions or \code{\link{init_ato}}.
 }
 \description{
 Formats the input data into the ATO format and appends the ATO_obs class.
+}
+\examples{
+# To start an obs table, you need datetime, either the name
+# of the animal or the code of the transmitter observed, and to
+# specify if that observation is terminal (i.e. there will be no
+# more detections/observations for this animal or transmitter).
+# Note that posix objects created on-the-fly do not necessarily
+# have an associated timezone - try running the code below 
+# without the tz argument and it will fail.
+x <- make_obs(datetime = rep(Sys.time(), 10),
+              transmitter = c(paste0(LETTERS[1:5], "-", 1:5), rep(NA, 5)),
+              animal = c(rep(NA, 5), letters[6:10]),
+              terminal = rep(FALSE, 10),
+              tz = "America/Halifax")
+head(x)
+
+# additionally, you can change the type of table being created by using 
+# the tbl argument - this requires having either data.table or tibble
+# installed on your machine.
+
 }
 \seealso{
 \code{\link{ATO_obs}}

@@ -47,18 +47,25 @@
   link <- sapply(1:ncol(object), function(i) "POSIXt" %in% class(object[[i]]))
   if (any(link)) {
     time_cols <- colnames(object)[link]
-    if (!missing(tz) & !is.null(tz)) { # empty ATOs have null tz
+    if (!missing(tz) && !is.null(tz)) { # empty ATOs have null tz
       for (i in time_cols) {
         attributes(object[[i]])$tzone <- tz
       }
     } else {
       tzones <- sapply(time_cols, function(i) {
+        if (all(is.na(object[[i]]))) {
+          # means this column was not initialized
+          # so it just receivet its tzone from another
+          return(NA)
+        }
         if (is.null(attributes(object[[i]])$tzone)) {
           return("")
         } else {
           return(attributes(object[[i]])$tzone)
         }
       })
+      # remove columns not initialized
+      tzones <- tzones[!is.na(tzones)]
       # check if any tz is missing
       if (any(tzones == "")) {
         aux <- which(is.null(tzones) | tzones == "")
@@ -175,7 +182,7 @@
       )
     }
   } else {
-    tbl <- getOption("ATO_table_type", default = "data.frame")
+    tbl <- ato_table_type_global()
     if (!tbl %in% c("data.frame", "data.table", "tibble")) {
       stop(
         "Option ATO_table_type has been modified to a value not",

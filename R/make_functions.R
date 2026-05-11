@@ -16,13 +16,27 @@
 #' @param tz the timezone of the datetime data.
 #' @param tbl The type of table to be generated. One of "data.frame",
 #'   "data.table", or "tibble". If omitted, the output of
-#'   getOption("ATO_table_type", default = "data.frame") is used.
+#'   \code{\link{ato_table_type_global}} is used.
 #' @param ... Non-standard columns to be added to the table.
 #'
 #' @return an ATO_ani object, ready to be used by one of the \code{\link{set}}
 #'  functions or \code{\link{init_ato}}.
 #'
 #' @export
+#' 
+#' @examples
+#' # only two columns are required to start an ani table.
+#' # Note that posix objects created on-the-fly do not necessarily
+#' # have an associated timezone - try running the code below 
+#' # without the tz argument and it will fail.
+#' x <- make_ani(animal = letters[1:10],
+#'               release_datetime = rep(Sys.time(), 10),
+#'               tz = "America/Halifax")
+#' head(x)
+#' 
+#' # additionally, you can change the type of table being created by using 
+#' # the tbl argument - this requires having either data.table or tibble
+#' # installed on your machine.
 #'
 #' @seealso \code{\link{ATO_ani}}
 #'
@@ -67,6 +81,11 @@ make_ani <- function(
   }
 
   tbl <- .check_tbl_argument(tbl)
+
+  # add a timezone to capture datetime if argument wasn't used
+  if (length(capture_datetime) == 1 && is.na(capture_datetime)) {
+    attributes(capture_datetime)$tzone <- attributes(release_datetime)$tzone
+  }
 
   output <- data.frame(
     animal = animal,
@@ -124,12 +143,30 @@ make_ani <- function(
 #' @param tz the timezone of the datetime data.
 #' @param tbl The type of table to be generated. One of "data.frame",
 #'   "data.table", or "tibble". If omitted, the output of
-#'   getOption("ATO_table_type", default = "data.frame") is used.
+#'   \code{\link{ato_table_type_global}} is used.
 #' @param ... Non-standard columns to be added to the table.
 #'
 #' @return an ATO_dep object, ready to be used by one of the \code{\link{set}}
 #'  functions or \code{\link{init_ato}}.
 #'
+#' @examples
+#' # only two columns are required to start a dep table.
+#' # Note that posix objects created on-the-fly do not necessarily
+#' # have an associated timezone - try running the code below 
+#' # without the tz argument and it will fail.
+#' x <- make_dep(deploy_datetime = rep(Sys.time(), 10),
+#'               recover_datetime = rep(Sys.time(), 10),
+#'               tz = "America/Halifax")
+#' head(x)
+#' 
+#' # additionally, you can change the type of table being created by using 
+#' # the tbl argument - this requires having either data.table or tibble
+#' # installed on your machine.
+#' 
+#' # while you can create deployments with only deployment and recovery times,
+#' # they will likely not be very useful unless you also include a receiver
+#' # serial number or an associated transmitter code.
+#' 
 #' @export
 #'
 #' @seealso \code{\link{ATO_dep}}
@@ -227,12 +264,30 @@ make_dep <- function(
 #' @param tz the timezone of the datetime data.
 #' @param tbl The type of table to be generated. One of "data.frame",
 #'   "data.table", or "tibble". If omitted, the output of
-#'   getOption("ATO_table_type", default = "data.frame") is used.
+#'   \code{\link{ato_table_type_global}} is used.
 #' @param ... Non-standard columns to be added to the table.
 #'
 #' @return an ATO_det object, ready to be used by one of the \code{\link{set}}
 #'  functions or \code{\link{init_ato}}.
 #'
+#' @examples
+#' # only three columns are required to start a det table.
+#' # Note that posix objects created on-the-fly do not necessarily
+#' # have an associated timezone - try running the code below 
+#' # without the tz argument and it will fail.
+#' x <- make_det(datetime = rep(round(Sys.time()), 10),
+#'               receiver_serial = letters[1:10],
+#'               transmitter = paste0(LETTERS[1:10], "-", 1:10),
+#'               tz = "America/Halifax")
+#' head(x)
+#' 
+#' # additionally, you can change the type of table being created by using 
+#' # the tbl argument - this requires having either data.table or tibble
+#' # installed on your machine.
+#' 
+#' # Note that make_det will complain if the datetime argument contains
+#' # milliseconds. Try removing the round() call above to see it
+#' 
 #' @export
 #'
 #' @seealso \code{\link{ATO_det}}
@@ -368,15 +423,15 @@ make_det <- function(
 #'   observation must have animal or transmitter information (or both).
 #' @param terminal Was the animal/transmitter permanently captured at the
 #'   moment of observation (logical)? Required.
+#' @param location Name of the place where the observation occurred (character).
 #' @param type Type of observation (e.g. directly seen, manual tracking)
 #'   (character).
-#' @param location Name of the place where the observation occurred (character).
 #' @param lat latitude of the observation. Preferably in WGS84 (numeric).
 #' @param lon longitude of the observation. Preferably in WGS84 (numeric).
 #' @param tz the timezone of the datetime data.
 #' @param tbl The type of table to be generated. One of "data.frame",
 #'   "data.table", or "tibble". If omitted, the output of
-#'   getOption("ATO_table_type", default = "data.frame") is used.
+#'   \code{\link{ato_table_type_global}} is used.
 #' @param ... Non-standard columns to be added to the table.
 #'
 #' @return an ATO_obs object, ready to be used by one of the \code{\link{set}}
@@ -384,6 +439,25 @@ make_det <- function(
 #'
 #' @export
 #'
+#' @examples
+#' # To start an obs table, you need datetime, either the name
+#' # of the animal or the code of the transmitter observed, and to
+#' # specify if that observation is terminal (i.e. there will be no
+#' # more detections/observations for this animal or transmitter).
+#' # Note that posix objects created on-the-fly do not necessarily
+#' # have an associated timezone - try running the code below 
+#' # without the tz argument and it will fail.
+#' x <- make_obs(datetime = rep(Sys.time(), 10),
+#'               transmitter = c(paste0(LETTERS[1:5], "-", 1:5), rep(NA, 5)),
+#'               animal = c(rep(NA, 5), letters[6:10]),
+#'               terminal = rep(FALSE, 10),
+#'               tz = "America/Halifax")
+#' head(x)
+#' 
+#' # additionally, you can change the type of table being created by using 
+#' # the tbl argument - this requires having either data.table or tibble
+#' # installed on your machine.
+#' 
 #' @seealso \code{\link{ATO_obs}}
 #'
 make_obs <- function(
@@ -391,8 +465,8 @@ make_obs <- function(
   animal = NA_character_,
   transmitter = NA_character_,
   terminal,
+  location = NA_character_,
   type = NA_character_,
-  location,
   lat = NA_real_,
   lon = NA_real_,
   tz,
@@ -400,8 +474,8 @@ make_obs <- function(
   ...
 ) {
   mandatory_cols <- c(
-    "terminal",
-    "datetime"
+    "datetime",
+    "terminal"
   )
   check <- sapply(mandatory_cols, function(i) {
     any(is.na(get(i)))
@@ -448,7 +522,7 @@ make_obs <- function(
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_obs", class(output))
-  output <- check(output, tz = tz)
+  output <- check(output, tz = tz, tbl = tbl)
   return(output)
 }
 
@@ -475,12 +549,22 @@ make_obs <- function(
 #' @param tz the timezone of the datetime data.
 #' @param tbl The type of table to be generated. One of "data.frame",
 #'   "data.table", or "tibble". If omitted, the output of
-#'   getOption("ATO_table_type", default = "data.frame") is used.
+#'   \code{\link{ato_table_type_global}} is used.
 #' @param ... Non-standard columns to be added to the table.
 #'
 #' @return an ATO_tag object, ready to be used by one of the \code{\link{set}}
 #'  functions or \code{\link{init_ato}}.
 #'
+#' @examples
+#' # All you need to make a tag table is the respective transmitter
+#' # code.
+#' x <- make_tag(transmitter = LETTERS[1:5])
+#' head(x)
+#' 
+#' # additionally, you can change the type of table being created by using 
+#' # the tbl argument - this requires having either data.table or tibble
+#' # installed on your machine.
+#' 
 #' @export
 #'
 #' @seealso \code{\link{ATO_tag}}

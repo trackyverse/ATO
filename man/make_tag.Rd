@@ -54,7 +54,7 @@ transmitter and respective variation around the average, in seconds
 
 \item{tbl}{The type of table to be generated. One of "data.frame",
 "data.table", or "tibble". If omitted, the output of
-getOption("ATO_table_type", default = "data.frame") is used.}
+\code{\link{ato_table_type_global}} is used.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }
@@ -64,6 +64,17 @@ functions or \code{\link{init_ato}}.
 }
 \description{
 Formats the input data into the ATO format and appends the ATO_tag class.
+}
+\examples{
+# All you need to make a tag table is the respective transmitter
+# code.
+x <- make_tag(transmitter = LETTERS[1:5])
+head(x)
+
+# additionally, you can change the type of table being created by using 
+# the tbl argument - this requires having either data.table or tibble
+# installed on your machine.
+
 }
 \seealso{
 \code{\link{ATO_tag}}

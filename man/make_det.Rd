@@ -30,7 +30,7 @@ make_det(
 
 \item{tbl}{The type of table to be generated. One of "data.frame",
 "data.table", or "tibble". If omitted, the output of
-getOption("ATO_table_type", default = "data.frame") is used.}
+\code{\link{ato_table_type_global}} is used.}
 
 \item{...}{Non-standard columns to be added to the table.}
 }
@@ -40,6 +40,25 @@ functions or \code{\link{init_ato}}.
 }
 \description{
 Formats the input data into the ATO format and appends the ATO_det class.
+}
+\examples{
+# only three columns are required to start a det table.
+# Note that posix objects created on-the-fly do not necessarily
+# have an associated timezone - try running the code below 
+# without the tz argument and it will fail.
+x <- make_det(datetime = rep(round(Sys.time()), 10),
+              receiver_serial = letters[1:10],
+              transmitter = paste0(LETTERS[1:10], "-", 1:10),
+              tz = "America/Halifax")
+head(x)
+
+# additionally, you can change the type of table being created by using 
+# the tbl argument - this requires having either data.table or tibble
+# installed on your machine.
+
+# Note that make_det will complain if the datetime argument contains
+# milliseconds. Try removing the round() call above to see it
+
 }
 \seealso{
 \code{\link{ATO_det}}
