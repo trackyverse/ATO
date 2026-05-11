@@ -51,12 +51,6 @@ The @log slot contains a history of the actions performed on the ato
 object. Packages within the trackyverse know how to interact with this
 slot automatically to add information. The user may also use the function
 \code{\link{log_event}} to manually add additional log lines.
-}
-
-\section{@tbl}{
-This internal slot indicates the type of tables contained within the
-ato object. ATO supports three types of tables: data.frame, data.table,
-and tibble. Do not edit this slot manually. See \code{\link{table_type}}.
 \subsection{@pkg}{
 
 The @pkg slot is intended to allow expandability without compromising
