@@ -1,9 +1,91 @@
-# NOTE
-# This file is meant to hold non-exported functions that do not belong
-# exclusively with any of the overall family functions. When creating
-# an internal function that is specific to a family, keep it within the
-# respective family file.
-#
+#' Count orphan detections and issue message
+#' 
+#' Used by the match functions
+#' 
+#' @param x an ATO object
+#' @param silent should a message be issued?
+#' 
+#' @return The number of orphans.
+#' 
+#' @keywords internal
+#' 
+.message_orphan_dets <- function(x, silent = FALSE) {
+  orphans <- is.na(x@det$dep_match) & x@det$valid
+  if (!silent & any(orphans)) {
+    n_rec <- length(unique(x@det$receiver_serial[orphans]))
+    message("M: ", sum(orphans), " valid detection", .s(sum(orphans)),
+            " (from ", n_rec, " receiver", .s(n_rec),
+            ") do not match deployment periods",
+            " (orphan detection", .s(sum(orphans)), ").")
+  }
+  return(sum(orphans))
+}
+
+#' Count stray detections and issue message
+#' 
+#' Used by the match functions
+#' 
+#' @inheritParams .message_orphan_dets
+#' 
+#' @return The number of stray detections.
+#' 
+#' @keywords internal
+#' 
+.message_stray_dets <- function(x, silent = FALSE) {
+  if (is.null(x@det$tag_match)) {
+    strays <- is.na(x@det$beacon_match) & x@det$valid
+  }
+  if (is.null(x@det$beacon_match)) {
+    strays <- is.na(x@det$tag_match) & x@det$valid
+  }
+  if (!is.null(x@det$tag_match) & !is.null(x@det$beacon_match)) {
+    strays <- is.na(x@det$tag_match) & is.na(x@det$beacon_match) & x@det$valid
+  }
+  if (!silent & any(strays)) {
+    n_tags <- length(unique(x@det$transmitter[strays]))
+    if (is.null(x@det$tag_match)) {
+      message("M: ", sum(strays), " valid detection", .s(sum(strays)),
+              " (from ", n_tags, " transmitter", .s(n_tags),
+              ") do not match transmitters listed in @dep",
+              " (stray detection", .s(sum(strays)), ").")
+    }
+    if (is.null(x@det$beacon_match)) {
+      message("M: ", sum(strays), " valid detection", .s(sum(strays)),
+              " (from ", n_tags, " transmitter", .s(n_tags),
+              ") do not match transmitters listed on @tag",
+              " (stray detection", .s(sum(strays)), ").")
+    }
+    if (!is.null(x@det$tag_match) & !is.null(x@det$beacon_match)) {
+      message("M: ", sum(strays), " valid detection", .s(sum(strays)),
+              " (from ", n_tags, " transmitter", .s(n_tags),
+              ") do not match transmitters listed on @tag or @dep",
+              " (stray detection", .s(sum(strays)), ").")
+    }
+  }
+  return(sum(strays))
+}
+
+#' Count number of zeros
+#' 
+#' Used by the match functions
+#' 
+#' @param x the vector of numbers
+#' @param longslot long name of the slot (e.g. animals)
+#' @param what what's being counted?
+#' @param silent should a message be issued?
+#' 
+#' @return The number of zeros.
+#' 
+#' @keywords internal
+#' 
+.message_n_zero <- function(x, longslot, what, silent) {
+  check <- sum(x == 0)
+  if (!silent & check > 0) {
+    message("M: ", check, " valid ", longslot, .s(sum(check)),
+            " ", .has(sum(check)), " no ", what, ".")
+  }
+  return(check)
+}
 
 #' Round value to a reasonable number of decimal places
 #' 
@@ -24,51 +106,6 @@
     output <- paste0("<0.", paste0(rep(0, max - 1), collapse = ""), "1")
   }
   return(output)
-}
-
-#' Check that data.table library is installed
-#' 
-#' @param error Stop if not installed?
-#' 
-#' @return TRUE if installed, FALSE if not installed and error = FALSE
-#' 
-#' @keywords internal
-#' 
-.data.table_exists <- function(error = TRUE) {
-  # data.table's special functions are hard to handle with data.table
-  # as a suggested package because this prevents us from using
-  # importFrom calls. Instead, this function loads all of data.table
-  # if we are about to use it.
-  # However, for code clarity and for the sanity of future developers,
-  # you should still use data.table:: wherever possible!
-  if (!"data.table" %in% utils::installed.packages()) {
-    if (error) {
-      stop("You must install package data.table to run this function.",
-           call. = FALSE)
-    } else {
-      return(FALSE)
-    }
-  }
-  return(TRUE)
-}
-
-#' Check that tibble library is installed
-#' 
-#' @param error Stop if not installed?
-#' 
-#' @return TRUE if installed, FALSE if not installed and error = FALSE
-#' 
-#' @keywords internal
-#' 
-.tibble_exists <- function(error = TRUE) {
-  if (!"tibble" %in% utils::installed.packages()) {
-    if (error) {
-      stop("This function requires package tibble to run.", call. = FALSE)
-    } else {
-      return(FALSE)
-    }
-  }
-  return(TRUE)
 }
 
 #' Concatenate vectors with commas

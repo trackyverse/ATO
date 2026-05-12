@@ -339,7 +339,7 @@ make_det <- function(
     data.table::setDT(mock)
   }
   if (tbl == "tibble") {
-    mock <- tibble::as.tibble(mock)
+    mock <- tibble::as_tibble(mock)
   }
   class(mock) <- c("ATO_det", class(mock))
   mock <- check(mock, tz = tz, tbl = tbl)
@@ -404,7 +404,7 @@ make_det <- function(
     data.table::setDT(output)
   }
   if (tbl == "tibble") {
-    output <- tibble::as.tibble(output)
+    output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_det", class(output))
   # run only the timezone checks here to save computing time
@@ -514,11 +514,11 @@ make_obs <- function(
     ...
   )
   if (tbl == "data.table") {
-    .data.table_exists()
+    .check_data.table_exists()
     data.table::setDT(output)
   }
   if (tbl == "tibble") {
-    .tibble_exists()
+    .check_tibble_exists()
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_obs", class(output))

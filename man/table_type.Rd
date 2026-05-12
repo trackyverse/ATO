@@ -47,3 +47,11 @@ table_type may be used on an ATO object to check the type of table within
 its slots, or directly on a slot object. table_type may also be used to
 change the type of tables of a slot object or of an ATO object.
 }
+\examples{
+# check the table type of an ato
+table_type(example_ato)
+
+# check the table type of an ATO slot
+table_type(.ATO_ani)
+
+}

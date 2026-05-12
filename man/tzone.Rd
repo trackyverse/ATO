@@ -3,20 +3,36 @@
 \name{tzone}
 \alias{tzone}
 \alias{tzone,ATO-method}
-\title{What is the timezone of this ATO?}
+\alias{tzone,ATO_ani-method}
+\alias{tzone,ATO_dep-method}
+\alias{tzone,ATO_det-method}
+\alias{tzone,ATO_obs-method}
+\alias{tzone,ATO_tag-method}
+\title{What is the timezone of this ATO object?}
 \usage{
 tzone(x)
 
 \S4method{tzone}{ATO}(x)
+
+\S4method{tzone}{ATO_ani}(x)
+
+\S4method{tzone}{ATO_dep}(x)
+
+\S4method{tzone}{ATO_det}(x)
+
+\S4method{tzone}{ATO_obs}(x)
+
+\S4method{tzone}{ATO_tag}(x)
 }
 \arguments{
-\item{x}{an \code{\link{ATO}}}
+\item{x}{an \code{\link{ATO}} or ATO slot object.}
 }
 \value{
-Returns the timezone of the ATO.
+Returns the timezone of the ATO object.
 }
 \description{
-What is the timezone of this ATO?
+You may use tzone to check and display the timezone of the datetime data
+of an ATO object or of any ATO slot object.
 }
 \examples{
 # check the timezone of the example ATO

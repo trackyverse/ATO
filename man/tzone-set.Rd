@@ -3,14 +3,29 @@
 \name{tzone<-}
 \alias{tzone<-}
 \alias{tzone<-,ATO-method}
-\title{Modify the time zone of the ATO}
+\alias{tzone<-,ATO_ani-method}
+\alias{tzone<-,ATO_det-method}
+\alias{tzone<-,ATO_dep-method}
+\alias{tzone<-,ATO_obs-method}
+\alias{tzone<-,ATO_tag-method}
+\title{Modify the time zone of an ATO object}
 \usage{
 tzone(x) <- value
 
 \S4method{tzone}{ATO}(x) <- value
+
+\S4method{tzone}{ATO_ani}(x) <- value
+
+\S4method{tzone}{ATO_det}(x) <- value
+
+\S4method{tzone}{ATO_dep}(x) <- value
+
+\S4method{tzone}{ATO_obs}(x) <- value
+
+\S4method{tzone}{ATO_tag}(x) <- value
 }
 \arguments{
-\item{x}{an \code{\link{ATO}}}
+\item{x}{an \code{\link{ATO}} or ATO slot object.}
 
 \item{value}{the desired time zone}
 }
@@ -18,7 +33,7 @@ tzone(x) <- value
 Nothing, acts directly on x
 }
 \description{
-Modify the time zone of the ATO
+Modify the time zone of an ATO object
 }
 \examples{
 # check the timezone of the example ATO
