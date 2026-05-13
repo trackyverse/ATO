@@ -1,0 +1,78 @@
+---
+title: "Setting up Air"
+vignette: >
+  %\VignetteIndexEntry{Setting up Air}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+# Introduction 
+
+For developers, the Trackyverse uses [Air](https://posit-dev.github.io/air/) 
+as linter to quickly format code. This article providers 
+instructions on why we use Air and how to setup Air whether you are using 
+RStudio, VS Code, or Positron. 
+
+# Formatting 
+Why does formatting matter? and why does using a linter matter?
+Formatting code creates consistancy in the style of code written. 
+It does not change the meaning of code, but instead allows for easier 
+readablity and reporduciblity. Consistancy, readablity, and reporduciblity
+are highly important for coding projects in general but become 
+of even greater importance when projects have multiple developers. 
+
+Using a linter matters because it makes adhereing to a given style easy as 
+a set of rules are created and then applied to all files of a particular type e.g., `.R`. 
+A linter can be setup to apply these rules every time a file is saved which 
+streamlines the overall use of a given style.  
+
+For example, a style could include whitespace after an operate (e.g., `c(1, 2, 3)` versues `c(1,2,3)`), 
+newlines, and other punctuation set to determined rules and standards. This could alsco include 
+code is indented with the appropriate amount of leading whitespace depending on the context. For more information 
+about formatting and style details see [Air formating details](https://posit-dev.github.io/air/formatter.html)
+
+# Installation
+Trackyverse pacakges use Air as a linter and formatter to create a standard style that then is applied 
+across all code files.
+
+ To install Air at the command line, you can use one of our standalone installers.
+
+On macOS and Linux:
+
+`curl -LsSf https://github.com/posit-dev/air/releases/latest/download/air-installer.sh | sh`
+
+On Windows:
+
+`powershell -ExecutionPolicy Bypass -c "irm https://github.com/posit-dev/air/releases/latest/download/air-installer.ps1 | iex"`
+
+The installer scripts will automatically add Air to your PATH. 
+The very first time you install Air, for the PATH modifications to be applied you’ll need to restart your terminal.
+
+For a specific version of Air:
+
+`curl -LsSf https://github.com/posit-dev/air/releases/download/0.9.0/air-installer.sh | sh`
+
+`powershell -ExecutionPolicy Bypass -c "irm https://github.com/posit-dev/air/releases/download/0.9.0/air-installer.ps1 | iex"`
+
+If you’re on macOS and are familiar with [Homebrew](https://brew.sh/), which we highly recommend, you can alternatively install the [Air formula](https://formulae.brew.sh/formula/air) with:
+
+`brew install air`
+
+If you use [uv](https://docs.astral.sh/uv/), you can install Air via the [air-formatter](air-formatter) package:
+
+```bash 
+# Global install
+uv tool install air-formatter
+air format path/to/my/script.R
+```
+```bash
+# Invoke once without installing
+uvx --from air-formatter air format path/to/my/script.R
+```
+
+Note that if you’d like to use Air inside VS Code or Positron, then the Extension for those editors comes pre-bundled with an Air binary, so there’s nothing you need to do besides [download the Extension](https://posit-dev.github.io/air/editor-vscode.html).
+
+# Setup 
