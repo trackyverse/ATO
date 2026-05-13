@@ -27,7 +27,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           dependencies: '"hard"'
-          extra-packages: any::testthat, any::covr, any::data.table, any::tibble
+          extra-packages: any::testthat, any::covr, any::xml2, any::data.table, any::tibble
           needs: coverage
 
       - name: Test coverage
