@@ -67,7 +67,7 @@ make_ani <- function(
       .comma(mandatory_cols[check]),
       ". All animals must have ",
       .comma(mandatory_cols[check]),
-      " information. ",
+      " information.",
       ifelse(
         check[2],
         paste0(
@@ -102,9 +102,11 @@ make_ani <- function(
   )
 
   if (tbl == "data.table") {
+    .check_data.table_exists()
     data.table::setDT(output)
   }
   if (tbl == "tibble") {
+    .check_tibble_exists()
     output <- tibble::as_tibble(output)
   }
   
@@ -242,9 +244,11 @@ make_dep <- function(
     ...
   )
   if (tbl == "data.table") {
+    .check_data.table_exists()
     data.table::setDT(output)
   }
   if (tbl == "tibble") {
+    .check_tibble_exists()
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_dep", class(output))
@@ -336,9 +340,11 @@ make_det <- function(
     valid = TRUE
   )
   if (tbl == "data.table") {
+    .check_data.table_exists()
     data.table::setDT(mock)
   }
   if (tbl == "tibble") {
+    .check_tibble_exists()
     mock <- tibble::as_tibble(mock)
   }
   class(mock) <- c("ATO_det", class(mock))
@@ -401,9 +407,11 @@ make_det <- function(
     ...
   )
   if (tbl == "data.table") {
+    .check_data.table_exists()
     data.table::setDT(output)
   }
   if (tbl == "tibble") {
+    .check_tibble_exists()
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_det", class(output))
@@ -494,7 +502,7 @@ make_obs <- function(
   if (any(is.na(animal) & is.na(transmitter))) {
     stop(
       "Each observation must be associated to either an animal or a",
-      " transmitter, or both",
+      " transmitter, or both.",
       call. = FALSE
     )
   }
@@ -613,9 +621,11 @@ make_tag <- function(
     ...
   )
   if (tbl == "data.table") {
+    .check_data.table_exists()
     data.table::setDT(output)
   }
   if (tbl == "tibble") {
+    .check_tibble_exists()
     output <- tibble::as_tibble(output)
   }
   class(output) <- c("ATO_tag", class(output))
