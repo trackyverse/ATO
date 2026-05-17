@@ -429,7 +429,9 @@ match_update <- function(x, silent = FALSE) {
       # observations must be after that.
       if (!is.null(x@tag$release_datetime) &&
           !is.na(x@tag$release_datetime[i])) {
-        first_time <- x@tag$release_datetime[i]
+        # activation time should be before release. but in case it
+        # isn't, pick the highest value of the two.
+        first_time <- max(first_time, x@tag$release_datetime[i])
       }
       # if the tag has an associated terminal time,
       # observations must be before that.
@@ -506,7 +508,7 @@ match_update <- function(x, silent = FALSE) {
       # make sure terminal detections are in chronological order
       term <- term[order(term$datetime), ]
       if (nrow(term) > 1) {
-      # make_obs should stop this from happening. does it?
+      # make_obs should stop this from happening.
         stop(
           "more than one terminal datetime found for tag ",
           term$transmitter[1],
@@ -515,18 +517,25 @@ match_update <- function(x, silent = FALSE) {
       }
       for (i in 1:nrow(term)) {
         link <- x@tag$transmitter == term$transmitter[i] &
-                x@tag$release_datetime <= term$datetime[i] &
-                .sub_na(x@tag$terminal_datetime >= term$datetime[i], TRUE)
+          .sub_na(x@tag$activation_datetime <= term$datetime[i], TRUE) &
+          .sub_na(x@tag$terminal_datetime >= term$datetime[i], TRUE)
+        
+        if (!is.null(x@tag$release_datetime)) {
+          link <- link &
+            .sub_na(x@tag$release_datetime <= term$datetime[i], TRUE)
+        }
         if (sum(link) > 1) {
+          # placeholder error for when someone somehow trips into this
           stop(
-            "too many matches",
-            .call = FALSE
+            "too many matches. contact dev.",
+            call. = FALSE
           )
         }
         if (sum(link) == 0) {
+          # placeholder error for when someone somehow trips into this
           stop(
-            "no matches",
-            .call = FALSE
+            "no matches. contact dev.",
+            call. = FALSE
           )
         }
         x@tag$terminal_location[link] <- term$location[i]
@@ -637,7 +646,7 @@ match_update <- function(x, silent = FALSE) {
 
   # issue message if some valid tags have no detections
   .message_n_zero(x@tag$n_det[x@tag$valid], 
-                  "tag", "valid detection", silent = silent)
+                  "tag", "valid detections", silent = silent)
 
   if (has(x, "ani")) {
     # include counts of valid detections per animal

@@ -245,7 +245,41 @@ test_that(".match_ani_tag warns tag activation time > animal release time", {
     "4450 comes after the release time of the respective animal(s)",
     fixed = TRUE
   )
-  # waiting for feedback on if this should be an error
+})
+
+test_that(".match_ani_tag warns tag activation time > animal terminal time", {
+  an <- make_ani(
+    animal = ani(example_ato)$animal[1],
+    release_datetime = ani(example_ato)$release_datetime[1]
+  )
+  ob <- make_obs(
+    datetime = ani(example_ato)$release_datetime[1] + 1800,
+    animal = ani(example_ato)$animal[1],
+    terminal = TRUE
+  )
+  ta <- make_tag(
+    transmitter = tag(example_ato)$transmitter[1],
+    animal = ani(example_ato)$animal[1],
+    activation_datetime = ani(example_ato)$release_datetime[1] + 3600
+  )
+  expect_warning(
+    x <- init_ato(
+      ani = an,
+      tag = ta,
+      obs = ob
+    ),
+    "4450 comes after the terminal time of the respective animal(s)",
+    fixed = TRUE
+  )
+  expect_warning(
+    x <- init_ato(
+      ani = an,
+      tag = ta,
+      obs = ob
+    ),
+    "4450 comes after the terminal time of the respective transmitter(s)",
+    fixed = TRUE
+  )
 })
 
 test_that(".match_obs_tag returns expected values", {
@@ -329,6 +363,71 @@ test_that(".match_obs_tag returns expected values", {
   expect_equal(
     tag(x)$terminal_datetime[4],
     as.POSIXct(NA_real_, tz = tzone(x))
+  )
+})
+
+test_that(".match_obs_tag works without ani", {
+  ta <- make_tag(
+    transmitter = tag(example_ato)$transmitter[1:4],
+    animal = ani(example_ato)$animal[1:4]
+  )
+
+  ob <- make_obs(
+    datetime = c(
+      ani(example_ato)$release_datetime[1] + 3 * 24 * 3600,
+      ani(example_ato)$release_datetime[1] + 24 * 3600
+    ),
+    transmitter = c(
+      tag(example_ato)$transmitter[1],
+      NA_character_
+    ),
+    animal = c(
+      NA_character_,
+      ani(example_ato)$animal[1]
+    ),
+    terminal = c(
+      FALSE,
+      TRUE
+    )
+  )
+
+  x <- init_ato(
+    obs = ob,
+    tag = ta
+  )
+
+  expect_equal(ani(x), NULL)
+  expect_equal(obs(x)$tag_match, c(1, NA))
+  expect_equal(obs(x)$ani_match, NULL)
+  expect_equal(tag(x)$n_obs, c(1, 0, 0, 0))
+
+  ob <- make_obs(
+    datetime = c(
+      ani(example_ato)$release_datetime[1] + 3 * 24 * 3600,
+      ani(example_ato)$release_datetime[1] + 24 * 3600
+    ),
+    transmitter = c(
+      tag(example_ato)$transmitter[1],
+      NA_character_
+    ),
+    animal = c(
+      NA_character_,
+      ani(example_ato)$animal[1]
+    ),
+    terminal = c(
+      TRUE,
+      TRUE
+    )
+  )
+
+  x <- init_ato(
+    obs = ob,
+    tag = ta
+  )
+
+  expect_equal(
+    tag(x)$terminal_datetime[1],
+    ani(example_ato)$release_datetime[1] + 3 * 24 * 3600
   )
 })
 
@@ -576,6 +675,34 @@ test_that(".match_obs_tag stops in case of ambiguity", {
     "@obs row 1 matches @tag rows 2 and 3. Fatal ambiguity.",
     fixed = TRUE
   )
+})
+
+test_that(".match_det_tag_base returns expected values", {
+  old_force_base <- getOption("ATO_force_base", default = FALSE)
+  on.exit(options(ATO_force_base = old_force_base))
+  options(ATO_force_base = TRUE)
+  ta <- make_tag(
+    transmitter = tag(example_ato)$transmitter[1:5],
+    animal = ani(example_ato)$animal[1:5]
+  )
+
+  expect_message(
+    x <- init_ato(
+      tag = ta,
+      det = det(example_ato),
+    ),
+    "M: 13618 valid detections (from 51 transmitters) do not match",
+    fixed = TRUE
+  )
+
+  check <- table(x@det$transmitter)[x@tag$transmitter]
+  check[is.na(check)] <- 0
+  expect_equal(x@tag$n_det, as.vector(check))
+
+  check <- table(x@det$transmitter, x@det$tag_match)
+  expect_equal(x@tag$n_det[2], check[1, 1])
+  expect_equal(x@tag$n_det[4], check[2, 2])
+  expect_equal(x@tag$n_det[5], check[3, 3])
 })
 
 # # TESTS END HERE ------
