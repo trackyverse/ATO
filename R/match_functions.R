@@ -32,12 +32,12 @@
 #' @export
 #' 
 match_update <- function(x, silent = FALSE) {
-  # always match obs to ani before ani to tag 
-  # so columns are transferred properly
-  
+  always_base <- getOption("ATO_force_base", default = FALSE)
   time_start <- last_break <- Sys.time()
 
   # NOTE:
+  # always match obs to ani before ani to tag 
+  # so columns are transferred properly
   # match functions are sorted by order of matching
 
   if (has(x, c("obs", "ani"))) {
@@ -109,7 +109,7 @@ match_update <- function(x, silent = FALSE) {
     if (!silent) {
       message("M: Matching @det to @tag...")
     }
-    if (.check_data.table_exists(FALSE)) {
+    if (!always_base & .check_data.table_exists(FALSE)) {
       x <- .match_det_tag_datatable(x, silent = silent)
     } else {
       x <- .match_det_tag_base(x, silent = silent)
@@ -138,7 +138,7 @@ match_update <- function(x, silent = FALSE) {
     if (!silent) {
       message("M: Matching @dep to @det...")
     }
-    if (.check_data.table_exists(FALSE)) {
+    if (!always_base & .check_data.table_exists(FALSE)) {
       x <- .match_dep_det_datatable(x, silent = silent)
     } else {
       x <- .match_dep_det_base(x, silent = silent)
@@ -226,10 +226,10 @@ match_update <- function(x, silent = FALSE) {
       link <- x@obs$valid & x@obs$ani_match == i
       aux <- utils::tail(x@obs[link, ], 1)
       if (aux$terminal) {
-        x@ani$terminal_location <- aux$location
-        x@ani$terminal_datetime <- aux$datetime
-        x@ani$terminal_lat <- aux$lat
-        x@ani$terminal_lon <- aux$lon
+        x@ani$terminal_location[i] <- aux$location
+        x@ani$terminal_datetime[i] <- aux$datetime
+        x@ani$terminal_lat[i] <- aux$lat
+        x@ani$terminal_lon[i] <- aux$lon
       }
     }
   }
@@ -287,63 +287,79 @@ match_update <- function(x, silent = FALSE) {
     # extract duplicated tags
     link <- valid_tags$transmitter %in% unique(valid_tags$transmitter[check])
     dup_tags <- valid_tags[link, ]
-    if (any(is.na(dup_tags$animal))) {
+    if (any(is.na(dup_tags$ani_match))) {
       stop("Duplicated transmitters found in @tag but no @ani match.",
            " Fatal ambiguity. Can't assign detections correctly.",
            call. = FALSE)
     }
-    if (is.null(x@tag$terminal_datetime)) {
+    if (is.null(x@ani$terminal_datetime)) {
       stop("Duplicated transmitters found in @tag but ato has no @obs",
            " (or @obs and @ani have not been matched yet).",
            " Fatal ambiguity. Can't assign detections correctly.",
            call. = FALSE)      
     }
     # sort relevant animals by release time to confirm dates are acceptable
-    link <- match(x@ani@animal %in% dup_tags$animal)
+    link <- x@ani$animal %in% dup_tags$animal
     sub_ani <- x@ani[link, ]
     sub_ani <- sub_ani[order(sub_ani$release_datetime), ]
     # now check timestamps by tag
     by_tag <- split(dup_tags, dup_tags$transmitter)
-    recipient <- lapply(by_tag, function(x) {
-      sub_ani_tag <- sub_ani[sub_ani$animal %in% x$animal, ]
+    recipient <- lapply(by_tag, function(the_tag) {
+      sub_ani_tag <- sub_ani[sub_ani$animal %in% the_tag$animal, ]
+      # all animals but the last must have terminal_datetime
+      check <- is.na(sub_ani_tag$terminal_datetime[-nrow(sub_ani_tag)])
+      if (any(check)) {
+        stop(
+          "Transmitter ", the_tag$transmitter[1],
+          " was used in animals ", .comma(sub_ani_tag$animal),
+          " but animal ", .s(sum(check)),
+          .comma(sub_ani_tag$animal[which(check)]),
+          " do", .es(sum(check), TRUE),
+          " not have terminal_datetime information.",
+          " Add terminal observations to allow tag reuse.",
+          " Fatal ambiguity. Can't assign detections correctly.",
+          call. = FALSE
+        )        
+      }
       # the release time of animal 2 must come 
       # after the terminal time of animal 1
       check <- sub_ani_tag$terminal_datetime[-nrow(sub_ani_tag)] < 
                sub_ani_tag$release_datetime[-1]
       if (any(!check)) {
-        stop("Transmitter ", x$transmitter[1],
-             " was used in animals ", .comma(x$transmitter$animal),
+        stop("Transmitter ", the_tag$transmitter[1],
+             " was used in animals ", .comma(sub_ani_tag$animal),
              " but these animals were out in the field at the same time.",
              " Fatal ambiguity. Can't assign detections correctly.",
              call. = FALSE)
       }
     })
   }
-  # include release details
+  # include animal details
+  # this is the first match, so reset the columns
   x@tag$release_location <- NA_character_
   the_tz <- attributes(x@ani$release_datetime)$tzone
   x@tag$release_datetime <- as.POSIXct(NA_real_, tz = the_tz)
   x@tag$release_lat <- NA_real_
   x@tag$release_lon <- NA_real_
-
-  link <- !is.na(x@tag$ani_match)
-  
-  x@tag$release_location[link] <- x@ani$release_location[x@tag$ani_match]
-  x@tag$release_datetime[link] <- x@ani$release_datetime[x@tag$ani_match]
-  x@tag$release_lat[link] <- x@ani$release_lat[x@tag$ani_match]
-  x@tag$release_lon[link] <- x@ani$release_lon[x@tag$ani_match]
+  # then pass all new values in
+  x@tag$release_location <- x@ani$release_location[x@tag$ani_match]
+  x@tag$release_datetime <- x@ani$release_datetime[x@tag$ani_match]
+  x@tag$release_lat <- x@ani$release_lat[x@tag$ani_match]
+  x@tag$release_lon <- x@ani$release_lon[x@tag$ani_match]
 
   # include terminal details
   if (!is.null(x@ani$terminal_location)) {
+    # this is the first match, so reset the columns
     x@tag$terminal_location <- NA_character_
     the_tz <- attributes(x@ani$terminal_datetime)$tzone
     x@tag$terminal_datetime <- as.POSIXct(NA_real_, tz = the_tz)
     x@tag$terminal_lat <- NA_real_
     x@tag$terminal_lon <- NA_real_
-    x@tag$terminal_location[link] <- x@ani$terminal_location[x@tag$ani_match]
-    x@tag$terminal_datetime[link] <- x@ani$terminal_datetime[x@tag$ani_match]
-    x@tag$terminal_lat[link] <- x@ani$terminal_lat[x@tag$ani_match]
-    x@tag$terminal_lon[link] <- x@ani$terminal_lon[x@tag$ani_match]
+    # then pass all new values in
+    x@tag$terminal_location <- x@ani$terminal_location[x@tag$ani_match]
+    x@tag$terminal_datetime <- x@ani$terminal_datetime[x@tag$ani_match]
+    x@tag$terminal_lat <- x@ani$terminal_lat[x@tag$ani_match]
+    x@tag$terminal_lon <- x@ani$terminal_lon[x@tag$ani_match]
   }
   return(x)
 }
@@ -362,6 +378,11 @@ match_update <- function(x, silent = FALSE) {
 .match_obs_tag <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("obs", "tag"), error = TRUE)
+
+  na_as_true <- function(x){
+    x[is.na(x)] <- TRUE
+    return(x)
+  }
 
   # assign tags to observations
   x@obs$tag_match <- NA
@@ -432,6 +453,58 @@ match_update <- function(x, silent = FALSE) {
   if (!silent & check > 0) {
     message("M: ", check, " valid tag", .s(sum(check)),
             " ", .has(sum(check)), " no valid observations.")
+  }
+
+  # tag might already have mached info from ani.
+  # Don't overwrite those
+  if (is.null(x@tag$terminal_location)) {
+    x@tag$terminal_location <- NA_character_
+    the_tz <- attributes(x@obs$datetime)$tzone
+    x@tag$terminal_datetime <- as.POSIXct(NA_real_, tz = the_tz)
+    x@tag$terminal_lat <- NA_real_
+    x@tag$terminal_lon <- NA_real_
+  }
+
+  if (any(!is.na(x@obs$tag_match))) {
+    sub_obs <- x@obs[!is.na(x@obs$tag_match), ]
+    by_tag <- split(sub_obs, sub_obs$transmitter)
+    for (the_tag in by_tag) {
+      if (all(!the_tag$terminal)) {
+        next()
+      }
+      term <- the_tag[the_tag$terminal, ]
+      # make sure terminal detections are in chronological order
+      term <- term[order(term$datetime), ]
+      if (nrow(term) > 1) {
+      # make_obs should stop this from happening. does it?
+        stop(
+          "more than one terminal datetime found for tag ",
+          term$transmitter[1],
+          call. = FALSE
+        )
+      }
+      for (i in 1:nrow(term)) {
+        link <- x@tag$transmitter == term$transmitter[i] &
+                x@tag$release_datetime <= term$datetime[i] &
+                na_as_true(x@tag$terminal_datetime >= term$datetime[i])
+        if (sum(link) > 1) {
+          stop(
+            "too many matches",
+            .call = FALSE
+          )
+        }
+        if (sum(link) == 0) {
+          stop(
+            "no matches",
+            .call = FALSE
+          )
+        }
+        x@tag$terminal_location[link] <- term$location[i]
+        x@tag$terminal_datetime[link] <- term$datetime[i]
+        x@tag$terminal_lat[link] <- term$lat[i]
+        x@tag$terminal_lon[link] <- term$lon[i]
+      }
+    }
   }
 
   return(x)
