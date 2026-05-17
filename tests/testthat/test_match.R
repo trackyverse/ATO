@@ -79,7 +79,7 @@ test_that(".match_ani_tag returns expected values", {
   expect_equal(tag(x)$ani_match, 1:5)
 })
 
-test_that(".match_ani_tag returns expected values", {
+test_that(".match_ani_tag messages about stray animals", {
   an <- make_ani(
     animal = ani(example_ato)$animal[2:6],
     release_datetime = ani(example_ato)$release_datetime[1:5]
@@ -227,6 +227,27 @@ test_that(".match_ani_tag can handle transmitter redeployment", {
   expect_equal(obs(x)$ani_match, 1)
 })
 
+test_that(".match_ani_tag warns tag activation time > animal release time", {
+  an <- make_ani(
+    animal = ani(example_ato)$animal[1],
+    release_datetime = ani(example_ato)$release_datetime[1]
+  )
+  ta <- make_tag(
+    transmitter = tag(example_ato)$transmitter[1],
+    animal = ani(example_ato)$animal[1],
+    activation_datetime = ani(example_ato)$release_datetime[1] + 3600
+  )
+  expect_warning(
+    x <- init_ato(
+      ani = an,
+      tag = ta
+    ),
+    "4450 comes after the release time of the respective animal(s)",
+    fixed = TRUE
+  )
+  # waiting for feedback on if this should be an error
+})
+
 test_that(".match_obs_tag returns expected values", {
   an <- make_ani(
     animal = ani(example_ato)$animal[2:6],
@@ -256,6 +277,7 @@ test_that(".match_obs_tag returns expected values", {
     tag(x)$release_datetime[1],
     as.POSIXct(NA_real_, tz = tzone(x))
   )
+
   an <- make_ani(
     animal = ani(example_ato)$animal[1:4],
     release_datetime = ani(example_ato)$release_datetime[1:4]
@@ -292,8 +314,36 @@ test_that(".match_obs_tag returns expected values", {
     tag = ta
   )
 
-  ani(x)
-  tag(x)
+  expect_equal(ani(x)$n_tag, c(1, 1, 1, 1))
+  expect_equal(tag(x)$ani_match, 1:4)
+  expect_equal(tag(x)$n_obs, c(0, 0, 0, 1))
+  expect_equal(ani(x)$n_obs, c(1, 0, 0, 0))
+  expect_equal(
+    tag(x)$release_datetime,
+    ani(x)$release_datetime
+  )
+  expect_equal(
+    tag(x)$terminal_datetime[1],
+    ani(example_ato)$release_datetime[1] + 24 * 3600
+  )
+  expect_equal(
+    tag(x)$terminal_datetime[4],
+    as.POSIXct(NA_real_, tz = tzone(x))
+  )
+})
+
+test_that(".match_obs_tag manages tag reuse", {
+  # tag is reused, there's a terminal in the middle
+  an <- make_ani(
+    animal = ani(example_ato)$animal[1:4],
+    release_datetime = ani(example_ato)$release_datetime[1:4]
+  )
+  an$release_datetime[4] <- an$release_datetime[4] + 2 * 24 * 3600
+
+  ta <- make_tag(
+    transmitter = tag(example_ato)$transmitter[c(1:3, 1)],
+    animal = ani(example_ato)$animal[1:4]
+  )
 
   ob <- make_obs(
     datetime = c(
@@ -314,14 +364,218 @@ test_that(".match_obs_tag returns expected values", {
     )
   )
 
-  ato_match_immediate(T)
   x <- init_ato(
     obs = ob,
     ani = an,
     tag = ta
   )
-  tag(x)
-  obs(x)
+
+  expect_equal(ani(x)$n_tag, c(1, 1, 1, 1))
+  expect_equal(tag(x)$ani_match, 1:4)
+  expect_equal(tag(x)$n_obs, c(0, 0, 0, 1))
+  expect_equal(ani(x)$n_obs, c(1, 0, 0, 0))
+  expect_equal(
+    tag(x)$release_datetime,
+    ani(x)$release_datetime
+  )
+  expect_equal(
+    tag(x)$terminal_datetime[1],
+    ani(example_ato)$release_datetime[1] + 24 * 3600
+  )
+  expect_equal(
+    tag(x)$terminal_datetime[4],
+    ani(example_ato)$release_datetime[1] + 3 * 24 * 3600
+  )
+
+  # but issues error if the first animal isn't terminated
+  ob <- make_obs(
+    datetime = c(
+      ani(example_ato)$release_datetime[1] + 3 * 24 * 3600,
+      ani(example_ato)$release_datetime[1] + 24 * 3600
+    ),
+    transmitter = c(
+      tag(example_ato)$transmitter[2],
+      NA_character_
+    ),
+    animal = c(
+      NA_character_,
+      ani(example_ato)$animal[2]
+    ),
+    terminal = c(
+      TRUE,
+      TRUE
+    )
+  )
+
+  expect_error(
+    init_ato(
+      obs = ob,
+      ani = an,
+      tag = ta
+    ),
+    "Transmitter R64K-4450 was used in animals 4450 and 4453 but animal 4450",
+    fixed = TRUE
+  )
+})
+
+test_that(".match_obs_tag manages terminal in both transmitter and animal", {
+  an <- make_ani(
+    animal = ani(example_ato)$animal[1:4],
+    release_datetime = ani(example_ato)$release_datetime[1:4]
+  )
+  an$release_datetime[4] <- an$release_datetime[4] + 2 * 24 * 3600
+
+  ta <- make_tag(
+    transmitter = tag(example_ato)$transmitter[c(1:3, 1)],
+    animal = ani(example_ato)$animal[1:4]
+  )
+
+  # both tag and animal have terminal obs.
+  # tag terminal comes after animal terminal, so
+  # the terminal obs for the tag is considered a stray.
+  ob <- make_obs(
+    datetime = c(
+      ani(example_ato)$release_datetime[1] + 3 * 24 * 3600,
+      ani(example_ato)$release_datetime[1] + 24 * 3600,
+      ani(example_ato)$release_datetime[1] + 24 * 3600
+    ),
+    transmitter = c(
+      tag(example_ato)$transmitter[2],
+      NA_character_,
+      NA_character_
+    ),
+    animal = c(
+      NA_character_,
+      ani(example_ato)$animal[1],
+      ani(example_ato)$animal[2]
+    ),
+    terminal = c(
+      TRUE,
+      TRUE,
+      TRUE
+    )
+  )
+
+  x <- init_ato(
+    obs = ob,
+    ani = an,
+    tag = ta
+  )
+
+  expect_equal(
+    tag(x)$terminal_datetime[2],
+    ani(example_ato)$release_datetime[1] + 24 * 3600
+  )
+
+  # both tag and animal have terminal obs.
+  # tag terminal comes before animal terminal, so
+  # the terminal obs for the tag wins over the animal.
+  ob <- make_obs(
+    datetime = c(
+      ani(example_ato)$release_datetime[1] + 2 * 24 * 3600,
+      ani(example_ato)$release_datetime[1] + 24 * 3600,
+      ani(example_ato)$release_datetime[1] + 3 * 24 * 3600
+    ),
+    transmitter = c(
+      tag(example_ato)$transmitter[2],
+      NA_character_,
+      NA_character_
+    ),
+    animal = c(
+      NA_character_,
+      ani(example_ato)$animal[1],
+      ani(example_ato)$animal[2]
+    ),
+    terminal = c(
+      TRUE,
+      TRUE,
+      TRUE
+    )
+  )
+
+  x <- init_ato(
+    obs = ob,
+    ani = an,
+    tag = ta
+  )
+
+  expect_equal(
+    tag(x)$terminal_datetime[2],
+    ani(example_ato)$release_datetime[1] + 2 * 24 * 3600
+  )
+})
+
+test_that(".match_obs_tag picks up activation datetime", {
+  an <- make_ani(
+    animal = ani(example_ato)$animal[1],
+    release_datetime = ani(example_ato)$release_datetime[1]
+  )
+  ta <- make_tag(
+    transmitter = tag(example_ato)$transmitter[1:2],
+    animal = c(ani(example_ato)$animal[1], NA),
+    activation_datetime = rep(ani(example_ato)$release_datetime[1] - 3600, 2)
+  )
+
+  ob <- make_obs(
+    datetime = c(
+      ani(example_ato)$release_datetime[1] + 3 * 24 * 3600,
+      ani(example_ato)$release_datetime[2] - 4000
+    ),
+    transmitter = tag(example_ato)$transmitter[1:2],
+    terminal = c(
+      FALSE,
+      FALSE
+    )
+  )
+
+  expect_message(
+    x <- init_ato(
+      obs = ob,
+      ani = an,
+      tag = ta
+    ),
+    "1 off-target valid observation (from 1 stray tag) found in the dataset.",
+    fixed = TRUE
+  )
+})
+
+test_that(".match_obs_tag stops in case of ambiguity", {
+  an <- make_ani(
+    animal = ani(example_ato)$animal[1],
+    release_datetime = ani(example_ato)$release_datetime[1]
+  )
+  ta <- make_tag(
+    transmitter = tag(example_ato)$transmitter[1:2],
+    animal = rep(ani(example_ato)$animal[1], 2),
+    activation_datetime = rep(ani(example_ato)$release_datetime[1] - 3600, 2)
+  )
+  ta <- rbind(ta, ta[2, ])
+
+  ob <- make_obs(
+    datetime = c(
+      ani(example_ato)$release_datetime[1] + 3 * 24 * 3600,
+      ani(example_ato)$release_datetime[2] + 4000
+    ),
+    transmitter = tag(example_ato)$transmitter[1:2],
+    terminal = c(
+      FALSE,
+      FALSE
+    )
+  )
+
+  expect_error(
+    expect_warning(
+      init_ato(
+        obs = ob,
+        ani = an,
+        tag = ta
+      ),
+      "Duplicated rows (2 and 3) detected in @tag",
+      fixed = TRUE
+    ),
+    "@obs row 1 matches @tag rows 2 and 3. Fatal ambiguity.",
+    fixed = TRUE
+  )
 })
 
 # # TESTS END HERE ------

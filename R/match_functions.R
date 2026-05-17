@@ -1,3 +1,8 @@
+.sub_na <- function(x, value){
+  x[is.na(x)] <- value
+  return(x)
+}
+
 #' Match the various slots of the ATO object
 #' 
 #' Automatically called by the \code{\link{set}} functions. You should not need
@@ -361,6 +366,33 @@ match_update <- function(x, silent = FALSE) {
     x@tag$terminal_lat <- x@ani$terminal_lat[x@tag$ani_match]
     x@tag$terminal_lon <- x@ani$terminal_lon[x@tag$ani_match]
   }
+
+  # issue warning if ani release time is after tag activation time
+  check <- .sub_na(x@tag$activation_datetime > x@tag$release_datetime, FALSE)
+  if (any(check)) {
+    warning(
+      "The activation time for transmitter",
+      .s(sum(check)),
+      " ", .comma(x@tag$transmitter[check]),
+      " comes after the release time of the respective animal(s).",
+      " Expect issues downstream.",
+      call. = FALSE, immediate. = TRUE
+    )
+  }
+
+  # issue warning if ani release time is after tag activation time
+  check <- .sub_na(x@tag$activation_datetime > x@tag$terminal_datetime, FALSE)
+  if (any(check)) {
+    warning(
+      "The activation time for transmitter",
+      .s(sum(check)),
+      " ", .comma(x@tag$transmitter[check]),
+      " comes after the terminal time of the respective animal(s).",
+      " Expect issues downstream.",
+      call. = FALSE, immediate. = TRUE
+    )
+  }
+
   return(x)
 }
 
@@ -378,11 +410,6 @@ match_update <- function(x, silent = FALSE) {
 .match_obs_tag <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("obs", "tag"), error = TRUE)
-
-  na_as_true <- function(x){
-    x[is.na(x)] <- TRUE
-    return(x)
-  }
 
   # assign tags to observations
   x@obs$tag_match <- NA
@@ -418,6 +445,10 @@ match_update <- function(x, silent = FALSE) {
       # check for ambiguity
       check <- !is.na(x@obs$tag_match[link])
       if (any(check)) {
+        # I don't think this can ever happen. at this point, tag and
+        # ani have already matched, so all tag information should be
+        # valid. I tried testing this and landed on
+        # "Duplicated transmitters found in @tag but no @ani match"
         r <- which(check)
         stop("@obs row", .s(length(r)), " ", .comma(r),
              " match", .es(length(r), TRUE), " @tag rows ",
@@ -425,7 +456,6 @@ match_update <- function(x, silent = FALSE) {
              " Fatal ambiguity. Can't assign observations correctly.",
              call. = FALSE)
       }
-
       # and assign the match
       x@obs$tag_match[link] <- i
     }
@@ -486,7 +516,7 @@ match_update <- function(x, silent = FALSE) {
       for (i in 1:nrow(term)) {
         link <- x@tag$transmitter == term$transmitter[i] &
                 x@tag$release_datetime <= term$datetime[i] &
-                na_as_true(x@tag$terminal_datetime >= term$datetime[i])
+                .sub_na(x@tag$terminal_datetime >= term$datetime[i], TRUE)
         if (sum(link) > 1) {
           stop(
             "too many matches",
@@ -507,6 +537,19 @@ match_update <- function(x, silent = FALSE) {
     }
   }
 
+  # issue warning if terminal time is after activation time
+  check <- .sub_na(x@tag$activation_datetime > x@tag$terminal_datetime, FALSE)
+  if (any(check)) {
+    warning(
+      "The activation time for transmitter",
+      .s(sum(check)),
+      " ", .comma(x@tag$transmitter[check]),
+      " comes after the terminal time of the respective transmitter(s).",
+      " Expect issues downstream.",
+      call. = FALSE, immediate. = TRUE
+    )
+  }
+  
   return(x)
 }
 

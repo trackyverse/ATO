@@ -334,3 +334,23 @@
          call. = FALSE) 
   }
 }
+
+.check_dup_rows <- function(object) {
+  check <- duplicated(object)
+  if (any(check)) {
+    check <- unique(
+      c(
+        which(check),
+        which(duplicated(object, fromLast = TRUE))
+      )
+    )
+    warning(
+      "Duplicated row", .s(length(check)), 
+      " (", .comma(sort(check)),
+      ") detected in ",
+      sub("ATO_", "@", class(object)[1]), ".",
+      " Expect issues downstream.",
+      call. = FALSE, immediate. = TRUE
+    )
+  }
+}

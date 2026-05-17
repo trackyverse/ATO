@@ -163,10 +163,14 @@ test_that("make_dep complains when bad NAs found", {
 test_that("make_dep can make data.tables and tibbles", {
   x <- as.data.frame(dep(example_ato))
   if ("data.table" %in% utils::installed.packages()) {
-    y <- make_dep(
-      deploy_datetime = x$deploy_datetime,
-      recover_datetime = x$recover_datetime,
-      tbl = "data.table"
+    expect_warning(
+      y <- make_dep(
+        deploy_datetime = x$deploy_datetime,
+        recover_datetime = x$recover_datetime,
+        tbl = "data.table"
+      ),
+      "Duplicated rows (1, 2, 3, 4, 5 and 12 others) detected in @dep.",
+      fixed = TRUE
     )
     expect_equal(class(y), c("ATO_dep", "data.table", "data.frame"))
   } else {
@@ -181,10 +185,14 @@ test_that("make_dep can make data.tables and tibbles", {
     )
   }
   if ("tibble" %in% utils::installed.packages()) {
-    y <- make_dep(
-      deploy_datetime = x$deploy_datetime,
-      recover_datetime = x$recover_datetime,
-      tbl = "tibble"
+    expect_warning(
+      y <- make_dep(
+        deploy_datetime = x$deploy_datetime,
+        recover_datetime = x$recover_datetime,
+        tbl = "tibble"
+      ),
+      "Duplicated rows (1, 2, 3, 4, 5 and 12 others) detected in @dep.",
+      fixed = TRUE
     )
     expect_equal(class(y), c("ATO_dep", "tbl_df", "tbl", "data.frame"))
   } else {
@@ -431,6 +439,39 @@ test_that("make_obs can make data.tables and tibbles", {
   }
 })
 
+test_that("make_obs stops when there are multiple terminal_datetimes", {
+  expect_error(
+    make_obs(
+      datetime = rep(ani(example_ato)$release_datetime[1] + 3600, 2),
+      animal = rep(ani(example_ato)$animal[1], 2),
+      terminal = rep(TRUE, 2)
+    ),
+    "Animal 4450 has more than one terminal observation",
+    fixed = TRUE
+  )
+
+  expect_error(
+    make_obs(
+      datetime = rep(ani(example_ato)$release_datetime[1] + 3600, 2),
+      transmitter = rep(tag(example_ato)$transmitter[1], 2),
+      terminal = rep(TRUE, 2)
+    ),
+    "Transmitter R64K-4450 has more than one terminal observation",
+    fixed = TRUE
+  )
+
+  expect_error(
+    make_obs(
+      datetime = rep(ani(example_ato)$release_datetime[1] + 3600, 2),
+      transmitter = rep(tag(example_ato)$transmitter[1], 2),
+      animal = c(ani(example_ato)$animal[1], NA),
+      terminal = rep(TRUE, 2)
+    ),
+    "Transmitter R64K-4450 has more than one terminal observation",
+    fixed = TRUE
+  )
+})
+
 test_that("make_tag works when given good data", {
   x <- as.data.frame(tag(example_ato))
   y <- make_tag(
@@ -498,6 +539,25 @@ test_that("make_tag can make data.tables and tibbles", {
       fixed = TRUE
     )
   }
+})
+
+test_that("make_tag complains about duplicated data", {
+  expect_warning(
+    make_tag(
+      transmitter = tag(example_ato)$transmitter[c(1:3, 1)]
+    ),
+    "Duplicated rows (1 and 4) detected in @tag",
+    fixed = TRUE
+  )
+
+  expect_warning(
+    make_tag(
+      transmitter = tag(example_ato)$transmitter[c(1:3, 1)],
+      animal = ani(example_ato)$animal[c(1:3, 1)]
+    ),
+    "MOST ATO FUNCTIONS WILL CRASH",
+    fixed = TRUE
+  )
 })
 
 # TESTS END HERE ------
