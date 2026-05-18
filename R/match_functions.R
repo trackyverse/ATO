@@ -674,48 +674,41 @@ match_update <- function(x, silent = FALSE) {
 #' 
 #' @keywords internal
 #' 
-.match_det_tag_datatable <- function(x, silent) {
+.match_det_tag_datatable <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("det", "tag"), error = TRUE)
   .check_data.table_exists()
 
-  # the preferred first time is the animal release time
-  if (!is.null(x@tag$release_datetime)) {
-    first_time <- x@tag$release_datetime
-  } else {
-    the_tz <- attributes(x@tag$activation_datetime)$tzone
-    first_time <- rep(NA, nrow(x@tag))
-    first_time <- as.POSIXct(first_time, tz = the_tz)
-  }
-  # if some first times are missing, try the tag activation time
-  link <- is.na(first_time)
-  if (any(link)) {
-    first_time[link] <- x@tag$activation_datetime[link]
-  }
-  # if any still missing after that, make those -Inf
-  if (any(is.na(first_time))) {
-    first_time[is.na(first_time)] <- -Inf
-  }
+  first_time <- sapply(
+    1:nrow(x@tag),
+    function(i) {
+      suppressWarnings(
+        max(
+          x@tag$release_datetime[i],
+          x@tag$activation_datetime[i],
+          na.rm = TRUE
+        )
+      )
+    }
+  )
+  the_tz <- attributes(x@tag$activation_datetime)$tzone
+  first_time <- as.POSIXct(first_time, tz = the_tz)
 
   # the preferred last time is the animal terminal observation time
-  if (!is.null(x@tag$terminal_datetime)) {
-    last_time <- x@tag$terminal_datetime
-  } else {
-    last_time <- rep(NA, nrow(x@tag))
-    the_tz <- attributes(x@tag$activation_datetime)$tzone
-    last_time <- as.POSIXct(last_time, tz = the_tz)
-  }
-  # if some last times are missing, try to use the battery life
-  if (any(is.na(last_time))) {
-    aux <- is.na(last_time)
-    last_time[aux] <- x@tag$activation_datetime[aux] +
-                      x@tag$battery_life[aux] * 24 * 3600
-  }
-  # if any still missing after that, make those Inf
-  if (any(is.na(last_time))) {
-    last_time[is.na(last_time)] <- Inf
-  }
-
+  last_time <- sapply(
+    1:nrow(x@tag),
+    function(i) {
+      suppressWarnings(
+        min(
+          x@tag$terminal_datetime[i],
+          x@tag$activation_datetime[i] + x@tag$battery_life[i] * 24 * 3600,
+          na.rm = TRUE
+        )
+      )
+    }
+  )
+  the_tz <- attributes(x@tag$activation_datetime)$tzone
+  last_time <- as.POSIXct(last_time, tz = the_tz)
 
   # start manipulating the slots
   x@det$original_row_order <- 1:nrow(x@det)
@@ -802,6 +795,9 @@ match_update <- function(x, silent = FALSE) {
   # on a per-tag basis to avoid wasted computing time.
   .check_tag_beacon(x)
 
+  # issue message if there are detections with no associated transmitter
+  .message_stray_dets(x, silent = silent)
+
   # include counts of valid detections per tag
   x@tag$n_det <- 0
   aux <- table(x@det$tag_match[x@det$valid])
@@ -809,7 +805,7 @@ match_update <- function(x, silent = FALSE) {
 
   # issue message if some valid tags have no detections
   .message_n_zero(x@tag$n_det[x@tag$valid],
-                  "tag", "valid detection", silent = silent)
+                  "tag", "valid detections", silent = silent)
 
   if (has(x, "ani")) {
     # match animals through tags
@@ -824,9 +820,10 @@ match_update <- function(x, silent = FALSE) {
     x@ani$n_det[as.numeric(names(aux))] <- aux
   } else {
     # remove any old matches
-    data.table::set(x@det, j = "ani_match", value = NULL)
-    data.table::set(x@det, j = "animal", value = NULL)
-    x@ani$n_det <- NULL
+    if (!is.null(x@det$ani_match)) {
+      data.table::set(x@det, j = "ani_match", value = NULL)
+      data.table::set(x@det, j = "animal", value = NULL)
+    }
   }
 
   # on.exit handles cleaning up the data.table modifications
