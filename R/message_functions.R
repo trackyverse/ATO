@@ -15,7 +15,8 @@
     n_rec <- length(unique(x@det$receiver_serial[orphans]))
     message("M: ", sum(orphans), " valid detection", .s(sum(orphans)),
             " (from ", n_rec, " receiver", .s(n_rec),
-            ") do not match deployment periods",
+            ") do not match receivers listed in @dep,",
+            " or fall outside their deployment periods",
             " (orphan detection", .s(sum(orphans)), ").")
   }
   return(sum(orphans))
@@ -46,19 +47,22 @@
     if (is.null(x@det$tag_match)) {
       message("M: ", sum(strays), " valid detection", .s(sum(strays)),
               " (from ", n_tags, " transmitter", .s(n_tags),
-              ") do not match transmitters listed in @dep",
+              ") do not match transmitters listed in @dep,",
+              " or fall outside their active times",
               " (stray detection", .s(sum(strays)), ").")
     }
     if (is.null(x@det$beacon_match)) {
       message("M: ", sum(strays), " valid detection", .s(sum(strays)),
               " (from ", n_tags, " transmitter", .s(n_tags),
-              ") do not match transmitters listed on @tag",
+              ") do not match transmitters listed on @tag,",
+              " or fall outside their active times",
               " (stray detection", .s(sum(strays)), ").")
     }
     if (!is.null(x@det$tag_match) & !is.null(x@det$beacon_match)) {
       message("M: ", sum(strays), " valid detection", .s(sum(strays)),
               " (from ", n_tags, " transmitter", .s(n_tags),
-              ") do not match transmitters listed on @tag or @dep",
+              ") do not match transmitters listed on @tag or @dep,",
+              " or fall outside their active times",
               " (stray detection", .s(sum(strays)), ").")
     }
   }

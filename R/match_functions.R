@@ -191,7 +191,7 @@ match_update <- function(x, silent = FALSE) {
 
   # match only valid animals
   aux <- x@ani$animal
-  aux[!x@ani$valid] <- NA
+  aux[!x@ani$valid] <- NA_character_
   x@obs$ani_match <- match(x@obs$animal, aux)
 
   # issue message if there are valid observations for non-valid animals
@@ -259,7 +259,7 @@ match_update <- function(x, silent = FALSE) {
 
   # match only valid animals
   aux <- x@ani$animal
-  aux[!x@ani$valid] <- NA
+  aux[!x@ani$valid] <- NA_character_
   x@tag$ani_match <- match(x@tag$animal, aux)
 
   # issue message if there are valid tags for non-valid animals
@@ -412,7 +412,7 @@ match_update <- function(x, silent = FALSE) {
   has(x, c("obs", "tag"), error = TRUE)
 
   # assign tags to observations
-  x@obs$tag_match <- NA
+  x@obs$tag_match <- NA_integer_
   for (i in 1:nrow(x@tag)) {
     if (x@tag$valid[i]) {
       # placeholders
@@ -578,10 +578,10 @@ match_update <- function(x, silent = FALSE) {
   has(x, c("det", "tag"), error = TRUE)
 
   # assign tags to detections
-  x@det$tag_match <- NA
+  x@det$tag_match <- NA_integer_
   if (!is.null(x@tag$ani_match)) {
-    x@det$ani_match <- NA
-    x@det$animal <- NA
+    x@det$ani_match <- NA_integer_
+    x@det$animal <- NA_character_
   }
 
   for (i in 1:nrow(x@tag)) {
@@ -600,7 +600,9 @@ match_update <- function(x, silent = FALSE) {
       # detections must be after that.
       if (!is.null(x@tag$release_datetime) &&
           !is.na(x@tag$release_datetime[i])) {
-        first_time <- x@tag$release_datetime[i]
+        # activation time should be before release. but in case it
+        # isn't, pick the highest value of the two.
+        first_time <- max(first_time, x@tag$release_datetime[i])
       }
       # if the tag has an associated battery life,
       # detections must be before battery runs out.
@@ -613,7 +615,8 @@ match_update <- function(x, silent = FALSE) {
       # detections must be before that.
       if (!is.null(x@tag$terminal_datetime) &&
           !is.na(x@tag$terminal_datetime[i])) {
-        last_time <- x@tag$terminal_datetime[i]
+        # only replace if battery hasn't run out yet
+        last_time <- min(last_time, x@tag$terminal_datetime[i])
       }
 
       link <- x@det$transmitter == transmitter &
@@ -853,8 +856,8 @@ match_update <- function(x, silent = FALSE) {
       allow_NA = FALSE, error = TRUE)
 
   # assign deps to detections
-  x@det$dep_match <- NA
-  x@det$beacon_match <- NA
+  x@det$dep_match <- NA_integer_
+  x@det$beacon_match <- NA_integer_
   for (i in 1:nrow(x@dep)) {
     if (x@dep$valid[i]) {
       # placeholders

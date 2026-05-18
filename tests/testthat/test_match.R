@@ -681,21 +681,23 @@ test_that(".match_det_tag_base returns expected values", {
   old_force_base <- getOption("ATO_force_base", default = FALSE)
   on.exit(options(ATO_force_base = old_force_base))
   options(ATO_force_base = TRUE)
+
   ta <- make_tag(
     transmitter = tag(example_ato)$transmitter[1:5],
-    animal = ani(example_ato)$animal[1:5]
+    animal = ani(example_ato)$animal[1:5],
+    tz = tzone(example_ato)
   )
 
   expect_message(
     x <- init_ato(
       tag = ta,
-      det = det(example_ato),
+      det = det(example_ato)
     ),
     "M: 13618 valid detections (from 51 transmitters) do not match",
     fixed = TRUE
   )
 
-  check <- table(x@det$transmitter)[x@tag$transmitter]
+  check <- table(example_ato@det$transmitter)[x@tag$transmitter]
   check[is.na(check)] <- 0
   expect_equal(x@tag$n_det, as.vector(check))
 
@@ -703,6 +705,68 @@ test_that(".match_det_tag_base returns expected values", {
   expect_equal(x@tag$n_det[2], check[1, 1])
   expect_equal(x@tag$n_det[4], check[2, 2])
   expect_equal(x@tag$n_det[5], check[3, 3])
+
+  ta <- make_tag(
+    transmitter = tag(example_ato)$transmitter[1:5],
+    activation_datetime = c(
+      as.POSIXct(NA),
+      ani(example_ato)$release_datetime[1]-1,
+      NA, NA, NA
+    ),
+    battery_life = c(NA, 20, NA, NA, NA),
+    animal = ani(example_ato)$animal[1:5],
+    tz = tzone(example_ato)
+  )
+
+  expect_message(
+    x <- init_ato(
+      tag = ta,
+      det = det(example_ato)
+    ),
+    "M: 13831 valid detections (from 52 transmitters) do not match",
+    fixed = TRUE
+  )
+
+  check <- table(example_ato@det$transmitter)[x@tag$transmitter]
+  check[is.na(check)] <- 0
+  expect_equal(x@tag$n_det[-2], as.vector(check)[-2])
+  expect_equal(x@tag$n_det[2], 336)
+
+  check <- table(x@det$transmitter, x@det$tag_match)
+  expect_equal(x@tag$n_det[2], 336)
+  expect_equal(x@tag$n_det[4], check[2, 2])
+  expect_equal(x@tag$n_det[5], check[3, 3])
+
+  an <- make_ani(
+    animal = ani(example_ato)$animal[1:5],
+    release_datetime = ani(example_ato)$release_datetime[1:5]
+  )
+
+  x <- init_ato(
+    tag = ta,
+    det = det(example_ato),
+    ani = an
+  )
+
+  expect_equal(x@ani$n_det, x@tag$n_det)
+
+  an <- make_ani(
+    animal = ani(example_ato)$animal[1],
+    release_datetime = ani(example_ato)$release_datetime[1]
+  )
+
+  ta <- make_tag(
+    transmitter = tag(example_ato)$transmitter[1:5],
+    animal = ani(example_ato)$animal[1]
+  )
+
+  x <- init_ato(
+    tag = ta,
+    det = det(example_ato),
+    ani = an
+  )
+
+  expect_equal(x@ani$n_det, sum(x@tag$n_det))
 })
 
 # # TESTS END HERE ------
