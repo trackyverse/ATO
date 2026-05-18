@@ -698,13 +698,7 @@ test_that(".match_det_tag_base returns expected values", {
   )
 
   check <- table(example_ato@det$transmitter)[x@tag$transmitter]
-  check[is.na(check)] <- 0
-  expect_equal(x@tag$n_det, as.vector(check))
-
-  check <- table(x@det$transmitter, x@det$tag_match)
-  expect_equal(x@tag$n_det[2], check[1, 1])
-  expect_equal(x@tag$n_det[4], check[2, 2])
-  expect_equal(x@tag$n_det[5], check[3, 3])
+  expect_equal(x@tag$n_det, c(0, 549, 0, 231, 146))
 })
 
 test_that(".match_det_tag_base handles activation time and battery life", {
@@ -733,15 +727,7 @@ test_that(".match_det_tag_base handles activation time and battery life", {
     fixed = TRUE
   )
 
-  check <- table(example_ato@det$transmitter)[x@tag$transmitter]
-  check[is.na(check)] <- 0
-  expect_equal(x@tag$n_det[-2], as.vector(check)[-2])
-  expect_equal(x@tag$n_det[2], 336)
-
-  check <- table(x@det$transmitter, x@det$tag_match)
-  expect_equal(x@tag$n_det[2], 336)
-  expect_equal(x@tag$n_det[4], check[2, 2])
-  expect_equal(x@tag$n_det[5], check[3, 3])
+  expect_equal(x@tag$n_det, c(0, 336, 0, 231, 146))
 })
 
 test_that(".match_det_tag_base handles animal links", {
@@ -841,7 +827,7 @@ test_that(".match_det_tag_base handles animal links", {
   expect_equal(x@ani$n_det, 780)
 })
 
-test_that(".match_det_tag_data.table returns expected values", {
+test_that(".match_det_tag_datatable returns expected values", {
   old_force_base <- getOption("ATO_force_base", default = FALSE)
   on.exit(options(ATO_force_base = old_force_base))
   options(ATO_force_base = FALSE)
@@ -861,17 +847,10 @@ test_that(".match_det_tag_data.table returns expected values", {
     fixed = TRUE
   )
 
-  check <- table(example_ato@det$transmitter)[x@tag$transmitter]
-  check[is.na(check)] <- 0
-  expect_equal(x@tag$n_det, as.vector(check))
-
-  check <- table(x@det$transmitter, x@det$tag_match)
-  expect_equal(x@tag$n_det[2], check[1, 1])
-  expect_equal(x@tag$n_det[4], check[2, 2])
-  expect_equal(x@tag$n_det[5], check[3, 3])
+  expect_equal(x@tag$n_det, c(0, 549, 0, 231, 146))
 })
 
-test_that(".match_det_tag_data.table handles activation time and battery life", {
+test_that(".match_det_tag_datatable handles activation time and battery life", {
   old_force_base <- getOption("ATO_force_base", default = FALSE)
   on.exit(options(ATO_force_base = old_force_base))
   options(ATO_force_base = FALSE)
@@ -897,18 +876,10 @@ test_that(".match_det_tag_data.table handles activation time and battery life", 
     fixed = TRUE
   )
 
-  check <- table(example_ato@det$transmitter)[x@tag$transmitter]
-  check[is.na(check)] <- 0
-  expect_equal(x@tag$n_det[-2], as.vector(check)[-2])
-  expect_equal(x@tag$n_det[2], 336)
-
-  check <- table(x@det$transmitter, x@det$tag_match)
-  expect_equal(x@tag$n_det[2], 336)
-  expect_equal(x@tag$n_det[4], check[2, 2])
-  expect_equal(x@tag$n_det[5], check[3, 3])
+  expect_equal(x@tag$n_det, c(0, 336, 0, 231, 146))
 })
 
-test_that(".match_det_tag_data.table handles animal links", {
+test_that(".match_det_tag_datatable handles animal links", {
   old_force_base <- getOption("ATO_force_base", default = FALSE)
   on.exit(options(ATO_force_base = old_force_base))
   options(ATO_force_base = FALSE)
@@ -1004,6 +975,63 @@ test_that(".match_det_tag_data.table handles animal links", {
 
   expect_equal(x@ani$n_det, 780)
 })
+
+test_that(".match_det_dep_base returns expected values", {
+  old_force_base <- getOption("ATO_force_base", default = FALSE)
+  on.exit(options(ATO_force_base = old_force_base))
+  options(ATO_force_base = TRUE)
+
+  de <- make_dep(
+    deploy_datetime = as.POSIXct("2000-01-01 00:00:00"),
+    recover_datetime = as.POSIXct("2025-01-01 00:00:00"),
+    receiver_serial = dep(example_ato)$receiver_serial[2],
+    transmitter = tag(example_ato)$transmitter[2],
+    tz = tzone(example_ato)
+  )
+
+  expect_message(
+    x <- init_ato(
+      dep = de,
+      det = det(example_ato)[, 1:6],
+      tag = tag(example_ato)[-2, ]
+    ),
+    "M: 13836 valid detections (from 15 receivers) do not match",
+    fixed = TRUE
+  )
+
+  check <- table(example_ato@det$receiver_serial)
+  expect_equal(x@dep$n_det, 708)
+  expect_equal(x@dep$n_beacon_det, 549)
+})
+
+test_that(".match_det_dep_datatable returns expected values", {
+  old_force_base <- getOption("ATO_force_base", default = FALSE)
+  on.exit(options(ATO_force_base = old_force_base))
+  options(ATO_force_base = FALSE)
+
+  de <- make_dep(
+    deploy_datetime = as.POSIXct("2000-01-01 00:00:00"),
+    recover_datetime = as.POSIXct("2025-01-01 00:00:00"),
+    receiver_serial = dep(example_ato)$receiver_serial[2],
+    transmitter = tag(example_ato)$transmitter[2],
+    tz = tzone(example_ato)
+  )
+
+  expect_message(
+    x <- init_ato(
+      dep = de,
+      det = det(example_ato)[, 1:6],
+      tag = tag(example_ato)[-2, ]
+    ),
+    "M: 13836 valid detections (from 15 receivers) do not match",
+    fixed = TRUE
+  )
+
+  check <- table(example_ato@det$receiver_serial)
+  expect_equal(x@dep$n_det, 708)
+  expect_equal(x@dep$n_beacon_det, 549)
+})
+
 
 # # TESTS END HERE ------
 # # ---------------------

@@ -881,7 +881,7 @@ match_update <- function(x, silent = FALSE) {
       if (!is.na(x@dep$transmitter[i])) {
         transmitter <- x@dep$transmitter[i]
 
-        link <- x@det$receiver_serial == transmitter &
+        link <- x@det$transmitter == transmitter &
                 x@det$datetime >= first_time &
                 x@det$datetime <= last_time
 

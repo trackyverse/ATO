@@ -45,23 +45,25 @@
   if (!silent & any(strays)) {
     n_tags <- length(unique(x@det$transmitter[strays]))
     if (is.null(x@det$tag_match)) {
-      message("M: ", sum(strays), " valid detection", .s(sum(strays)),
-              " (from ", n_tags, " transmitter", .s(n_tags),
-              ") do not match transmitters listed in @dep,",
-              " or fall outside their active times",
-              " (stray detection", .s(sum(strays)), ").")
+      message(
+        "M: ", sum(strays), " valid detection", .s(sum(strays)),
+        " (from ", n_tags, " transmitter", .s(n_tags),
+        ") do not match transmitters listed in @dep,",
+        " or fall outside their active times,",
+        " but @tag not yet matched.")
     }
     if (is.null(x@det$beacon_match)) {
-      message("M: ", sum(strays), " valid detection", .s(sum(strays)),
-              " (from ", n_tags, " transmitter", .s(n_tags),
-              ") do not match transmitters listed on @tag,",
-              " or fall outside their active times",
-              " (stray detection", .s(sum(strays)), ").")
+      message(
+        "M: ", sum(strays), " valid detection", .s(sum(strays)),
+        " (from ", n_tags, " transmitter", .s(n_tags),
+        ") do not match transmitters listed in @tag,",
+        " or fall outside their active times,",
+        " but @dep not yet matched.")
     }
     if (!is.null(x@det$tag_match) & !is.null(x@det$beacon_match)) {
       message("M: ", sum(strays), " valid detection", .s(sum(strays)),
               " (from ", n_tags, " transmitter", .s(n_tags),
-              ") do not match transmitters listed on @tag or @dep,",
+              ") do not match transmitters listed in @tag or @dep,",
               " or fall outside their active times",
               " (stray detection", .s(sum(strays)), ").")
     }

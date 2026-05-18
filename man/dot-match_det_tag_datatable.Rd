@@ -4,7 +4,7 @@
 \alias{.match_det_tag_datatable}
 \title{Match transmitters in the detections to the target tags}
 \usage{
-.match_det_tag_datatable(x, silent)
+.match_det_tag_datatable(x, silent = FALSE)
 }
 \arguments{
 \item{x}{an \code{\link{ATO}}}
