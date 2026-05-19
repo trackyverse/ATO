@@ -18,6 +18,7 @@ setGeneric(
   }
 )
 
+#' @method check ATO_ani
 #' @rdname check
 setMethod(
   "check",
@@ -38,6 +39,7 @@ setMethod(
   }
 )
 
+#' @method check ATO_dep
 #' @rdname check
 setMethod(
   "check",
@@ -58,6 +60,7 @@ setMethod(
   }
 )
 
+#' @method check ATO_det
 #' @rdname check
 setMethod(
   "check",
@@ -75,6 +78,7 @@ setMethod(
   }
 )
 
+#' @method check ATO_obs
 #' @rdname check
 setMethod(
   "check",
@@ -129,6 +133,7 @@ setMethod(
   }
 )
 
+#' @method check ATO_tag
 #' @rdname check
 setMethod(
   "check",
