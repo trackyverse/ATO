@@ -9,12 +9,16 @@
 #' 
 #' @keywords internal
 #' 
-setGeneric( # nocov start
+#' @name check
+NULL
+
+#' @rdname check
+setGeneric(
   "check",
   function(object, tz, tbl) {
     standardGeneric("check")
   }
-) # nocov end
+)
 
 #' @rdname check
 setMethod(
