@@ -10,11 +10,7 @@
 #' @keywords internal
 #' 
 #' @name check
-.silly_function <- function(x) {
-  return("this is a test")
-}
-
-#' @rdname check
+#' 
 setGeneric(
   "check",
   function(object, tz, tbl) {
