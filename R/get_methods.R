@@ -20,13 +20,16 @@
 #'
 setGeneric(
   "get_ani",
-  function(x, type = c("all", "valid", "invalid"))
+  function(x, type = c("all", "valid", "invalid")) {
     standardGeneric("get_ani")
+  }
 )
 
 #' @rdname get_ani
-setMethod("get_ani", "ATO",
-          function(x, type = c("all", "valid", "invalid")) {
+setMethod(
+  "get_ani",
+  "ATO",
+  function(x, type = c("all", "valid", "invalid")) {
     type <- match.arg(type)
     if (!has(x, "ani")) {
       return(NULL)
@@ -47,13 +50,16 @@ setMethod("get_ani", "ATO",
 #' @export
 setGeneric(
   "ani",
-  function(x, type = c("all", "valid", "invalid"))
+  function(x, type = c("all", "valid", "invalid")) {
     standardGeneric("ani")
+  }
 )
 
 #' @rdname get_ani
-setMethod("ani", "ATO",
-          function(x, type = c("all", "valid", "invalid")) {
+setMethod(
+  "ani",
+  "ATO",
+  function(x, type = c("all", "valid", "invalid")) {
     output <- get_ani(x, type)
     return(output)
   }
@@ -81,13 +87,16 @@ setMethod("ani", "ATO",
 #'
 setGeneric(
   "get_dep",
-  function(x, type = c("all", "valid", "invalid"))
+  function(x, type = c("all", "valid", "invalid")) {
     standardGeneric("get_dep")
+  }
 )
 
 #' @rdname get_dep
-setMethod("get_dep", "ATO", 
-          function(x, type = c("all", "valid", "invalid")) {
+setMethod(
+  "get_dep",
+  "ATO", 
+  function(x, type = c("all", "valid", "invalid")) {
     type <- match.arg(type)
     if (!has(x, "dep")) {
       return(NULL)
@@ -108,13 +117,16 @@ setMethod("get_dep", "ATO",
 #' @export
 setGeneric(
   "dep",
-  function(x, type = c("all", "valid", "invalid"))
+  function(x, type = c("all", "valid", "invalid")) {
     standardGeneric("dep")
+  }
 )
 
 #' @rdname get_dep
-setMethod("dep", "ATO",
-          function(x, type = c("all", "valid", "invalid")) {
+setMethod(
+  "dep",
+  "ATO",
+  function(x, type = c("all", "valid", "invalid")) {
     output <- get_dep(x, type)
     return(output)
   }
@@ -164,8 +176,9 @@ setMethod("dep", "ATO",
 #'
 setGeneric(
   "get_det",
-  function(x, receivers, transmitters, type = c("all", "valid", "invalid"))
+  function(x, receivers, transmitters, type = c("all", "valid", "invalid")) {
     standardGeneric("get_det")
+  }
 )
 
 #' @rdname get_det
@@ -206,12 +219,15 @@ setMethod(
 #' @export
 setGeneric(
   "det",
-  function(x, receivers,transmitters, type = c("all", "valid", "invalid"))
+  function(x, receivers,transmitters, type = c("all", "valid", "invalid")) {
     standardGeneric("det")
+  }
 )
 
 #' @rdname get_dep
-setMethod("det", "ATO",
+setMethod(
+  "det",
+  "ATO",
   function(x, receivers,transmitters, type = c("all", "valid", "invalid")) {
     output <- get_det(x, receivers, transmitters, type)
     return(output)
@@ -241,8 +257,9 @@ setMethod("det", "ATO",
 #'
 setGeneric(
   "get_det_tag",
-  function(x, receivers, type = c("all", "valid", "invalid"))
+  function(x, receivers, type = c("all", "valid", "invalid")) {
     standardGeneric("get_det_tag")
+  }
 )
 
 #' @rdname get_det_tag
@@ -288,8 +305,9 @@ setMethod(
 #'
 setGeneric(
   "get_det_dep",
-  function(x, receivers, type = c("all", "valid", "invalid"))
+  function(x, receivers, type = c("all", "valid", "invalid")) {
     standardGeneric("get_det_dep")
+  }
 )
 
 #' @rdname get_det_dep
@@ -329,38 +347,46 @@ setMethod(
 #'
 setGeneric(
   "get_obs",
-  function(x, type = c("all", "valid", "invalid"))
+  function(x, type = c("all", "valid", "invalid")) {
     standardGeneric("get_obs")
+  }
 )
 
 #' @rdname get_obs
-setMethod("get_obs", "ATO", function(x, type = c("all", "valid", "invalid")) {
-  type <- match.arg(type)
-  if (!has(x, "obs")) {
-    return(NULL)
+setMethod(
+  "get_obs",
+  "ATO",
+  function(x, type = c("all", "valid", "invalid")) {
+    type <- match.arg(type)
+    if (!has(x, "obs")) {
+      return(NULL)
+    }
+    if (type == "all") {
+      return(x@obs)
+    }
+    if (type == "valid") {
+      return(x@obs[x@obs$valid, ])
+    }
+    if (type == "invalid") {
+      return(x@obs[!x@obs$valid, ])
+    }
   }
-  if (type == "all") {
-    return(x@obs)
-  }
-  if (type == "valid") {
-    return(x@obs[x@obs$valid, ])
-  }
-  if (type == "invalid") {
-    return(x@obs[!x@obs$valid, ])
-  }
-})
+)
 
 #' @rdname get_obs
 #' @export
 setGeneric(
   "obs",
-  function(x, type = c("all", "valid", "invalid"))
+  function(x, type = c("all", "valid", "invalid")) {
     standardGeneric("obs")
+  }
 )
 
 #' @rdname get_obs
-setMethod("obs", "ATO",
-          function(x, type = c("all", "valid", "invalid")) {
+setMethod(
+  "obs",
+  "ATO",
+  function(x, type = c("all", "valid", "invalid")) {
     output <- get_obs(x, type)
     return(output)
   }
@@ -388,13 +414,16 @@ setMethod("obs", "ATO",
 #'
 setGeneric(
   "get_tag",
-  function(x, type = c("all", "valid", "invalid"))
+  function(x, type = c("all", "valid", "invalid")) {
     standardGeneric("get_tag")
+  }
 )
 
 #' @rdname get_tag
-setMethod("get_tag", "ATO",
-          function(x, type = c("all", "valid", "invalid")) {
+setMethod(
+  "get_tag",
+  "ATO",
+  function(x, type = c("all", "valid", "invalid")) {
     type <- match.arg(type)
 
     if (!has(x, "tag")) {
@@ -416,13 +445,16 @@ setMethod("get_tag", "ATO",
 #' @export
 setGeneric(
   "tag",
-  function(x, type = c("all", "valid", "invalid"))
+  function(x, type = c("all", "valid", "invalid")) {
     standardGeneric("tag")
+  }
 )
 
 #' @rdname get_tag
-setMethod("tag", "ATO",
-          function(x, type = c("all", "valid", "invalid")) {
+setMethod(
+  "tag",
+  "ATO",
+  function(x, type = c("all", "valid", "invalid")) {
     output <- get_tag(x, type)
     return(output)
   }
@@ -447,20 +479,26 @@ setMethod("tag", "ATO",
 #'
 setGeneric(
   "get_log",
-  function(x, debug = FALSE) standardGeneric("get_log")
+  function(x, debug = FALSE) {
+    standardGeneric("get_log")
+  }
 )
 
 #' @rdname get_log
-setMethod("get_log", "ATO", function(x, debug = FALSE) {
-  if (!has(x, "log")) {
-    return(NULL)
+setMethod(
+  "get_log",
+  "ATO",
+  function(x, debug = FALSE) {
+    if (!has(x, "log")) {
+      return(NULL)
+    }
+    if (debug) {
+      return(x@log)
+    } else {
+      return(x@log[x@log$type != "debug", colnames(x@log) != "call"])
+    }
   }
-  if (debug) {
-    return(x@log)
-  } else {
-    return(x@log[x@log$type != "debug", colnames(x@log) != "call"])
-  }
-})
+)
 
 #' `$` Method to extract ATO slots directly
 #'
@@ -481,22 +519,26 @@ setMethod("get_log", "ATO", function(x, debug = FALSE) {
 #' rm(dep)
 #' 
 #' @export
-setMethod("$", "ATO", function(x, name) {
-  left <- substitute(x)
-  right <- substitute(name)
-  pretty_subset <- function(subs) paste0('`', left, subs, right, '`')
+setMethod(
+  "$",
+  "ATO",
+  function(x, name) {
+    left <- substitute(x)
+    right <- substitute(name)
+    pretty_subset <- function(subs) paste0('`', left, subs, right, '`')
 
-  warning(
-    paste(
-      pretty_subset("$"),
-      "converted to",
-      pretty_subset("@"),
-      "for convenience, please use",
-      pretty_subset("@"),
-      "in the future.\n  See `?slot` for more information."
-    ),
-    immediate. = TRUE
-  )
+    warning(
+      paste(
+        pretty_subset("$"),
+        "converted to",
+        pretty_subset("@"),
+        "for convenience, please use",
+        pretty_subset("@"),
+        "in the future.\n  See `?slot` for more information."
+      ),
+      immediate. = TRUE
+    )
 
-  return(slot(x, name))
-})
+    return(slot(x, name))
+  }
+)
