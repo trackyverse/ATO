@@ -5,6 +5,7 @@
 [![name status badge](https://trackyverse.r-universe.dev/badges/:name)](https://trackyverse.r-universe.dev/)
 [![ATO status badge](https://trackyverse.r-universe.dev/ATO/badges/version)](https://trackyverse.r-universe.dev/ATO)
 [![R-CMD-check](https://github.com/trackyverse/ATO/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/trackyverse/ATO/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/trackyverse/ATO/graph/badge.svg)](https://app.codecov.io/gh/trackyverse/ATO)
 <!-- badges: end -->
 
 This repository is a fastly evolving work in progress, with the intent to provide S4 classes to create, edit and expand ATOs. 
