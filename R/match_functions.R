@@ -787,7 +787,12 @@ match_update <- function(x, silent = FALSE) {
   .check_dup_match_datatable(result$xid, result$yid, "dep", "tag")
 
   # assign the match
-  data.table::set(x@det, i = result$xid, j = "tag_match", value = result$yid)
+  data.table::set(
+    x@det,
+    i = result$xid,
+    j = "tag_match",
+    value = x@tag$original_row_order[result$yid]
+    )
 
   # last check: detections can't match both tags and beacons
   # Note: this check is placed here instead of further down 
@@ -801,7 +806,8 @@ match_update <- function(x, silent = FALSE) {
   # include counts of valid detections per tag
   x@tag$n_det <- 0
   aux <- table(x@det$tag_match[x@det$valid])
-  x@tag$n_det[as.numeric(names(aux))] <- aux
+  row_link <- match(as.numeric(names(aux)), x@tag$original_row_order)
+  x@tag$n_det[row_link] <- aux
 
   # issue message if some valid tags have no detections
   .message_n_zero(x@tag$n_det[x@tag$valid],
@@ -1024,8 +1030,12 @@ match_update <- function(x, silent = FALSE) {
   .check_dup_match_datatable(result_rec$xid, result_rec$yid, "det", "dep")
 
   # assign the match
-  data.table::set(x@det, i = result_rec$xid,
-                  j = "dep_match", value = result_rec$yid)
+  data.table::set(
+    x@det,
+    i = result_rec$xid,
+    j = "dep_match",
+    value = x@dep$original_row_order[result_rec$yid]
+  )
 
   # now do the same thing for the beacon tags
 
@@ -1044,8 +1054,12 @@ match_update <- function(x, silent = FALSE) {
   .check_dup_match_datatable(result_bea$xid, result_bea$yid, "det", "dep")
 
   # assign the match
-  data.table::set(x@det, i = result_bea$xid,
-                  j = "beacon_match", value = result_bea$yid)
+  data.table::set(
+    x@det,
+    i = result_bea$xid,
+    j = "beacon_match",
+    value = x@dep$original_row_order[result_bea$yid]
+  )
 
   # last check: detections can't match both deps and beacons
   # Note: this check is placed here instead of further down 
@@ -1062,7 +1076,8 @@ match_update <- function(x, silent = FALSE) {
   # include counts of valid detections per dep
   x@dep$n_det <- 0
   aux <- table(x@det$dep_match[x@det$valid])
-  x@dep$n_det[as.numeric(names(aux))] <- aux
+  row_link <- match(as.numeric(names(aux)), x@dep$original_row_order)
+  x@dep$n_det[row_link] <- aux
 
   # issue message if some valid deployments have no detections
   .message_n_zero(x@dep$n_det[x@dep$valid],
@@ -1072,7 +1087,8 @@ match_update <- function(x, silent = FALSE) {
   # include counts of valid beacon detections per dep
   x@dep$n_beacon_det <- 0
   aux <- table(x@det$beacon_match[x@det$valid])
-  x@dep$n_beacon_det[as.numeric(names(aux))] <- aux
+  row_link <- match(as.numeric(names(aux)), x@dep$original_row_order)
+  x@dep$n_beacon_det[row_link] <- aux
 
   # issue message if some valid deps have no detections
   .message_n_zero(x@dep$n_beacon_det[x@dep$valid],
