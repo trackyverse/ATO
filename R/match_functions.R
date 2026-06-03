@@ -1066,7 +1066,8 @@ match_update <- function(x, silent = FALSE) {
   .message_stray_dets(x, silent = silent)
 
   # include counts of valid detections per dep
-  x@dep$n_det <- 0
+  x@dep$n_det <- NA_integer_
+  x@dep$n_det[!is.na(x@dep$receiver_serial)] <- 0
   aux <- table(x@det$dep_match[x@det$valid])
   x@dep$n_det[as.numeric(names(aux))] <- aux
 
@@ -1076,7 +1077,8 @@ match_update <- function(x, silent = FALSE) {
                   silent = silent)
 
   # include counts of valid beacon detections per dep
-  x@dep$n_beacon_det <- 0
+  x@dep$n_beacon_det <- NA_integer_
+  x@dep$n_beacon_det[!is.na(x@dep$transmitter)] <- 0
   aux <- table(x@det$beacon_match[x@det$valid])
   x@dep$n_beacon_det[as.numeric(names(aux))] <- aux
 
@@ -1252,7 +1254,9 @@ match_update <- function(x, silent = FALSE) {
   .message_stray_dets(x, silent = silent)
 
   # include counts of valid detections per dep
-  x@dep$n_det <- 0
+  x@dep$n_det <- NA_integer_
+  x@dep$n_det[!is.na(x@dep$receiver_serial)] <- 0
+
   aux <- table(x@det$dep_match[x@det$valid])
   row_link <- match(as.numeric(names(aux)), x@dep$original_row_order)
   x@dep$n_det[row_link] <- aux
@@ -1263,7 +1267,9 @@ match_update <- function(x, silent = FALSE) {
                   silent = silent)
 
   # include counts of valid beacon detections per dep
-  x@dep$n_beacon_det <- 0
+  x@dep$n_beacon_det <- NA_integer_
+  x@dep$n_beacon_det[!is.na(x@dep$transmitter)] <- 0
+
   aux <- table(x@det$beacon_match[x@det$valid])
   row_link <- match(as.numeric(names(aux)), x@dep$original_row_order)
   x@dep$n_beacon_det[row_link] <- aux
