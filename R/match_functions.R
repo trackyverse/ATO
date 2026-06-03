@@ -57,14 +57,26 @@ match_update <- function(x, silent = FALSE) {
     }
   } else {
     if (has(x, "obs")) {
-      x@obs$ani_match <- NULL
+      if (!is.null(x@obs$ani_match)) {
+        x@obs$ani_match <- NULL
+      }
     }
     if (has(x, "ani")) {
-      x@ani$n_obs <- NULL
-      x@ani$terminal_location <- NULL
-      x@ani$terminal_datetime <- NULL
-      x@ani$terminal_lat <- NULL
-      x@ani$terminal_lon <- NULL
+      if (!is.null(x@ani$n_obs)) {
+        x@ani$n_obs <- NULL
+      }
+      if (!is.null(x@ani$terminal_location)) {
+        x@ani$terminal_location <- NULL
+      }
+      if (!is.null(x@ani$terminal_datetime)) {
+        x@ani$terminal_datetime <- NULL
+      }
+      if (!is.null(x@ani$terminal_lat)) {
+        x@ani$terminal_lat <- NULL
+      }
+      if (!is.null(x@ani$terminal_lon)) {
+        x@ani$terminal_lon <- NULL
+      }
     }
   }
 
@@ -80,14 +92,26 @@ match_update <- function(x, silent = FALSE) {
     }
   } else {
     if (has(x, "ani")) {
-      x@ani$n_tag <- NULL
+      if (!is.null(x@ani$n_tag)) {
+        x@ani$n_tag <- NULL
+      }
     }
     if (has(x, "tag")) {
-      x@tag$ani_match
-      x@tag$release_location <- NULL
-      x@tag$release_datetime <- NULL
-      x@tag$release_lat <- NULL
-      x@tag$release_lon <- NULL
+      if (!is.null(x@tag$ani_match)) {
+        x@tag$ani_match <- NULL
+      }
+      if (!is.null(x@tag$release_location)) {
+        x@tag$release_location <- NULL
+      }
+      if (!is.null(x@tag$release_datetime)) {
+        x@tag$release_datetime <- NULL
+      }
+      if (!is.null(x@tag$release_lat)) {
+        x@tag$release_lat <- NULL
+      }
+      if (!is.null(x@tag$release_lon)) {
+        x@tag$release_lon <- NULL
+      }
     }
   }
 
@@ -103,10 +127,14 @@ match_update <- function(x, silent = FALSE) {
     }
   } else {
     if (has(x, "obs")) {
-      x@obs$tag_match <- NULL
+      if (!is.null(x@obs$tag_match)) {
+        x@obs$tag_match <- NULL
+      }
     }
     if (has(x, "tag")) {
-      x@tag$n_obs <- NULL
+      if (!is.null(x@tag$n_obs)) {
+        x@tag$n_obs <- NULL
+      }
     }
   }
 
@@ -126,16 +154,28 @@ match_update <- function(x, silent = FALSE) {
     }
   } else {
     if (has(x, "det")) {
-      x@det$tag_match <- NULL
-      x@det$animal <- NULL
-      x@det$ani_match <- NULL
-      x@det$animal <- NULL
+      if (!is.null(x@det$tag_match)) {
+        x@det$tag_match <- NULL
+      }
+      if (!is.null(x@det$animal)) {
+        x@det$animal <- NULL
+      }
+      if (!is.null(x@det$ani_match)) {
+        x@det$ani_match <- NULL
+      }
+      if (!is.null(x@det$animal)) {
+        x@det$animal <- NULL
+      }
     }
     if (has(x, "tag")) {
-      x@tag$n_det <- NULL
+      if (!is.null(x@tag$n_det)) {
+        x@tag$n_det <- NULL
+      }
     }
     if (has(x, "ani")) {
-      x@ani$n_det <- NULL
+      if (!is.null(x@ani$n_det)) {
+        x@ani$n_det <- NULL
+      }
     }
   }
 
@@ -155,12 +195,20 @@ match_update <- function(x, silent = FALSE) {
     }
   } else {
     if (has(x, "dep")) {
-      x@dep$n_det <- NULL
-      x@dep$n_beacon_det <- NULL
+      if (!is.null(x@dep$n_det)) {
+        x@dep$n_det <- NULL
+      }
+      if (!is.null(x@dep$n_beacon_det)) {
+        x@dep$n_beacon_det <- NULL
+      }
     }
     if (has(x, "det")) {
-      x@det$dep_match <- NULL
-      x@det$beacon_match <- NULL
+      if (!is.null(x@det$dep_match)) {
+        x@det$dep_match <- NULL
+      }
+      if (!is.null(x@det$beacon_match)) {
+        x@det$beacon_match <- NULL
+      }
     }
   }
 
