@@ -35,6 +35,35 @@ setMethod(
 
     .check_dup_rows(object)
 
+    # check that capture_datetime, if present, is before release_datetime
+    
+    # conceptual test
+    # object <- data.frame(
+    #   capture_datetime = as.POSIXct(
+    #     c("2026-05-03 12:00:00",
+    #       NA
+    #     )
+    #   ),
+    #   release_datetime = as.POSIXct(
+    #     c(
+    #       "2026-05-02 12:00:00",
+    #       "2026-05-02 12:00:00"
+    #     )
+    #   )
+    # )
+    check <- object$capture_datetime > object$release_datetime
+    check <- .sub_na(check, FALSE)
+
+    if (any(check)) {
+      x <- which(check)
+      stop(
+        "capture_datetime for row", .s(x),
+        " ", .comma(x),
+        " comes after release_datetime.",
+        " Animals must be captured before they are released.",
+        call. = FALSE)
+    }
+
     return(object)
   }
 )
