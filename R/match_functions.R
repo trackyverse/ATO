@@ -1211,7 +1211,7 @@ match_update <- function(x, silent = FALSE) {
     original_x = x@det$original_row_order,
     original_y = x@dep$original_row_order,
     label_x = "det",
-    label_y = "dep"
+    label_y = "dep (receiver_serial)"
   )
 
   # assign the match - from the set of valid deployments
@@ -1246,7 +1246,7 @@ match_update <- function(x, silent = FALSE) {
     original_x = x@det$original_row_order,
     original_y = x@dep$original_row_order,
     label_x = "det",
-    label_y = "dep"
+    label_y = "dep (transmitter)"
   )
 
   # assign the match - using only valid deployments
