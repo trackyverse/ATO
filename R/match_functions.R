@@ -731,7 +731,13 @@ match_update <- function(x, silent = FALSE) {
               x@det$datetime <= last_time
 
       # check for ambiguity
-      .check_dup_match_base(x@det$tag_match[link], i, "det", "tag")
+      .check_dup_match_base(
+        x = x@det$tag_match[link],
+        x_index = which(link),
+        i = i,
+        label_x = "det",
+        label_y = "tag"
+      )
 
       # and assign the match
       x@det$tag_match[link] <- i
@@ -1033,8 +1039,13 @@ match_update <- function(x, silent = FALSE) {
                 x@det$datetime <= last_time
 
         # check for ambiguity
-        .check_dup_match_base(x@det$dep_match[link], i,
-                              "det", "dep (receiver_serial)")
+        .check_dup_match_base(
+          x = x@det$dep_match[link],
+          x_index = which(link),
+          i = i,
+          label_x = "det",
+          label_y = "dep (receiver_serial)"
+        )
 
         # and assign the match
         x@det$dep_match[link] <- i
@@ -1049,8 +1060,13 @@ match_update <- function(x, silent = FALSE) {
                 x@det$datetime <= last_time
 
         # check for ambiguity
-        .check_dup_match_base(x@det$beacon_match[link], i,
-                              "det", "dep (transmitter)")
+        .check_dup_match_base(
+          x = x@det$beacon_match[link],
+          x_index = which(link),
+          i = i,
+          label_x = "det",
+          label_y = "dep (transmitter)"
+        )
 
         # and assign the match
         x@det$beacon_match[link] <- i

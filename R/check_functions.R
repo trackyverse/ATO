@@ -288,7 +288,8 @@
 #' This is called inside a for loop, where i is the
 #' tag currently being matched to the detections
 #' 
-#' @param x the vector of a new subset of matches
+#' @param x the vector of a new subset of items to assign matches to
+#' @param x_index the original index of the x values being evaluated
 #' @param i the tag in y currently being matched against x
 #' @param label_x the name of the slot on the left side of the match
 #' @param label_y the name of the slot on the right side of the match
@@ -297,14 +298,22 @@
 #' 
 #' @keywords internal
 #' 
-.check_dup_match_base <- function(x, i, label_x, label_y) {
+.check_dup_match_base <- function(x, x_index, i, label_x, label_y) {
   if (any(!is.na(x))) {
-    r <- which(!is.na(x))
-    stop("@", label_x, " row", .s(length(r)), " ", .comma(r),
-         " match", .es(length(r), TRUE), " @", label_y, " rows ",
-         .comma(c(unique(x), i)), ". Fatal ambiguity.",
-         " Can't assign detections correctly.",
-         call. = FALSE)
+    dup_x_index <- x_index[!is.na(x)]
+    y_rows <- sort(c(unique(x[!is.na(x)]), i))
+
+    stop(
+      "@", label_x,
+      " row", .s(length(dup_x_index)),
+      " ", .comma(dup_x_index),
+      " match", .es(length(dup_x_index), TRUE),
+      " @", label_y,
+      " rows ", .comma(y_rows),
+      ". Fatal ambiguity. Can't assign detections correctly.",
+      call. = FALSE
+    )
+    
   }
 }
 
