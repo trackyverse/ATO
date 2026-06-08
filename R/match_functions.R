@@ -912,10 +912,12 @@ match_update <- function(x, silent = FALSE) {
 
   # check for ambiguous matches
   .check_dup_match_datatable(
-    result$xid,
-    result$yid,
-    "dep",
-    "tag"
+    x = result$xid,
+    y = result$yid,
+    original_x = x@det$original_row_order,
+    original_y = x@tag$original_row_order,
+    label_x = "det",
+    label_y = "tag"
   )
 
   # assign the match - only from the valid subset of tags
@@ -1203,7 +1205,14 @@ match_update <- function(x, silent = FALSE) {
   )
 
   # check for ambiguous matches
-  .check_dup_match_datatable(result_rec$xid, result_rec$yid, "det", "dep")
+  .check_dup_match_datatable(
+    x = result_rec$xid,
+    y = result_rec$yid,
+    original_x = x@det$original_row_order,
+    original_y = x@dep$original_row_order,
+    label_x = "det",
+    label_y = "dep"
+  )
 
   # assign the match - from the set of valid deployments
   data.table::set(
@@ -1231,7 +1240,14 @@ match_update <- function(x, silent = FALSE) {
   )
 
   # check for ambiguous matches
-  .check_dup_match_datatable(result_bea$xid, result_bea$yid, "det", "dep")
+  .check_dup_match_datatable(
+    x = result_bea$xid,
+    y = result_bea$yid,
+    original_x = x@det$original_row_order,
+    original_y = x@dep$original_row_order,
+    label_x = "det",
+    label_y = "dep"
+  )
 
   # assign the match - using only valid deployments
   data.table::set(

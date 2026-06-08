@@ -4,12 +4,16 @@
 \alias{.check_dup_match_datatable}
 \title{Check for duplicated matches in the data.table version}
 \usage{
-.check_dup_match_datatable(x, y, label_x, label_y)
+.check_dup_match_datatable(x, y, original_x, original_y, label_x, label_y)
 }
 \arguments{
 \item{x}{the vector of the xid from the data.table::foverlaps output}
 
 \item{y}{the vector of the yid from the data.table::foverlaps output}
+
+\item{original_x}{the original row order of x, for error messages}
+
+\item{original_y}{the original row order of x, for error messages}
 
 \item{label_x}{the name of the slot on the left side of the match}
 
