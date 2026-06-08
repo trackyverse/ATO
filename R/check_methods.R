@@ -57,7 +57,7 @@ setMethod(
     if (any(check)) {
       x <- which(check)
       stop(
-        "capture_datetime for row", .s(x),
+        "capture_datetime for row", .s(length(x)),
         " ", .comma(x),
         " comes after release_datetime.",
         " Animals must be captured before they are released.",
