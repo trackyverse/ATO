@@ -8,7 +8,7 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/base:noble",
 	"features": {
-		"ghcr.io/rocker-org/devcontainer-features/r-apt:0": {
+		"ghcr.io/rocker-org/devcontainer-features/r-apt:1": {
 			"installDevTools": true,
 			"installRMarkdown": true,
 			"installRadian": true,
