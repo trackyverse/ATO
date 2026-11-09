@@ -4,6 +4,8 @@ vignette: >
   %\VignetteIndexEntry{Setting up Air}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+execute:
+    eval: FALSE
 knitr:
   opts_chunk:
     collapse: true
@@ -16,9 +18,16 @@ as linter to quickly format code. This article providers
 instructions on why we use Air and how to setup Air whether you are using 
 RStudio, VS Code, or Positron. 
 
+Air shares properties with other modern formatters and linters, such as Ruff for Python. A feww things about 
+Air is the following: 
+
+- Air is highly opinionated and offers relatively few options for customization but it can be customized. 
+- Air is written in Rust and is based on the Biome formatter engine, which makes it extremely fast.
+
 # Formatting 
+
 Why does formatting matter? and why does using a linter matter?
-Formatting code creates consistancy in the style of code written. 
+Formatting code creates consistancy in the style of the code written. 
 It does not change the meaning of code, but instead allows for easier 
 readablity and reporduciblity. Consistancy, readablity, and reporduciblity
 are highly important for coding projects in general but become 
@@ -30,15 +39,15 @@ A linter can be setup to apply these rules every time a file is saved which
 streamlines the overall use of a given style.  
 
 For example, a style could include whitespace after an operate (e.g., `c(1, 2, 3)` versues `c(1,2,3)`), 
-newlines, and other punctuation set to determined rules and standards. This could alsco include 
-code is indented with the appropriate amount of leading whitespace depending on the context. For more information 
-about formatting and style details see [Air formating details](https://posit-dev.github.io/air/formatter.html)
+newlines, and other punctuation set to determined rules and standards. This could also include 
+code that is indented with the appropriate amount of leading whitespace depending on the context. For more information 
+about formatting and style details of Air see [Air formating details](https://posit-dev.github.io/air/formatter.html)
 
 # Installation
 Trackyverse pacakges use Air as a linter and formatter to create a standard style that then is applied 
 across all code files.
 
- To install Air at the command line, you can use one of our standalone installers.
+To install Air at the command line, you can use the following standalone installers.
 
 On macOS and Linux:
 
@@ -48,8 +57,7 @@ On Windows:
 
 `powershell -ExecutionPolicy Bypass -c "irm https://github.com/posit-dev/air/releases/latest/download/air-installer.ps1 | iex"`
 
-The installer scripts will automatically add Air to your PATH. 
-The very first time you install Air, for the PATH modifications to be applied you’ll need to restart your terminal.
+This will automatically add Air to your PATH. The very first time you install Air, for the PATH modifications to be applied you’ll need to restart your terminal.
 
 For a specific version of Air:
 
@@ -68,6 +76,7 @@ If you use [uv](https://docs.astral.sh/uv/), you can install Air via the [air-fo
 uv tool install air-formatter
 air format path/to/my/script.R
 ```
+
 ```bash
 # Invoke once without installing
 uvx --from air-formatter air format path/to/my/script.R
@@ -75,4 +84,121 @@ uvx --from air-formatter air format path/to/my/script.R
 
 Note that if you’d like to use Air inside VS Code or Positron, then the Extension for those editors comes pre-bundled with an Air binary, so there’s nothing you need to do besides [download the Extension](https://posit-dev.github.io/air/editor-vscode.html).
 
-# Setup 
+# Setup
+
+## RStudio
+
+If you are using RStudio, it does not support [Language Server Protocol](https://microsoft.github.io/language-server-protocol/), but you can still use Air as an *external* formatter. 
+
+To use with RStudio please follow the following guide - [using Air with RStudio](https://posit-dev.github.io/air/editor-rstudio.html), 
+which details how to adjust RStudio's Global Options to find and recognize Air. Once done you can adjust a few settings to have 
+RStudio to work with Air which the guide details. See [Guide to using Air below.](#guide-to-using-air)
+
+## Positron and VS Code 
+
+If you are using Positron or VS Code, it does support Language Server Protcols and allows for Air to have a bit more freedom edit settings at a user level and at a workspace level (i.e. for just the current project you are working on). 
+
+Because Air can leverage Language Server Protcols there is no further setup needed.
+
+# Initialization 
+
+To setup Air for a repositiory once installed and setup you can run the following code: 
+
+```r
+install.packages("usethis")
+```
+
+We can then use `{usethis}` to setup Air for a repository using the following:
+
+```r
+usethis::use_air()
+```
+
+This will create a `air.toml` and a folder `.vscode` where it will create a `settings.json` and `extensions.json`.
+
+The `settings.json` file contains the following: 
+
+```json
+{
+    "recommendations": [
+        "Posit.air-vscode"
+    ]
+}
+```
+
+The `extensions.json` file contains the following this: 
+
+```json
+{
+    "[r]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "Posit.air-vscode"
+    },
+    "[quarto]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "quarto.quarto"
+    }
+}
+```
+
+Both `settings.json` and `extension.json` can be further customized such as: 
+
+```json
+{
+    "[r]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "Posit.air-vscode"
+    }
+}
+```
+
+# Guide to using Air
+
+Once we have setup Air on a repoistory we can do a couple different things to start utilizing Air's ability 
+as linter. 
+
+## RStudio
+
+To set features of Air such as Format on Save we can adjust the Global Settings using `Tools -> Global Options -> Code -> Saving and check Reformat documents on save.`, which is detailed [Air's guide to using with RStudio](https://posit-dev.github.io/air/editor-rstudio.html#rstudio-format-on-save). 
+
+## Positron and VS code 
+To enable some Air features, like Format on Save, you’ll need to adjust settings in either your user or workspace level `settings.json` file. We generally recommend modifying workspace level settings for two reasons:
+
+- Workspace level settings exist inside your workspace folder at `.vscode/settings.json` and are checked in to your version control system. This means that your collaborators will get those settings automatically when they check out your project. User level settings are not checked in to version control.
+
+- User level settings are automatically applied for all projects that you open. While this sounds nice, if you open an older project (or a project you don’t own) that doesn’t use Air, then you’ll have to remember to turn off your user level Air settings before committing to that project, otherwise you may create a large amount of format related diffs that the project may not want.
+
+The easiest way to set up a workspace level `settings.json` with the recommended settings is by running the command *Air: Initialize Workspace Folder*. This is equivalent to running `usethis::use_air()` from an R console.
+
+Alternatively, to open your `settings.json` file from the Command Palette (`Cmd + Shift + P` on Mac/Linux, `Ctrl + Shift + P` on Windows):
+
+Run Preferences: `Open Workspace Settings (JSON)` to modify workspace specific settings (recommended).
+Run Preferences: `Open User Settings (JSON)` to modify global user settings.
+
+At this point, for the Trackyverse, there is no futher setup needed, however, if one would like to explore the Air to its 
+full capacity please see [Air Guide](https://posit-dev.github.io/air/editor-vscode.html). 
+
+# Customizing Air
+
+The `air.toml` file is a Tom's Own Markup Language (toml) file that allows the ablity to customize and change the default 
+settings of Air. 
+
+Below are the available settings to adjust and customize and can be added to to `air.toml` file: 
+
+```toml
+[format]
+line-width = 80
+indent-width = 2
+indent-style = "space"
+line-ending = "auto"
+persistent-line-breaks = true
+assignment-style = "arrow"
+exclude = []
+default-exclude = true
+skip = []
+table = []
+default-table = true
+```
+
+
+
