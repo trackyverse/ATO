@@ -2,14 +2,24 @@
 % Please edit documentation in R/check_functions.R
 \name{.check_slot_tzones}
 \alias{.check_slot_tzones}
-\title{Check that all slots are in the same timezone}
+\title{Check that all slots inside the ATO are in the same timezone}
 \usage{
-.check_slot_tzones(x)
+.check_slot_tzones(x, s)
 }
 \arguments{
-\item{x}{An ATO object}
+\item{x}{An ATO slot object}
+
+\item{s}{the name of the slot, for messaging purposes}
 }
 \description{
-Check that all slots are in the same timezone
+how to use:
+all in the same tz, returns the tz
+\code{.check_slot_tzones(tag(example_ato))}
+}
+\details{
+force fail by different tz
+\code{object <- example_ato}
+\code{attributes(object@dep$deploy_datetime)$tzone <- "UTC"}
+\code{check_slot_tzones(dep(object))}
 }
 \keyword{internal}

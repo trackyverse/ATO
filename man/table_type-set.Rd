@@ -35,3 +35,11 @@ Acts directly on x
 \description{
 Assign a new table type to an ATO or an ATO slot.
 }
+\examples{
+# runnning examples for this function would
+# require having either data.table or tibble installed.
+# if you have them installed, you can try e.g.
+# table_type(example_ato) <- "data.table"
+# table_type(example_ato)
+
+}

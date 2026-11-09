@@ -4,6 +4,9 @@
 #' 
 #' @return Nothing. Called for side-effects
 #' 
+#' @examples
+#' show(example_ato)
+#' 
 #' @export
 #' 
 setMethod("show", "ATO", function(object) {

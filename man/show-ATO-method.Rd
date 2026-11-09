@@ -15,3 +15,7 @@ Nothing. Called for side-effects
 \description{
 Method to show an \code{\link{ATO}}
 }
+\examples{
+show(example_ato)
+
+}

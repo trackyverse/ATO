@@ -15,5 +15,29 @@ match_update(x, silent = FALSE)
 the updated ATO
 }
 \description{
-Automatically called by the \code{\link{set}} functions.
+Automatically called by the \code{\link{set}} functions. You should not need
+to call this function directly unless you have deactivated the ATO's
+automatic matching feature (see \code{\link{ato_match_immediate}}).
+}
+\details{
+For developers: You may deactivate ato_match_immediate() to be able to
+to perform multiple actions in the ATO in quick sequence without incurring
+the computational cost of repeated, needless matches. You can then run
+match_update() on the ATO to match everything up in the end.
+Remember to leave ato_match_immediate() in the same state that the user
+set it to. See the code inside \code{\link{init_ato}} for an example.
+}
+\examples{
+old_match_immediate <- ato_match_immediate()
+ato_match_immediate(FALSE)
+x <- init_ato(ani = ani(example_ato),
+             tag = tag(example_ato),
+             det = det(example_ato),
+             dep = dep(example_ato))
+x <- match_update(x)
+
+# clean up
+ato_match_immediate(old_match_immediate)
+rm(x, old_match_immediate)
+
 }

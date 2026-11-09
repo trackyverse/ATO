@@ -18,6 +18,13 @@
 #' @return if expect is missing, returns the type of table used by the ATO.
 #'   If expect is provided, either errors or returns nothing.
 #' 
+#' @examples
+#' # check the table type of an ato
+#' table_type(example_ato)
+#' 
+#' # check the table type of an ATO slot
+#' table_type(.ATO_ani)
+#' 
 #' @export
 #' 
 setGeneric("table_type", function(x, expect) standardGeneric("table_type"))
@@ -205,6 +212,13 @@ setMethod("table_type", "ATO_tag", function(x, expect) {
 #' 
 #' @return Acts directly on x
 #' 
+#' @examples
+#' # runnning examples for this function would
+#' # require having either data.table or tibble installed.
+#' # if you have them installed, you can try e.g.
+#' # table_type(example_ato) <- "data.table"
+#' # table_type(example_ato)
+#' 
 #' @export
 #' 
 setGeneric("table_type<-", 
@@ -226,7 +240,7 @@ setMethod("table_type<-", "ATO",
     log <- as.data.frame(x@log)
   }
   if (value == "data.table") {
-    .data.table_exists()
+    .check_data.table_exists()
     ani <- data.table::as.data.table(x@ani)
     dep <- data.table::as.data.table(x@dep)
     det <- data.table::as.data.table(x@det)
@@ -235,7 +249,7 @@ setMethod("table_type<-", "ATO",
     log <- data.table::as.data.table(x@log)
   }
   if (value == "tibble") {
-    .tibble_exists()
+    .check_tibble_exists()
     ani <- tibble::as_tibble(x@ani)
     dep <- tibble::as_tibble(x@dep)
     det <- tibble::as_tibble(x@det)
@@ -270,11 +284,11 @@ setMethod("table_type<-", "ATO_ani",
     x <- as.data.frame(x)
   }
   if (value == "data.table") {
-    .data.table_exists()
+    .check_data.table_exists()
     x <- data.table::as.data.table(x)
   }
   if (value == "tibble") {
-    .tibble_exists()
+    .check_tibble_exists()
     x <- tibble::as_tibble(x)
   }
   class(x) <- c("ATO_ani", class(x))
@@ -291,11 +305,11 @@ setMethod("table_type<-", "ATO_dep",
     x <- as.data.frame(x)
   }
   if (value == "data.table") {
-    .data.table_exists()
+    .check_data.table_exists()
     x <- data.table::as.data.table(x)
   }
   if (value == "tibble") {
-    .tibble_exists()
+    .check_tibble_exists()
     x <- tibble::as_tibble(x)
   }
   class(x) <- c("ATO_dep", class(x))
@@ -312,11 +326,11 @@ setMethod("table_type<-", "ATO_det",
     x <- as.data.frame(x)
   }
   if (value == "data.table") {
-    .data.table_exists()
+    .check_data.table_exists()
     x <- data.table::as.data.table(x)
   }
   if (value == "tibble") {
-    .tibble_exists()
+    .check_tibble_exists()
     x <- tibble::as_tibble(x)
   }
   class(x) <- c("ATO_det", class(x))
@@ -333,11 +347,11 @@ setMethod("table_type<-", "ATO_obs",
     x <- as.data.frame(x)
   }
   if (value == "data.table") {
-    .data.table_exists()
+    .check_data.table_exists()
     x <- data.table::as.data.table(x)
   }
   if (value == "tibble") {
-    .tibble_exists()
+    .check_tibble_exists()
     x <- tibble::as_tibble(x)
   }
   class(x) <- c("ATO_obs", class(x))
@@ -354,11 +368,11 @@ setMethod("table_type<-", "ATO_tag",
     x <- as.data.frame(x)
   }
   if (value == "data.table") {
-    .data.table_exists()
+    .check_data.table_exists()
     x <- data.table::as.data.table(x)
   }
   if (value == "tibble") {
-    .tibble_exists()
+    .check_tibble_exists()
     x <- tibble::as_tibble(x)
   }
   class(x) <- c("ATO_tag", class(x))
@@ -373,15 +387,39 @@ setMethod("table_type<-", "ATO_tag",
 #' 
 #' @return the current global table type if 'type' is missing.
 #' 
+#' @examples
+#' old_table_type_global <- ato_table_type_global()
+#' ato_table_type_global("data.frame")
+#' 
+#' # clean up
+#' ato_table_type_global(old_table_type_global)
+#' rm(old_table_type_global)
+#' 
 #' @export
 #' 
 ato_table_type_global <- function(type = c("data.frame",
                                            "data.table",
                                            "tibble")) {
   if (missing(type)) {
-    return(getOption("ATO_table_type", default = "data.frame"))
+    type <- getOption("ATO_table_type", default = "data.frame")
+    if (!type %in% c("data.frame", "data.table", "tibble")) {
+      stop(
+        "Option ATO_table_type has been modified to a value not",
+        " recognized. Please change it back to one of 'data.frame',",
+        " 'data.table', or 'tibble' to continue creating new ATO data.",
+        " See ?ato_table_type_global().",
+        call. = FALSE
+        )
+    }
+    return(type)
   } else {
     type <- match.arg(type)
+    if (type == "data.table") {
+      .check_data.table_exists()
+    }
+    if (type == "tibble") {
+      .check_tibble_exists()
+    }
     options(ATO_table_type = type)
     message("M: Newly created ATO objects will be of type ", type)
   }

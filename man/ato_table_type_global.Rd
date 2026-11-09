@@ -17,3 +17,12 @@ the current global table type if 'type' is missing.
 \description{
 Helper function to set the global type of ATO tables
 }
+\examples{
+old_table_type_global <- ato_table_type_global()
+ato_table_type_global("data.frame")
+
+# clean up
+ato_table_type_global(old_table_type_global)
+rm(old_table_type_global)
+
+}

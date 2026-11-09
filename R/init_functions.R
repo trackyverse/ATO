@@ -43,11 +43,11 @@ init_ato <- function(ani, dep, det, obs, tag, silent = FALSE) {
     pkg = list()
   )
 
-  table_type(ato) <- getOption("ATO_table_type", default = "data.frame")
+  table_type(ato) <- ato_table_type_global()
 
-  old_match_immediate <- getOption("ATO_match_immediate", default = TRUE)
-  on.exit(options(ATO_match_immediate = old_match_immediate))
-  options(ATO_match_immediate = FALSE)
+  old_match_immediate <- ato_match_immediate(silent = TRUE)
+  on.exit(ato_match_immediate(old_match_immediate, silent = TRUE))
+  ato_match_immediate(FALSE, silent = TRUE)
   
   if (!missing(ani)) {
     ato <- set_ani(ato, ani, silent = silent)

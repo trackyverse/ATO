@@ -12,6 +12,26 @@
 \item{tz}{optional; a timezone to apply to all time columns}
 }
 \description{
-Check that all columns within a slot have the same timezone
+How to use:
+\code{object <- get_tag(example_ato)}
+}
+\details{
+all in the same tz, works
+\code{object <- .check_column_tzones(object)}
+
+force fail by missing tz
+\code{attributes(object$release_datetime)$tzone <- ""}
+\code{object <- .check_column_tzones(object)}
+
+force fail by differing tzs
+\code{attributes(object$release_datetime)$tzone <- "UTC"}
+\code{object <- .check_column_tzones(object)}
+
+correct fail by adding tz argument
+\code{object <- .check_column_tzones(object, "Europe/Copenhagen")}
+
+confirm correction applied
+\code{attributes(object$activation_datetime)$tzone}
+\code{attributes(object$release_datetime)$tzone}
 }
 \keyword{internal}

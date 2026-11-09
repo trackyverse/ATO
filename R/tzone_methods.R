@@ -1,8 +1,11 @@
-#' What is the timezone of this ATO?
+#' What is the timezone of this ATO object?
 #' 
-#' @param x an \code{\link{ATO}}
+#' You may use tzone to check and display the timezone of the datetime data
+#' of an ATO object or of any ATO slot object.
 #' 
-#' @return Returns the timezone of the ATO.
+#' @param x an \code{\link{ATO}} or ATO slot object.
+#' 
+#' @return Returns the timezone of the ATO object.
 #' 
 #' @examples
 #' # check the timezone of the example ATO
@@ -14,12 +17,37 @@ setGeneric("tzone", function(x) standardGeneric("tzone"))
 
 #' @rdname tzone
 setMethod("tzone", "ATO", function(x) {
+  .check_ato_tzones(x)
+})
+
+#' @rdname tzone
+setMethod("tzone", "ATO_ani", function(x) {
   .check_slot_tzones(x)
 })
 
-#' Modify the time zone of the ATO
+#' @rdname tzone
+setMethod("tzone", "ATO_dep", function(x) {
+  .check_slot_tzones(x)
+})
+
+#' @rdname tzone
+setMethod("tzone", "ATO_det", function(x) {
+  .check_slot_tzones(x)
+})
+
+#' @rdname tzone
+setMethod("tzone", "ATO_obs", function(x) {
+  .check_slot_tzones(x)
+})
+
+#' @rdname tzone
+setMethod("tzone", "ATO_tag", function(x) {
+  .check_slot_tzones(x)
+})
+
+#' Modify the time zone of an ATO object
 #' 
-#' @param x an \code{\link{ATO}}
+#' @param x an \code{\link{ATO}} or ATO slot object.
 #' @param value the desired time zone
 #' 
 #' @return Nothing, acts directly on x
@@ -60,5 +88,35 @@ setMethod("tzone<-", "ATO", function(x, value) {
     }
   }
 
+  return(x)
+})
+
+#' @rdname tzone-set
+setMethod("tzone<-", "ATO_ani", function(x, value) {
+  x <- .check_column_tzones(x, tz = value)
+  return(x)
+})
+
+#' @rdname tzone-set
+setMethod("tzone<-", "ATO_det", function(x, value) {
+  x <- .check_column_tzones(x, tz = value)
+  return(x)
+})
+
+#' @rdname tzone-set
+setMethod("tzone<-", "ATO_dep", function(x, value) {
+  x <- .check_column_tzones(x, tz = value)
+  return(x)
+})
+
+#' @rdname tzone-set
+setMethod("tzone<-", "ATO_obs", function(x, value) {
+  x <- .check_column_tzones(x, tz = value)
+  return(x)
+})
+
+#' @rdname tzone-set
+setMethod("tzone<-", "ATO_tag", function(x, value) {
+  x <- .check_column_tzones(x, tz = value)
   return(x)
 })
