@@ -288,7 +288,8 @@
 #' This is called inside a for loop, where i is the
 #' tag currently being matched to the detections
 #' 
-#' @param x the vector of a new subset of matches
+#' @param x the vector of a new subset of items to assign matches to
+#' @param x_index the original index of the x values being evaluated
 #' @param i the tag in y currently being matched against x
 #' @param label_x the name of the slot on the left side of the match
 #' @param label_y the name of the slot on the right side of the match
@@ -297,14 +298,22 @@
 #' 
 #' @keywords internal
 #' 
-.check_dup_match_base <- function(x, i, label_x, label_y) {
+.check_dup_match_base <- function(x, x_index, i, label_x, label_y) {
   if (any(!is.na(x))) {
-    r <- which(!is.na(x))
-    stop("@", label_x, " row", .s(length(r)), " ", .comma(r),
-         " match", .es(length(r), TRUE), " @", label_y, " rows ",
-         .comma(c(unique(x), i)), ". Fatal ambiguity.",
-         " Can't assign detections correctly.",
-         call. = FALSE)
+    dup_x_index <- x_index[!is.na(x)]
+    y_rows <- sort(c(unique(x[!is.na(x)]), i))
+
+    stop(
+      "@", label_x,
+      " row", .s(length(dup_x_index)),
+      " ", .comma(dup_x_index),
+      " match", .es(length(dup_x_index), TRUE),
+      " @", label_y,
+      " rows ", .comma(y_rows),
+      ". Fatal ambiguity. Can't assign detections correctly.",
+      call. = FALSE
+    )
+    
   }
 }
 
@@ -315,6 +324,8 @@
 #' 
 #' @param x the vector of the xid from the data.table::foverlaps output
 #' @param y the vector of the yid from the data.table::foverlaps output
+#' @param original_x the original row order of x, for error messages
+#' @param original_y the original row order of x, for error messages
 #' @param label_x the name of the slot on the left side of the match
 #' @param label_y the name of the slot on the right side of the match
 #' 
@@ -322,16 +333,46 @@
 #' 
 #' @keywords internal
 #' 
-.check_dup_match_datatable <- function(x, y, label_x, label_y) {
+.check_dup_match_datatable <- function(
+  x,
+  y,
+  original_x,
+  original_y,
+  label_x,
+  label_y
+) {
+  # x is the row indexes of the detections. each x should only
+  # show up once, because each detection can only match once
+  # to a specific tag row.
+
+  # conceptual example
+  # x <- c(1, 1, 1, 2, 3, 4)
+  # y <- c(1, 2, 4, 1, 3, 1)
+  # label_x <- "det"
+  # label_y <- "tag"
+  # original_x <- c(4, 3, 2, 1)
+  # original_y <- c(1, 3, 2, 10)
+  # i.e. the temporary detection row 1 matches temporary tag rows 1, 2, 4.
+  # which trace back to detection 4 matching tags 1, 3, and 10 in the original
+  # row orders.
+
+  # find double matches on x (i.e. multiple tags match the same detection)
   check <- duplicated(x)
   if (any(check)) {
-    xd <- unique(which(check))
-    yd <- unique(y[x %in% xd])
-    stop("@", label_x, " row", .s(length(xd)), " ", .comma(xd),
-         " match", .es(length(xd), TRUE),
-         " multiple @", label_y, " rows (" ,.comma(yd), ").",
-         " Fatal ambiguity. Can't assign detections correctly.",
-         call. = FALSE) 
+    # find the indexes of the troublesome detections
+    x_duplicated <- unique(x[which(check)])
+    # find the tags that those detections matched to
+    y_duplicated <- unique(y[x %in% x_duplicated])
+    stop(
+      "@", label_x, " row",
+      .s(length(x_duplicated)),
+      " ", .comma(sort(original_x[x_duplicated])),
+      " match", .es(length(x_duplicated), TRUE),
+      " multiple @", label_y,
+      " rows (" ,.comma(sort(original_y[y_duplicated])), ").",
+      " Fatal ambiguity. Can't assign detections correctly.",
+      call. = FALSE
+    ) 
   }
 }
 

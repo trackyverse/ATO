@@ -85,12 +85,17 @@
 #' @keywords internal
 #' 
 .message_n_zero <- function(x, longslot, what, silent) {
-  check <- sum(x == 0)
-  if (!silent & check > 0) {
-    message("M: ", check, " valid ", longslot, .s(sum(check)),
-            " ", .has(sum(check)), " no ", what, ".")
+  if (all(is.na(x))) {
+    return(NA_real_)
+  } else {
+    x <- x[!is.na(x)]
+    check <- sum(x == 0)
+    if (!silent & check > 0) {
+      message("M: ", check, " valid ", longslot, .s(sum(check)),
+              " ", .has(sum(check)), " no ", what, ".")
+    }
+    return(check)
   }
-  return(check)
 }
 
 #' Round value to a reasonable number of decimal places

@@ -4,10 +4,12 @@
 \alias{.check_dup_match_base}
 \title{Check for duplicated matches in the base version}
 \usage{
-.check_dup_match_base(x, i, label_x, label_y)
+.check_dup_match_base(x, x_index, i, label_x, label_y)
 }
 \arguments{
-\item{x}{the vector of a new subset of matches}
+\item{x}{the vector of a new subset of items to assign matches to}
+
+\item{x_index}{the original index of the x values being evaluated}
 
 \item{i}{the tag in y currently being matched against x}
 

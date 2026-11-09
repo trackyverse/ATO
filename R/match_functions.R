@@ -49,7 +49,7 @@ match_update <- function(x, silent = FALSE) {
     if (!silent) {
       message("M: Matching @obs to @ani...")
     }
-    x <- .match_obs_ani(x, silent = silent)
+    x <- .match_ani_obs(x, silent = silent)
     if (!silent & ato_debug()) {
       time_dur <- difftime(Sys.time(), last_break, units = "s")
       message("M: Matching @obs to @ani took ", round(time_dur, 3), "s")
@@ -57,14 +57,26 @@ match_update <- function(x, silent = FALSE) {
     }
   } else {
     if (has(x, "obs")) {
-      x@obs$ani_match <- NULL
+      if (!is.null(x@obs$ani_match)) {
+        x@obs$ani_match <- NULL
+      }
     }
     if (has(x, "ani")) {
-      x@ani$n_obs <- NULL
-      x@ani$terminal_location <- NULL
-      x@ani$terminal_datetime <- NULL
-      x@ani$terminal_lat <- NULL
-      x@ani$terminal_lon <- NULL
+      if (!is.null(x@ani$n_obs)) {
+        x@ani$n_obs <- NULL
+      }
+      if (!is.null(x@ani$terminal_location)) {
+        x@ani$terminal_location <- NULL
+      }
+      if (!is.null(x@ani$terminal_datetime)) {
+        x@ani$terminal_datetime <- NULL
+      }
+      if (!is.null(x@ani$terminal_lat)) {
+        x@ani$terminal_lat <- NULL
+      }
+      if (!is.null(x@ani$terminal_lon)) {
+        x@ani$terminal_lon <- NULL
+      }
     }
   }
 
@@ -80,14 +92,26 @@ match_update <- function(x, silent = FALSE) {
     }
   } else {
     if (has(x, "ani")) {
-      x@ani$n_tag <- NULL
+      if (!is.null(x@ani$n_tag)) {
+        x@ani$n_tag <- NULL
+      }
     }
     if (has(x, "tag")) {
-      x@tag$ani_match
-      x@tag$release_location <- NULL
-      x@tag$release_datetime <- NULL
-      x@tag$release_lat <- NULL
-      x@tag$release_lon <- NULL
+      if (!is.null(x@tag$ani_match)) {
+        x@tag$ani_match <- NULL
+      }
+      if (!is.null(x@tag$release_location)) {
+        x@tag$release_location <- NULL
+      }
+      if (!is.null(x@tag$release_datetime)) {
+        x@tag$release_datetime <- NULL
+      }
+      if (!is.null(x@tag$release_lat)) {
+        x@tag$release_lat <- NULL
+      }
+      if (!is.null(x@tag$release_lon)) {
+        x@tag$release_lon <- NULL
+      }
     }
   }
 
@@ -103,10 +127,14 @@ match_update <- function(x, silent = FALSE) {
     }
   } else {
     if (has(x, "obs")) {
-      x@obs$tag_match <- NULL
+      if (!is.null(x@obs$tag_match)) {
+        x@obs$tag_match <- NULL
+      }
     }
     if (has(x, "tag")) {
-      x@tag$n_obs <- NULL
+      if (!is.null(x@tag$n_obs)) {
+        x@tag$n_obs <- NULL
+      }
     }
   }
 
@@ -126,16 +154,28 @@ match_update <- function(x, silent = FALSE) {
     }
   } else {
     if (has(x, "det")) {
-      x@det$tag_match <- NULL
-      x@det$animal <- NULL
-      x@det$ani_match <- NULL
-      x@det$animal <- NULL
+      if (!is.null(x@det$tag_match)) {
+        x@det$tag_match <- NULL
+      }
+      if (!is.null(x@det$animal)) {
+        x@det$animal <- NULL
+      }
+      if (!is.null(x@det$ani_match)) {
+        x@det$ani_match <- NULL
+      }
+      if (!is.null(x@det$animal)) {
+        x@det$animal <- NULL
+      }
     }
     if (has(x, "tag")) {
-      x@tag$n_det <- NULL
+      if (!is.null(x@tag$n_det)) {
+        x@tag$n_det <- NULL
+      }
     }
     if (has(x, "ani")) {
-      x@ani$n_det <- NULL
+      if (!is.null(x@ani$n_det)) {
+        x@ani$n_det <- NULL
+      }
     }
   }
 
@@ -155,12 +195,20 @@ match_update <- function(x, silent = FALSE) {
     }
   } else {
     if (has(x, "dep")) {
-      x@dep$n_det <- NULL
-      x@dep$n_beacon_det <- NULL
+      if (!is.null(x@dep$n_det)) {
+        x@dep$n_det <- NULL
+      }
+      if (!is.null(x@dep$n_beacon_det)) {
+        x@dep$n_beacon_det <- NULL
+      }
     }
     if (has(x, "det")) {
-      x@det$dep_match <- NULL
-      x@det$beacon_match <- NULL
+      if (!is.null(x@det$dep_match)) {
+        x@det$dep_match <- NULL
+      }
+      if (!is.null(x@det$beacon_match)) {
+        x@det$beacon_match <- NULL
+      }
     }
   }
 
@@ -185,9 +233,20 @@ match_update <- function(x, silent = FALSE) {
 #' 
 #' @keywords internal
 #' 
-.match_obs_ani <- function(x, silent = FALSE) {
+.match_ani_obs <- function(x, silent = FALSE) {
   is_ato(x)
-  has(x, c("obs", "ani"), error = TRUE)
+  has(x, c("ani", "obs"), error = TRUE)
+
+  if (!any(x@ani$valid)) {
+    warning(
+      "No valid animals, skipping ani-obs match.",
+      immediate. = TRUE,
+      call. = FALSE
+    )
+    x@ani$n_obs <- NULL
+    x@obs$ani_match <- NULL
+    return(x)
+  }
 
   # match only valid animals
   aux <- x@ani$animal
@@ -256,6 +315,29 @@ match_update <- function(x, silent = FALSE) {
 .match_ani_tag <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("tag", "ani"), error = TRUE)
+
+  if (!any(x@ani$valid)) {
+    warning(
+      "No valid animals, skipping ani-tag match.",
+      immediate. = TRUE,
+      call. = FALSE
+    )
+    x@tag$ani_match <- NULL
+    x@ani$n_tag <- NULL
+    x@ani$n_det <- NULL
+    return(x)
+  }
+  if (!any(x@tag$valid)) {
+    warning(
+      "No valid tags, skipping ani-tag match.",
+      immediate. = TRUE,
+      call. = FALSE
+    )
+    x@tag$ani_match <- NULL
+    x@ani$n_tag <- NULL
+    x@ani$n_det <- NULL
+    return(x)
+  }
 
   # match only valid animals
   aux <- x@ani$animal
@@ -410,6 +492,17 @@ match_update <- function(x, silent = FALSE) {
 .match_obs_tag <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("obs", "tag"), error = TRUE)
+
+  if (!any(x@tag$valid)) {
+    warning(
+      "No valid tags, skipping ani-tag match.",
+      immediate. = TRUE,
+      call. = FALSE
+    )
+    x@obs$tag_match <- NULL
+    x@tag$n_obs <- NULL
+    return(x)
+  }
 
   # assign tags to observations
   x@obs$tag_match <- NA_integer_
@@ -584,6 +677,20 @@ match_update <- function(x, silent = FALSE) {
     x@det$animal <- NA_character_
   }
 
+  if (!any(x@tag$valid)) {
+    warning(
+      "No valid tags, skipping det-tag match.",
+      immediate. = TRUE,
+      call. = FALSE
+    )
+    x@det$tag_match <- NULL
+    x@det$ani_match <- NULL
+    x@det$animal <- NULL
+    x@tag$n_det <- NULL
+    x@ani$n_det <- NULL
+    return(x)
+  }
+
   for (i in 1:nrow(x@tag)) {
     if (x@tag$valid[i]) {
       # placeholders
@@ -624,7 +731,13 @@ match_update <- function(x, silent = FALSE) {
               x@det$datetime <= last_time
 
       # check for ambiguity
-      .check_dup_match_base(x@det$tag_match[link], i, "det", "tag")
+      .check_dup_match_base(
+        x = x@det$tag_match[link],
+        x_index = which(link),
+        i = i,
+        label_x = "det",
+        label_y = "tag"
+      )
 
       # and assign the match
       x@det$tag_match[link] <- i
@@ -679,6 +792,20 @@ match_update <- function(x, silent = FALSE) {
   has(x, c("det", "tag"), error = TRUE)
   .check_data.table_exists()
 
+  if (!any(x@tag$valid)) {
+    warning(
+      "No valid tags, skipping det-tag match.",
+      immediate. = TRUE,
+      call. = FALSE
+    )
+    x@det$tag_match <- NULL
+    x@det$ani_match <- NULL
+    x@det$animal <- NULL
+    x@tag$n_det <- NULL
+    x@ani$n_det <- NULL
+    return(x)
+  }
+  
   first_time <- sapply(
     1:nrow(x@tag),
     function(i) {
@@ -772,8 +899,10 @@ match_update <- function(x, silent = FALSE) {
     }
   })
 
-  # perform the match
-  data.table::setkeyv(x@tag, 
+  # perform the match using only valid tags
+  valid_tags <- x@tag[x@tag$valid, ]
+
+  data.table::setkeyv(valid_tags, 
                       c("transmitter",
                         "first_time",
                         "last_time"))
@@ -781,13 +910,29 @@ match_update <- function(x, silent = FALSE) {
                       c("transmitter",
                         "datetime",
                         "datetime_dummy"))
-  result <- data.table::foverlaps(x@det, x@tag, nomatch = NA, which = TRUE)
+  result <- data.table::foverlaps(
+    x@det,
+    valid_tags,
+    nomatch = NA,
+    which = TRUE)
 
   # check for ambiguous matches
-  .check_dup_match_datatable(result$xid, result$yid, "dep", "tag")
+  .check_dup_match_datatable(
+    x = result$xid,
+    y = result$yid,
+    original_x = x@det$original_row_order,
+    original_y = x@tag$original_row_order,
+    label_x = "det",
+    label_y = "tag"
+  )
 
-  # assign the match
-  data.table::set(x@det, i = result$xid, j = "tag_match", value = result$yid)
+  # assign the match - only from the valid subset of tags
+  data.table::set(
+    x@det,
+    i = result$xid,
+    j = "tag_match",
+    value = valid_tags$original_row_order[result$yid]
+    )
 
   # last check: detections can't match both tags and beacons
   # Note: this check is placed here instead of further down 
@@ -801,7 +946,8 @@ match_update <- function(x, silent = FALSE) {
   # include counts of valid detections per tag
   x@tag$n_det <- 0
   aux <- table(x@det$tag_match[x@det$valid])
-  x@tag$n_det[as.numeric(names(aux))] <- aux
+  row_link <- match(as.numeric(names(aux)), x@tag$original_row_order)
+  x@tag$n_det[row_link] <- aux
 
   # issue message if some valid tags have no detections
   .message_n_zero(x@tag$n_det[x@tag$valid],
@@ -809,15 +955,26 @@ match_update <- function(x, silent = FALSE) {
 
   if (has(x, "ani")) {
     # match animals through tags
-    data.table::set(x@det, j = "ani_match",
-                    value = x@tag$ani_match[x@det$tag_match])
-    data.table::set(x@det, j = "animal",
-                    value = x@tag$animal[x@det$tag_match])
+    # Make sure tag is in the original order
+    # so we can use tag_match as a row identifier
+    data.table::setkeyv(x@tag, "original_row_order")
+    # now set things
+    data.table::set(
+      x@det,
+      j = "ani_match",
+      value = x@tag$ani_match[x@det$tag_match]
+    )
+    data.table::set(
+      x@det,
+      j = "animal",
+      value = x@tag$animal[x@det$tag_match]
+    )
 
     # include counts of valid detections per animal
     x@ani$n_det <- 0
-    aux <- table(x@det$ani_match[x@det$valid])
-    x@ani$n_det[as.numeric(names(aux))] <- aux
+    aux <- table(x@det$animal[x@det$valid])
+    row_link <- match(names(aux), x@ani$animal)
+    x@ani$n_det[row_link] <- aux
   } else {
     # remove any old matches
     if (!is.null(x@det$ani_match)) {
@@ -829,7 +986,6 @@ match_update <- function(x, silent = FALSE) {
   # on.exit handles cleaning up the data.table modifications
   return(x)
 }
-
 
 #' Match transmitters in the detections to
 #' beacon/reference transmitters in the deployments
@@ -852,6 +1008,19 @@ match_update <- function(x, silent = FALSE) {
       c("receiver_serial", "datetime"),
       allow_NA = FALSE, error = TRUE)
 
+  if (!any(x@dep$valid)) {
+    warning(
+      "No valid deployments, skipping dep-det match.",
+      immediate. = TRUE,
+      call. = FALSE
+    )
+    x@det$dep_match <- NULL
+    x@det$beacon_match <- NULL
+    x@dep$n_det <- NULL
+    x@dep$n_beacon_det <- NULL
+    return(x)
+  }
+
   # assign deps to detections
   x@det$dep_match <- NA_integer_
   x@det$beacon_match <- NA_integer_
@@ -870,8 +1039,13 @@ match_update <- function(x, silent = FALSE) {
                 x@det$datetime <= last_time
 
         # check for ambiguity
-        .check_dup_match_base(x@det$dep_match[link], i,
-                              "det", "dep (receiver_serial)")
+        .check_dup_match_base(
+          x = x@det$dep_match[link],
+          x_index = which(link),
+          i = i,
+          label_x = "det",
+          label_y = "dep (receiver_serial)"
+        )
 
         # and assign the match
         x@det$dep_match[link] <- i
@@ -886,8 +1060,13 @@ match_update <- function(x, silent = FALSE) {
                 x@det$datetime <= last_time
 
         # check for ambiguity
-        .check_dup_match_base(x@det$beacon_match[link], i,
-                              "det", "dep (transmitter)")
+        .check_dup_match_base(
+          x = x@det$beacon_match[link],
+          x_index = which(link),
+          i = i,
+          label_x = "det",
+          label_y = "dep (transmitter)"
+        )
 
         # and assign the match
         x@det$beacon_match[link] <- i
@@ -905,7 +1084,8 @@ match_update <- function(x, silent = FALSE) {
   .message_stray_dets(x, silent = silent)
 
   # include counts of valid detections per dep
-  x@dep$n_det <- 0
+  x@dep$n_det <- NA_integer_
+  x@dep$n_det[!is.na(x@dep$receiver_serial)] <- 0
   aux <- table(x@det$dep_match[x@det$valid])
   x@dep$n_det[as.numeric(names(aux))] <- aux
 
@@ -915,7 +1095,8 @@ match_update <- function(x, silent = FALSE) {
                   silent = silent)
 
   # include counts of valid beacon detections per dep
-  x@dep$n_beacon_det <- 0
+  x@dep$n_beacon_det <- NA_integer_
+  x@dep$n_beacon_det[!is.na(x@dep$transmitter)] <- 0
   aux <- table(x@det$beacon_match[x@det$valid])
   x@dep$n_beacon_det[as.numeric(names(aux))] <- aux
 
@@ -950,6 +1131,19 @@ match_update <- function(x, silent = FALSE) {
       allow_NA = FALSE, error = TRUE)
 
   .check_data.table_exists()
+
+  if (!any(x@dep$valid)) {
+    warning(
+      "No valid deployments, skipping dep-det match.",
+      immediate. = TRUE,
+      call. = FALSE
+    )
+    x@det$dep_match <- NULL
+    x@det$beacon_match <- NULL
+    x@dep$n_det <- NULL
+    x@dep$n_beacon_det <- NULL
+    return(x)
+  }
 
   # start manipulating the slots
   x@det$original_row_order <- 1:nrow(x@det)
@@ -1009,8 +1203,9 @@ match_update <- function(x, silent = FALSE) {
     }
   })
 
-  # perform the match
-  data.table::setkeyv(x@dep,
+  # perform the match using only valid deployments
+  valid_deps <- x@dep[x@dep$valid, ]
+  data.table::setkeyv(valid_deps,
                       c("receiver_serial",
                         "deploy_datetime",
                         "recover_datetime"))
@@ -1018,19 +1213,34 @@ match_update <- function(x, silent = FALSE) {
                       c("receiver_serial",
                         "datetime",
                         "datetime_dummy"))
-  result_rec <- data.table::foverlaps(x@det, x@dep, nomatch = NA, which = TRUE)
+  result_rec <- data.table::foverlaps(
+    x@det,
+    valid_deps,
+    nomatch = NA,
+    which = TRUE
+  )
 
   # check for ambiguous matches
-  .check_dup_match_datatable(result_rec$xid, result_rec$yid, "det", "dep")
+  .check_dup_match_datatable(
+    x = result_rec$xid,
+    y = result_rec$yid,
+    original_x = x@det$original_row_order,
+    original_y = x@dep$original_row_order,
+    label_x = "det",
+    label_y = "dep (receiver_serial)"
+  )
 
-  # assign the match
-  data.table::set(x@det, i = result_rec$xid,
-                  j = "dep_match", value = result_rec$yid)
+  # assign the match - from the set of valid deployments
+  data.table::set(
+    x@det,
+    i = result_rec$xid,
+    j = "dep_match",
+    value = valid_deps$original_row_order[result_rec$yid]
+  )
 
   # now do the same thing for the beacon tags
-
   # perform the match
-  data.table::setkeyv(x@dep,
+  data.table::setkeyv(valid_deps,
                       c("transmitter",
                         "deploy_datetime",
                         "recover_datetime"))
@@ -1038,14 +1248,30 @@ match_update <- function(x, silent = FALSE) {
                       c("transmitter",
                         "datetime",
                         "datetime_dummy"))
-  result_bea <- data.table::foverlaps(x@det, x@dep, nomatch = NA, which = TRUE)
+  result_bea <- data.table::foverlaps(
+    x@det,
+    valid_deps,
+    nomatch = NA,
+    which = TRUE
+  )
 
   # check for ambiguous matches
-  .check_dup_match_datatable(result_bea$xid, result_bea$yid, "det", "dep")
+  .check_dup_match_datatable(
+    x = result_bea$xid,
+    y = result_bea$yid,
+    original_x = x@det$original_row_order,
+    original_y = x@dep$original_row_order,
+    label_x = "det",
+    label_y = "dep (transmitter)"
+  )
 
-  # assign the match
-  data.table::set(x@det, i = result_bea$xid,
-                  j = "beacon_match", value = result_bea$yid)
+  # assign the match - using only valid deployments
+  data.table::set(
+    x@det,
+    i = result_bea$xid,
+    j = "beacon_match",
+    value = valid_deps$original_row_order[result_bea$yid]
+  )
 
   # last check: detections can't match both deps and beacons
   # Note: this check is placed here instead of further down 
@@ -1060,9 +1286,12 @@ match_update <- function(x, silent = FALSE) {
   .message_stray_dets(x, silent = silent)
 
   # include counts of valid detections per dep
-  x@dep$n_det <- 0
+  x@dep$n_det <- NA_integer_
+  x@dep$n_det[!is.na(x@dep$receiver_serial)] <- 0
+
   aux <- table(x@det$dep_match[x@det$valid])
-  x@dep$n_det[as.numeric(names(aux))] <- aux
+  row_link <- match(as.numeric(names(aux)), x@dep$original_row_order)
+  x@dep$n_det[row_link] <- aux
 
   # issue message if some valid deployments have no detections
   .message_n_zero(x@dep$n_det[x@dep$valid],
@@ -1070,9 +1299,12 @@ match_update <- function(x, silent = FALSE) {
                   silent = silent)
 
   # include counts of valid beacon detections per dep
-  x@dep$n_beacon_det <- 0
+  x@dep$n_beacon_det <- NA_integer_
+  x@dep$n_beacon_det[!is.na(x@dep$transmitter)] <- 0
+
   aux <- table(x@det$beacon_match[x@det$valid])
-  x@dep$n_beacon_det[as.numeric(names(aux))] <- aux
+  row_link <- match(as.numeric(names(aux)), x@dep$original_row_order)
+  x@dep$n_beacon_det[row_link] <- aux
 
   # issue message if some valid deps have no detections
   .message_n_zero(x@dep$n_beacon_det[x@dep$valid],
