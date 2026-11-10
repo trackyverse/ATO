@@ -14,40 +14,45 @@ knitr:
 # Introduction 
 
 For developers, the Trackyverse uses [Air](https://posit-dev.github.io/air/) 
-as linter to quickly format code. This article providers 
+as a default formatter/linter to quickly reformat code. This article providers 
 instructions on why we use Air and how to setup Air whether you are using 
 RStudio, VS Code, or Positron. 
 
-Air shares properties with other modern formatters and linters, such as Ruff for Python. A feww things about 
-Air is the following: 
+Air shares properties with other modern formatters and linters, such as Ruff for Python.
+
+A few things to note about Air: 
 
 - Air is highly opinionated and offers relatively few options for customization but it can be customized. 
 - Air is written in Rust and is based on the Biome formatter engine, which makes it extremely fast.
 
 # Formatting 
 
-Why does formatting matter? and why does using a linter matter?
-Formatting code creates consistancy in the style of the code written. 
+**Why does formatting matter? and why does using a linter matter?**
+
+Formatting code creates consistency in the style of the code written. 
 It does not change the meaning of code, but instead allows for easier 
-readablity and reporduciblity. Consistancy, readablity, and reporduciblity
+readablity and reporduciblity. Consistency, readability, and reproducibility
 are highly important for coding projects in general but become 
 of even greater importance when projects have multiple developers. 
 
-Using a linter matters because it makes adhereing to a given style easy as 
-a set of rules are created and then applied to all files of a particular type e.g., `.R`. 
-A linter can be setup to apply these rules every time a file is saved which 
-streamlines the overall use of a given style.  
+Using a common linter matters because it enforces adhering to a given style.
+An agreed-upon set of rules are applied to all files of a particular type e.g., `.R`. 
+A linter applies these rules every time a file is saved which  streamlines the overall 
+use of a given style.  
 
-For example, a style could include whitespace after an operate (e.g., `c(1, 2, 3)` versues `c(1,2,3)`), 
-newlines, and other punctuation set to determined rules and standards. This could also include 
-code that is indented with the appropriate amount of leading whitespace depending on the context. For more information 
-about formatting and style details of Air see [Air formating details](https://posit-dev.github.io/air/formatter.html)
+For example, a prescribed style could recommend including whitespace after arguments 
+(e.g., `c(1, 2, 3)` versus `c(1,2,3)`), enforce newlines after function closures, and all 
+manner of rules and standards. Rules about code indenting with the appropriate amount of 
+leading whitespace depending on the context. For more information about formatting and style 
+details of Air see [Air formating details](https://posit-dev.github.io/air/formatter.html) 
+
+To understand the linting rules that are enforced by Air see [How does Air format my code?](https://tidyverse.org/blog/2025/02/air/#how-does-air-decide-how-to-format-your-code)
 
 # Installation
-Trackyverse pacakges use Air as a linter and formatter to create a standard style that then is applied 
-across all code files.
+Trackyverse packages recommend using Air as a linter and formatter to enforce the standard style 
+across all changes you make to your code / files.
 
-To install Air at the command line, you can use the following standalone installers.
+To install Air at the command line, you can use one of the following commands.
 
 On macOS and Linux:
 
@@ -57,7 +62,8 @@ On Windows:
 
 `powershell -ExecutionPolicy Bypass -c "irm https://github.com/posit-dev/air/releases/latest/download/air-installer.ps1 | iex"`
 
-This will automatically add Air to your PATH. The very first time you install Air, for the PATH modifications to be applied you’ll need to restart your terminal.
+This will automatically add Air to your PATH. The very first time you install Air, after 
+adding it to your PATH variable with the command above, you’ll need to restart your terminal.
 
 For a specific version of Air:
 
@@ -65,7 +71,8 @@ For a specific version of Air:
 
 `powershell -ExecutionPolicy Bypass -c "irm https://github.com/posit-dev/air/releases/download/0.9.0/air-installer.ps1 | iex"`
 
-If you’re on macOS and are familiar with [Homebrew](https://brew.sh/), which we highly recommend, you can alternatively install the [Air formula](https://formulae.brew.sh/formula/air) with:
+If you’re on macOS and are familiar with [Homebrew](https://brew.sh/), which we highly recommend, you can 
+alternatively install the [Air formula](https://formulae.brew.sh/formula/air) with:
 
 `brew install air`
 
@@ -82,7 +89,8 @@ air format path/to/my/script.R
 uvx --from air-formatter air format path/to/my/script.R
 ```
 
-Note that if you’d like to use Air inside VS Code or Positron, then the Extension for those editors comes pre-bundled with an Air binary, so there’s nothing you need to do besides [download the Extension](https://posit-dev.github.io/air/editor-vscode.html).
+Note that if you’d like to use Air inside of IDEs like VS Code or Positron, install the Extension for those editors, 
+which comes pre-bundled with an Air binary, so there’s nothing you need to do besides [download the Extension](https://posit-dev.github.io/air/editor-vscode.html).
 
 # Setup
 
@@ -90,31 +98,31 @@ Note that if you’d like to use Air inside VS Code or Positron, then the Extens
 
 If you are using RStudio, it does not support [Language Server Protocol](https://microsoft.github.io/language-server-protocol/), but you can still use Air as an *external* formatter. 
 
-To use with RStudio please follow the following guide - [using Air with RStudio](https://posit-dev.github.io/air/editor-rstudio.html), 
-which details how to adjust RStudio's Global Options to find and recognize Air. Once done you can adjust a few settings to have 
-RStudio to work with Air which the guide details. See [Guide to using Air below.](#guide-to-using-air)
+To get Air working with RStudio see the following guide - [using Air with RStudio](https://posit-dev.github.io/air/editor-rstudio.html), 
+which details how to adjust RStudio's Global Options to find and recognize Air. See [Guide to using Air](#guide-to-using-air) below.
 
 ## Positron and VS Code 
 
-If you are using Positron or VS Code, it does support Language Server Protcols and allows for Air to have a bit more freedom edit settings at a user level and at a workspace level (i.e. for just the current project you are working on). 
+If you are using Positron or VS Code, it does support Language Server Protcols and allows for Air to have a bit more freedom, enforcing 
+different settings at a user level and at a workspace level (i.e. for just the current project you are working on). 
 
 Because Air can leverage Language Server Protcols there is no further setup needed.
 
 # Initialization 
 
-To setup Air for a repositiory once installed and setup you can run the following code: 
+To setup Air for a repository, once installed, you can run the following code: 
 
 ```r
 install.packages("usethis")
 ```
 
-We can then use `{usethis}` to setup Air for a repository using the following:
+We can then use `{usethis}` to setup Air for a repository:
 
 ```r
 usethis::use_air()
 ```
 
-This will create a `air.toml` and a folder `.vscode` where it will create a `settings.json` and `extensions.json`.
+This will create a `air.toml` file and a folder `.vscode` wherein it will create two config files: `settings.json` and `extensions.json`.
 
 The `settings.json` file contains the following: 
 
@@ -154,15 +162,14 @@ Both `settings.json` and `extension.json` can be further customized such as:
 
 # Guide to using Air
 
-Once we have setup Air on a repoistory we can do a couple different things to start utilizing Air's ability 
-as linter. 
+Once we have setup Air on a repository we can do a couple different things to start using it with our code 
 
 ## RStudio
 
-To set features of Air such as Format on Save we can adjust the Global Settings using `Tools -> Global Options -> Code -> Saving and check Reformat documents on save.`, which is detailed [Air's guide to using with RStudio](https://posit-dev.github.io/air/editor-rstudio.html#rstudio-format-on-save). 
+To enable features such as Format on Save we can adjust the Global Settings using `Tools -> Global Options -> Code -> Saving and check Reformat documents on save.`, which is detailed in [Air's guide to using with RStudio](https://posit-dev.github.io/air/editor-rstudio.html#rstudio-format-on-save). 
 
-## Positron and VS code 
-To enable some Air features, like Format on Save, you’ll need to adjust settings in either your user or workspace level `settings.json` file. We generally recommend modifying workspace level settings for two reasons:
+## Positron and VS Code 
+To enable features like Format on Save, you’ll need to adjust settings in either your user or workspace level `settings.json` file. We generally recommend modifying workspace level settings for two reasons:
 
 - Workspace level settings exist inside your workspace folder at `.vscode/settings.json` and are checked in to your version control system. This means that your collaborators will get those settings automatically when they check out your project. User level settings are not checked in to version control.
 
@@ -175,12 +182,12 @@ Alternatively, to open your `settings.json` file from the Command Palette (`Cmd 
 Run Preferences: `Open Workspace Settings (JSON)` to modify workspace specific settings (recommended).
 Run Preferences: `Open User Settings (JSON)` to modify global user settings.
 
-At this point, for the Trackyverse, there is no futher setup needed, however, if one would like to explore the Air to its 
-full capacity please see [Air Guide](https://posit-dev.github.io/air/editor-vscode.html). 
+At this point, for the Trackyverse, there is no futher setup needed, however, for more on using Air to its 
+full capacity, see the [Air Guide](https://posit-dev.github.io/air/editor-vscode.html). 
 
 # Customizing Air
 
-The `air.toml` file is a Tom's Own Markup Language (toml) file that allows the ablity to customize and change the default 
+The `air.toml` file is a Tom's Own Markup Language (toml) file that allows users to customize and change the default 
 settings of Air. 
 
 Below are the available settings to adjust and customize and can be added to to `air.toml` file: 
