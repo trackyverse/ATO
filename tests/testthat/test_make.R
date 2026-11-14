@@ -1,4 +1,4 @@
-skip_on_cran()
+# skip_on_cran()
 oldtz <- Sys.getenv('TZ', unset = NA)
 Sys.setenv(TZ = 'UTC')
 # 
