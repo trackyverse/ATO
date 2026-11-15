@@ -1,10 +1,3 @@
-# skip_on_cran()
-oldtz <- Sys.getenv('TZ', unset = NA)
-Sys.setenv(TZ = 'UTC')
-
-tests.home <- getwd()
-setwd(tempdir())
-
 # # TESTS START HERE ----
 # # ---------------------
 
