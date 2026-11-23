@@ -13,3 +13,5 @@
 ^\.devcontainer$
 ^data/example_ATO.R$
 
+^[.]?air[.]toml$
+^\.vscode$
