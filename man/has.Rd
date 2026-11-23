@@ -46,5 +46,4 @@ has(example_ato, "tag", c("test", "power_level"))
 # has(example_ato, "tag",
 #    c("release_datetime", "power_level"),
 #    allow_NA = FALSE, error = TRUE)
-
 }
