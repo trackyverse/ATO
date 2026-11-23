@@ -97,7 +97,7 @@ setMethod("has", c(object = "ATO"),
           check <- apply(slot(object, i)[, column, with = FALSE],
                          2, function(i) any(is.na(i)))
         } else {
-          check <- apply(slot(object, i)[, column],
+          check <- apply(slot(object, i)[, column, drop = FALSE],
                          2, function(i) any(is.na(i)))
         }
         if (any(check)) {
