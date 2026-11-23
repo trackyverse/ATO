@@ -128,8 +128,9 @@
 #' @return a string
 #' 
 #' @keywords internal
+#' @examples
 #' 
-#' tests:
+#' # tests:
 #'   .comma(LETTERS[1])
 #'   .comma(LETTERS[1:2])
 #'   .comma(LETTERS[1:3])
