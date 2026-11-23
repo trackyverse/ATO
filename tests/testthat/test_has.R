@@ -117,4 +117,3 @@ if (is.na(oldtz)) {
 }
 
 rm(list = ls())
-apply()
