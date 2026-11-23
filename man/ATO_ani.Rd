@@ -7,8 +7,6 @@
 \title{S4 class: ATO_ani}
 \format{
 See \code{\link{make_ani}}.
-
-An object of class \code{ATO_ani} (inherits from \code{data.frame}) with 0 rows and 10 columns.
 }
 \usage{
 .ATO_ani
@@ -35,4 +33,3 @@ See \code{\link{table_type}} for more details on
 \code{\link{make_ani}}
 }
 \keyword{classes}
-\keyword{datasets}

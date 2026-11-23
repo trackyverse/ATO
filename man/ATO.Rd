@@ -72,5 +72,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Hugo Flávio \email{hflavio@dal.ca}
 
+Authors:
+\itemize{
+  \item Hugo Flávio \email{hflavio@dal.ca}
+}
+
 }
 \keyword{internal}

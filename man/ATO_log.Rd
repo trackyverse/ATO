@@ -15,8 +15,6 @@ A data frame with 0 rows and 4 variables:
 \item{call}{full function call, for debugging.}
 \item{log}{log entry.}
 }
-
-An object of class \code{ATO_log} (inherits from \code{data.frame}) with 0 rows and 6 columns.
 }
 \usage{
 .ATO_log
@@ -40,4 +38,3 @@ See \code{\link{table_type}} for more details on
 \code{\link{ATO}} table types.
 }
 \keyword{classes}
-\keyword{datasets}
