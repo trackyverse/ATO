@@ -2,9 +2,7 @@
 
 is_cran <- Sys.getenv("NOT_CRAN")
 
-if (is_cran %in% "") {
-Sys.setenv("NOT_CRAN"="true")
-} else {
+if (is_cran %in% "false") {
   skip_on_cran()
 }
 
@@ -15,3 +13,6 @@ Sys.setenv(TZ = 'UTC')
 # ----- set deterector ---
 tests.home <- getwd()
 setwd(tempdir())
+
+
+  
