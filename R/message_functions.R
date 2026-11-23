@@ -129,7 +129,7 @@
 #' 
 #' @keywords internal
 #' @examples
-#' 
+#' \dontrun{
 #' # tests:
 #'   .comma(LETTERS[1])
 #'   .comma(LETTERS[1:2])
@@ -148,7 +148,7 @@
 #'   .comma(LETTERS[1:3], max_i = 1)
 #'   .comma(LETTERS[1:5], max_i = 1)
 #'   .comma(LETTERS[1:10], max_i = 1)
-#'
+#' }
 .comma <- function(x, max_i = 5) {
   if (max_i < 2) {
     if (length(x) == 1) {

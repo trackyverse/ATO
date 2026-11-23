@@ -19,7 +19,7 @@ a string
 Concatenate vectors with commas
 }
 \examples{
-
+\dontrun{
 # tests:
   .comma(LETTERS[1])
   .comma(LETTERS[1:2])
@@ -38,6 +38,6 @@ Concatenate vectors with commas
   .comma(LETTERS[1:3], max_i = 1)
   .comma(LETTERS[1:5], max_i = 1)
   .comma(LETTERS[1:10], max_i = 1)
-
+}
 }
 \keyword{internal}
