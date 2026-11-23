@@ -28,7 +28,7 @@
 #' # has(example_ato, "tag",
 #' #    c("release_datetime", "power_level"),
 #' #    allow_NA = FALSE, error = TRUE)
-#' 
+
 #' @export
 #' 
 setGeneric("has",
@@ -48,7 +48,10 @@ setMethod("has", c(object = "ATO"),
     column,
     allow_NA = TRUE,
     error = FALSE) {
-  is_ato(object) # not necessary, the method won't let it pass if it is not ATO.
+    # not necessary, the method won't let it pass if it is not ATO. 
+    # correct if we change object to "ANY" this will by pass the 
+    # method's class check and we will hit is_ato()
+  is_ato(object) 
   
   link <- !(value %in% c("ani", "dep", "det", "obs", "tag", "log"))
   if (any(link)) {
@@ -115,4 +118,4 @@ setMethod("has", c(object = "ATO"),
     }
   }
   return(TRUE)
-})
+  })
