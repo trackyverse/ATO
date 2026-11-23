@@ -1,23 +1,25 @@
+# # TESTS START HERE ----
+# # ---------------------
 
 test_that("does is_ato() error when given a non-ato object", {
   x <- data.frame(
-    y = seq(1, 10, 1), 
+    y = seq(1, 10, 1),
     z = rep(letters[1:2], 5)
   )
 
   expect_error(
-    is_ato(x), 
+    is_ato(x),
     "input is not an ATO object.",
     fixed = TRUE
   )
 })
 test_that("does is_ato() not error when error = FALSE when given a non-ato object", {
   x <- data.frame(
-    y = seq(1, 10, 1), 
+    y = seq(1, 10, 1),
     z = rep(letters[1:2], 5)
   )
 
-  expect_false( is_ato(x, error = FALSE))
+  expect_false(is_ato(x, error = FALSE))
   expect_no_error(is_ato(x, error = FALSE))
 })
 
@@ -37,6 +39,18 @@ test_that("does is_ato() does not error when given an ATO object", {
     ani = an,
     obs = ob
   )
-  
+
   expect_true(is_ato(x))
 })
+# # TESTS END HERE ------
+# # ---------------------
+
+setwd(tests.home)
+
+if (is.na(oldtz)) {
+  Sys.unsetenv("TZ")
+} else {
+  Sys.setenv(TZ = oldtz)
+}
+
+rm(list = ls())
