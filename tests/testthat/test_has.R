@@ -25,12 +25,85 @@ meet the desired values", {
 })
 
 
-has(
-  object = init_ato(),
-  value = "obs",
-  column = c("datetime")
-)
+test_that("Check if has errors when there is an empty slot that it is looking 
+for when error = TRUE", {
+  expect_error(
+    has(
+      object = init_ato(),
+      value = "obs",
+      error = TRUE
+    ),
+    fixed = TRUE,
+    "The following slot is empty: obs"
+  )
+  expect_error(
+    has(
+      object = init_ato(),
+      value = c("obs", "tag"),
+      error = TRUE
+    ),
+    fixed = TRUE,
+    "The following slots are empty: obs and tag"
+  )
+})
 
+test_that("Check if has errors when there is an empty slot that it is looking 
+for when error = FALSE it reutrns a false object", {
+  expect_false(
+    has(
+      object = init_ato(),
+      value = "obs",
+    )
+  )
+  expect_false(
+    has(
+      object = init_ato(),
+      value = c("obs", "tag"),
+    )
+  )
+})
+
+
+test_that("Check if errors when missing a column when error = TRUE", {
+  test_ato <- example_ato
+  test_ato@tag$transmitter <- NULL
+
+  expect_error(
+    has(test_ato, value = "tag", column = "transmitter", error = TRUE),
+    "Slot tag does not contain column transmitter.",
+    fixed = TRUE
+  )
+  test_ato@tag$serial <- NULL
+
+  expect_error(
+    has(
+      test_ato,
+      value = "tag",
+      column = c("transmitter", "serial"),
+      error = TRUE
+    ),
+    "Slot tag does not contain columns transmitter and serial.",
+    fixed = TRUE
+  )
+})
+
+test_that("Check if errors when missing a column when error = FALSE", {
+  test_ato <- example_ato
+  test_ato@tag$transmitter <- NULL
+
+  expect_false(
+    has(test_ato, value = "tag", column = "transmitter")
+  )
+  test_ato@tag$serial <- NULL
+
+  expect_false(
+    has(
+      test_ato,
+      value = "tag",
+      column = c("transmitter", "serial")
+    )
+  )
+})
 
 # # TESTS END HERE ------
 # # ---------------------
@@ -44,3 +117,4 @@ if (is.na(oldtz)) {
 }
 
 rm(list = ls())
+apply()
