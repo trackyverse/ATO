@@ -94,7 +94,7 @@ setMethod("has", c(object = "ATO"),
       }
       if (!allow_NA) {
         if (table_type(object) == "data.table") {
-          check <- apply(slot(object, i)[, column, with = FALSE],
+          check <- apply(slot(object, i)[, column, with = FALSE, drop = FALSE],
                          2, function(i) any(is.na(i)))
         } else {
           check <- apply(slot(object, i)[, column, drop = FALSE],
