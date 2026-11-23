@@ -105,9 +105,201 @@ test_that("Check if errors when missing a column when error = FALSE", {
   )
 })
 
+
+test_that("Check if errors when NAs are introduced and not ALLOWED when error = TRUE", {
+  test_ato_na <- example_ato
+  test_ato_na@tag$transmitter <- NA
+
+  expect_error(
+    has(
+      test_ato_na,
+      value = "tag",
+      column = "transmitter",
+      allow_NA = FALSE,
+      error = TRUE
+    ),
+    "NAs found in column transmitter of slot tag.",
+    fixed = TRUE
+  )
+  test_ato_na@tag$serial <- NA
+
+  expect_error(
+    has(
+      test_ato_na,
+      value = "tag",
+      column = c("transmitter", "serial"),
+      allow_NA = FALSE,
+      error = TRUE
+    ),
+    "NAs found in columns transmitter and serial of slot tag",
+    fixed = TRUE
+  )
+})
+
+test_that("Check if errors when NAs are introduced and not ALLOWED when error = TRUE", {
+  test_ato_na <- example_ato
+  test_ato_na@tag$transmitter <- NA
+
+  expect_error(
+    has(
+      test_ato_na,
+      value = "tag",
+      column = "transmitter",
+      allow_NA = FALSE,
+      error = TRUE
+    ),
+    "NAs found in column transmitter of slot tag.",
+    fixed = TRUE
+  )
+  test_ato_na@tag$serial <- NA
+
+  expect_error(
+    has(
+      test_ato_na,
+      value = "tag",
+      column = c("transmitter", "serial"),
+      allow_NA = FALSE,
+      error = TRUE
+    ),
+    "NAs found in columns transmitter and serial of slot tag",
+    fixed = TRUE
+  )
+})
+
+test_that("Check if errors when NAs are introduced and not ALLOWED when error = FALSE", {
+  test_ato_na <- example_ato
+  test_ato_na@tag$transmitter <- NA
+
+  expect_false(
+    has(
+      test_ato_na,
+      value = "tag",
+      column = "transmitter",
+      allow_NA = FALSE,
+      error = FALSE
+    )
+  )
+  test_ato_na@tag$serial <- NA
+
+  expect_false(
+    has(
+      test_ato_na,
+      value = "tag",
+      column = c("transmitter", "serial"),
+      allow_NA = FALSE,
+      error = FALSE
+    )
+  )
+})
+
+
+test_that("If has() when allowed_NA = FALSE and error = TRUE does it work properly for when 
+an ATO is made with data.table ATO objects", {
+  ato_table_type_global("data.table")
+
+  ani_df <- as.data.frame(ani(example_ato))
+  dep_df <- as.data.frame(dep(example_ato))
+
+  if ("data.table" %in% utils::installed.packages()) {
+    ani_dt <- make_ani(
+      animal = ani_df$animal,
+      release_datetime = ani_df$release_datetime,
+      tbl = "data.table"
+    )
+  }
+
+  if ("data.table" %in% utils::installed.packages()) {
+    dep_dt <- make_dep(
+      deploy_datetime = dep_df$deploy_datetime,
+      recover_datetime = dep_df$recover_datetime,
+      tbl = "data.table"
+    )
+  }
+
+  test_ato_dt <- init_ato(ani = ani_dt, dep = dep_dt)
+  test_ato_dt@ani$animal <- NA
+  expect_error(
+  has(
+    test_ato_dt,
+    value = "ani",
+    column = c("animal"),
+    allow_NA = FALSE,
+    error = TRUE
+  ), 
+  "NAs found in column animal of slot ani.",
+  fixed = TRUE
+)
+
+test_ato_dt@ani$release_datetime <- NA
+  expect_error(
+  has(
+    test_ato_dt,
+    value = "ani",
+    column = c("animal", "release_datetime"),
+    allow_NA = FALSE,
+    error = TRUE
+  ), 
+  "NAs found in columns animal and release_datetime of slot ani.",
+  fixed = TRUE
+)
+  
+})
+test_that("If has() when allowed_NA = FALSE and error = FALSE does it work properly for when 
+an ATO is made with data.table ATO objects", {
+
+
+  ani_df <- as.data.frame(ani(example_ato))
+  dep_df <- as.data.frame(dep(example_ato))
+
+  if ("data.table" %in% utils::installed.packages()) {
+    ani_dt <- make_ani(
+      animal = ani_df$animal,
+      release_datetime = ani_df$release_datetime,
+      tbl = "data.table"
+    )
+  }
+
+  if ("data.table" %in% utils::installed.packages()) {
+    dep_dt <- make_dep(
+      deploy_datetime = dep_df$deploy_datetime,
+      recover_datetime = dep_df$recover_datetime,
+      tbl = "data.table"
+    )
+  }
+
+  test_ato_dt <- init_ato(ani = ani_dt, dep = dep_dt)
+  test_ato_dt@ani$animal <- NA
+
+  expect_false(
+    has(
+    test_ato_dt,
+    value = "ani",
+    column = c("animal"),
+    allow_NA = FALSE,
+    error = FALSE
+  )
+)
+
+  
+test_ato_dt@ani$release_datetime <- NA
+  expect_false(
+  has(
+    test_ato_dt,
+    value = "ani",
+    column = c("animal", "release_datetime"),
+    allow_NA = FALSE,
+    error = FALSE
+  )
+)
+  
+})
+
+
 # # TESTS END HERE ------
 # # ---------------------
 
+# rest to data.frame so the rest of the test pass 
+ato_table_type_global("data.frame")
 setwd(tests.home)
 
 if (is.na(oldtz)) {
