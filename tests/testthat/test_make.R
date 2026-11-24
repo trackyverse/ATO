@@ -162,7 +162,7 @@ test_that("make_dep can make data.tables and tibbles", {
         recover_datetime = x$recover_datetime,
         tbl = "data.table"
       ),
-      "Duplicated rows (1, 2, 3, 4, 5 and 12 others) detected in @dep.",
+      "Duplicated rows (1, 2, 3, 4, 5, and 12 others) detected in @dep.",
       fixed = TRUE
     )
     expect_equal(class(y), c("ATO_dep", "data.table", "data.frame"))
@@ -184,7 +184,7 @@ test_that("make_dep can make data.tables and tibbles", {
         recover_datetime = x$recover_datetime,
         tbl = "tibble"
       ),
-      "Duplicated rows (1, 2, 3, 4, 5 and 12 others) detected in @dep.",
+      "Duplicated rows (1, 2, 3, 4, 5, and 12 others) detected in @dep.",
       fixed = TRUE
     )
     expect_equal(class(y), c("ATO_dep", "tbl_df", "tbl", "data.frame"))
