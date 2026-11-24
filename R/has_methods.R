@@ -48,8 +48,9 @@ setMethod("has", c(object = "ATO"),
     column,
     allow_NA = TRUE,
     error = FALSE) {
-    # not necessary, the method won't let it pass if it is not ATO. 
-    # correct if we change object to "ANY" this will by pass the 
+    # HF: is_ato() here is not necessary, the method won't let it pass
+    # if it is not ATO. Leaving here anyway just in case. 
+    # BH: Correct if we change object to "ANY" this will by pass the 
     # method's class check and we will hit is_ato()
   is_ato(object) 
   
