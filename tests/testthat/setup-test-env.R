@@ -10,7 +10,7 @@ if (is_cran %in% "false") {
 oldtz <- Sys.getenv('TZ', unset = NA)
 Sys.setenv(TZ = 'UTC')
 
-# ----- set deterector ---
+# ----- set directory ---
 tests.home <- getwd()
 setwd(tempdir())
 
