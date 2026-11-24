@@ -171,7 +171,7 @@
                          ", and ", x[length(x)])
       } else {
         output <- paste0(paste0(x[1:max_i], collapse = ", "),
-                         " and ", length(x)-max_i,
+                         ", and ", length(x)-max_i,
                          ifelse(length(x)-max_i == 1,
                                 " other",
                                 " others"))
