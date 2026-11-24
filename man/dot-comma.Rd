@@ -19,25 +19,7 @@ a string
 Concatenate vectors with commas
 }
 \examples{
-\dontrun{
-# tests:
-  .comma(LETTERS[1])
-  .comma(LETTERS[1:2])
-  .comma(LETTERS[1:3])
-  .comma(LETTERS[1:5])
-  .comma(LETTERS[1:10])
+  ATO:::.comma(LETTERS[1])
 
-  .comma(LETTERS[1], max_i = 2)
-  .comma(LETTERS[1:2], max_i = 2)
-  .comma(LETTERS[1:3], max_i = 2)
-  .comma(LETTERS[1:5], max_i = 2)
-  .comma(LETTERS[1:10], max_i = 2)
-
-  .comma(LETTERS[1], max_i = 1)
-  .comma(LETTERS[1:2], max_i = 1)
-  .comma(LETTERS[1:3], max_i = 1)
-  .comma(LETTERS[1:5], max_i = 1)
-  .comma(LETTERS[1:10], max_i = 1)
-}
 }
 \keyword{internal}
