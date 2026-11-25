@@ -1,4 +1,3 @@
-# ----- determine if we are local or not  ----- 
 
 start_test <- function() {
   # ----- reset ato table type globally to data.frame ----- 
