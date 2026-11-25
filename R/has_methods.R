@@ -57,7 +57,7 @@ setMethod("has", c(object = "ATO"),
   link <- !(value %in% c("ani", "dep", "det", "obs", "tag", "log"))
   if (any(link)) {
     aux <- sum(link)
-    stop(.comma(value[link]), " do", .es(aux),
+    stop(.comma(value[link]), " do", .es(aux, reverse = TRUE),
          " not match ATO slot names.", call. = FALSE)
   }
   check <- sapply(value, function(i) {
