@@ -58,14 +58,14 @@ Formats the input data into the ATO format and appends the ATO_ani class.
 \examples{
 # only two columns are required to start an ani table.
 # Note that posix objects created on-the-fly do not necessarily
-# have an associated timezone - try running the code below 
+# have an associated timezone - try running the code below
 # without the tz argument and it will fail.
 x <- make_ani(animal = letters[1:10],
               release_datetime = rep(Sys.time(), 10),
               tz = "America/Halifax")
 head(x)
 
-# additionally, you can change the type of table being created by using 
+# additionally, you can change the type of table being created by using
 # the tbl argument - this requires having either data.table or tibble
 # installed on your machine.
 

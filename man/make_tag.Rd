@@ -71,7 +71,7 @@ Formats the input data into the ATO format and appends the ATO_tag class.
 x <- make_tag(transmitter = LETTERS[1:5])
 head(x)
 
-# additionally, you can change the type of table being created by using 
+# additionally, you can change the type of table being created by using
 # the tbl argument - this requires having either data.table or tibble
 # installed on your machine.
 
