@@ -1,3 +1,4 @@
+start_test()
 # # TESTS START HERE ----
 # # ---------------------
 
@@ -184,10 +185,13 @@ error = TRUE", {
       deploy_datetime = dep_df$deploy_datetime,
       recover_datetime = dep_df$recover_datetime,
       tbl = "data.table"
-    )
+    ) |>
+      suppressWarnings()
   }
 
-  test_ato_dt <- init_ato(ani = ani_dt, dep = dep_dt)
+  test_ato_dt <- init_ato(ani = ani_dt, dep = dep_dt) |>
+    suppressWarnings()
+
   test_ato_dt@ani$animal <- NA
   expect_error(
     has(
@@ -231,11 +235,13 @@ error = FALSE", {
     dep_dt <- make_dep(
       deploy_datetime = dep_df$deploy_datetime,
       recover_datetime = dep_df$recover_datetime,
-      tbl = "data.table"
-    )
+      tbl = "data.table",
+    ) |>
+      suppressWarnings()
   }
 
-  test_ato_dt <- init_ato(ani = ani_dt, dep = dep_dt)
+  test_ato_dt <- init_ato(ani = ani_dt, dep = dep_dt) |>
+    suppressWarnings()
   test_ato_dt@ani$animal <- NA
 
   expect_false(
@@ -264,14 +270,4 @@ error = FALSE", {
 # # TESTS END HERE ------
 # # ---------------------
 
-# reset to data.frame so the rest of the tests pass
-ato_table_type_global("data.frame")
-setwd(tests.home)
-
-if (is.na(oldtz)) {
-  Sys.unsetenv("TZ")
-} else {
-  Sys.setenv(TZ = oldtz)
-}
-
-rm(list = ls())
+end_test()
