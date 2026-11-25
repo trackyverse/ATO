@@ -7,8 +7,6 @@
 \title{S4 class: ATO_obs}
 \format{
 See \code{\link{make_obs}}.
-
-An object of class \code{ATO_obs} (inherits from \code{data.frame}) with 0 rows and 9 columns.
 }
 \usage{
 .ATO_obs
@@ -37,4 +35,3 @@ See \code{\link{table_type}} for more details on
 \code{\link{make_obs}}
 }
 \keyword{classes}
-\keyword{datasets}

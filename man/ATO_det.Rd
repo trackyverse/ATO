@@ -7,8 +7,6 @@
 \title{S4 class: ATO_det}
 \format{
 See \code{\link{make_det}}.
-
-An object of class \code{ATO_det} (inherits from \code{data.frame}) with 0 rows and 6 columns.
 }
 \usage{
 .ATO_det
@@ -32,4 +30,3 @@ See \code{\link{table_type}} for more details on
 \code{\link{make_det}}
 }
 \keyword{classes}
-\keyword{datasets}

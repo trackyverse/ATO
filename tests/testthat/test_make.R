@@ -1,10 +1,4 @@
-# skip_on_cran()
-oldtz <- Sys.getenv('TZ', unset = NA)
-Sys.setenv(TZ = 'UTC')
-# 
-tests.home <- getwd()
-setwd(tempdir())
-
+start_test()
 # TESTS START HERE ----
 # ---------------------
 
@@ -25,7 +19,7 @@ test_that("make_ani works when given good data", {
     length_mm = x$length_mm,
     mass_g = x$mass_g
   )
-	expect_equal(y, ani(example_ato)[, 1:13])
+  expect_equal(y, ani(example_ato)[, 1:13])
   expect_equal(class(y), c("ATO_ani", "data.frame"))
 })
 
@@ -33,14 +27,16 @@ test_that("make_ani complains when bad NAs found", {
   expect_error(
     make_ani(
       animal = "1",
-      release_datetime = NA),
+      release_datetime = NA
+    ),
     paste0(
       "Missing data detected in release_datetime.",
       " All animals must have release_datetime information.",
       " If you are unsure what the exact release times were,",
       " use an approximate value."
     ),
-    fixed = TRUE)
+    fixed = TRUE
+  )
 
   expect_error(
     make_ani(
@@ -135,7 +131,8 @@ test_that("make_dep complains when bad NAs found", {
   expect_error(
     make_dep(
       deploy_datetime = Sys.time(),
-      recover_datetime = NA),
+      recover_datetime = NA
+    ),
     paste0(
       "Missing data detected in recover_datetime.",
       " All deployments must have recover_datetime information.",
@@ -144,12 +141,14 @@ test_that("make_dep complains when bad NAs found", {
       " For rolling receiver deployments, use the time of",
       " last download as the recovery time."
     ),
-    fixed = TRUE)
+    fixed = TRUE
+  )
 
   expect_error(
     make_dep(
       deploy_datetime = NA,
-      recover_datetime = Sys.time()),
+      recover_datetime = Sys.time()
+    ),
     paste0(
       "Missing data detected in deploy_datetime.",
       " All deployments must have deploy_datetime information.",
@@ -169,7 +168,7 @@ test_that("make_dep can make data.tables and tibbles", {
         recover_datetime = x$recover_datetime,
         tbl = "data.table"
       ),
-      "Duplicated rows (1, 2, 3, 4, 5 and 12 others) detected in @dep.",
+      "Duplicated rows (1, 2, 3, 4, 5, and 12 others) detected in @dep.",
       fixed = TRUE
     )
     expect_equal(class(y), c("ATO_dep", "data.table", "data.frame"))
@@ -191,7 +190,7 @@ test_that("make_dep can make data.tables and tibbles", {
         recover_datetime = x$recover_datetime,
         tbl = "tibble"
       ),
-      "Duplicated rows (1, 2, 3, 4, 5 and 12 others) detected in @dep.",
+      "Duplicated rows (1, 2, 3, 4, 5, and 12 others) detected in @dep.",
       fixed = TRUE
     )
     expect_equal(class(y), c("ATO_dep", "tbl_df", "tbl", "data.frame"))
@@ -563,8 +562,4 @@ test_that("make_tag complains about duplicated data", {
 # TESTS END HERE ------
 # ---------------------
 
-setwd(tests.home)
-
-if (is.na(oldtz)) Sys.unsetenv("TZ") else Sys.setenv(TZ = oldtz)
-
-rm(list = ls())
+end_test()

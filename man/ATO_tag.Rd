@@ -7,8 +7,6 @@
 \title{S4 class: ATO_tag}
 \format{
 See \code{\link{make_tag}}.
-
-An object of class \code{ATO_tag} (inherits from \code{data.frame}) with 0 rows and 13 columns.
 }
 \usage{
 .ATO_tag
@@ -37,4 +35,3 @@ See \code{\link{table_type}} for more details on
 \code{\link{make_tag}}
 }
 \keyword{classes}
-\keyword{datasets}

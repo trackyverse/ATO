@@ -128,26 +128,9 @@
 #' @return a string
 #' 
 #' @keywords internal
+#' @examples
+#'   ATO:::.comma(LETTERS[1])
 #' 
-#' tests:
-#'   .comma(LETTERS[1])
-#'   .comma(LETTERS[1:2])
-#'   .comma(LETTERS[1:3])
-#'   .comma(LETTERS[1:5])
-#'   .comma(LETTERS[1:10])
-#'
-#'   .comma(LETTERS[1], max_i = 2)
-#'   .comma(LETTERS[1:2], max_i = 2)
-#'   .comma(LETTERS[1:3], max_i = 2)
-#'   .comma(LETTERS[1:5], max_i = 2)
-#'   .comma(LETTERS[1:10], max_i = 2)
-#'
-#'   .comma(LETTERS[1], max_i = 1)
-#'   .comma(LETTERS[1:2], max_i = 1)
-#'   .comma(LETTERS[1:3], max_i = 1)
-#'   .comma(LETTERS[1:5], max_i = 1)
-#'   .comma(LETTERS[1:10], max_i = 1)
-#'
 .comma <- function(x, max_i = 5) {
   if (max_i < 2) {
     if (length(x) == 1) {
@@ -171,7 +154,7 @@
                          ", and ", x[length(x)])
       } else {
         output <- paste0(paste0(x[1:max_i], collapse = ", "),
-                         " and ", length(x)-max_i,
+                         ", and ", length(x)-max_i,
                          ifelse(length(x)-max_i == 1,
                                 " other",
                                 " others"))

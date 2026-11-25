@@ -18,19 +18,8 @@ a string
 \description{
 Concatenate vectors with commas
 }
-\keyword{.comma(LETTERS[1:10])}
-\keyword{.comma(LETTERS[1:10],}
-\keyword{.comma(LETTERS[1:2])}
-\keyword{.comma(LETTERS[1:2],}
-\keyword{.comma(LETTERS[1:3])}
-\keyword{.comma(LETTERS[1:3],}
-\keyword{.comma(LETTERS[1:5])}
-\keyword{.comma(LETTERS[1:5],}
-\keyword{.comma(LETTERS[1])}
-\keyword{.comma(LETTERS[1],}
-\keyword{1)}
-\keyword{2)}
-\keyword{=}
+\examples{
+  ATO:::.comma(LETTERS[1])
+
+}
 \keyword{internal}
-\keyword{max_i}
-\keyword{tests:}

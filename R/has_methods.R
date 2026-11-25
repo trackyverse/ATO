@@ -28,7 +28,7 @@
 #' # has(example_ato, "tag",
 #' #    c("release_datetime", "power_level"),
 #' #    allow_NA = FALSE, error = TRUE)
-#' 
+
 #' @export
 #' 
 setGeneric("has",
@@ -48,12 +48,16 @@ setMethod("has", c(object = "ATO"),
     column,
     allow_NA = TRUE,
     error = FALSE) {
-  is_ato(object) # not necessary, the method won't let it pass if it is not ATO.
+    # HF: is_ato() here is not necessary, the method won't let it pass
+    # if it is not ATO. Leaving here anyway just in case. 
+    # BH: Correct if we change object to "ANY" this will by pass the 
+    # method's class check and we will hit is_ato()
+  is_ato(object) 
   
   link <- !(value %in% c("ani", "dep", "det", "obs", "tag", "log"))
   if (any(link)) {
     aux <- sum(link)
-    stop(.comma(value[link]), " do", .es(aux),
+    stop(.comma(value[link]), " do", .es(aux, reverse = TRUE),
          " not match ATO slot names.", call. = FALSE)
   }
   check <- sapply(value, function(i) {
@@ -91,10 +95,10 @@ setMethod("has", c(object = "ATO"),
       }
       if (!allow_NA) {
         if (table_type(object) == "data.table") {
-          check <- apply(slot(object, i)[, column, with = FALSE],
+          check <- apply(slot(object, i)[, column, with = FALSE, drop = FALSE],
                          2, function(i) any(is.na(i)))
         } else {
-          check <- apply(slot(object, i)[, column],
+          check <- apply(slot(object, i)[, column, drop = FALSE],
                          2, function(i) any(is.na(i)))
         }
         if (any(check)) {
@@ -115,4 +119,4 @@ setMethod("has", c(object = "ATO"),
     }
   }
   return(TRUE)
-})
+  })

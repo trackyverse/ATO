@@ -1299,6 +1299,10 @@ match_update <- function(x, silent = FALSE) {
                   silent = silent)
 
   # include counts of valid beacon detections per dep
+  # this is what causes test_init to error and result in 
+  # example data as it makes n_beacon NA and turns it 
+  # to 0 if transmitter is not NA in deploy 
+  # since it is this becomes NA 
   x@dep$n_beacon_det <- NA_integer_
   x@dep$n_beacon_det[!is.na(x@dep$transmitter)] <- 0
 
