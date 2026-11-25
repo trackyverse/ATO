@@ -4,7 +4,11 @@
 #' contents are as expected. Matches it with the respective prototype reference.
 #'
 #' @param object The prospective ATO slot object
-#'
+#' @param tz a `character` string that contains the timezone to
+#' check.
+#' @param tbl The type of table to be generated. One of
+#' `"data.frame"`, `"data.table"`, or `"tibble"``. If omitted,
+#'  the output of \code{\link{ato_table_type_global}} is used.
 #' @return the checked ATO object
 #'
 #' @keywords internal

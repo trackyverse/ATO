@@ -23,6 +23,13 @@ check(object, tz, tbl)
 }
 \arguments{
 \item{object}{The prospective ATO slot object}
+
+\item{tz}{a \code{character} string that contains the timezone to
+check.}
+
+\item{tbl}{The type of table to be generated. One of
+\code{"data.frame"}, \code{"data.table"}, or `"tibble"``. If omitted,
+the output of \code{\link{ato_table_type_global}} is used.}
 }
 \value{
 the checked ATO object
