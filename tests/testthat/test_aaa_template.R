@@ -1,9 +1,4 @@
-# skip_on_cran()
-# oldtz <- Sys.getenv('TZ', unset = NA)
-# Sys.setenv(TZ = 'UTC')
-
-# tests.home <- getwd()
-# setwd(tempdir())
+# start_test()
 
 # # TESTS START HERE ----
 # # ---------------------
@@ -18,8 +13,4 @@
 # # TESTS END HERE ------
 # # ---------------------
 
-# setwd(tests.home)
-
-# if (is.na(oldtz)) Sys.unsetenv("TZ") else Sys.setenv(TZ = oldtz)
-
-# rm(list = ls())
+# end_test()
