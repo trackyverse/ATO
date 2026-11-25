@@ -28,6 +28,14 @@ setMethod(
   "check",
   "ATO_ani",
   function(object, tz, tbl) {
+    # BH: tbl right now is expected by function() which if not supplied
+    # check() with arg tbl this errors making it a required argument.
+    # The frist statment is if tbl is not NULL then tbl_type(). This
+    # runs conter intiutive as it can never be NULL since function expect
+    # tbl to be something. Do we want it to be NULL here? Maybe I also do
+    # not follow because this is actually being set globally by
+    # ato_table_type_global. So it isn't NULL?
+
     # object class check
     if (!is.null(tbl)) {
       table_type(object, tbl)
