@@ -1,3 +1,4 @@
+start_test()
 # TESTS START HERE ----
 # ---------------------
 
@@ -18,7 +19,7 @@ test_that("make_ani works when given good data", {
     length_mm = x$length_mm,
     mass_g = x$mass_g
   )
-	expect_equal(y, ani(example_ato)[, 1:13])
+  expect_equal(y, ani(example_ato)[, 1:13])
   expect_equal(class(y), c("ATO_ani", "data.frame"))
 })
 
@@ -26,14 +27,16 @@ test_that("make_ani complains when bad NAs found", {
   expect_error(
     make_ani(
       animal = "1",
-      release_datetime = NA),
+      release_datetime = NA
+    ),
     paste0(
       "Missing data detected in release_datetime.",
       " All animals must have release_datetime information.",
       " If you are unsure what the exact release times were,",
       " use an approximate value."
     ),
-    fixed = TRUE)
+    fixed = TRUE
+  )
 
   expect_error(
     make_ani(
@@ -128,7 +131,8 @@ test_that("make_dep complains when bad NAs found", {
   expect_error(
     make_dep(
       deploy_datetime = Sys.time(),
-      recover_datetime = NA),
+      recover_datetime = NA
+    ),
     paste0(
       "Missing data detected in recover_datetime.",
       " All deployments must have recover_datetime information.",
@@ -137,12 +141,14 @@ test_that("make_dep complains when bad NAs found", {
       " For rolling receiver deployments, use the time of",
       " last download as the recovery time."
     ),
-    fixed = TRUE)
+    fixed = TRUE
+  )
 
   expect_error(
     make_dep(
       deploy_datetime = NA,
-      recover_datetime = Sys.time()),
+      recover_datetime = Sys.time()
+    ),
     paste0(
       "Missing data detected in deploy_datetime.",
       " All deployments must have deploy_datetime information.",
@@ -556,8 +562,4 @@ test_that("make_tag complains about duplicated data", {
 # TESTS END HERE ------
 # ---------------------
 
-setwd(tests.home)
-
-if (is.na(oldtz)) Sys.unsetenv("TZ") else Sys.setenv(TZ = oldtz)
-
-rm(list = ls())
+end_test()

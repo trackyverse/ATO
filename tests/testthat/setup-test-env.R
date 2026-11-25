@@ -1,18 +1,34 @@
 # ----- determine if we are local or not  ----- 
 
-is_cran <- Sys.getenv("NOT_CRAN")
+start_test <- function() {
+  # ----- reset ato table type globally to data.frame ----- 
+  ato_table_type_global("data.frame")
 
-if (is_cran %in% "false") {
-  skip_on_cran()
+  # ----- set timezone -----
+  oldtz <- Sys.getenv('TZ', unset = NA)
+  Sys.setenv(TEST_OLD_TZ = oldtz)
+  Sys.setenv(TZ = 'UTC')
+  # ----- set directory ---
+  tests.home <- getwd()
+  Sys.setenv(TEST_HOME_WD = tests.home)
+  setwd(tempdir())
 }
 
-# ----- set timezone -----
-oldtz <- Sys.getenv('TZ', unset = NA)
-Sys.setenv(TZ = 'UTC')
+end_test <- function() {
+  # reset to data.frame so the rest of the tests pass
+  ato_table_type_global("data.frame")
 
-# ----- set directory ---
-tests.home <- getwd()
-setwd(tempdir())
+  # reset timezone
+  oldtz <- Sys.getenv('TEST_OLD_TZ')
+  if (is.na(oldtz)) {
+    Sys.unsetenv("TZ")
+  } else {
+    Sys.setenv(TZ = oldtz)
+  }
+  Sys.unsetenv("TEST_OLD_TZ")
 
-
-  
+  # go back home
+  tests.home <- Sys.getenv('TEST_HOME_WD')
+  setwd(tests.home)
+  Sys.unsetenv("TEST_HOME_WD")
+}

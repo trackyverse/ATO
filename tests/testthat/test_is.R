@@ -1,3 +1,4 @@
+start_test()
 # # TESTS START HERE ----
 # # ---------------------
 
@@ -45,12 +46,4 @@ test_that("is_ato() does not error when given an ATO object", {
 # # TESTS END HERE ------
 # # ---------------------
 
-setwd(tests.home)
-
-if (is.na(oldtz)) {
-  Sys.unsetenv("TZ")
-} else {
-  Sys.setenv(TZ = oldtz)
-}
-
-rm(list = ls())
+end_test()
