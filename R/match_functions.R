@@ -1,26 +1,26 @@
-.sub_na <- function(x, value){
+.sub_na <- function(x, value) {
   x[is.na(x)] <- value
   return(x)
 }
 
 #' Match the various slots of the ATO object
-#' 
+#'
 #' Automatically called by the \code{\link{set}} functions. You should not need
 #' to call this function directly unless you have deactivated the ATO's
 #' automatic matching feature (see \code{\link{ato_match_immediate}}).
-#' 
+#'
 #' For developers: You may deactivate ato_match_immediate() to be able to
 #' to perform multiple actions in the ATO in quick sequence without incurring
 #' the computational cost of repeated, needless matches. You can then run
 #' match_update() on the ATO to match everything up in the end.
 #' Remember to leave ato_match_immediate() in the same state that the user
 #' set it to. See the code inside \code{\link{init_ato}} for an example.
-#' 
+#'
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
-#' 
+#'
 #' @return the updated ATO
-#' 
+#'
 #' @examples
 #' old_match_immediate <- ato_match_immediate()
 #' ato_match_immediate(FALSE)
@@ -29,19 +29,19 @@
 #'              det = det(example_ato),
 #'              dep = dep(example_ato))
 #' x <- match_update(x)
-#' 
+#'
 #' # clean up
 #' ato_match_immediate(old_match_immediate)
 #' rm(x, old_match_immediate)
-#' 
+#'
 #' @export
-#' 
+#'
 match_update <- function(x, silent = FALSE) {
   always_base <- getOption("ATO_force_base", default = FALSE)
   time_start <- last_break <- Sys.time()
 
   # NOTE:
-  # always match obs to ani before ani to tag 
+  # always match obs to ani before ani to tag
   # so columns are transferred properly
   # match functions are sorted by order of matching
 
@@ -216,23 +216,25 @@ match_update <- function(x, silent = FALSE) {
   im_msg <- getOption("ATO_match_immediate_msg", default = TRUE)
   if (time_dur > 60 & im_msg & !.check_data.table_exists(FALSE)) {
     options(ATO_match_immediate_msg = FALSE)
-    message("Note: If matches are taking very long, consider",
-            " installing data.table to speed them up.")
+    message(
+      "Note: If matches are taking very long, consider",
+      " installing data.table to speed them up."
+    )
   }
   return(x)
 }
 
 #' Match animals in the observations to the target animals
-#' 
+#'
 #' Automatically called by the \code{\link{set}} functions.
-#' 
+#'
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
-#' 
+#'
 #' @return the updated ATO
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 .match_ani_obs <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("ani", "obs"), error = TRUE)
@@ -255,14 +257,21 @@ match_update <- function(x, silent = FALSE) {
 
   # issue message if there are valid observations for non-valid animals
   strays <- !is.na(x@obs$animal) &
-            is.na(x@obs$ani_match) &
-            x@obs$valid
+    is.na(x@obs$ani_match) &
+    x@obs$valid
   if (!silent & any(strays)) {
     n_animals <- length(unique(x@obs$animal[strays]))
-    message("M: ", sum(strays),
-            " off-target valid observation", .s(sum(strays)),
-            " (from ", n_animals, " stray animal", .s(n_animals),
-            ") found in the dataset.")
+    message(
+      "M: ",
+      sum(strays),
+      " off-target valid observation",
+      .s(sum(strays)),
+      " (from ",
+      n_animals,
+      " stray animal",
+      .s(n_animals),
+      ") found in the dataset."
+    )
   }
 
   # include counts of valid observations per animal
@@ -273,8 +282,15 @@ match_update <- function(x, silent = FALSE) {
   # issue message if some valid animals have no observations
   check <- sum(x@ani$n_obs[x@ani$valid] == 0)
   if (!silent & check > 0) {
-    message("M: ", check, " valid animal", .s(check),
-            " ", .has(check), " no valid observations.")
+    message(
+      "M: ",
+      check,
+      " valid animal",
+      .s(check),
+      " ",
+      .has(check),
+      " no valid observations."
+    )
   }
 
   # include terminal details
@@ -302,16 +318,16 @@ match_update <- function(x, silent = FALSE) {
 }
 
 #' Match animals listed in the target tags to the target animals
-#' 
+#'
 #' Automatically called by the \code{\link{set}} functions.
-#' 
+#'
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
-#' 
+#'
 #' @return the updated ATO
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 .match_ani_tag <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("tag", "ani"), error = TRUE)
@@ -346,13 +362,20 @@ match_update <- function(x, silent = FALSE) {
 
   # issue message if there are valid tags for non-valid animals
   strays <- is.na(x@tag$ani_match) &
-            x@tag$valid
+    x@tag$valid
   if (!silent & any(strays)) {
     n_ani <- length(unique(x@tag$animal[strays]))
-    message("M: ", sum(strays),
-            " off-target valid tag", .s(sum(strays)),
-            " (from ", n_ani, " stray animal", .s(n_ani),
-            ") found in the dataset.")
+    message(
+      "M: ",
+      sum(strays),
+      " off-target valid tag",
+      .s(sum(strays)),
+      " (from ",
+      n_ani,
+      " stray animal",
+      .s(n_ani),
+      ") found in the dataset."
+    )
   }
 
   # include number of valid tags per animal
@@ -363,8 +386,15 @@ match_update <- function(x, silent = FALSE) {
   # issue message if some valid animals have no tags
   check <- sum(x@ani$n_tag[x@ani$valid] == 0)
   if (!silent & check > 0) {
-    message("M: ", check, " valid animal", .s(check),
-            " ", .has(check), " no valid tags.")
+    message(
+      "M: ",
+      check,
+      " valid animal",
+      .s(check),
+      " ",
+      .has(check),
+      " no valid tags."
+    )
   }
 
   # check if a tag was used for more than one animal
@@ -375,15 +405,19 @@ match_update <- function(x, silent = FALSE) {
     link <- valid_tags$transmitter %in% unique(valid_tags$transmitter[check])
     dup_tags <- valid_tags[link, ]
     if (any(is.na(dup_tags$ani_match))) {
-      stop("Duplicated transmitters found in @tag but no @ani match.",
-           " Fatal ambiguity. Can't assign detections correctly.",
-           call. = FALSE)
+      stop(
+        "Duplicated transmitters found in @tag but no @ani match.",
+        " Fatal ambiguity. Can't assign detections correctly.",
+        call. = FALSE
+      )
     }
     if (is.null(x@ani$terminal_datetime)) {
-      stop("Duplicated transmitters found in @tag but ato has no @obs",
-           " (or @obs and @ani have not been matched yet).",
-           " Fatal ambiguity. Can't assign detections correctly.",
-           call. = FALSE)      
+      stop(
+        "Duplicated transmitters found in @tag but ato has no @obs",
+        " (or @obs and @ani have not been matched yet).",
+        " Fatal ambiguity. Can't assign detections correctly.",
+        call. = FALSE
+      )
     }
     # sort relevant animals by release time to confirm dates are acceptable
     link <- x@ani$animal %in% dup_tags$animal
@@ -397,27 +431,35 @@ match_update <- function(x, silent = FALSE) {
       check <- is.na(sub_ani_tag$terminal_datetime[-nrow(sub_ani_tag)])
       if (any(check)) {
         stop(
-          "Transmitter ", the_tag$transmitter[1],
-          " was used in animals ", .comma(sub_ani_tag$animal),
-          " but animal ", .s(sum(check)),
+          "Transmitter ",
+          the_tag$transmitter[1],
+          " was used in animals ",
+          .comma(sub_ani_tag$animal),
+          " but animal ",
+          .s(sum(check)),
           .comma(sub_ani_tag$animal[which(check)]),
-          " do", .es(sum(check), TRUE),
+          " do",
+          .es(sum(check), TRUE),
           " not have terminal_datetime information.",
           " Add terminal observations to allow tag reuse.",
           " Fatal ambiguity. Can't assign detections correctly.",
           call. = FALSE
-        )        
+        )
       }
-      # the release time of animal 2 must come 
+      # the release time of animal 2 must come
       # after the terminal time of animal 1
-      check <- sub_ani_tag$terminal_datetime[-nrow(sub_ani_tag)] < 
-               sub_ani_tag$release_datetime[-1]
+      check <- sub_ani_tag$terminal_datetime[-nrow(sub_ani_tag)] <
+        sub_ani_tag$release_datetime[-1]
       if (any(!check)) {
-        stop("Transmitter ", the_tag$transmitter[1],
-             " was used in animals ", .comma(sub_ani_tag$animal),
-             " but these animals were out in the field at the same time.",
-             " Fatal ambiguity. Can't assign detections correctly.",
-             call. = FALSE)
+        stop(
+          "Transmitter ",
+          the_tag$transmitter[1],
+          " was used in animals ",
+          .comma(sub_ani_tag$animal),
+          " but these animals were out in the field at the same time.",
+          " Fatal ambiguity. Can't assign detections correctly.",
+          call. = FALSE
+        )
       }
     })
   }
@@ -455,10 +497,12 @@ match_update <- function(x, silent = FALSE) {
     warning(
       "The activation time for transmitter",
       .s(sum(check)),
-      " ", .comma(x@tag$transmitter[check]),
+      " ",
+      .comma(x@tag$transmitter[check]),
       " comes after the release time of the respective animal(s).",
       " Expect issues downstream.",
-      call. = FALSE, immediate. = TRUE
+      call. = FALSE,
+      immediate. = TRUE
     )
   }
 
@@ -468,10 +512,12 @@ match_update <- function(x, silent = FALSE) {
     warning(
       "The activation time for transmitter",
       .s(sum(check)),
-      " ", .comma(x@tag$transmitter[check]),
+      " ",
+      .comma(x@tag$transmitter[check]),
       " comes after the terminal time of the respective animal(s).",
       " Expect issues downstream.",
-      call. = FALSE, immediate. = TRUE
+      call. = FALSE,
+      immediate. = TRUE
     )
   }
 
@@ -479,16 +525,16 @@ match_update <- function(x, silent = FALSE) {
 }
 
 #' Match transmitters in the observations to the target tags
-#' 
+#'
 #' Automatically called by the \code{\link{set}} functions.
-#' 
+#'
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
-#' 
+#'
 #' @return the updated ATO
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 .match_obs_tag <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("obs", "tag"), error = TRUE)
@@ -520,22 +566,26 @@ match_update <- function(x, silent = FALSE) {
       }
       # if the tag has an associated release time,
       # observations must be after that.
-      if (!is.null(x@tag$release_datetime) &&
-          !is.na(x@tag$release_datetime[i])) {
+      if (
+        !is.null(x@tag$release_datetime) &&
+          !is.na(x@tag$release_datetime[i])
+      ) {
         # activation time should be before release. but in case it
         # isn't, pick the highest value of the two.
         first_time <- max(first_time, x@tag$release_datetime[i])
       }
       # if the tag has an associated terminal time,
       # observations must be before that.
-      if (!is.null(x@tag$terminal_datetime) &&
-          !is.na(x@tag$terminal_datetime[i])) {
+      if (
+        !is.null(x@tag$terminal_datetime) &&
+          !is.na(x@tag$terminal_datetime[i])
+      ) {
         last_time <- x@tag$terminal_datetime[i]
       }
 
       link <- x@obs$transmitter == transmitter &
-              x@obs$datetime >= first_time &
-              x@obs$datetime <= last_time
+        x@obs$datetime >= first_time &
+        x@obs$datetime <= last_time
 
       # check for ambiguity
       check <- !is.na(x@obs$tag_match[link])
@@ -545,11 +595,19 @@ match_update <- function(x, silent = FALSE) {
         # valid. I tried testing this and landed on
         # "Duplicated transmitters found in @tag but no @ani match"
         r <- which(check)
-        stop("@obs row", .s(length(r)), " ", .comma(r),
-             " match", .es(length(r), TRUE), " @tag rows ",
-             .comma(c(unique(x@obs$tag_match[link]), i)), ".",
-             " Fatal ambiguity. Can't assign observations correctly.",
-             call. = FALSE)
+        stop(
+          "@obs row",
+          .s(length(r)),
+          " ",
+          .comma(r),
+          " match",
+          .es(length(r), TRUE),
+          " @tag rows ",
+          .comma(c(unique(x@obs$tag_match[link]), i)),
+          ".",
+          " Fatal ambiguity. Can't assign observations correctly.",
+          call. = FALSE
+        )
       }
       # and assign the match
       x@obs$tag_match[link] <- i
@@ -558,14 +616,21 @@ match_update <- function(x, silent = FALSE) {
 
   # issue message if there are valid observations for non-valid tagmals
   strays <- !is.na(x@obs$transmitter) &
-            is.na(x@obs$tag_match) &
-            x@obs$valid
+    is.na(x@obs$tag_match) &
+    x@obs$valid
   if (!silent & any(strays)) {
     n_tags <- length(unique(x@obs$transmitter[strays]))
-    message("M: ", sum(strays),
-            " off-target valid observation", .s(sum(strays)),
-            " (from ", n_tags, " stray tag", .s(n_tags),
-            ") found in the dataset.")
+    message(
+      "M: ",
+      sum(strays),
+      " off-target valid observation",
+      .s(sum(strays)),
+      " (from ",
+      n_tags,
+      " stray tag",
+      .s(n_tags),
+      ") found in the dataset."
+    )
   }
 
   # include counts of valid observations per transmitter
@@ -576,8 +641,15 @@ match_update <- function(x, silent = FALSE) {
   # issue message if some valid tags have no observations
   check <- sum(x@tag$n_obs[x@tag$valid] == 0)
   if (!silent & check > 0) {
-    message("M: ", check, " valid tag", .s(sum(check)),
-            " ", .has(sum(check)), " no valid observations.")
+    message(
+      "M: ",
+      check,
+      " valid tag",
+      .s(sum(check)),
+      " ",
+      .has(sum(check)),
+      " no valid observations."
+    )
   }
 
   # tag might already have mached info from ani.
@@ -601,7 +673,7 @@ match_update <- function(x, silent = FALSE) {
       # make sure terminal detections are in chronological order
       term <- term[order(term$datetime), ]
       if (nrow(term) > 1) {
-      # make_obs should stop this from happening.
+        # make_obs should stop this from happening.
         stop(
           "more than one terminal datetime found for tag ",
           term$transmitter[1],
@@ -612,7 +684,7 @@ match_update <- function(x, silent = FALSE) {
         link <- x@tag$transmitter == term$transmitter[i] &
           .sub_na(x@tag$activation_datetime <= term$datetime[i], TRUE) &
           .sub_na(x@tag$terminal_datetime >= term$datetime[i], TRUE)
-        
+
         if (!is.null(x@tag$release_datetime)) {
           link <- link &
             .sub_na(x@tag$release_datetime <= term$datetime[i], TRUE)
@@ -645,27 +717,29 @@ match_update <- function(x, silent = FALSE) {
     warning(
       "The activation time for transmitter",
       .s(sum(check)),
-      " ", .comma(x@tag$transmitter[check]),
+      " ",
+      .comma(x@tag$transmitter[check]),
       " comes after the terminal time of the respective transmitter(s).",
       " Expect issues downstream.",
-      call. = FALSE, immediate. = TRUE
+      call. = FALSE,
+      immediate. = TRUE
     )
   }
-  
+
   return(x)
 }
 
 #' Match transmitters in the detections to the target tags
-#' 
+#'
 #' Automatically called by the \code{\link{set}} functions.
-#' 
+#'
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
-#' 
+#'
 #' @return the updated ATO
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 .match_det_tag_base <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("det", "tag"), error = TRUE)
@@ -705,30 +779,36 @@ match_update <- function(x, silent = FALSE) {
       }
       # if the tag has an associated release time,
       # detections must be after that.
-      if (!is.null(x@tag$release_datetime) &&
-          !is.na(x@tag$release_datetime[i])) {
+      if (
+        !is.null(x@tag$release_datetime) &&
+          !is.na(x@tag$release_datetime[i])
+      ) {
         # activation time should be before release. but in case it
         # isn't, pick the highest value of the two.
         first_time <- max(first_time, x@tag$release_datetime[i])
       }
       # if the tag has an associated battery life,
       # detections must be before battery runs out.
-      if (!is.na(x@tag$activation_datetime[i]) &
-          !is.na(x@tag$battery_life[i])) {
+      if (
+        !is.na(x@tag$activation_datetime[i]) &
+          !is.na(x@tag$battery_life[i])
+      ) {
         last_time <- x@tag$activation_datetime[i] +
-                     x@tag$battery_life[i] * 24 * 3600
+          x@tag$battery_life[i] * 24 * 3600
       }
       # if the tag has an associated terminal time,
       # detections must be before that.
-      if (!is.null(x@tag$terminal_datetime) &&
-          !is.na(x@tag$terminal_datetime[i])) {
+      if (
+        !is.null(x@tag$terminal_datetime) &&
+          !is.na(x@tag$terminal_datetime[i])
+      ) {
         # only replace if battery hasn't run out yet
         last_time <- min(last_time, x@tag$terminal_datetime[i])
       }
 
       link <- x@det$transmitter == transmitter &
-              x@det$datetime >= first_time &
-              x@det$datetime <= last_time
+        x@det$datetime >= first_time &
+        x@det$datetime <= last_time
 
       # check for ambiguity
       .check_dup_match_base(
@@ -761,8 +841,12 @@ match_update <- function(x, silent = FALSE) {
   x@tag$n_det[as.numeric(names(aux))] <- aux
 
   # issue message if some valid tags have no detections
-  .message_n_zero(x@tag$n_det[x@tag$valid], 
-                  "tag", "valid detections", silent = silent)
+  .message_n_zero(
+    x@tag$n_det[x@tag$valid],
+    "tag",
+    "valid detections",
+    silent = silent
+  )
 
   if (has(x, "ani")) {
     # include counts of valid detections per animal
@@ -775,18 +859,18 @@ match_update <- function(x, silent = FALSE) {
 }
 
 #' Match transmitters in the detections to the target tags
-#' 
+#'
 #' Much faster than \code{\link{.match_det_tag_base}}
-#' 
+#'
 #' Automatically called by the \code{\link{match_update}} function.
-#' 
+#'
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
-#' 
+#'
 #' @return the updated ATO
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 .match_det_tag_datatable <- function(x, silent = FALSE) {
   is_ato(x)
   has(x, c("det", "tag"), error = TRUE)
@@ -805,7 +889,7 @@ match_update <- function(x, silent = FALSE) {
     x@ani$n_det <- NULL
     return(x)
   }
-  
+
   first_time <- sapply(
     1:nrow(x@tag),
     function(i) {
@@ -902,19 +986,14 @@ match_update <- function(x, silent = FALSE) {
   # perform the match using only valid tags
   valid_tags <- x@tag[x@tag$valid, ]
 
-  data.table::setkeyv(valid_tags, 
-                      c("transmitter",
-                        "first_time",
-                        "last_time"))
-  data.table::setkeyv(x@det, 
-                      c("transmitter",
-                        "datetime",
-                        "datetime_dummy"))
+  data.table::setkeyv(valid_tags, c("transmitter", "first_time", "last_time"))
+  data.table::setkeyv(x@det, c("transmitter", "datetime", "datetime_dummy"))
   result <- data.table::foverlaps(
     x@det,
     valid_tags,
     nomatch = NA,
-    which = TRUE)
+    which = TRUE
+  )
 
   # check for ambiguous matches
   .check_dup_match_datatable(
@@ -932,10 +1011,10 @@ match_update <- function(x, silent = FALSE) {
     i = result$xid,
     j = "tag_match",
     value = valid_tags$original_row_order[result$yid]
-    )
+  )
 
   # last check: detections can't match both tags and beacons
-  # Note: this check is placed here instead of further down 
+  # Note: this check is placed here instead of further down
   # in .match_det_tag because the base method runs this check
   # on a per-tag basis to avoid wasted computing time.
   .check_tag_beacon(x)
@@ -950,8 +1029,12 @@ match_update <- function(x, silent = FALSE) {
   x@tag$n_det[row_link] <- aux
 
   # issue message if some valid tags have no detections
-  .message_n_zero(x@tag$n_det[x@tag$valid],
-                  "tag", "valid detections", silent = silent)
+  .message_n_zero(
+    x@tag$n_det[x@tag$valid],
+    "tag",
+    "valid detections",
+    silent = silent
+  )
 
   if (has(x, "ani")) {
     # match animals through tags
@@ -989,24 +1072,32 @@ match_update <- function(x, silent = FALSE) {
 
 #' Match transmitters in the detections to
 #' beacon/reference transmitters in the deployments
-#' 
+#'
 #' Automatically called by the \code{\link{set}} functions.
-#' 
+#'
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
-#' 
+#'
 #' @return the updated ATO
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 .match_dep_det_base <- function(x, silent = FALSE) {
   is_ato(x)
-  has(x, "dep",
-      c("receiver_serial", "deploy_datetime", "recover_datetime"),
-      allow_NA = FALSE, error = TRUE)
-  has(x, "det",
-      c("receiver_serial", "datetime"),
-      allow_NA = FALSE, error = TRUE)
+  has(
+    x,
+    "dep",
+    c("receiver_serial", "deploy_datetime", "recover_datetime"),
+    allow_NA = FALSE,
+    error = TRUE
+  )
+  has(
+    x,
+    "det",
+    c("receiver_serial", "datetime"),
+    allow_NA = FALSE,
+    error = TRUE
+  )
 
   if (!any(x@dep$valid)) {
     warning(
@@ -1035,8 +1126,8 @@ match_update <- function(x, silent = FALSE) {
         receiver_serial <- x@dep$receiver_serial[i]
 
         link <- x@det$receiver_serial == receiver_serial &
-                x@det$datetime >= first_time &
-                x@det$datetime <= last_time
+          x@det$datetime >= first_time &
+          x@det$datetime <= last_time
 
         # check for ambiguity
         .check_dup_match_base(
@@ -1056,8 +1147,8 @@ match_update <- function(x, silent = FALSE) {
         transmitter <- x@dep$transmitter[i]
 
         link <- x@det$transmitter == transmitter &
-                x@det$datetime >= first_time &
-                x@det$datetime <= last_time
+          x@det$datetime >= first_time &
+          x@det$datetime <= last_time
 
         # check for ambiguity
         .check_dup_match_base(
@@ -1090,9 +1181,12 @@ match_update <- function(x, silent = FALSE) {
   x@dep$n_det[as.numeric(names(aux))] <- aux
 
   # issue message if some valid deps have no detections
-  .message_n_zero(x@dep$n_det[x@dep$valid],
-                  "receiver deployment", "valid detections",
-                  silent = silent)
+  .message_n_zero(
+    x@dep$n_det[x@dep$valid],
+    "receiver deployment",
+    "valid detections",
+    silent = silent
+  )
 
   # include counts of valid beacon detections per dep
   x@dep$n_beacon_det <- NA_integer_
@@ -1101,34 +1195,45 @@ match_update <- function(x, silent = FALSE) {
   x@dep$n_beacon_det[as.numeric(names(aux))] <- aux
 
   # issue message if some valid deps have no detections
-  .message_n_zero(x@dep$n_beacon_det[x@dep$valid],
-                  "transmitter deployment", "valid detections",
-                  silent = silent)
+  .message_n_zero(
+    x@dep$n_beacon_det[x@dep$valid],
+    "transmitter deployment",
+    "valid detections",
+    silent = silent
+  )
 
   return(x)
 }
 
 #' Match transmitters in the detections to
 #' beacon/reference transmitters in the deployments
-#' 
+#'
 #' Much faster than \code{\link{.match_dep_det_base}}
-#' 
+#'
 #' Automatically called by the \code{\link{match_update}} function.
-#' 
+#'
 #' @param x an \code{\link{ATO}}
 #' @param silent Supresses summary messages
-#' 
+#'
 #' @return the updated ATO
-#' 
+#'
 #' @keywords internal
 .match_dep_det_datatable <- function(x, silent) {
   is_ato(x)
-  has(x, "dep",
-      c("receiver_serial", "deploy_datetime", "recover_datetime"),
-      allow_NA = FALSE, error = TRUE)
-  has(x, "det",
-      c("receiver_serial", "datetime"),
-      allow_NA = FALSE, error = TRUE)
+  has(
+    x,
+    "dep",
+    c("receiver_serial", "deploy_datetime", "recover_datetime"),
+    allow_NA = FALSE,
+    error = TRUE
+  )
+  has(
+    x,
+    "det",
+    c("receiver_serial", "datetime"),
+    allow_NA = FALSE,
+    error = TRUE
+  )
 
   .check_data.table_exists()
 
@@ -1205,14 +1310,11 @@ match_update <- function(x, silent = FALSE) {
 
   # perform the match using only valid deployments
   valid_deps <- x@dep[x@dep$valid, ]
-  data.table::setkeyv(valid_deps,
-                      c("receiver_serial",
-                        "deploy_datetime",
-                        "recover_datetime"))
-  data.table::setkeyv(x@det,
-                      c("receiver_serial",
-                        "datetime",
-                        "datetime_dummy"))
+  data.table::setkeyv(
+    valid_deps,
+    c("receiver_serial", "deploy_datetime", "recover_datetime")
+  )
+  data.table::setkeyv(x@det, c("receiver_serial", "datetime", "datetime_dummy"))
   result_rec <- data.table::foverlaps(
     x@det,
     valid_deps,
@@ -1240,14 +1342,11 @@ match_update <- function(x, silent = FALSE) {
 
   # now do the same thing for the beacon tags
   # perform the match
-  data.table::setkeyv(valid_deps,
-                      c("transmitter",
-                        "deploy_datetime",
-                        "recover_datetime"))
-  data.table::setkeyv(x@det,
-                      c("transmitter",
-                        "datetime",
-                        "datetime_dummy"))
+  data.table::setkeyv(
+    valid_deps,
+    c("transmitter", "deploy_datetime", "recover_datetime")
+  )
+  data.table::setkeyv(x@det, c("transmitter", "datetime", "datetime_dummy"))
   result_bea <- data.table::foverlaps(
     x@det,
     valid_deps,
@@ -1274,7 +1373,7 @@ match_update <- function(x, silent = FALSE) {
   )
 
   # last check: detections can't match both deps and beacons
-  # Note: this check is placed here instead of further down 
+  # Note: this check is placed here instead of further down
   # in .match_det_dep because the base method runs this check
   # on a per-dep basis to avoid wasted computing time.
   .check_tag_beacon(x)
@@ -1294,15 +1393,18 @@ match_update <- function(x, silent = FALSE) {
   x@dep$n_det[row_link] <- aux
 
   # issue message if some valid deployments have no detections
-  .message_n_zero(x@dep$n_det[x@dep$valid],
-                  "receiver deployment", "valid detections",
-                  silent = silent)
+  .message_n_zero(
+    x@dep$n_det[x@dep$valid],
+    "receiver deployment",
+    "valid detections",
+    silent = silent
+  )
 
   # include counts of valid beacon detections per dep
-  # this is what causes test_init to error and result in 
-  # example data as it makes n_beacon NA and turns it 
-  # to 0 if transmitter is not NA in deploy 
-  # since it is this becomes NA 
+  # this is what causes test_init to error and result in
+  # example data as it makes n_beacon NA and turns it
+  # to 0 if transmitter is not NA in deploy
+  # since it is this becomes NA
   x@dep$n_beacon_det <- NA_integer_
   x@dep$n_beacon_det[!is.na(x@dep$transmitter)] <- 0
 
@@ -1311,25 +1413,28 @@ match_update <- function(x, silent = FALSE) {
   x@dep$n_beacon_det[row_link] <- aux
 
   # issue message if some valid deps have no detections
-  .message_n_zero(x@dep$n_beacon_det[x@dep$valid],
-                  "transmitter deployment", "valid detections",
-                  silent = silent)
+  .message_n_zero(
+    x@dep$n_beacon_det[x@dep$valid],
+    "transmitter deployment",
+    "valid detections",
+    silent = silent
+  )
 
   # on.exit handles cleaning up the data.table modifications
   return(x)
 }
 
 #' Helper function to turn automatic matching on or off
-#' 
+#'
 #' Matching of the slots' contents is essential to keep the ATO operational.
 #' Do not turn automatic matching off unless you are working with extremely
 #' large datasets that would cause heavy computation delays.
-#' 
+#'
 #' @param value logical. Should matching be done on the fly?
 #' @param silent Supresses messages
-#' 
+#'
 #' @return the current value for ATO_match_immediate if no new value is provided
-#' 
+#'
 #' @examples
 #' old_match_immediate <- ato_match_immediate()
 #' ato_match_immediate(FALSE)
@@ -1338,30 +1443,32 @@ match_update <- function(x, silent = FALSE) {
 #'              det = det(example_ato),
 #'              dep = dep(example_ato))
 #' x <- match_update(x)
-#' 
+#'
 #' # clean up
 #' ato_match_immediate(old_match_immediate)
 #' rm(x, old_match_immediate)
-#' 
+#'
 #' @export
-#' 
+#'
 ato_match_immediate <- function(value = TRUE, silent = FALSE) {
   if (missing(value)) {
     return(getOption("ATO_match_immediate", default = TRUE))
   } else {
     if (length(value) != 1) {
-      stop ("value must of length 1.", call. = FALSE)
+      stop("value must of length 1.", call. = FALSE)
     }
     if (!is.logical(value)) {
-      stop ("value must be logical.", call. = FALSE)
+      stop("value must be logical.", call. = FALSE)
     }
     options(ATO_match_immediate = value)
     if (!silent) {
       if (value) {
         message("M: Automatic matching resumed.")
       } else {
-        message("M: Automatic matching paused.",
-                " Use match_update() to force matching when desired.")
+        message(
+          "M: Automatic matching paused.",
+          " Use match_update() to force matching when desired."
+        )
       }
     }
   }

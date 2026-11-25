@@ -17,16 +17,16 @@
 #' dep <- get_dep(example_ato)
 #' det <- get_det(example_ato)
 #' tag <- get_tag(example_ato)
-#' 
+#'
 #' # and now use the parts to build a new ato
 #' x <- init_ato(ani = ani,
 #'               dep = dep,
 #'               det = det,
 #'               tag = tag)
-#' 
+#'
 #' # clean up
 #' rm(ani, dep, det, tag, x)
-#' 
+#'
 #' @return an \code{\link{ATO}}
 #'
 #' @export
@@ -48,7 +48,7 @@ init_ato <- function(ani, dep, det, obs, tag, silent = FALSE) {
   old_match_immediate <- ato_match_immediate(silent = TRUE)
   on.exit(ato_match_immediate(old_match_immediate, silent = TRUE))
   ato_match_immediate(FALSE, silent = TRUE)
-  
+
   if (!missing(ani)) {
     ato <- set_ani(ato, ani, silent = silent)
   }
@@ -64,10 +64,10 @@ init_ato <- function(ani, dep, det, obs, tag, silent = FALSE) {
   if (!missing(tag)) {
     ato <- set_tag(ato, tag, silent = silent)
   }
-  
+
   if (old_match_immediate) {
     ato <- match_update(ato, silent = silent)
   }
-  
+
   return(ato)
 }

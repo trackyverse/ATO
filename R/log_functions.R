@@ -15,18 +15,22 @@
 #'  }
 #' @param ... The text fragments that compose the event message.
 #' @param blame Not used yet; functionality to come in the future.
-#' 
+#'
 #' @examples
 #' # add an event to the ato
 #' x <- log_event(example_ato, type = "msg", "M: just a test")
 #' get_log(x)
-#' 
+#'
 #' @return The updated ATO.
 #'
 #' @export
 #'
-log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
-                      "comment"), ..., blame) {
+log_event <- function(
+  ato,
+  type = c("log", "message", "msg", "warning", "debug", "comment"),
+  ...,
+  blame
+) {
   if (!getOption("ATO_log_events", default = TRUE)) {
     return(ato)
   }
@@ -34,9 +38,11 @@ log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
   is_ato(ato)
 
   type <- match.arg(type)
-  if (type == "msg") type <- "message"
+  if (type == "msg") {
+    type <- "message"
+  }
 
-  i = 1
+  i <- 1
   while (i <= sys.nframe()) {
     fun_call <- sys.calls()[[i]]
 
@@ -81,7 +87,7 @@ log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
   ato@log <- updated_log
 
   if (type == "warning") {
-    warning(event_text, immediate. = TRUE, call. = FALSE)    
+    warning(event_text, immediate. = TRUE, call. = FALSE)
   }
   if (type == "message") {
     message(event_text)
@@ -97,12 +103,12 @@ log_event <- function(ato, type = c("log", "message", "msg", "warning", "debug",
 #'
 #' @param ato the ATO object to which to log the comment
 #' @param ... The text fragments that compose the comment.
-#' 
+#'
 #' @examples
 #' # add an event to the ato
 #' x <- log_comment(example_ato, "M: just a comment")
 #' get_log(x)
-#' 
+#'
 #' @return the updated ATO.
 #'
 #' @export

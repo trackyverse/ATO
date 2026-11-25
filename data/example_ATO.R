@@ -1,6 +1,6 @@
 # library("actel")
 # library("ATO")
-# # 
+# #
 # # @ani
 # head(actel:::example.biometrics)
 # tail(actel:::example.spatial)
@@ -21,7 +21,7 @@
 # head(ani)
 # str(ani)
 # table_type(ani)
-# # 
+# #
 # # @dep
 # head(actel:::example.deployments)
 # head(actel:::example.spatial)
@@ -48,7 +48,7 @@
 #                 section = actel:::example.spatial$Section[link])
 # summary(dep)
 # head(dep)
-# # 
+# #
 # # @det
 # head(actel:::example.detections)
 # det <- make_det(datetime = as.POSIXct(actel:::example.detections$Timestamp),
@@ -60,7 +60,7 @@
 #                 tz = "Europe/Copenhagen")
 # summary(det)
 # head(det)
-# # 
+# #
 # # @tag
 # head(actel:::example.biometrics)
 # head(actel:::example.detections)
@@ -80,15 +80,14 @@
 #                 mass_air_g = 1.9,
 #                 mass_water_g = 1.2)
 # summary(tag)
-# # 
-
+# #
 
 # example_ato <- init_ato(ani = ani,
 #                         dep = dep,
 #                         det = det,
 #                         tag = tag)
-# # 
+# #
 # example_ato
 
-# # 
+# #
 # usethis::use_data(example_ato, overwrite = TRUE, internal = FALSE)

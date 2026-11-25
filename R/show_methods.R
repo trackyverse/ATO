@@ -1,14 +1,14 @@
 #' Method to show an \code{\link{ATO}}
-#' 
+#'
 #' @param object an ATO
-#' 
+#'
 #' @return Nothing. Called for side-effects
-#' 
+#'
 #' @examples
 #' show(example_ato)
-#' 
+#'
 #' @export
-#' 
+#'
 setMethod("show", "ATO", function(object) {
   cat(table_type(object))
   cat(" ATO object:\n")

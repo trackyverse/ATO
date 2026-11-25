@@ -1,6 +1,5 @@
-
 start_test <- function() {
-  # ----- reset ato table type globally to data.frame ----- 
+  # ----- reset ato table type globally to data.frame -----
   ato_table_type_global("data.frame")
 
   # ----- set timezone -----

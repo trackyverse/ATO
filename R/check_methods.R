@@ -1,16 +1,16 @@
 #' check generic
-#' 
+#'
 #' Checks a prospective ATO slot object to confirm that the
 #' contents are as expected. Matches it with the respective prototype reference.
-#' 
+#'
 #' @param object The prospective ATO slot object
-#' 
+#'
 #' @return the checked ATO object
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 #' @name check
-#' 
+#'
 setGeneric(
   "check",
   function(object, tz, tbl) {
@@ -36,7 +36,7 @@ setMethod(
     .check_dup_rows(object)
 
     # check that capture_datetime, if present, is before release_datetime
-    
+
     # conceptual test
     # object <- data.frame(
     #   capture_datetime = as.POSIXct(
@@ -57,11 +57,14 @@ setMethod(
     if (any(check)) {
       x <- which(check)
       stop(
-        "capture_datetime for row", .s(length(x)),
-        " ", .comma(x),
+        "capture_datetime for row",
+        .s(length(x)),
+        " ",
+        .comma(x),
         " comes after release_datetime.",
         " Animals must be captured before they are released.",
-        call. = FALSE)
+        call. = FALSE
+      )
     }
 
     return(object)
@@ -131,15 +134,18 @@ setMethod(
       })
       if (any(aux)) {
         stop(
-          "Transmitter", .s(sum(aux)),
-          " ", .comma(names(aux)[aux]),
-          " ", .has(sum(aux)),
+          "Transmitter",
+          .s(sum(aux)),
+          " ",
+          .comma(names(aux)[aux]),
+          " ",
+          .has(sum(aux)),
           " more than one terminal observation.",
           " Transmitters and animals must be terminated only once.",
           call. = FALSE
         )
       }
-    } 
+    }
     # check only one terminal per animal
     if (any(!is.na(object$animal))) {
       aux <- object[!is.na(object$animal), ]
@@ -149,15 +155,18 @@ setMethod(
       })
       if (any(aux)) {
         stop(
-          "Animal", .s(sum(aux)),
-          " ", .comma(names(aux)[aux]),
-          " ", .has(sum(aux)),
+          "Animal",
+          .s(sum(aux)),
+          " ",
+          .comma(names(aux)[aux]),
+          " ",
+          .has(sum(aux)),
           " more than one terminal observation.",
           " Transmitters and animals must be terminated only once.",
           call. = FALSE
         )
       }
-    } 
+    }
     return(object)
   }
 )
@@ -192,12 +201,16 @@ setMethod(
           )
         )
         warning(
-          "Transmitter", .s(length(unique(tagani$transmitter[check]))),
-          " ", .comma(unique(tagani$transmitter[check])),
-          " ", .was(length(unique(tagani$transmitter[check]))),
+          "Transmitter",
+          .s(length(unique(tagani$transmitter[check]))),
+          " ",
+          .comma(unique(tagani$transmitter[check])),
+          " ",
+          .was(length(unique(tagani$transmitter[check]))),
           " deployed to the same animal more than once!",
           " MOST ATO FUNCTIONS WILL CRASH!",
-          call. = FALSE, immediate. = TRUE
+          call. = FALSE,
+          immediate. = TRUE
         )
       }
     }

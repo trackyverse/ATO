@@ -1,18 +1,18 @@
 #' What is the timezone of this ATO object?
-#' 
+#'
 #' You may use tzone to check and display the timezone of the datetime data
 #' of an ATO object or of any ATO slot object.
-#' 
+#'
 #' @param x an \code{\link{ATO}} or ATO slot object.
-#' 
+#'
 #' @return Returns the timezone of the ATO object.
-#' 
+#'
 #' @examples
 #' # check the timezone of the example ATO
 #' tzone(example_ato)
-#' 
+#'
 #' @export
-#' 
+#'
 setGeneric("tzone", function(x) standardGeneric("tzone"))
 
 #' @rdname tzone
@@ -46,33 +46,33 @@ setMethod("tzone", "ATO_tag", function(x) {
 })
 
 #' Modify the time zone of an ATO object
-#' 
+#'
 #' @param x an \code{\link{ATO}} or ATO slot object.
 #' @param value the desired time zone
-#' 
+#'
 #' @return Nothing, acts directly on x
-#' 
+#'
 #' @examples
 #' # check the timezone of the example ATO
 #' tzone(example_ato)
 #' summary(get_det(example_ato))
-#' 
+#'
 #' # change the tz to UTC
 #' tzone(example_ato) <- "UTC"
 #' tzone(example_ato)
 #' summary(get_det(example_ato))
-#' 
+#'
 #' # clean_up
 #' tzone(example_ato) <- "Europe/Copenhagen"
-#' 
+#'
 #' @export
-#' 
+#'
 setGeneric("tzone<-", function(x, value) standardGeneric("tzone<-"))
 
 #' @rdname tzone-set
 setMethod("tzone<-", "ATO", function(x, value) {
   slots <- c("ani", "dep", "det", "obs", "tag")
-  
+
   for (s in slots) {
     if (!has(x, s)) {
       next()

@@ -23,18 +23,18 @@
 #'  functions or \code{\link{init_ato}}.
 #'
 #' @export
-#' 
+#'
 #' @examples
 #' # only two columns are required to start an ani table.
 #' # Note that posix objects created on-the-fly do not necessarily
-#' # have an associated timezone - try running the code below 
+#' # have an associated timezone - try running the code below
 #' # without the tz argument and it will fail.
 #' x <- make_ani(animal = letters[1:10],
 #'               release_datetime = rep(Sys.time(), 10),
 #'               tz = "America/Halifax")
 #' head(x)
-#' 
-#' # additionally, you can change the type of table being created by using 
+#'
+#' # additionally, you can change the type of table being created by using
 #' # the tbl argument - this requires having either data.table or tibble
 #' # installed on your machine.
 #'
@@ -109,9 +109,9 @@ make_ani <- function(
     .check_tibble_exists()
     output <- tibble::as_tibble(output)
   }
-  
+
   class(output) <- c("ATO_ani", class(output))
-  
+
   output <- check(output, tz = tz, tbl = tbl)
   return(output)
 }
@@ -154,21 +154,21 @@ make_ani <- function(
 #' @examples
 #' # only two columns are required to start a dep table.
 #' # Note that posix objects created on-the-fly do not necessarily
-#' # have an associated timezone - try running the code below 
+#' # have an associated timezone - try running the code below
 #' # without the tz argument and it will fail.
 #' x <- make_dep(deploy_datetime = rep(Sys.time(), 10),
 #'               recover_datetime = rep(Sys.time(), 10),
 #'               tz = "America/Halifax")
 #' head(x)
-#' 
-#' # additionally, you can change the type of table being created by using 
+#'
+#' # additionally, you can change the type of table being created by using
 #' # the tbl argument - this requires having either data.table or tibble
 #' # installed on your machine.
-#' 
+#'
 #' # while you can create deployments with only deployment and recovery times,
 #' # they will likely not be very useful unless you also include a receiver
 #' # serial number or an associated transmitter code.
-#' 
+#'
 #' @export
 #'
 #' @seealso \code{\link{ATO_dep}}
@@ -214,8 +214,10 @@ make_dep <- function(
         check[2],
         paste0(
           " For rolling receiver deployments, use the time of",
-          " last download as the recovery time."),
-        ""),
+          " last download as the recovery time."
+        ),
+        ""
+      ),
       call. = FALSE
     )
   }
@@ -277,21 +279,21 @@ make_dep <- function(
 #' @examples
 #' # only three columns are required to start a det table.
 #' # Note that posix objects created on-the-fly do not necessarily
-#' # have an associated timezone - try running the code below 
+#' # have an associated timezone - try running the code below
 #' # without the tz argument and it will fail.
 #' x <- make_det(datetime = rep(round(Sys.time()), 10),
 #'               receiver_serial = letters[1:10],
 #'               transmitter = paste0(LETTERS[1:10], "-", 1:10),
 #'               tz = "America/Halifax")
 #' head(x)
-#' 
-#' # additionally, you can change the type of table being created by using 
+#'
+#' # additionally, you can change the type of table being created by using
 #' # the tbl argument - this requires having either data.table or tibble
 #' # installed on your machine.
-#' 
+#'
 #' # Note that make_det will complain if the datetime argument contains
 #' # milliseconds. Try removing the round() call above to see it
-#' 
+#'
 #' @export
 #'
 #' @seealso \code{\link{ATO_det}}
@@ -453,7 +455,7 @@ make_det <- function(
 #' # specify if that observation is terminal (i.e. there will be no
 #' # more detections/observations for this animal or transmitter).
 #' # Note that posix objects created on-the-fly do not necessarily
-#' # have an associated timezone - try running the code below 
+#' # have an associated timezone - try running the code below
 #' # without the tz argument and it will fail.
 #' x <- make_obs(datetime = rep(Sys.time(), 10),
 #'               transmitter = c(paste0(LETTERS[1:5], "-", 1:5), rep(NA, 5)),
@@ -461,11 +463,11 @@ make_det <- function(
 #'               terminal = rep(FALSE, 10),
 #'               tz = "America/Halifax")
 #' head(x)
-#' 
-#' # additionally, you can change the type of table being created by using 
+#'
+#' # additionally, you can change the type of table being created by using
 #' # the tbl argument - this requires having either data.table or tibble
 #' # installed on your machine.
-#' 
+#'
 #' @seealso \code{\link{ATO_obs}}
 #'
 make_obs <- function(
@@ -568,11 +570,11 @@ make_obs <- function(
 #' # code.
 #' x <- make_tag(transmitter = LETTERS[1:5])
 #' head(x)
-#' 
-#' # additionally, you can change the type of table being created by using 
+#'
+#' # additionally, you can change the type of table being created by using
 #' # the tbl argument - this requires having either data.table or tibble
 #' # installed on your machine.
-#' 
+#'
 #' @export
 #'
 #' @seealso \code{\link{ATO_tag}}

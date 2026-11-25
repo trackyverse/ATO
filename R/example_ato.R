@@ -17,7 +17,7 @@
 #'  and was collected by the author
 #'
 #' @name example_ato
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 'example_ato'

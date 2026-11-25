@@ -296,7 +296,7 @@ class(.ATO_log) <- c("ATO_log", "data.frame")
 #' @slot pkg A list slot reserved for package outputs.
 #'
 #' @export
-#' 
+#'
 setClass(
   "ATO",
   slots = c(

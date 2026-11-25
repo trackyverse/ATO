@@ -704,8 +704,10 @@ test_that(".match_det_tag_base handles activation time and battery life", {
     transmitter = tag(example_ato)$transmitter[1:5],
     activation_datetime = c(
       as.POSIXct(NA),
-      ani(example_ato)$release_datetime[1]-1,
-      NA, NA, NA
+      ani(example_ato)$release_datetime[1] - 1,
+      NA,
+      NA,
+      NA
     ),
     battery_life = c(NA, 20, NA, NA, NA),
     animal = ani(example_ato)$animal[1:5],
@@ -733,8 +735,10 @@ test_that(".match_det_tag_base handles animal links", {
     transmitter = tag(example_ato)$transmitter[1:5],
     activation_datetime = c(
       as.POSIXct(NA),
-      ani(example_ato)$release_datetime[1]-1,
-      NA, NA, NA
+      ani(example_ato)$release_datetime[1] - 1,
+      NA,
+      NA,
+      NA
     ),
     battery_life = c(NA, 20, NA, NA, NA),
     animal = ani(example_ato)$animal[1:5],
@@ -853,8 +857,10 @@ test_that(".match_det_tag_datatable handles activation time and battery life", {
     transmitter = tag(example_ato)$transmitter[1:5],
     activation_datetime = c(
       as.POSIXct(NA),
-      ani(example_ato)$release_datetime[1]-1,
-      NA, NA, NA
+      ani(example_ato)$release_datetime[1] - 1,
+      NA,
+      NA,
+      NA
     ),
     battery_life = c(NA, 20, NA, NA, NA),
     animal = ani(example_ato)$animal[1:5],
@@ -882,8 +888,10 @@ test_that(".match_det_tag_datatable handles animal links", {
     transmitter = tag(example_ato)$transmitter[1:5],
     activation_datetime = c(
       as.POSIXct(NA),
-      ani(example_ato)$release_datetime[1]-1,
-      NA, NA, NA
+      ani(example_ato)$release_datetime[1] - 1,
+      NA,
+      NA,
+      NA
     ),
     battery_life = c(NA, 20, NA, NA, NA),
     animal = ani(example_ato)$animal[1:5],
