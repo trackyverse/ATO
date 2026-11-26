@@ -23,7 +23,8 @@ setMethod("summary", "ATO_ani", function(object) {
     # but here the summary method is for ATO_ani which the
     # object does not have n_ani because it is never added to any object so this
     # will always go to the else statemnt since n will always be 0 since
-    # the column doesn't exist. I can't write a test that doesn't fail.
+    # the column doesn't exist. I can't write a test that doesn't fail. Is this
+    # suppose to be n_tag? maybe?
     n <- sum(object$n_ani == 0)
     if (n > 0) {
       cat(" - ", n, " without associated tags\n", sep = "")
