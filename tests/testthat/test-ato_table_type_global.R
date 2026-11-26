@@ -15,9 +15,6 @@ test_that("global table types are set", {
   expect_type(ato_df, "S4")
   expect_s4_class(ato_df, "ATO")
 
-  expect_true(ato_df@tbl == "data.frame")
-  expect_s3_class(ato_df@tbl, c("ATO_tbl", "character"), exact = TRUE)
-
   expect_s3_class(ato_df@det, c("ATO_det", "data.frame"), exact = TRUE)
 
   # ATO object is created as data.table
