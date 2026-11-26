@@ -1,3 +1,8 @@
+start_test()
+
+# # TESTS START HERE ----
+# # --------------------
+# built by MOB
 test_that("global table types are set", {
   initial_table_type <- options()$ATO_table_type
 
@@ -60,3 +65,8 @@ test_that("throws error if not data.frame, data.table, or tibble", {
       "\'arg\' should be one of \"data.frame\", \"data.table\", \"tibble\""
     )
 })
+
+# # TESTS END HERE ------
+# # ---------------------
+
+end_test()
