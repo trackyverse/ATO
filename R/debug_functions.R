@@ -61,7 +61,7 @@ ato_debug_header <- function() {
       "Debug: Starting ",
       fun,
       " (",
-      Sys.time(),
+      round(Sys.time()),
       ")"
     )
   }
