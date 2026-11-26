@@ -8,17 +8,11 @@ test_that("show() displays the table type as data.frame", {
 
 test_that("show() displays @ani slot", {
   expect_output(show(example_ato), "@ani:")
-  # BH: These could be moved to test_summary.R as summary() is called
-  # here and produces this information.
-  expect_output(show(example_ato), " - 60 animals in total")
-  expect_output(show(example_ato), " - All with associated tags")
-  expect_output(show(example_ato), " - 6 with no detection")
 })
 
 test_that("show() displays empty @ani slot", {
   expect_output(show(init_ato()), "@ani slot is empty.\n")
 })
-
 
 test_that("show() displays empty @obs slot", {
   test_obs <- make_obs(
@@ -34,7 +28,6 @@ test_that("show() displays empty @obs slot", {
   )
   expect_output(show(obs_ato), "@obs:")
 })
-
 
 test_that("show() displays table type as data.table", {
   ato_table_type_global("data.table")
