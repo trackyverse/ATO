@@ -38,7 +38,8 @@ test_that("check() errors when capture_datetime > release_date for data.trable",
     )
   }
 
-  example_ato_dt <- init_ato(ani = ani_dt)
+  example_ato_dt <- init_ato(ani = ani_dt) |>
+    suppressWarnings()
   # make capture date greater than release date
   example_ani_dt <- ani(example_ato_dt)
 
@@ -73,7 +74,8 @@ test_that("check() errors when capture_datetime > release_date for tibble", {
     )
   }
 
-  example_ato_tb <- init_ato(ani = ani_tb)
+  example_ato_tb <- init_ato(ani = ani_tb) |>
+    suppressWarnings()
   # make capture date greater than release date
   example_ani_tb <- ani(example_ato_tb)
 
