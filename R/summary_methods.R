@@ -293,7 +293,7 @@ setMethod("summary", "ATO_obs", function(object) {
   tag_check <- any(colnames(object) %in% "tag_match")
   ani_check <- any(colnames(object) %in% "ani_match")
   cat("@obs:\n")
-  cat(" -", nrow(object), "observations\n", sep = "")
+  cat(" - ", nrow(object), " observations\n", sep = "")
 
   if (tag_check | ani_check) {
     stray_link <- rep(FALSE, nrow(object))
