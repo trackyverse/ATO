@@ -56,7 +56,15 @@ test_that("throws error if not data.frame, data.table, or tibble", {
       "\'arg\' should be one of .data.frame., .data.table., .tibble."
     )
 })
-
+test_that("ato_table_type_global() when type is missing and default has changed
+to something that isn't `data.table`, `tibble`, or `data.frame` then error", {
+  options("ATO_table_type" = "tbl")
+  expect_error(
+    ato_table_type_global(),
+    "Option ATO_table_type has been modified to a value not recognized. Please change it back to one of 'data.frame', 'data.table', or 'tibble' to continue creating new ATO data. See ?ato_table_type_global().",
+    fixed = TRUE
+  )
+})
 # # TESTS END HERE ------
 # # ---------------------
 
