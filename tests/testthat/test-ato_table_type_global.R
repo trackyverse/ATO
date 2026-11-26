@@ -8,7 +8,7 @@ test_that("global table types are set", {
 
   # ATO object is created as data.frame
   ato_table_type_global("data.frame") |>
-    expect_message("M: Newly created ATOs will have tables of type data.frame")
+    expect_message("M: Newly created ATO objects will be of type data.frame")
 
   ato_df <- init_ato()
 
