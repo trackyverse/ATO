@@ -146,6 +146,66 @@ test_that(".check_tbl_argument() errors when tbl isn't data.frame, data.table, o
     fixed = TRUE
   )
 })
+# ----- end test .check_tbl_argument() -------
+# ----- start test .check_tag_beacon() -------
+test_that(".check_tag_beacon() errors when tag_match or beacon_match is not NA", {
+  example_ato@det$beacon_match <- 1
+
+  expect_error(
+    .check_tag_beacon(example_ato),
+    "@det rows 1, 2, 3, 4, 5, and 14539 others match both a row in @tag and a row in @dep. Fatal ambiguity. Can't assign detections correctly.",
+    fixed = TRUE
+  )
+})
+# ----- end test .check_tag_beacon() -------
+# ----- start test .check_dup_match_base() -------
+test_that(".check_dup_match_base() if it errors properly", {
+  transmitter <- "R64K-4549"
+  first_time <- min(example_ato@det$datetime) + 1
+  last_time <- max(example_ato@det$datetime) + 1
+
+  link <- example_ato@det$transmitter == transmitter &
+    example_ato@det$datetime >= first_time &
+    example_ato@det$datetime <= last_time
+
+  expect_error(
+    .check_dup_match_base(
+      x = example_ato@det$tag_match[link],
+      x_index = which(link),
+      i = transmitter,
+      label_x = "det",
+      label_y = "tag"
+    ),
+    "@det rows 4732, 4734, 4735, 4736, 4737, and 91 others match @tag rows 60 and R64K-4549. Fatal ambiguity. Can't assign detections correctly.",
+    fixed = TRUE
+  )
+})
+# ----- end test .check_dup_match_base() -------
+# ----- start test .check_dup_match_datatable() -------
+test_that("..check_dup_match_datatable() errors properly", {
+  x <- c(1, 1, 1, 2, 3, 4)
+  y <- c(1, 2, 4, 1, 3, 1)
+  label_x <- "det"
+  label_y <- "tag"
+  original_x <- c(4, 3, 2, 1)
+  original_y <- c(1, 3, 2, 10)
+  # i.e. the temporary detection row 1 matches temporary tag rows 1, 2, 4.
+  # which trace back to detection 4 matching tags 1, 3, and 10 in the original
+  # row orders.
+
+  expect_error(
+    .check_dup_match_datatable(
+      x = x,
+      y = y,
+      original_x = original_x,
+      original_y = original_y,
+      label_x = label_x,
+      label_y = label_y
+    ),
+    "@det row 4 matches multiple @tag rows (1, 3, and 10). Fatal ambiguity. Can't assign detections correctly.",
+    fixed = TRUE
+  )
+})
 
 # TESTS END HERE ------
 # ---------------------
