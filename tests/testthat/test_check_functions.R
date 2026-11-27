@@ -126,8 +126,15 @@ test_that(".check_slot_tzones() errors when ATO slots has tz of ''", {
 })
 
 test_that(".check_slot_tzones() returns null when slot doesn't have any posixct values ", {
+  example_ato@ani$release_datetime <- as.character(
+    example_ato@ani$release_datetime
+  )
+  example_ato@ani$capture_datetime <- as.character(
+    example_ato@ani$capture_datetime
+  )
+
   expect_null(
-    .check_slot_tzones(x = example_ato@log, s = "log")[[1]]
+    .check_slot_tzones(x = example_ato@ani, s = "ani")
   )
 })
 # ----- end test .check_slot_tzones() -------
