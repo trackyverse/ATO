@@ -9,7 +9,7 @@
 #' @examples
 #' x <- c(1:10, NA)
 #'
-#' .sub_na(x, value = 11)
+#' ATO:::.sub_na(x, value = 11)
 #'
 #' @keywords internal
 
