@@ -10,7 +10,7 @@
   if (!"data.table" %in% utils::installed.packages()) {
     if (error) {
       stop(
-        "You must install package data.table to run this function.",
+        "You must install package \"data.table\" to run this function.",
         call. = FALSE
       )
     } else {
@@ -31,7 +31,10 @@
 .check_tibble_exists <- function(error = TRUE) {
   if (!"tibble" %in% utils::installed.packages()) {
     if (error) {
-      stop("This function requires package tibble to run.", call. = FALSE)
+      stop(
+        "You must install package \"tibble\" to run this function.",
+        call. = FALSE
+      )
     } else {
       return(FALSE)
     }

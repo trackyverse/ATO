@@ -60,7 +60,7 @@ Formats the input data into the ATO format and appends the ATO_obs class.
 # specify if that observation is terminal (i.e. there will be no
 # more detections/observations for this animal or transmitter).
 # Note that posix objects created on-the-fly do not necessarily
-# have an associated timezone - try running the code below 
+# have an associated timezone - try running the code below
 # without the tz argument and it will fail.
 x <- make_obs(datetime = rep(Sys.time(), 10),
               transmitter = c(paste0(LETTERS[1:5], "-", 1:5), rep(NA, 5)),
@@ -69,7 +69,7 @@ x <- make_obs(datetime = rep(Sys.time(), 10),
               tz = "America/Halifax")
 head(x)
 
-# additionally, you can change the type of table being created by using 
+# additionally, you can change the type of table being created by using
 # the tbl argument - this requires having either data.table or tibble
 # installed on your machine.
 

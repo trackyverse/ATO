@@ -16,6 +16,15 @@ setMethod("summary", "ATO_ani", function(object) {
   cat("@ani:\n")
   cat(" - ", nrow(object), " animal", .s(nrow(object)), " in total\n", sep = "")
   if (ani_check) {
+    # BH: I do not follow here, n_ani is created by .match_ani_tag() line 367 of
+    # match_function.R. Once created it is used in a message but other than that
+    # there is no other place that it is used or added to an object either as a
+    # column or attribute.
+    # but here the summary method is for ATO_ani which the
+    # object does not have n_ani because it is never added to any object so this
+    # will always go to the else statemnt since n will always be 0 since
+    # the column doesn't exist. I can't write a test that doesn't fail. Is this
+    # suppose to be n_tag? maybe?
     n <- sum(object$n_ani == 0)
     if (n > 0) {
       cat(" - ", n, " without associated tags\n", sep = "")
@@ -293,7 +302,7 @@ setMethod("summary", "ATO_obs", function(object) {
   tag_check <- any(colnames(object) %in% "tag_match")
   ani_check <- any(colnames(object) %in% "ani_match")
   cat("@obs:\n")
-  cat(" -", nrow(object), "observations\n", sep = "")
+  cat(" - ", nrow(object), " observations\n", sep = "")
 
   if (tag_check | ani_check) {
     stray_link <- rep(FALSE, nrow(object))

@@ -1,8 +1,3 @@
-.sub_na <- function(x, value) {
-  x[is.na(x)] <- value
-  return(x)
-}
-
 #' Match the various slots of the ATO object
 #'
 #' Automatically called by the \code{\link{set}} functions. You should not need
