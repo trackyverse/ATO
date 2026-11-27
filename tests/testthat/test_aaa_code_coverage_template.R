@@ -1,5 +1,5 @@
-# ---- DO NOT UNCOMMENT ------
-# copy out and uncomment to run in separate file
+## ---- DO NOT UNCOMMENT ------
+## copy out and uncomment to run in separate file
 
 # library(covr)
 
