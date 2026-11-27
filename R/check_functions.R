@@ -10,7 +10,7 @@
   if (!"data.table" %in% utils::installed.packages()) {
     if (error) {
       stop(
-        "You must install package data.table to run this function.",
+        "You must install package \"data.table\" to run this function.",
         call. = FALSE
       )
     } else {
@@ -32,7 +32,7 @@
   if (!"tibble" %in% utils::installed.packages()) {
     if (error) {
       stop(
-        "You must install package tibble to run this function.",
+        "You must install package \"tibble\" to run this function.",
         call. = FALSE
       )
     } else {

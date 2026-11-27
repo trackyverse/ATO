@@ -12,7 +12,7 @@ test_that(".check_data.table_exists() errors when data.table isn't installed", {
   )
   expect_error(
     .check_data.table_exists(),
-    "You must install package data.table to run this function.",
+    "You must install package \"data.table\" to run this function.",
     fixed = TRUE
   )
   expect_false(
@@ -36,7 +36,7 @@ test_that(".check_tibble_exists() errors when tibble isn't installed", {
   )
   expect_error(
     .check_tibble_exists(),
-    "You must install package tibble to run this function.",
+    "You must install package \"tibble\" to run this function.",
     fixed = TRUE
   )
   expect_false(
