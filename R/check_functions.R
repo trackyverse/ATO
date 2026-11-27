@@ -31,7 +31,10 @@
 .check_tibble_exists <- function(error = TRUE) {
   if (!"tibble" %in% utils::installed.packages()) {
     if (error) {
-      stop("This function requires package tibble to run.", call. = FALSE)
+      stop(
+        "You must install package tibble to run this function.",
+        call. = FALSE
+      )
     } else {
       return(FALSE)
     }
